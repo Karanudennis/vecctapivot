@@ -18,7 +18,7 @@
         .intro-box p { font-size: 16px; line-height: 1.8; color: #2d3748; margin: 0 auto; max-width: 850px; font-weight: 500; }
         .section-title { text-align: center; margin: 40px 0 25px 0; font-size: 18px; color: var(--primary); letter-spacing: 2px; font-weight: 800; text-transform: uppercase; }
         
-        /* 6-Tab Custom Layout System */
+        /* 5-Tab Custom Layout System */
         .tabs-wrapper { display: flex; flex-direction: column; }
         .tab-switch { display: none; }
         .tab-menu { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 30px; }
@@ -26,14 +26,13 @@
         .tab-label:hover { background: #fafbfc; transform: translateY(-1px); }
         .tab-panel { display: none; background: #fff; border-radius: 8px; padding: 35px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-top: 5px solid var(--primary); }
         
-        #tab1:checked ~ .tab-menu .lbl1 { border-color: #00F0FF; color: #0A192F; background: #e0f2fe; }
+        #tab1:checked ~ .tab-menu .lbl1 { border-color: #00F0FF; color: #00F0FF; background: #0A192F; color: #fff; }
         #tab2:checked ~ .tab-menu .lbl2 { border-color: #EF4444; color: #991B1B; background: #FEE2E2; }
-        #tab3:checked ~ .tab-menu .lbl3 { border-color: #3B82F6; color: #1E3A8A; background: #DBEAFE; }
-        #tab4:checked ~ .tab-menu .lbl4 { border-color: #0A192F; color: #0A192F; background: #cbd5e1; }
-        #tab5:checked ~ .tab-menu .lbl5 { border-color: #097969; color: #097969; background: #dcfce7; }
-        #tab6:checked ~ .tab-menu .lbl6 { border-color: #D4AF37; color: #854d0e; background: #fef9c3; }
+        #tab3:checked ~ .tab-menu .lbl3 { border-color: #0A192F; color: #0A192F; background: #cbd5e1; }
+        #tab4:checked ~ .tab-menu .lbl4 { border-color: #097969; color: #097969; background: #dcfce7; }
+        #tab5:checked ~ .tab-menu .lbl5 { border-color: #D4AF37; color: #854d0e; background: #fef9c3; }
         
-        #tab1:checked ~ .panel1, #tab2:checked ~ .panel2, #tab3:checked ~ .panel3, #tab4:checked ~ .panel4, #tab5:checked ~ .panel5, #tab6:checked ~ .panel6 { display: block; }
+        #tab1:checked ~ .panel1, #tab2:checked ~ .panel2, #tab3:checked ~ .panel3, #tab4:checked ~ .panel4, #tab5:checked ~ .panel5 { display: block; }
         
         .panel-heading { margin-top: 0; margin-bottom: 10px; color: var(--primary); font-size: 22px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; font-weight: 700; }
         .panel-desc { font-size: 14px; color: #4a5568; margin-bottom: 25px; line-height: 1.6; font-weight: 500; }
@@ -42,7 +41,7 @@
         .service-card h4 { margin: 0 0 8px 0; color: #111; font-size: 16px; font-weight: 700; }
         .service-card p { margin: 0 0 15px 0; font-size: 13px; line-height: 1.5; color: #4b5563; }
         
-        .preview-frame { background: #e2e8f0; height: 130px; border-radius: 4px; margin-bottom: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #475569; font-size: 12px; font-weight: bold; border: 1px dashed #94a3b8; }
+        .preview-frame { background: #e2e8f0; height: 110px; border-radius: 4px; margin-bottom: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #475569; font-size: 12px; font-weight: bold; border: 1px dashed #94a3b8; }
         .sub-btn { display: block; background: var(--primary); color: white; padding: 11px; text-decoration: none; border-radius: 4px; font-size: 13px; font-weight: bold; text-align: center; border: none; width: 100%; box-sizing: border-box; cursor: pointer; }
         .sub-btn:hover { opacity: 0.9; }
         
@@ -64,7 +63,7 @@
     <div class="container">
         <div class="intro-box">
             <h2>Multi-Scope Operations Portal & General Agency</h2>
-            <p>We are East Africa’s premier independent Operations & Sourcing Agency. Built for an agile economy, we leverage cross-functional digital expertise, on-demand logistics networks, and deep supply chain linkages to deliver rapid solutions for modern enterprises and independent traders alike. Operating on a highly optimized, asset-light structure, we deploy instant support across six elite service desks. Tap any division panel below to activate our specialized capabilities.</p>
+            <p>We are East Africa’s premier independent Operations & Sourcing Agency. Built for an agile economy, we leverage cross-functional digital expertise, on-demand logistics networks, and deep supply chain linkages to deliver rapid solutions for modern enterprises and independent traders alike. Operating on a highly optimized, asset-light structure, we deploy instant support across five elite service desks. Tap any division panel below to activate our specialized capabilities.</p>
         </div>
 
         <div class="section-title">SELECT AN OPERATIONAL DIVISION TO DEPLOY SOLUTIONS</div>
@@ -75,49 +74,45 @@
             <input type="radio" id="tab3" name="scopetabs" class="tab-switch">
             <input type="radio" id="tab4" name="scopetabs" class="tab-switch">
             <input type="radio" id="tab5" name="scopetabs" class="tab-switch">
-            <input type="radio" id="tab6" name="scopetabs" class="tab-switch">
 
             <div class="tab-menu">
                 <label for="tab1" class="tab-label lbl1">💻 Digital & Brands</label>
-                <label for="tab2" class="tab-label lbl2">📚 High School Desk</label>
-                <label for="tab3" class="tab-label lbl3">🎓 Professional Testing</label>
-                <label for="tab4" class="tab-label lbl4">🚖 Transport Hub</label>
-                <label for="tab5" class="tab-label lbl5">🤝 Trader Linkages</label>
-                <label for="tab6" class="tab-label lbl6">🛠️ Fixer Desk</label>
+                <label for="tab2" class="tab-label lbl2">📚 Academic Revisions</label>
+                <label for="tab3" class="tab-label lbl3">🚖 Transport Hub</label>
+                <label for="tab4" class="tab-label lbl4">🤝 Trader Linkages</label>
+                <label for="tab5" class="tab-label lbl5">🛠️ Fixer Desk</label>
             </div>
 
             <!-- PILLAR 1 -->
             <div class="tab-panel panel1" style="border-top-color: #00F0FF;">
                 <h3 class="panel-heading">💻 Digital Systems & Brand Architecture Desk</h3>
-                <p class="panel-desc">Eliminating system bureaucracy and weak branding. We execute secure remote virtual support, handle critical portal registry filings, and design premium graphic identity solutions.</p>
+                <p class="panel-desc">Eliminating portal bureaucracy and weak branding. We execute secure remote virtual support, handle critical eCitizen/NTSA filings, and manage foreign freelance project account distribution pipelines.</p>
                 <div class="services-grid">
                     <div class="service-card" style="border-left-color: #00F0FF;">
                         <h4>Portal Filings & Cyber Operations</h4>
-                        <p>Processing swift eCitizen portal submittals, database registry filings, NTSA licensing arrays, and virtual assistant administrative workflows.</p>
+                        <p>Processing swift eCitizen submittals, KRA tax alignments, business name updates, and data assistant workflows.</p>
                         <button onclick="contactHustle('Cyber and Portal Filings')" class="sub-btn" style="background: #0A192F;">Deploy Portal Support</button>
                     </div>
-                    <div class="service-card" style="border-left-color: #38BDF8;">
-                        <h4>Corporate Identity & Brand Design</h4>
-                        <p>Engineering premium vector typography logos, visual design guideline booklets, layout graphics cards, and unique monogram corporate seals.</p>
-                        <button onclick="contactHustle('Logo and Brand Design')" class="sub-btn" style="background: #0369A1;">Launch Design Suite</button>
+                    <div class="service-card" style="border-left-color: #A855F7;">
+                        <h4>Global Account Placement & Identity</h4>
+                        <p>Managing remote virtual assistant spreadsheets, layout design tasks, and foreign freelance task distribution matrices.</p>
+                        <button onclick="contactHustle('Global Account Admin Support')" class="sub-btn" style="background: #A855F7;">Inquire Virtual Admin</button>
                     </div>
                 </div>
             </div>
 
-            <!-- PILLAR 2 -->
+            <!-- PILLAR 2 (MAXIMIZED FOR TRENDS) -->
             <div class="tab-panel panel2" style="border-top-color: #EF4444;">
-                <h3 class="panel-heading">📚 High School Revision & Exam Logistics Desk</h3>
-                <p class="panel-desc">CBC and 8-4-4 secondary exam systems. Review page 1 of our comprehensive termly mock paper bundles or topical guide booklets below, and unlock full packages instantly.</p>
+                <h3 class="panel-heading">📚 Academic Logistics & Professional Testing Desk</h3>
+                <p class="panel-desc">Solving curriculum anxieties for schools and professionals. Review page 1 of our AI-optimized CBC home study templates, secondary terminal mocks, or historical KASNEB archives to unlock full PDFs via M-Pesa.</p>
                 <div class="services-grid">
                     <div class="service-card" style="border-left-color: #EF4444;">
-                        <h4>Secondary Form 1 - 4 Mock Papers</h4>
-                        <div class="preview-frame">📄 KCSE & Regional Mocks [Page 1 Preview]</div>
-                        <p>Complete termly evaluation sets compiled directly with verified national school marking schemes and answers matrices.</p>
-                        <button onclick="contactHustle('High School Mock Papers')" class="sub-btn" style="background: #B91C1C;">Unlock via M-Pesa</button>
+                        <h4>Secondary & CBC Revision Bundles</h4>
+                        <div class="preview-frame">📄 CBC Homework Guides & Mocks [Page 1 Teaser]</div>
+                        <p>Complete weekly CBC home project templates and secondary Form 1-4 mock papers packed with examiner marking schemes.</p>
+                        <button onclick="contactHustle('Secondary and CBC Revision Packs')" class="sub-btn" style="background: #B91C1C;">Unlock via M-Pesa</button>
                     </div>
-                </div>
-            </div>
-
-            <!-- PILLAR 3 -->
-            <div class="tab-panel panel3" style="border-top-color: #3B82F6;">
-                <h3 class="panel-heading">🎓 Professional Exam Boards Testing Desk</h3>
+                    <div class="service-card" style="border-left-color: #3B82F6;">
+                        <h4>KASNEB CPA / ATD Past Papers Archive</h4>
+                        <div class="preview-frame">🧾 KASNEB Core Sittings [Page 1 Teaser]</div>
+                        <p>Systematic 5 to 10-year professional board sitting booklets, thoroughly structured by section with full examiner answers guides.</p>
