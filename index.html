@@ -15,21 +15,34 @@
         .intro-box { background: #fff; border-radius: 8px; padding: 25px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.02); margin-bottom: 30px; border-top: 4px solid var(--accent); }
         .intro-box p { font-size: 15px; line-height: 1.6; color: #444; margin: 0; }
         .section-title { text-align: center; margin: 35px 0 20px 0; font-size: 20px; color: var(--primary); letter-spacing: 1px; font-weight: bold; }
+        
+        /* Pure CSS Accordion Using Hidden Checkboxes */
         .accordion-item { background: #fff; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); overflow: hidden; border-left: 5px solid var(--primary); }
         .accordion-item.virtual { border-left-color: #A855F7; }
         .accordion-item.cyber { border-left-color: #00F0FF; }
         .accordion-item.transport { border-left-color: #0A192F; }
         .accordion-item.trade { border-left-color: #097969; }
         .accordion-item.solutions { border-left-color: #D4AF37; }
+        
+        .toggle-input { display: none; }
+        
         .accordion-header { padding: 22px; font-size: 18px; font-weight: bold; color: #111; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #fff; user-select: none; }
         .accordion-header:hover { background: #fafbfc; }
-        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0, 1, 0, 1); background: #fff; padding: 0 22px; }
-        .sub-services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; padding-bottom: 22px; padding-top: 5px; }
+        
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #fff; padding: 0 22px; }
+        
+        /* When checkbox is checked, open the content panel */
+        .toggle-input:checked ~ .accordion-content { max-height: 2000px; }
+        
+        /* Change arrow direction on click */
+        .toggle-input:checked ~ .accordion-header .icon::before { content: "▲"; }
+        .icon::before { content: "▼"; }
+
+        .sub-services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; padding-bottom: 22px; padding-top: 15px; }
         .sub-card { background: #f8fafc; border-radius: 6px; padding: 15px; border-left: 3px solid #cbd5e1; display: flex; flex-direction: column; justify-content: space-between; }
         .sub-card h4 { margin: 0 0 6px 0; color: var(--primary); font-size: 15px; }
         .sub-card p { margin: 0 0 12px 0; font-size: 13px; line-height: 1.4; color: #555; }
-        .sub-btn { display: block; background: var(--primary); color: white; padding: 9px; text-decoration: none; border-radius: 4px; font-size: 12px; font-weight: bold; text-align: center; cursor: pointer; border: none; width: 100%; box-sizing: border-box; }
-        .icon { font-size: 16px; transition: transform 0.2s; }
+        .sub-btn { display: block; background: var(--primary); color: white; padding: 10px; text-decoration: none; border-radius: 4px; font-size: 12px; font-weight: bold; text-align: center; width: 100%; box-sizing: border-box; }
         .footer { text-align: center; padding: 30px; background: var(--primary); color: white; margin-top: 50px; font-size: 12px; }
     </style>
 </head>
@@ -51,18 +64,19 @@
 
         <!-- SECTOR 1 -->
         <div class="accordion-item virtual">
-            <div class="accordion-header" onclick="toggleAccordion(this)"><span>🌐 Remote Virtual Assistant & Cyber Solutions</span><span class="icon">▼</span></div>
+            <input type="checkbox" id="sec1" class="toggle-input">
+            <label for="sec1" class="accordion-header"><span>🌐 Remote Virtual Assistant & Cyber Solutions</span><span class="icon"></span></label>
             <div class="accordion-content">
                 <div class="sub-services-grid">
                     <div class="sub-card">
                         <h4>Remote Administrative Support</h4>
                         <p>Managing data entry templates, cleaning customer Excel sheets, sorting digital calendars, and organizing documents remotely.</p>
-                        <button onclick="contactHustle('Remote Admin Support')" class="sub-btn" style="background: #A855F7;">Inquire via WhatsApp</button>
+                        <a href="https://wa.me." target="_blank" class="sub-btn" style="background: #A855F7;">Inquire via WhatsApp</a>
                     </div>
                     <div class="sub-card">
                         <h4>Online Sourcing & Market Research</h4>
                         <p>Conducting detailed web investigations to trace product suppliers, compare bulk wholesale rates, and deliver analytical option sheets.</p>
-                        <button onclick="contactHustle('Online Market Research')" class="sub-btn" style="background: #A855F7;">Inquire via WhatsApp</button>
+                        <a href="https://wa.me." target="_blank" class="sub-btn" style="background: #A855F7;">Inquire via WhatsApp</a>
                     </div>
                 </div>
             </div>
@@ -70,18 +84,19 @@
 
         <!-- SECTOR 2 -->
         <div class="accordion-item cyber">
-            <div class="accordion-header" onclick="toggleAccordion(this)"><span>💻 Physical Cyber Work, Branding & Printing</span><span class="icon">▼</span></div>
+            <input type="checkbox" id="sec2" class="toggle-input">
+            <label for="sec2" class="accordion-header"><span>💻 Physical Cyber Work, Branding & Printing</span><span class="icon"></span></label>
             <div class="accordion-content">
                 <div class="sub-services-grid">
                     <div class="sub-card">
                         <h4>eCitizen Portal & Registry Filings</h4>
                         <p>Handling official online portal submissions, business layout searches, driver licensing tasks, and public registry processing assistance.</p>
-                        <button onclick="contactHustle('eCitizen Portal Filings')" class="sub-btn" style="background: #00F0FF; color: #0A192F;">Inquire via WhatsApp</button>
+                        <a href="https://wa.me." target="_blank" class="sub-btn" style="background: #00F0FF; color: #0A192F;">Inquire via WhatsApp</a>
                     </div>
                     <div class="sub-card">
                         <h4>Corporate Identity & Logo Branding</h4>
                         <p>Custom vector logo creation, visual asset styling, branding design guides, and unique monogram corporate emblems.</p>
-                        <button onclick="contactHustle('Logo Branding')" class="sub-btn" style="background: #00F0FF; color: #0A192F;">Inquire via WhatsApp</button>
+                        <a href="https://wa.me." target="_blank" class="sub-btn" style="background: #00F0FF; color: #0A192F;">Inquire via WhatsApp</a>
                     </div>
                 </div>
             </div>
@@ -89,18 +104,19 @@
 
         <!-- SECTOR 3 -->
         <div class="accordion-item transport">
-            <div class="accordion-header" onclick="toggleAccordion(this)"><span>🚖 Transport Brokerage & Delivery Booking Hub</span><span class="icon">▼</span></div>
+            <input type="checkbox" id="sec3" class="toggle-input">
+            <label for="sec3" class="accordion-header"><span>🚖 Transport Brokerage & Delivery Booking Hub</span><span class="icon"></span></label>
             <div class="accordion-content">
                 <div class="sub-services-grid">
                     <div class="sub-card">
                         <h4>Uber & Taxicab Dispatch Booking</h4>
                         <p>Coordinating local town point-to-point transfers and matching staff or retail items with on-demand vehicle networks seamlessly.</p>
-                        <button onclick="contactHustle('Taxi Booking Hub')" class="sub-btn">Book Ride Now</button>
+                        <a href="https://wa.me." target="_blank" class="sub-btn">Book Ride Now</a>
                     </div>
                     <div class="sub-card">
                         <h4>Boda Courier Coordination</h4>
                         <p>Organizing rapid motorcycle dispatch links for instant documents exchange, parcel distribution, and urgent pick-and-drops.</p>
-                        <button onclick="contactHustle('Boda Courier Request')" class="sub-btn">Book Boda Courier</button>
+                        <a href="https://wa.me." target="_blank" class="sub-btn">Book Boda Courier</a>
                     </div>
                 </div>
             </div>
@@ -108,32 +124,15 @@
 
         <!-- SECTOR 4 -->
         <div class="accordion-item trade">
-            <div class="accordion-header" onclick="toggleAccordion(this)"><span>🤝 Commodity Sourcing & Merchant Linkages</span><span class="icon">▼</span></div>
+            <input type="checkbox" id="sec4" class="toggle-input">
+            <label for="sec4" class="accordion-header"><span>🤝 Commodity Sourcing & Merchant Linkages</span><span class="icon"></span></label>
             <div class="accordion-content">
                 <div class="sub-services-grid">
                     <div class="sub-card">
                         <h4>Agribusiness Supply Networks</h4>
                         <p>Aggregating seasonal crop volumes directly from agricultural zones and securing bulk supplies for urban outlets and hotels.</p>
-                        <button onclick="contactHustle('Agribusiness Supply')" class="sub-btn" style="background: #097969;">Source Produce</button>
+                        <a href="https://wa.me." target="_blank" class="sub-btn" style="background: #097969;">Source Produce</a>
                     </div>
                     <div class="sub-card">
                         <h4>Wholesale Procurement Brokerage</h4>
                         <p>Helping retail store owners trace reliable wholesale depots for fast-moving retail stock, electronics, and commercial items.</p>
-                        <button onclick="contactHustle('Wholesale Sourcing')" class="sub-btn" style="background: #097969;">Consult Sourcing</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTOR 5 -->
-        <div class="accordion-item solutions">
-            <div class="accordion-header" onclick="toggleAccordion(this)"><span>🛠️ Custom Project Management & General Solutions</span><span class="icon">▼</span></div>
-            <div class="accordion-content">
-                <div class="sub-services-grid">
-                    <div class="sub-card">
-                        <h4>Direct Field Agency Representation</h4>
-                        <p>Acting as your reliable eyes and ears on the ground to inspect assets, verify orders, check hardware, and anchor local deals.</p>
-                        <button onclick="contactHustle('Field Agency Work')" class="sub-btn" style="background: #D4AF37; color: #111;">Hire Field Agent</button>
-                    </div>
-                    <div class="sub-card">
-                        <h4>Indirect Independent Fixer Desk</h4>
