@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vecctapivot Enterprises | Multi-Scope Hub</title>
+    <style>
+        :root {
+            --primary: #0A192F;
+            --accent: #00F0FF;
+            --text: #ffffff;
+            --bg-light: #f4f6f9;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: #333;
+        }
+        header {
+            background-color: var(--primary);
+            color: var(--text);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--accent);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 2px;
+        }
+        header p {
+            margin: 5px 0 0 0;
+            font-style: italic;
+            color: var(--accent);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .welcome {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card.logistics { border-top-color: #0A192F; }
+        .card.agri { border-top-color: #097969; }
+        .card.trade { border-top-color: #1E1E1E; }
+        
+        .card h2 {
+            margin-top: 0;
+            color: #111;
+        }
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #0A192F;
+            color: white;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>VECCTAPIVOT ENTERPRISES</h1>
+        <p>"Directed Motion. Endless Adaptation."</p>
+    </header>
+
+    <div class="container">
+        <div class="welcome">
+            <h2>Welcome to Your Multi-Scope Gateway</h2>
+            <p>Providing professional, asset-light coordination and supply network solutions across East Africa.</p>
+        </div>
+
+        <div class="grid">
+            <!-- Logistics Portal -->
+            <div class="card logistics">
+                <h2>🚛 Logistics & Agencies</h2>
+                <p>Strategic transport brokering, cargo coordination, and transit clearance solutions without heavy asset overheads.</p>
+                <a href="https://wa.me" class="btn" style="background-color: #0A192F;">Request Quote</a>
+            </div>
+
+            <!-- Agribusiness Portal -->
+            <div class="card agri">
+                <h2>🌾 Agribusiness Distribution</h2>
+                <p>Bulk commodity sourcing, agricultural market linkages, and direct farm-to-retailer supply chain logistics.</p>
+                <a href="https://wa.me" class="btn" style="background-color: #097969;">Order Bulk</a>
+            </div>
+
+            <!-- General Trade Portal -->
+            <div class="card trade">
+                <h2>🏛️ General Trade & Supplies</h2>
+                <p>Government tender fulfillment, corporate office supply solutions, and comprehensive local purchase order (LPO) execution.</p>
+                <a href="https://wa.me" class="btn" style="background-color: #1E1E1E;">Submit LPO</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2026 Vecctapivot Enterprises. All Rights Reserved. | Asset-Light Umbrella Solutions</p>
+    </div>
+
+</body>
+</html>
