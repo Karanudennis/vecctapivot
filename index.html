@@ -3,47 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vecctapivot Enterprises | Multi-Service Hub</title>
+    <title>Vecctapivot Enterprises | Operations Hub</title>
     <style>
         :root { --primary: #0A192F; --accent: #00F0FF; --gold: #D4AF37; --bg: #f4f6f9; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background: var(--bg); color: #333; }
-        header { background: var(--primary); color: #fff; padding: 40px 20px; text-align: center; border-bottom: 4px solid var(--accent); }
+        header { background: var(--primary); color: #fff; padding: 45px 20px; text-align: center; border-bottom: 4px solid var(--accent); }
         header img { height: 110px; width: auto; border-radius: 50%; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        header h1 { margin: 0; font-size: 32px; letter-spacing: 2px; }
+        header h1 { margin: 0; font-size: 34px; letter-spacing: 2px; text-transform: uppercase; }
         header p { margin: 8px 0 0 0; font-style: italic; color: var(--gold); font-size: 16px; font-weight: bold; }
-        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
-        .intro-box { background: #fff; border-radius: 8px; padding: 25px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.02); margin-bottom: 30px; border-top: 4px solid var(--accent); }
-        .intro-box p { font-size: 15px; line-height: 1.6; color: #444; margin: 0; }
-        .section-title { text-align: center; margin: 35px 0 20px 0; font-size: 20px; color: var(--primary); letter-spacing: 1px; font-weight: bold; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
         
-        /* Pure CSS Accordion Using Hidden Checkboxes */
-        .accordion-item { background: #fff; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); overflow: hidden; border-left: 5px solid var(--primary); }
-        .accordion-item.virtual { border-left-color: #A855F7; }
-        .accordion-item.cyber { border-left-color: #00F0FF; }
-        .accordion-item.transport { border-left-color: #0A192F; }
-        .accordion-item.trade { border-left-color: #097969; }
-        .accordion-item.solutions { border-left-color: #D4AF37; }
+        .intro-box { background: #fff; border-radius: 8px; padding: 40px 30px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 35px; border-top: 5px solid var(--accent); }
+        .intro-box h2 { color: var(--primary); font-size: 24px; margin-top: 0; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; }
+        .intro-box p { font-size: 16px; line-height: 1.8; color: #2d3748; margin: 0 auto; max-width: 850px; font-weight: 500; }
+        .section-title { text-align: center; margin: 40px 0 25px 0; font-size: 18px; color: var(--primary); letter-spacing: 2px; font-weight: 800; text-transform: uppercase; }
         
-        .toggle-input { display: none; }
+        /* 6-Tab Custom Layout System */
+        .tabs-wrapper { display: flex; flex-direction: column; }
+        .tab-switch { display: none; }
+        .tab-menu { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 30px; }
+        .tab-label { padding: 14px 18px; background: #fff; border-radius: 6px; font-weight: bold; font-size: 13px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.02); border-bottom: 3px solid transparent; transition: all 0.2s ease; display: flex; align-items: center; gap: 6px; }
+        .tab-label:hover { background: #fafbfc; transform: translateY(-1px); }
+        .tab-panel { display: none; background: #fff; border-radius: 8px; padding: 35px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-top: 5px solid var(--primary); }
         
-        .accordion-header { padding: 22px; font-size: 18px; font-weight: bold; color: #111; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #fff; user-select: none; }
-        .accordion-header:hover { background: #fafbfc; }
+        #tab1:checked ~ .tab-menu .lbl1 { border-color: #00F0FF; color: #0A192F; background: #e0f2fe; }
+        #tab2:checked ~ .tab-menu .lbl2 { border-color: #EF4444; color: #991B1B; background: #FEE2E2; }
+        #tab3:checked ~ .tab-menu .lbl3 { border-color: #3B82F6; color: #1E3A8A; background: #DBEAFE; }
+        #tab4:checked ~ .tab-menu .lbl4 { border-color: #0A192F; color: #0A192F; background: #cbd5e1; }
+        #tab5:checked ~ .tab-menu .lbl5 { border-color: #097969; color: #097969; background: #dcfce7; }
+        #tab6:checked ~ .tab-menu .lbl6 { border-color: #D4AF37; color: #854d0e; background: #fef9c3; }
         
-        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #fff; padding: 0 22px; }
+        #tab1:checked ~ .panel1, #tab2:checked ~ .panel2, #tab3:checked ~ .panel3, #tab4:checked ~ .panel4, #tab5:checked ~ .panel5, #tab6:checked ~ .panel6 { display: block; }
         
-        /* When checkbox is checked, open the content panel */
-        .toggle-input:checked ~ .accordion-content { max-height: 2000px; }
+        .panel-heading { margin-top: 0; margin-bottom: 10px; color: var(--primary); font-size: 22px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; font-weight: 700; }
+        .panel-desc { font-size: 14px; color: #4a5568; margin-bottom: 25px; line-height: 1.6; font-weight: 500; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .service-card { background: #f8fafc; border-radius: 6px; padding: 22px; border-left: 4px solid #cbd5e1; display: flex; flex-direction: column; justify-content: space-between; }
+        .service-card h4 { margin: 0 0 8px 0; color: #111; font-size: 16px; font-weight: 700; }
+        .service-card p { margin: 0 0 15px 0; font-size: 13px; line-height: 1.5; color: #4b5563; }
         
-        /* Change arrow direction on click */
-        .toggle-input:checked ~ .accordion-header .icon::before { content: "▲"; }
-        .icon::before { content: "▼"; }
-
-        .sub-services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; padding-bottom: 22px; padding-top: 15px; }
-        .sub-card { background: #f8fafc; border-radius: 6px; padding: 15px; border-left: 3px solid #cbd5e1; display: flex; flex-direction: column; justify-content: space-between; }
-        .sub-card h4 { margin: 0 0 6px 0; color: var(--primary); font-size: 15px; }
-        .sub-card p { margin: 0 0 12px 0; font-size: 13px; line-height: 1.4; color: #555; }
-        .sub-btn { display: block; background: var(--primary); color: white; padding: 10px; text-decoration: none; border-radius: 4px; font-size: 12px; font-weight: bold; text-align: center; width: 100%; box-sizing: border-box; }
-        .footer { text-align: center; padding: 30px; background: var(--primary); color: white; margin-top: 50px; font-size: 12px; }
+        .preview-frame { background: #e2e8f0; height: 130px; border-radius: 4px; margin-bottom: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #475569; font-size: 12px; font-weight: bold; border: 1px dashed #94a3b8; }
+        .sub-btn { display: block; background: var(--primary); color: white; padding: 11px; text-decoration: none; border-radius: 4px; font-size: 13px; font-weight: bold; text-align: center; border: none; width: 100%; box-sizing: border-box; cursor: pointer; }
+        .sub-btn:hover { opacity: 0.9; }
+        
+        .footer { text-align: center; padding: 35px; background: var(--primary); color: white; margin-top: 50px; font-size: 13px; border-top: 4px solid var(--accent); }
+        .footer p { margin: 5px 0; }
+        .footer a { color: var(--accent); text-decoration: none; font-weight: bold; }
+        
+        @media(max-width: 600px) { .tab-menu { flex-direction: column; width: 100%; } .tab-label { width: calc(100% - 32px); text-align: center; justify-content: center; } }
     </style>
 </head>
 <body>
@@ -56,83 +63,61 @@
 
     <div class="container">
         <div class="intro-box">
-            <h2>Multi-Scope Commercial Agency & General Solutions</h2>
-            <p>An agile, independent service consortium engineered to execute specialized tasks, coordinate commercial operations, and deploy remote virtual solutions or physical asset-light networks across East Africa.</p>
+            <h2>Multi-Scope Operations Portal & General Agency</h2>
+            <p>We are East Africa’s premier independent Operations & Sourcing Agency. Built for an agile economy, we leverage cross-functional digital expertise, on-demand logistics networks, and deep supply chain linkages to deliver rapid solutions for modern enterprises and independent traders alike. Operating on a highly optimized, asset-light structure, we deploy instant support across six elite service desks. Tap any division panel below to activate our specialized capabilities.</p>
         </div>
 
-        <div class="section-title">TAP A SECTOR TO VIEW SERVICES</div>
+        <div class="section-title">SELECT AN OPERATIONAL DIVISION TO DEPLOY SOLUTIONS</div>
 
-        <!-- SECTOR 1 -->
-        <div class="accordion-item virtual">
-            <input type="checkbox" id="sec1" class="toggle-input">
-            <label for="sec1" class="accordion-header"><span>🌐 Remote Virtual Assistant & Cyber Solutions</span><span class="icon"></span></label>
-            <div class="accordion-content">
-                <div class="sub-services-grid">
-                    <div class="sub-card">
-                        <h4>Remote Administrative Support</h4>
-                        <p>Managing data entry templates, cleaning customer Excel sheets, sorting digital calendars, and organizing documents remotely.</p>
-                        <a href="https://wa.me." target="_blank" class="sub-btn" style="background: #A855F7;">Inquire via WhatsApp</a>
+        <div class="tabs-wrapper">
+            <input type="radio" id="tab1" name="scopetabs" class="tab-switch" checked>
+            <input type="radio" id="tab2" name="scopetabs" class="tab-switch">
+            <input type="radio" id="tab3" name="scopetabs" class="tab-switch">
+            <input type="radio" id="tab4" name="scopetabs" class="tab-switch">
+            <input type="radio" id="tab5" name="scopetabs" class="tab-switch">
+            <input type="radio" id="tab6" name="scopetabs" class="tab-switch">
+
+            <div class="tab-menu">
+                <label for="tab1" class="tab-label lbl1">💻 Digital & Brands</label>
+                <label for="tab2" class="tab-label lbl2">📚 High School Desk</label>
+                <label for="tab3" class="tab-label lbl3">🎓 Professional Testing</label>
+                <label for="tab4" class="tab-label lbl4">🚖 Transport Hub</label>
+                <label for="tab5" class="tab-label lbl5">🤝 Trader Linkages</label>
+                <label for="tab6" class="tab-label lbl6">🛠️ Fixer Desk</label>
+            </div>
+
+            <!-- PILLAR 1 -->
+            <div class="tab-panel panel1" style="border-top-color: #00F0FF;">
+                <h3 class="panel-heading">💻 Digital Systems & Brand Architecture Desk</h3>
+                <p class="panel-desc">Eliminating system bureaucracy and weak branding. We execute secure remote virtual support, handle critical portal registry filings, and design premium graphic identity solutions.</p>
+                <div class="services-grid">
+                    <div class="service-card" style="border-left-color: #00F0FF;">
+                        <h4>Portal Filings & Cyber Operations</h4>
+                        <p>Processing swift eCitizen portal submittals, database registry filings, NTSA licensing arrays, and virtual assistant administrative workflows.</p>
+                        <button onclick="contactHustle('Cyber and Portal Filings')" class="sub-btn" style="background: #0A192F;">Deploy Portal Support</button>
                     </div>
-                    <div class="sub-card">
-                        <h4>Online Sourcing & Market Research</h4>
-                        <p>Conducting detailed web investigations to trace product suppliers, compare bulk wholesale rates, and deliver analytical option sheets.</p>
-                        <a href="https://wa.me." target="_blank" class="sub-btn" style="background: #A855F7;">Inquire via WhatsApp</a>
+                    <div class="service-card" style="border-left-color: #38BDF8;">
+                        <h4>Corporate Identity & Brand Design</h4>
+                        <p>Engineering premium vector typography logos, visual design guideline booklets, layout graphics cards, and unique monogram corporate seals.</p>
+                        <button onclick="contactHustle('Logo and Brand Design')" class="sub-btn" style="background: #0369A1;">Launch Design Suite</button>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- SECTOR 2 -->
-        <div class="accordion-item cyber">
-            <input type="checkbox" id="sec2" class="toggle-input">
-            <label for="sec2" class="accordion-header"><span>💻 Physical Cyber Work, Branding & Printing</span><span class="icon"></span></label>
-            <div class="accordion-content">
-                <div class="sub-services-grid">
-                    <div class="sub-card">
-                        <h4>eCitizen Portal & Registry Filings</h4>
-                        <p>Handling official online portal submissions, business layout searches, driver licensing tasks, and public registry processing assistance.</p>
-                        <a href="https://wa.me." target="_blank" class="sub-btn" style="background: #00F0FF; color: #0A192F;">Inquire via WhatsApp</a>
-                    </div>
-                    <div class="sub-card">
-                        <h4>Corporate Identity & Logo Branding</h4>
-                        <p>Custom vector logo creation, visual asset styling, branding design guides, and unique monogram corporate emblems.</p>
-                        <a href="https://wa.me." target="_blank" class="sub-btn" style="background: #00F0FF; color: #0A192F;">Inquire via WhatsApp</a>
+            <!-- PILLAR 2 -->
+            <div class="tab-panel panel2" style="border-top-color: #EF4444;">
+                <h3 class="panel-heading">📚 High School Revision & Exam Logistics Desk</h3>
+                <p class="panel-desc">CBC and 8-4-4 secondary exam systems. Review page 1 of our comprehensive termly mock paper bundles or topical guide booklets below, and unlock full packages instantly.</p>
+                <div class="services-grid">
+                    <div class="service-card" style="border-left-color: #EF4444;">
+                        <h4>Secondary Form 1 - 4 Mock Papers</h4>
+                        <div class="preview-frame">📄 KCSE & Regional Mocks [Page 1 Preview]</div>
+                        <p>Complete termly evaluation sets compiled directly with verified national school marking schemes and answers matrices.</p>
+                        <button onclick="contactHustle('High School Mock Papers')" class="sub-btn" style="background: #B91C1C;">Unlock via M-Pesa</button>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- SECTOR 3 -->
-        <div class="accordion-item transport">
-            <input type="checkbox" id="sec3" class="toggle-input">
-            <label for="sec3" class="accordion-header"><span>🚖 Transport Brokerage & Delivery Booking Hub</span><span class="icon"></span></label>
-            <div class="accordion-content">
-                <div class="sub-services-grid">
-                    <div class="sub-card">
-                        <h4>Uber & Taxicab Dispatch Booking</h4>
-                        <p>Coordinating local town point-to-point transfers and matching staff or retail items with on-demand vehicle networks seamlessly.</p>
-                        <a href="https://wa.me." target="_blank" class="sub-btn">Book Ride Now</a>
-                    </div>
-                    <div class="sub-card">
-                        <h4>Boda Courier Coordination</h4>
-                        <p>Organizing rapid motorcycle dispatch links for instant documents exchange, parcel distribution, and urgent pick-and-drops.</p>
-                        <a href="https://wa.me." target="_blank" class="sub-btn">Book Boda Courier</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTOR 4 -->
-        <div class="accordion-item trade">
-            <input type="checkbox" id="sec4" class="toggle-input">
-            <label for="sec4" class="accordion-header"><span>🤝 Commodity Sourcing & Merchant Linkages</span><span class="icon"></span></label>
-            <div class="accordion-content">
-                <div class="sub-services-grid">
-                    <div class="sub-card">
-                        <h4>Agribusiness Supply Networks</h4>
-                        <p>Aggregating seasonal crop volumes directly from agricultural zones and securing bulk supplies for urban outlets and hotels.</p>
-                        <a href="https://wa.me." target="_blank" class="sub-btn" style="background: #097969;">Source Produce</a>
-                    </div>
-                    <div class="sub-card">
-                        <h4>Wholesale Procurement Brokerage</h4>
-                        <p>Helping retail store owners trace reliable wholesale depots for fast-moving retail stock, electronics, and commercial items.</p>
+            <!-- PILLAR 3 -->
+            <div class="tab-panel panel3" style="border-top-color: #3B82F6;">
+                <h3 class="panel-heading">🎓 Professional Exam Boards Testing Desk</h3>
