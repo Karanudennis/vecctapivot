@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vecctapivot Enterprises | Multi-Scope Hub</title>
+    <title>Vecctapivot Enterprises | Multi-Service Network</title>
     <style>
         :root {
             --primary: #0A192F;
@@ -21,69 +21,131 @@
         header {
             background-color: var(--primary);
             color: var(--text);
-            padding: 20px;
+            padding: 45px 20px;
             text-align: center;
             border-bottom: 4px solid var(--accent);
         }
         header h1 {
             margin: 0;
-            font-size: 28px;
-            letter-spacing: 2px;
+            font-size: 34px;
+            letter-spacing: 3px;
         }
         header p {
-            margin: 5px 0 0 0;
+            margin: 8px 0 0 0;
             font-style: italic;
             color: var(--accent);
+            font-size: 16px;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 40px auto;
             padding: 0 20px;
         }
-        .welcome {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-        .card {
+        .intro-box {
             background: #ffffff;
             border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 5px solid var(--primary);
-            transition: transform 0.3s ease;
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            margin-bottom: 40px;
+            border-top: 4px solid var(--accent);
         }
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        .card.logistics { border-top-color: #0A192F; }
-        .card.agri { border-top-color: #097969; }
-        .card.trade { border-top-color: #1E1E1E; }
-        
-        .card h2 {
+        .intro-box h2 {
             margin-top: 0;
-            color: #111;
+            color: var(--primary);
+            font-size: 26px;
         }
-        .btn {
+        .section-title {
+            text-align: center;
+            margin: 40px 0 25px 0;
+            font-size: 22px;
+            color: var(--primary);
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+        
+        /* Interactive Dropdown Styles */
+        .accordion-item {
+            background-color: #ffffff;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            overflow: hidden;
+            border-left: 5px solid var(--primary);
+        }
+        .accordion-item.virtual { border-left-color: #A855F7; }
+        .accordion-item.cyber { border-left-color: #00F0FF; }
+        .accordion-item.transport { border-left-color: #0A192F; }
+        .accordion-item.trade { border-left-color: #097969; }
+        .accordion-item.solutions { border-left-color: #D4AF37; }
+
+        .accordion-header {
+            padding: 25px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #111;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            background: #ffffff;
+        }
+        .accordion-header:hover {
+            background: #fafbfc;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: #ffffff;
+            padding: 0 25px;
+        }
+        .sub-services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding-bottom: 25px;
+            padding-top: 10px;
+        }
+        .sub-card {
+            background: #f8fafc;
+            border-radius: 6px;
+            padding: 15px;
+            border-left: 3px solid #cbd5e1;
+        }
+        .sub-card h4 {
+            margin: 0 0 8px 0;
+            color: var(--primary);
+            font-size: 16px;
+        }
+        .sub-card p {
+            margin: 0 0 12px 0;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #555;
+        }
+        .sub-btn {
             display: inline-block;
             background-color: var(--primary);
             color: white;
-            padding: 10px 20px;
+            padding: 6px 12px;
             text-decoration: none;
             border-radius: 4px;
-            margin-top: 15px;
+            font-size: 12px;
             font-weight: bold;
+        }
+        .icon {
+            font-size: 18px;
+            transition: transform 0.3s;
         }
         .footer {
             text-align: center;
-            padding: 30px;
+            padding: 35px;
             background-color: #0A192F;
             color: white;
-            margin-top: 60px;
+            margin-top: 70px;
+            font-size: 13px;
         }
     </style>
 </head>
@@ -91,42 +153,84 @@
 
     <header>
         <h1>VECCTAPIVOT ENTERPRISES</h1>
-        <p>"Directed Motion. Endless Adaptation."</p>
+        <p>"One Pivot. Endless Possibilities."</p>
     </header>
 
     <div class="container">
-        <div class="welcome">
-            <h2>Welcome to Your Multi-Scope Gateway</h2>
-            <p>Providing professional, asset-light coordination and supply network solutions across East Africa.</p>
+        
+        <div class="intro-box">
+            <h2>Multi-Scope Commercial Agency & General Solutions</h2>
+            <p>An agile, independent service consortium engineered to execute specialized tasks, coordinate commercial operations, and deploy remote virtual solutions or physical asset-light networks across multiple industries.</p>
         </div>
 
-        <div class="grid">
-            <!-- Logistics Portal -->
-            <div class="card logistics">
-                <h2>🚛 Logistics & Agencies</h2>
-                <p>Strategic transport brokering, cargo coordination, and transit clearance solutions without heavy asset overheads.</p>
-                <a href="https://wa.me" class="btn" style="background-color: #0A192F;">Request Quote</a>
-            </div>
+        <div class="section-title">TAP A SECTOR TO VIEW SERVICES</div>
 
-            <!-- Agribusiness Portal -->
-            <div class="card agri">
-                <h2>🌾 Agribusiness Distribution</h2>
-                <p>Bulk commodity sourcing, agricultural market linkages, and direct farm-to-retailer supply chain logistics.</p>
-                <a href="https://wa.me" class="btn" style="background-color: #097969;">Order Bulk</a>
+        <!-- NEW SECTOR 1: 100% VIRTUAL ASSISTANT & REMOTE CYBER WORK -->
+        <div class="accordion-item virtual">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>🌐 Remote Virtual Assistant & Cyber Solutions</span>
+                <span class="icon">▼</span>
             </div>
-
-            <!-- General Trade Portal -->
-            <div class="card trade">
-                <h2>🏛️ General Trade & Supplies</h2>
-                <p>Government tender fulfillment, corporate office supply solutions, and comprehensive local purchase order (LPO) execution.</p>
-                <a href="https://wa.me" class="btn" style="background-color: #1E1E1E;">Submit LPO</a>
+            <div class="accordion-content">
+                <div class="sub-services-grid">
+                    <div class="sub-card">
+                        <h4>Remote Administrative Support</h4>
+                        <p>Managing data entry templates, cleaning up customer Excel sheets, managing schedules, and organizing digital documents from anywhere.</p>
+                        <a href="https://wa.me" class="btn sub-btn" style="background-color: #A855F7;">Inquire</a>
+                    </div>
+                    <div class="sub-card">
+                        <h4>Online Sourcing & Market Research</h4>
+                        <p>Conducting detailed web investigations to find product suppliers, compare wholesale rates, and deliver concise analytical option sheets.</p>
+                        <a href="https://wa.me" class="btn sub-btn" style="background-color: #A855F7;">Inquire</a>
+                    </div>
+                    <div class="sub-card">
+                        <h4>Content Typing & Slides Presentation</h4>
+                        <p>Transforming raw physical notes or layouts into clean text files, typing up official PDF documents, and designing modern PowerPoint business decks.</p>
+                        <a href="https://wa.me" class="btn sub-btn" style="background-color: #A855F7;">Inquire</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="footer">
-        <p>&copy; 2026 Vecctapivot Enterprises. All Rights Reserved. | Asset-Light Umbrella Solutions</p>
-    </div>
+        <!-- SECTOR 2: PHYSICAL CYBER WORK, BRANDING & PRINTING -->
+        <div class="accordion-item cyber">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>💻 Physical Cyber Work, Branding & Printing</span>
+                <span class="icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="sub-services-grid">
+                    <div class="sub-card">
+                        <h4>eCitizen Portal & Registry Filings</h4>
+                        <p>Handling official online portal applications, business searches, driver licensing tasks, and public registry processing assistance.</p>
+                        <a href="https://wa.me" class="btn sub-btn" style="background-color: #00F0FF; color: #0A192F;">Inquire</a>
+                    </div>
+                    <div class="sub-card">
+                        <h4>Corporate Identity & Logo Branding</h4>
+                        <p>Custom vector logo creation, visual asset styling, branding design guides, and unique monogram corporate emblems.</p>
+                        <a href="https://wa.me" class="btn sub-btn" style="background-color: #00F0FF; color: #0A192F;">Inquire</a>
+                    </div>
+                    <div class="sub-card">
+                        <h4>Hardcopy Production & Copying</h4>
+                        <p>High-resolution flyer layouts, laser black/color documentation printing, custom business cards, and hardcopy booklet organization.</p>
+                        <a href="https://wa.me" class="btn sub-btn" style="background-color: #00F0FF; color: #0A192F;">Inquire</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-</body>
-</html>
+        <!-- SECTOR 3: LOGISTICS & TRANSPORT HUB -->
+        <div class="accordion-item transport">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>🚖 Transport Brokerage & Delivery Booking Hub</span>
+                <span class="icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="sub-services-grid">
+                    <div class="sub-card">
+                        <h4>Uber & Taxicab Dispatch Booking</h4>
+                        <p>Coordinating local town point-to-point transfers and matching staff or retail items with on-demand vehicle networks.</p>
+                        <a href="https://wa.me" class="btn sub-btn">Book Now</a>
+                    </div>
+                    <div class="sub-card">
+                        <h4>Boda Courier Coordination</h4>
