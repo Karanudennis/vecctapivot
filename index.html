@@ -19,6 +19,7 @@
             box-sizing: border-box; 
             margin: 0; 
             padding: 0; 
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; 
         }
 
         body {
@@ -31,7 +32,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Premium Header Area Layout */
+        /* Institutional Header Layout */
         .portal-header {
             background: linear-gradient(135deg, #060b18 0%, var(--bg-obsidian) 100%);
             text-align: center;
@@ -45,7 +46,7 @@
             margin: 0 auto; 
         }
 
-        /* Brand Identity Header Infrastructure */
+        /* Brand Identity Layout Frame */
         .brand-identity-block {
             display: flex;
             flex-direction: column;
@@ -134,7 +135,7 @@
             line-height: 1.6;
         }
 
-        /* Keyword Directory Search Input Area Layout */
+        /* Keyword Search Area Layout */
         .search-master-section {
             max-width: 850px;
             width: 100%;
@@ -173,7 +174,7 @@
             border-color: var(--gold-accent);
         }
 
-        /* 7 Primary Grid Core Navigational Cards Layout */
+        /* Primary Grid Core Navigational Cards Layout */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -360,6 +361,3 @@
         @media(max-width: 768px) {
             .portal-header { padding: 50px 16px; }
             .portal-header h1 { font-size: 24px; }
-            .grid-container { padding: 24px 16px; gap: 16px; }
-            .footer-grid-row { gap: 30px; }
-            .legal-footer { text-align: left; }
