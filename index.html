@@ -2,7 +2,8 @@
 <html lang="en-KE">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CRITICAL VIEWPORT TAG FOR REAL FULL-SCREEN HEIGHT & WIDTH SIZES ON MOBILE PHONES -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Vecctapivot Enterprises | Operations Portal</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -13,7 +14,7 @@
         <p>⏰ Avoid BRS Late Penalty Fees — File your Corporate Annual Returns on time. Check exam deadlines via Desk 2.</p>
     </div>
 
-    <!-- Core Brand Header -->
+    <!-- Core Brand Header Layer -->
     <header class="portal-header">
         <img src="logo.png" alt="Vecctapivot Logo" class="corporate-logo" onerror="this.style.display='none'">
         <h1>VECCTAPIVOT ENTERPRISES</h1>
@@ -21,10 +22,16 @@
         <div class="trust-badge">
             <span>🛡️ Government Registered Agency | BRS Reference: BN-AYSO8LRE</span>
         </div>
+        
+        <!-- NEW INTERACTIVE BOOKING & SYSTEM NAVIGATION TRACK NODES -->
+        <div class="header-action-container">
+            <a href="#portal-grid" class="cta-btn-main">Launch Operations Portal</a>
+            <a href="ticket.html" class="cta-btn-main ticket-btn">🎫 Open Support Ticket / Book Call</a>
+        </div>
     </header>
 
     <!-- The 6 Pillars Routing Grid -->
-    <main class="grid-container">
+    <main id="portal-grid" class="grid-container">
         
         <a href="digital.html" class="pillar-card-link">
             <section class="pillar-card">
@@ -66,7 +73,6 @@
             </section>
         </a>
 
-        <!-- Fixed Routing Track leading cleanly to agency.html -->
         <a href="agency.html" class="pillar-card-link">
             <section class="pillar-card">
                 <div class="icon">🏢</div>
@@ -77,7 +83,7 @@
 
     </main>
 
-    <!-- Balanced Bottom Footer Area -->
+    <!-- Balanced Bottom Footer Area Baseline Layer -->
     <footer id="portal-footer" class="portal-footer">
         <p>Vecctapivot Enterprises | Central Support Box: vecctapivotenterprises@gmail.com | Hotline: +254 788 099 685</p>
         <p class="legal-footer">Disclaimer: Vecctapivot Enterprises is an independent operations agency registered under the Kenya Registrar of Companies, Reference Module: BN-AYSO8LRE.</p>
