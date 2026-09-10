@@ -21,11 +21,18 @@
             min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased;
         }
         .ticker { background: var(--amber-warning); color: #000000; text-align: center; padding: 12px; font-size: 13px; font-weight: 800; letter-spacing: 0.3px; }
-        .header { text-align: center; padding: 60px 24px; border-bottom: 1px solid var(--border-muted); }
-        .brand { font-size: 26px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
-        .brand span { color: var(--gold-accent); }
-        .tagline { font-size: 14.5px; color: var(--text-muted); font-style: italic; margin-top: 6px; }
-        .search-box { max-width: 650px; width: 100%; margin: 40px auto 10px auto; padding: 0 24px; }
+        .header { text-align: center; padding: 50px 24px; border-bottom: 1px solid var(--border-muted); }
+        
+        /* Premium Corporate Logo Integration Elements */
+        .brand-identity-block { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 10px; }
+        .corporate-logo { max-height: 90px; width: auto; margin-bottom: 14px; filter: drop-shadow(0 2px 8px rgba(212,175,55,0.2)); }
+        .brand-text-fallback { font-size: 26px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+        .brand-text-fallback span { color: var(--gold-accent); }
+        
+        .welcome-banner { font-size: 11px; font-weight: 700; color: var(--gold-accent); letter-spacing: 2.5px; text-transform: uppercase; margin-top: 8px; margin-bottom: 10px; }
+        .portal-header-title { font-size: 34px; font-weight: 800; color: #ffffff; margin-bottom: 10px; letter-spacing: -0.5px; }
+        .tagline { font-size: 14.5px; color: var(--text-muted); font-style: italic; }
+        .search-box { max-width: 650px; width: 100%; margin: 35px auto 10px auto; padding: 0 24px; }
         .search-box input { width: 100%; padding: 16px 24px; background: var(--panel-slate); border: 1px solid var(--border-muted); border-radius: 30px; color: #ffffff; font-size: 14.5px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .search-box input:focus { outline: none; border-color: var(--gold-accent); box-shadow: 0 0 12px rgba(212,175,55,0.15); }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1300px; width: 100%; margin: 30px auto; padding: 0 24px; }
@@ -39,10 +46,16 @@
     </style>
 </head>
 <body>
-    <div class="ticker">🔒 Multidimensional Architecture Grid Operational — Active Tracking Status reference: <strong>VP-TICKET-000000</strong></div>
+    <div class="ticker">🔒 Multidimensional Architecture Grid Operational — Reference Ticket: <strong>VP-TICKET-000000</strong></div>
     <header class="header">
-        <div class="brand">VECCTAPIVOT <span>ENTERPRISES</span></div>
-        <div class="tagline">Master Operations Routing Portal Gateway (BRS Status Verification: BN-AYSO8LRE)</div>
+        
+            <!-- logo.png linked dynamically from your GitHub repository asset layer -->
+            <img src="logo.png" alt="Vecctapivot Logo" class="corporate-logo" onerror="this.style.display='none';">
+            <div class="brand-text-fallback">VECCTAPIVOT <span>ENTERPRISES</span></div>
+            <div class="welcome-banner">343 Matrix Pipeline Marketplace</div>
+        </div>
+        <h1 class="portal-header-title">Master Operations Routing Portal</h1>
+        <div class="tagline">Statutory Account Alignment Hub (BRS Status Verification: BN-AYSO8LRE)</div>
     </header>
     <div class="search-box">
         <input type="text" id="globalSearch" placeholder="Type key processes (e.g., KRA, CPA, BN2, TIMMS) to isolate active desks instantly...">
