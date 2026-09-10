@@ -1,0 +1,113 @@
+/* Multi-Page Clean-Tech Structural Design Parameters */
+:root {
+    --primary-navy: #0A192F;
+    --accent-slate: #172A45;
+    --bg-light: #F8F9FA;
+    --text-dark: #1E2229;
+    --wa-green: #25D366;
+    --gmail-red: #D14836;
+    --call-blue: #007AFF;
+    --amber-warning: #FFB300;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+/* Countdown Notification Banner */
+.urgency-ticker {
+    background-color: var(--amber-warning);
+    color: #000;
+    text-align: center;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Master Header Layer */
+.portal-header {
+    background: linear-gradient(135deg, var(--primary-navy) 0%, var(--accent-slate) 100%);
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+}
+.portal-header h1 { margin: 0; font-size: 32px; letter-spacing: 1px; }
+.tagline { font-style: italic; color: #8892B0; margin: 10px 0; font-size: 17px; }
+.trust-badge { margin: 15px 0; font-size: 13px; background: rgba(255,255,255,0.1); display: inline-block; padding: 6px 15px; border-radius: 20px; }
+
+/* Home Dashboard Navigation Links & Responsive Grid */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.pillar-card-link { text-decoration: none; color: inherit; display: block; }
+.pillar-card {
+    background: white;
+    padding: 35px 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    border-bottom: 4px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+.pillar-card:hover { transform: translateY(-4px); border-bottom: 4px solid var(--primary-navy); box-shadow: 0 8px 25px rgba(0,0,0,0.06); }
+.pillar-card .icon { font-size: 45px; margin-bottom: 12px; }
+.pillar-card h2 { font-size: 19px; color: var(--primary-navy); margin: 10px 0; }
+.pillar-card p { font-size: 14px; color: #555; line-height: 1.5; }
+
+/* Sub Pages Catalogue Page Layout */
+.services-panel-page {
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+.services-panel-page h2 { color: var(--primary-navy); font-size: 24px; border-bottom: 2px solid #E2E8F0; padding-bottom: 10px; }
+
+/* Back Navigation Bars */
+.back-nav { background: var(--primary-navy); padding: 15px 20px; }
+.back-btn { color: white; text-decoration: none; font-weight: bold; font-size: 15px; }
+
+/* Consolidated Service Item Block Cards */
+.service-item-block {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    border-left: 5px solid var(--primary-navy);
+}
+.service-item-block h3 { margin: 0 0 10px 0; font-size: 18px; color: var(--primary-navy); }
+.meta-row { font-size: 14px; color: #444; background: #F1F5F9; padding: 12px; border-radius: 6px; margin: 12px 0; line-height: 1.6; }
+.final-highlight-price { font-weight: bold; font-size: 16px; color: #000; margin-top: 4px; }
+
+/* Web-Safe Action Communications Utility Ribbons */
+.action-btn-ribbon { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+.ribbon-btn { flex: 1; min-width: 140px; text-align: center; text-decoration: none; color: white; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 14px; }
+.wa-color { background-color: var(--wa-green); }
+.mail-color { background-color: var(--gmail-red); }
+.call-color { background-color: var(--call-blue); }
+
+/* Baseline Corporate Footer Element Layer */
+.portal-footer {
+    background-color: var(--primary-navy);
+    color: #8892B0;
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 13px;
+    margin-top: 80px;
+    line-height: 1.6;
+}
+.legal-footer { font-size: 11px; opacity: 0.6; margin-top: 12px; }
+
+/* Adjustments for tight smartphone viewing screens */
+@media(max-width: 600px) {
+    .action-btn-ribbon { flex-direction: column; }
+    .portal-header h1 { font-size: 24px; }
+}
