@@ -21,7 +21,7 @@
             box-sizing: border-box; 
             margin: 0; 
             padding: 0; 
-            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease, background-color 0.2s ease; 
+            transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease; 
         }
 
         body {
@@ -57,155 +57,120 @@
         }
 
         .welcome-container { max-width: 850px; margin: 0 auto; }
-        
-        .brand-identity-block {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-        
-        .corporate-logo {
-            max-height: 90px;
-            width: auto;
-            margin-bottom: 12px;
-            filter: drop-shadow(0 2px 8px rgba(212,175,55,0.2));
-        }
-
-        .brand-text-fallback {
-            font-size: 24px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            color: #ffffff;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
+        .brand-identity-block { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .corporate-logo { max-height: 80px; width: auto; margin-bottom: 10px; }
+        .brand-text-fallback { font-size: 24px; font-weight: 900; letter-spacing: 1.5px; color: #ffffff; text-transform: uppercase; margin-bottom: 4px; }
         .brand-text-fallback span { color: var(--gold-accent); }
-        .welcome-banner { font-size: 11px; font-weight: 700; color: var(--gold-accent); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 20px; }
-        .portal-header h1 { font-size: 34px; font-weight: 800; color: #ffffff; margin-bottom: 10px; }
-        .tagline { font-size: 14.5px; color: var(--text-muted); font-style: italic; }
+        .welcome-banner { font-size: 11px; font-weight: 700; color: var(--gold-accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+        .portal-header h1 { font-size: 32px; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
+        .tagline { font-size: 14px; color: var(--text-muted); font-style: italic; }
 
-        .search-master-section {
-            max-width: 850px;
+        .matrix-breadcrumb-bar {
+            max-width: 1200px;
             width: 100%;
-            margin: 40px auto 10px auto;
+            margin: 30px auto 10px auto;
             padding: 0 24px;
-            text-align: center;
-        }
-
-        .search-bar-box input {
-            width: 100%;
-            padding: 16px 24px;
-            background-color: var(--panel-slate);
-            border: 1px solid var(--border-muted);
-            border-radius: 30px;
-            color: #ffffff;
-            font-size: 14.5px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .search-bar-box input:focus {
-            outline: none;
-            border-color: var(--gold-accent);
-            box-shadow: 0 0 12px rgba(212, 175, 55, 0.2);
-        }
-
-        .matrix-wrapper {
-            max-width: 1400px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 20px 24px 20px 24px;
             display: flex;
-            flex-direction: column;
-            gap: 40px;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
         }
 
-        .core-pillar-block {
+        .crumb-item {
+            color: var(--text-muted);
+            padding: 6px 14px;
+            background: var(--panel-slate);
+            border: 1px solid var(--border-muted);
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .crumb-item.active-layer {
+            color: #000000;
+            background: var(--gold-accent);
+            border-color: var(--gold-accent);
+        }
+
+        .dashboard-matrix-view {
+            max-width: 1200px;
+            width: 100%;
+            margin: 10px auto 40px auto;
+            padding: 0 24px;
+            flex: 1;
+        }
+
+        .matrix-stage-panel {
             background-color: var(--panel-slate);
             border: 1px solid var(--border-muted);
             border-radius: 12px;
-            padding: 24px;
+            padding: 35px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
 
-        .core-pillar-block.hidden-node { display: none !important; }
-
-        .pillar-title-row {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 1px solid var(--border-muted);
-            padding-bottom: 16px;
+        .matrix-stage-panel h3 {
+            font-size: 19px;
+            font-weight: 800;
+            color: #ffffff;
             margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-muted);
+            padding-bottom: 14px;
         }
 
-        .pillar-title-row .icon { font-size: 32px; }
-        .pillar-title-row h2 { font-size: 22px; font-weight: 800; color: #ffffff; }
-
-        .sub-pillars-grid {
+        .matrix-buttons-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
         }
 
-        .sub-pillar-card {
+        .matrix-clickable-node {
             background-color: var(--bg-deep-node);
             border: 1px solid var(--border-muted);
             border-radius: 8px;
-            padding: 18px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sub-pillar-card.hidden-node { display: none !important; }
-
-        .sub-pillar-card h3 {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--gold-accent);
-            margin-bottom: 14px;
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
-            padding-bottom: 8px;
-        }
-
-        .sub-sub-actions-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .sub-sub-item-btn {
-            font-size: 12.5px;
-            color: var(--text-muted);
-            padding: 10px 14px;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid var(--border-muted);
+            padding: 24px;
             text-align: left;
-            width: 100%;
             cursor: pointer;
+            width: 100%;
+            color: inherit;
             font-family: inherit;
         }
 
-        .sub-sub-item-btn:hover {
-            color: #000000;
-            font-weight: 700;
-            background-color: var(--gold-accent);
+        .matrix-clickable-node:hover {
             border-color: var(--gold-accent);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.08);
         }
 
-        .sub-sub-item-btn.match-highlight {
-            color: #000000;
+        .matrix-clickable-node h4 {
+            font-size: 16px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .matrix-clickable-node p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .action-node-label {
+            font-size: 11px;
             font-weight: 700;
-            background-color: var(--gold-accent);
-            border-color: var(--gold-accent);
+            color: var(--gold-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 12px;
+            display: block;
         }
 
         .ingestion-console-section {
-            max-width: 1400px;
+            max-width: 1200px;
             width: 100%;
             margin: 20px auto 60px auto;
             padding: 0 24px;
@@ -256,10 +221,28 @@
 <body>
 
     <div class="urgency-ticker">
-        <p>🔒 7 × 7 × 7 Operational Pipeline Matrix Active [343 Systems Verified] — Reference Ticket: <strong>VP-TICKET-000000</strong></p>
+        <p>🔒 7 × 7 × 7 Unified Grid System Live — Reference Tracking Ticket: <strong>VP-TICKET-000000</strong></p>
     </div>
 
     <header class="portal-header">
         <div class="welcome-container">
             
-                <img src="logo.png" alt="Vecctapivot Enterprises Logo" class="corporate-logo" onerror="this.style.display='none';">
+                <img src="logo.png" alt="Logo" class="corporate-logo" onerror="this.style.display='none';">
+                <div class="brand-text-fallback">VECCTAPIVOT <span>ENTERPRISES</span></div>
+                <div class="welcome-banner">343 Matrix Pipeline Marketplace</div>
+            </div>
+            <h1>Interactive Routing Terminal</h1>
+            <p class="tagline">Statutory Account Alignment Hub (BRS Reference: BN-AYSO8LRE)</p>
+        </div>
+    </header>
+
+    <nav class="matrix-breadcrumb-bar">
+        <span class="crumb-item active-layer" id="crumbL1">1. Pillars Matrix</span>
+        <span class="crumb-item" id="crumbL2">2. Sub Pillars</span>
+        <span class="crumb-item" id="crumbL3">3. Sub-Subs Actions</span>
+    </nav>
+
+    <main class="dashboard-matrix-view">
+        <div class="matrix-stage-panel">
+            <h3 id="matrixPanelTitle">Select Core Operations Sector Pillar</h3>
+            <div class="matrix-buttons-grid" id="matrixGridElement"></div>
