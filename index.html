@@ -33,7 +33,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Urgencies ticker ribbon formatting options */
         .urgency-ticker {
             background-color: var(--amber-warning); 
             color: #000000;
@@ -48,7 +47,6 @@
         }
         .urgency-ticker p { margin: 0; }
 
-        /* Institutional Corporate Header Panel Layout */
         .portal-header {
             background: linear-gradient(135deg, #060b18 0%, var(--bg-obsidian) 100%);
             text-align: center;
@@ -59,7 +57,6 @@
 
         .welcome-container { max-width: 850px; margin: 0 auto; }
 
-        /* Premium Brand Identity Header Area Architecture */
         .brand-identity-block {
             display: flex;
             flex-direction: column;
@@ -76,10 +73,7 @@
             text-transform: uppercase;
         }
 
-        .brand-text-fallback span {
-            color: var(--gold-accent);
-        }
-
+        .brand-text-fallback span { color: var(--gold-accent); }
         .welcome-banner {
             font-size: 11px;
             font-weight: 700;
@@ -117,32 +111,6 @@
             color: var(--gold-accent);
         }
 
-        .philosophy-box {
-            background-color: var(--panel-slate);
-            border-left: 3px solid var(--gold-accent);
-            border-radius: 4px;
-            padding: 24px;
-            margin-top: 30px;
-            text-align: left;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .philosophy-box h3 {
-            font-size: 14px;
-            font-weight: 700;
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-
-        .philosophy-box p {
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        /* Real-Time Keyword Search Input Section */
         .search-master-section {
             max-width: 850px;
             width: 100%;
@@ -158,12 +126,6 @@
             margin-bottom: 6px;
         }
 
-        .faq-subtitle {
-            font-size: 13.5px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-
         .search-bar-box input {
             width: 100%;
             padding: 16px 24px;
@@ -172,7 +134,6 @@
             border-radius: 30px;
             color: #ffffff;
             font-size: 14.5px;
-            font-family: inherit;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
@@ -182,74 +143,100 @@
             box-shadow: 0 0 12px rgba(212, 175, 55, 0.2);
         }
 
-        /* Navigational Grid Menu Layout Container */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 24px;
             padding: 40px 24px;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             width: 100%;
         }
 
-        .pillar-card {
+        .desk-card {
             background-color: var(--panel-slate);
             border: 1px solid var(--border-muted);
-            padding: 35px 24px;
+            padding: 24px;
             border-radius: 8px;
-            text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            cursor: pointer;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
-        .pillar-card:hover {
-            border-color: var(--gold-accent);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.1);
+        .desk-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
         }
 
-        .pillar-card.hidden-node {
-            display: none !important;
+        .desk-card.hidden-node { display: none !important; }
+
+        .desk-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-muted);
+            padding-bottom: 14px;
+            margin-bottom: 16px;
         }
 
-        .pillar-card .icon {
-            font-size: 40px;
-            margin-bottom: 14px;
+        .desk-header .icon { font-size: 28px; }
+        .desk-header h2 { font-size: 18px; font-weight: 800; color: #ffffff; }
+
+        .nodes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .pillar-card h2 {
-            font-size: 17px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 10px;
+        .node-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-muted);
+            border-radius: 6px;
+            padding: 12px;
         }
 
-        .pillar-card p {
-            font-size: 13.5px;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 20px;
-            flex: 1;
-        }
+        .node-item.hidden-node { display: none !important; }
 
-        .explore-node-text {
-            font-size: 11.5px;
+        .node-item h3 {
+            font-size: 14px;
             font-weight: 700;
             color: var(--gold-accent);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            margin-bottom: 6px;
         }
 
-        /* Professional Stacked Mobile Footer Architecture Layout */
+        .steps-list {
+            list-style: none;
+            padding-left: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .steps-list li {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .steps-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .steps-list li.match-highlight {
+            color: #ffffff;
+            font-weight: 600;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 2px;
+        }
+
         .portal-footer {
             background-color: #090e1a;
             border-top: 1px solid var(--border-muted);
-            padding: 60px 24px 40px 24px;
-            font-size: 14px;
+            padding: 40px 24px;
+            font-size: 13px;
             text-align: center;
             margin-top: auto;
             color: var(--text-muted);
@@ -258,58 +245,63 @@
         .footer-branding {
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .footer-meta {
-            font-size: 12px;
-            margin-top: 15px;
-            color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 4px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Urgencies Live Ribbon -->
     <div class="urgency-ticker">
-        <p>🔒 Tracking Active Status: Staged & Locked in Queue — Reference Ticket: <strong>VP-TICKET-000000</strong></p>
+        <p>🔒 7x7x7 Architecture Grid Lock Active — Queue Staging Verification Reference: <strong>VP-TICKET-000000</strong></p>
     </div>
 
-    <!-- Institutional Corporate Header Panel Layout -->
     <header class="portal-header">
         <div class="welcome-container">
             
                 <div class="brand-text-fallback">VECCTAPIVOT <span>ENTERPRISES</span></div>
-                <div class="welcome-banner">Master Operations Marketplace Hub</div>
+                <div class="welcome-banner">343 Matrix Pipeline Marketplace</div>
             </div>
             <h1>Operational Routing Portal</h1>
-            <p class="tagline">Registered Business Name Verification Terminal (BRS: BN-AYSO8LRE)</p>
-            <div class="trust-badge">Secure Client Encrypted Gateway Account Enabled</div>
-            
-            <div class="philosophy-box">
-                <h3>System Framework Protocol</h3>
-                <p>Welcome to your central architecture desk interface. Select an operations desk module below to manage active logging configurations, localized parameters, or query statutory processing systems.</p>
-            </div>
+            <p class="tagline">Statutory Account Alignment Node (BRS: BN-AYSO8LRE)</p>
+            <div class="trust-badge">Full Multidimensional Grid Mapping Active</div>
         </div>
     </header>
 
-    <!-- Real-Time Keyword Search Input Section -->
     <section class="search-master-section">
-        <h3>Search Operations Matrix</h3>
-        <p class="faq-subtitle">Filter cross-functional service pillars instantly by keywords</p>
+        <h3>Live Matrix Diagnostics</h3>
         <div class="search-bar-box">
-            <input type="text" id="deskSearchInput" placeholder="Type core phrases (e.g., KRA, eCitizen, Courier, Audit)...">
+            <input type="text" id="matrixSearchInput" placeholder="Filter through 343 processing nodes instantly (e.g., BN3, KRA, Audit, CPA)...">
         </div>
     </section>
 
-    <!-- Navigational Grid Menu Layout Container -->
-    <main class="grid-container" id="gridContainer">
-        <!-- Desk Pillar 1 -->
-        <div class="pillar-card" data-keywords="ecitizen brand registration alterations business company bn3 forms">
-            <div>
+    <!-- The 7x7x7 Hierarchical Grid Container -->
+    <main class="grid-container" id="matrixGrid">
+        
+        <!-- DESK 1 -->
+        <div class="desk-card" data-desk="1">
+            <div class="desk-header">
                 <div class="icon">💼</div>
-                <h2>Digital & Brand Systems</h2>
-                <p>eCitizen account processing, registrations, conversions, structures, and business name identity panel alterations.</p>
+                <h2>Desk 1: Digital & Brand Systems</h2>
             </div>
-            <span class="explore-node-text">Open Desk 1 →</span>
+            <div class="nodes-container">
+                <div class="node-item" data-keywords="ecitizen business name registration name search">
+                    <h3>Node 1.1: Business Registry Filing</h3>
+                    <ul class="steps-list">
+                        <li>Step 1: Name reservation query execution</li>
+                        <li>Step 2: Proprietor details input check</li>
+                        <li>Step 3: Administrative form generation</li>
+                        <li>Step 4: Statutory submission queueing</li>
+                        <li>Step 5: Fee settlement clearing process</li>
+                        <li>Step 6: Registration certificate download</li>
+                        <li>Step 7: Verification logs archiving</li>
+                    </ul>
+                </div>
+                <div class="node-item" data-keywords="partnership firm registry entry formation layout">
+                    <h3>Node 1.2: Partnership Formation Node</h3>
+                    <ul class="steps-list">
+                        <li>Step 1: Deed verification screening</li>
+                        <li>Step 2: Partner identity record entry</li>
+                        <li>Step 3: Registration application compiling</li>
+                        <li>Step 4: Signatory execution logging</li>
+                        <li>Step 5: Portal routing pipeline tracking</li>
+                        <li>Step 6: Compliance confirmation audit</li>
