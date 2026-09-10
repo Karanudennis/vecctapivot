@@ -14,82 +14,85 @@
             --text-muted: #9ca3af;
             --amber-warning: #FFB300;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.2s ease; }
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: transform 0.2s ease, border-color 0.2s ease; }
         body {
             background-color: var(--bg-main); color: var(--text-white);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased;
         }
-        .ticker { background: var(--amber-warning); color: #000; text-align: center; padding: 12px; font-size: 13px; font-weight: 800; }
-        .header { text-align: center; padding: 50px 24px; border-bottom: 1px solid var(--border-muted); }
-        .brand { font-size: 24px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; }
+        .ticker { background: var(--amber-warning); color: #000000; text-align: center; padding: 12px; font-size: 13px; font-weight: 800; letter-spacing: 0.3px; }
+        .header { text-align: center; padding: 60px 24px; border-bottom: 1px solid var(--border-muted); }
+        .brand { font-size: 26px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
         .brand span { color: var(--gold-accent); }
-        .tagline { font-size: 14px; color: var(--text-muted); font-style: italic; margin-top: 5px; }
-        .search-box { max-width: 600px; margin: 30px auto 10px auto; padding: 0 20px; }
-        .search-box input { width: 100%; padding: 16px 24px; background: var(--panel-slate); border: 1px solid var(--border-muted); border-radius: 30px; color: #fff; font-size: 14.5px; }
-        .search-box input:focus { outline: none; border-color: var(--gold-accent); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: 30px auto; padding: 0 24px; }
-        .card { background: var(--panel-slate); border: 1px solid var(--border-muted); padding: 30px 24px; border-radius: 8px; text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
-        .card:hover { border-color: var(--gold-accent); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(212,175,55,0.05); }
+        .tagline { font-size: 14.5px; color: var(--text-muted); font-style: italic; margin-top: 6px; }
+        .search-box { max-width: 650px; width: 100%; margin: 40px auto 10px auto; padding: 0 24px; }
+        .search-box input { width: 100%; padding: 16px 24px; background: var(--panel-slate); border: 1px solid var(--border-muted); border-radius: 30px; color: #ffffff; font-size: 14.5px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .search-box input:focus { outline: none; border-color: var(--gold-accent); box-shadow: 0 0 12px rgba(212,175,55,0.15); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1300px; width: 100%; margin: 30px auto; padding: 0 24px; }
+        .card { background: var(--panel-slate); border: 1px solid var(--border-muted); padding: 35px 24px; border-radius: 8px; text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
+        .card:hover { border-color: var(--gold-accent); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(212,175,55,0.06); }
         .card.hidden { display: none !important; }
-        .card h2 { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 10px; }
-        .card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; flex: 1; margin-bottom: 15px; }
-        .card span { font-size: 11.5px; font-weight: 700; color: var(--gold-accent); text-transform: uppercase; }
-        .footer { background: #060b18; border-top: 1px solid var(--border-muted); padding: 30px; text-align: center; font-size: 13px; color: var(--text-muted); margin-top: auto; }
+        .card h2 { font-size: 18px; font-weight: 800; color: #ffffff; margin-bottom: 12px; }
+        .card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; flex: 1; margin-bottom: 20px; }
+        .card span { font-size: 11.5px; font-weight: 700; color: var(--gold-accent); text-transform: uppercase; letter-spacing: 0.5px; }
+        .footer { background: #060b18; border-top: 1px solid var(--border-muted); padding: 40px 24px; text-align: center; font-size: 13px; color: var(--text-muted); margin-top: auto; }
     </style>
 </head>
 <body>
-    <div class="ticker">🔒 Staged & Locked in Queue — Reference Ticket: <strong>VP-TICKET-000000</strong></div>
+    <div class="ticker">🔒 Multidimensional Architecture Grid Operational — Active Tracking Status reference: <strong>VP-TICKET-000000</strong></div>
     <header class="header">
         <div class="brand">VECCTAPIVOT <span>ENTERPRISES</span></div>
-        <div class="tagline">Master Operations Routing Portal (BRS: BN-AYSO8LRE)</div>
+        <div class="tagline">Master Operations Routing Portal Gateway (BRS Status Verification: BN-AYSO8LRE)</div>
     </header>
     <div class="search-box">
-        <input type="text" id="globalSearch" placeholder="Type core keywords to filter active operational desks instantly...">
+        <input type="text" id="globalSearch" placeholder="Type key processes (e.g., KRA, CPA, BN2, TIMMS) to isolate active desks instantly...">
     </div>
     <main class="grid">
-        <a href="digital.html" class="card" data-index="digital brand ecitizen registration bn2 form share conversion logo">
+        <a href="digital.html" class="card" data-index="digital brand ecitizen registration layouts bn2 form share conversion logo particular alterations cessation data control privacy">
             <h2>Pillar 1: Digital & Brand Systems</h2>
-            <p>eCitizen database verification protocols, name searches, firm configurations layout forms, transformations, and identity asset protection locks.</p>
-            <span>Open Desk 1 →</span>
+            <p>eCitizen registration entry nodes, name query validation files, partnership configurations setup (BN2), articles alterations, share conversions, and identity brand protection protocols.</p>
+            <span>Open Desk 1 Operations →</span>
         </a>
-        <a href="academic.html" class="card" data-index="academic exam mock booklets kasneb cpa cbc revision kit notes">
+        <a href="academic.html" class="card" data-index="academic exam mock booklets kasneb cpa cbc revision kit notes secondary paper junior student portal knec tveta syllabus">
             <h2>Pillar 2: Academic & Testing Logistics</h2>
-            <p>Inter-county evaluation distributions, spiral-bound compilation packs, KASNEB CPA vault access, vocational materials, and institutional portals structures.</p>
-            <span>Open Desk 2 →</span>
+            <p>Form 1-4 termly county evaluation packs, spiral-bound topic compilation resource materials, KASNEB CPA / ATD revision matrices archives, and CBC primary routing portals maps.</p>
+            <span>Open Desk 2 Operations →</span>
         </a>
-        <a href="transport.html" class="card" data-index="transport courier ride booking lorry cargo canter logistics fleet track">
+        <a href="transport.html" class="card" data-index="transport courier ride booking lorry cargo canter logistics fleet track last mile motorcycle cold chain executive transit">
             <h2>Pillar 3: Transport Brokerage Hub</h2>
-            <p>Point-to-point corporate executive travel alignments, last-mile courier operators, agricultural long-haul cargo lorry networks, and active telemetry arrays.</p>
-            <span>Open Desk 3 →</span>
+            <p>Point-to-point urban transfer configurations, last-mile certificate courier dispatches, inter-county agricultural freight cargo tracking setups, and continuous telemetry arrays.</p>
+            <span>Open Desk 3 Operations →</span>
         </a>
-        <a href="sourcing.html" class="card" data-index="sourcing produce farm agriculture wholesale price audit supplier map border import">
+        <a href="sourcing.html" class="card" data-index="sourcing produce farm agriculture wholesale price audit supplier map border import customs freight manifest contract factory">
             <h2>Pillar 4: Merchandise Sourcing Links</h2>
-            <p>Farm-gate aggregation fields, corporate factory wholesale value audits, cross-border import corridor supplier tracking maps, and production off-take frameworks.</p>
-            <span>Open Desk 4 →</span>
+            <p>Farm-gate produce asset collection metrics, factory wholesale cost verification audits, B2B cross-border supply trajectory charts layout, and long-term contract off-take agriculture rules.</p>
+            <span>Open Desk 4 Operations →</span>
         </a>
-        <a href="fixer.html" class="card" data-index="fixer land site inspection proxy permit storefront check subcounty zoning">
+        <a href="fixer.html" class="card" data-index="fixer land site inspection proxy permit storefront check subcounty zoning real estate beacon security compliance municipal citation">
             <h2>Pillar 5: Independent Fixer Desk</h2>
-            <p>Ground proxy units coordinate audits, beacon location mapping runs, sub-county municipal documentation overrides, and storefront tracking activity metrics.</p>
-            <span>Open Desk 5 →</span>
+            <p>Ground proxy coordinates verifications, manual loading bay pre-transit inventory checks, local sub-county administrative permit clearance overrides, and zoning layout inspections.</p>
+            <span>Open Desk 5 Operations →</span>
         </a>
-        <a href="agency.html" class="card" data-index="agency core balance aggregated billing ledger milestone queue override escrow">
+        <a href="agency.html" class="card" data-index="agency core balance aggregated billing ledger milestone queue override escrow retainers intake redirection kpi dashboard">
             <h2>Pillar 6: General Agency Core</h2>
-            <p>Multi-desk aggregated dashboard reports mapping layouts, micro-merchant Intake paths shortcut routing links, status counters tracking, and milestone escrow pools.</p>
-            <span>Open Desk 6 →</span>
+            <p>Multi-sector consolidated performance matrices tracking, micro-merchant intake pathway shortcuts link grids, automated macro ledger updates statements, and secure escrow holding pools.</p>
+            <span>Open Desk 6 Operations →</span>
         </a>
-        <a href="statutory.html" class="card" data-index="statutory duplicate maisha id travel passport ntsa tims logbook dl transfer shif nssf">
+        <a href="statutory.html" class="card" data-index="statutory duplicate maisha id travel passport ntsa timms logbook dl transfer shif nssf nea dci fingerprint good conduct gazette">
             <h2>Pillar 7: Statutory & Portal Logistics</h2>
-            <p>eCitizen profile corrections, duplicate national ID updates, passport travel processing bookings, NTSA/TIMS transfer logbooks maps, and SHIF/NSSF roster logs.</p>
-            <span>Open Desk 7 →</span>
+            <p>Maisha entry updates processing, national passport tracking bookings, NTSA/TIMS transfer profiles setup, health authority social transition rosters logs, and Gazette listings validations.</p>
+            <span>Open Desk 7 Operations →</span>
         </a>
     </main>
-    <footer class="footer"><strong>VECCTAPIVOT ENTERPRISES</strong><p style="margin-top:5px;">© 2026. Static Low-Bandwidth Infrastructure Node. All Rights Reserved.</p></footer>
+    <footer class="footer">
+        <div class="footer-branding"><strong>VECCTAPIVOT ENTERPRISES</strong></div>
+        <p style="margin-top:6px; font-size:12px; opacity:0.6;">© 2026. Low-Bandwidth Infrastructure Node Framework. All Protocols Observed.</p>
+    </footer>
     <script>
         document.getElementById('globalSearch').addEventListener('input', function(e) {
             const val = e.target.value.toLowerCase().trim();
             document.querySelectorAll('.card').forEach(card => {
-                const terms = card.getAttribute('data-index');
+                const terms = card.getAttribute('data-index') || "";
                 if(val === "" || terms.includes(val)) { card.classList.remove('hidden'); }
                 else { card.classList.add('hidden'); }
             });
