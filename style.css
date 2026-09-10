@@ -70,6 +70,7 @@ html, body {
 .scroll-btn:hover { background-color: var(--wa-green) !important; color: white !important; }
 .ticket-btn { background-color: var(--call-blue) !important; box-shadow: 0 4px 10px rgba(0,122,255,0.2) !important; }
 
+/* Interactive Calculator Styling Blocks */
 .calculator-master-card {
     background: white; max-width: 600px; margin: -30px auto 40px auto; padding: 30px;
     border-radius: 14px; box-shadow: 0 10px 30px rgba(10,25,47,0.06); position: relative;
@@ -83,6 +84,7 @@ html, body {
 .calc-stat { flex: 1; font-size: 14px; color: #334155; }
 .calc-stat strong { display: block; font-size: 18px; color: var(--primary-navy); margin-top: 4px; }
 
+/* Search Directory Bar Formats */
 .search-master-section { max-width: 850px; margin: 30px auto 0 auto; padding: 0 20px; width: 100%; text-align: center; }
 .search-master-section h3 { color: var(--primary-navy); font-size: 18px; margin-bottom: 12px; }
 .search-bar-box input {
@@ -90,6 +92,7 @@ html, body {
     font-size: 15px; box-sizing: border-box; background: white;
 }
 
+/* Home Pillars Navigation Layout Dashboard Grid */
 .grid-container {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;
     padding: 50px 20px; max-width: 1200px; margin: 0 auto; width: 100%; flex: 1;
@@ -110,6 +113,7 @@ html, body {
 .pillar-card p { font-size: 14px; color: #555; line-height: 1.5; margin: 0 0 15px 0; flex: 1; }
 .explore-node-text { font-size: 12px; font-weight: bold; color: var(--call-blue); text-transform: uppercase; }
 
+/* Ingested Form Layout Fields Inside Sub-Pages */
 .embedded-intake-desk { margin-top: 15px; background: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #E2E8F0; display: flex; flex-direction: column; gap: 8px; }
 .embedded-intake-desk label { font-size: 13px; font-weight: bold; color: var(--primary-navy); margin-top: 4px; text-align: left; display: block; }
 .embedded-intake-desk input, .embedded-intake-desk textarea, .embedded-intake-desk select {
@@ -118,6 +122,7 @@ html, body {
 .embedded-intake-desk input:focus, .embedded-intake-desk textarea:focus { outline: none; border-color: var(--primary-navy); background: #fff; }
 .upload-picker-input { background: #ffffff !important; border: 1px dashed #CBD5E1 !important; padding: 10px !important; font-size: 13px !important; cursor: pointer; color: #64748B !important; }
 
+/* Secure One-Client Ticket Success Popup Modal */
 .ticket-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(10, 25, 47, 0.95); z-index: 99999; display: flex; justify-content: center; align-items: center; padding: 20px; }
 .ticket-modal-card { background: #ffffff; padding: 35px 25px; border-radius: 16px; max-width: 500px; width: 100%; text-align: center; box-shadow: 0 15px 40px rgba(0,0,0,0.2); border-top: 5px solid var(--wa-green); }
 .ticket-badge-icon { font-size: 50px; margin-bottom: 10px; }
@@ -128,10 +133,12 @@ html, body {
 .modal-close-btn { background-color: var(--primary-navy); color: white; border: none; padding: 12px 25px; border-radius: 6px; font-weight: bold; font-size: 14px; cursor: pointer; width: 100%; }
 .hidden-popup { display: none !important; }
 
+/* Anti-Fraud Banner Styles */
 .security-trust-box { background-color: #FEF2F2; border-left: 5px solid #EF4444; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(239,68,68,0.05); }
 .security-trust-box h4 { margin: 0 0 8px 0; color: #991B1B; font-size: 15px; font-weight: 800; text-transform: uppercase; }
 .security-trust-box p { margin: 0; font-size: 13.5px; color: #7F1D1D; line-height: 1.6; }
 
+/* FAQ Panels Styling Layout */
 .faq-master-container { max-width: 850px; margin: 50px auto; padding: 0 20px; width: 100%; }
 .faq-master-container h2 { color: var(--primary-navy); font-size: 24px; text-align: center; margin-bottom: 5px; }
 .faq-subtitle { text-align: center; font-size: 14px; color: #666; margin-bottom: 30px; }
@@ -142,9 +149,7 @@ html, body {
 .faq-answer-content { margin-top: 12px; border-top: 1px solid #F1F5F9; padding-top: 10px; font-size: 14px; color: #4A5568; line-height: 1.6; text-align: left; }
 .hidden-faq { display: none !important; }
 
+/* Outer Sub-Pages Elements */
 .back-nav { background: var(--primary-navy); padding: 15px 20px; width: 100%; }
 .back-btn { color: white; text-decoration: none; font-weight: bold; font-size: 15px; }
 .services-panel-page { max-width: 850px; margin: 40px auto; padding: 0 20px; width: 100%; flex: 1; }
-.services-panel-page h2 { color: var(--primary-navy); font-size: 24px; border-bottom: 2px solid #E2E8F0; padding-bottom: 10px; margin-top: 0; }
-.service-item-block { background: white; padding: 25px; border-radius: 10px; margin-top: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); border-left: 5px solid var(--primary-navy); }
-.service-item-block h3 { margin: 0 0 10px 0; font-size: 18px; color: var(--primary-navy); }
