@@ -1,5 +1,5 @@
 /* ==========================================================================
-   VECCTAPIVOT ENTERPRISES - ARCHITECTURAL STYLESHEET OVERHAUL (NO FOOTER)
+   VECCTAPIVOT ENTERPRISES - GLOBAL ARCHITECTURAL STYLESHEET (NO FOOTER)
    ========================================================================== */
 
 :root {
@@ -28,7 +28,7 @@ html, body {
     scroll-behavior: smooth; -webkit-font-smoothing: antialiased;
 }
 
-/* Urgency Announcement Notification Ticker */
+/* Urgency Top Announcement Ticker */
 .urgency-ticker {
     background-color: var(--amber-warning); color: #000;
     text-align: center; padding: 14px 20px; font-size: 13px; font-weight: 800; width: 100%;
@@ -81,7 +81,7 @@ html, body {
 }
 .search-bar-box input:focus { outline: none; border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(100,255,218,0.3); }
 
-/* The Presentable 7 Primary Grid System Layout */
+/* Presentable 7 Primary Grid Architecture */
 .grid-container {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;
     padding: 40px 20px; max-width: 1100px; margin: 0 auto; width: 100%;
@@ -101,13 +101,14 @@ html, body {
 .pillar-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin: 0 0 15px 0; flex: 1; }
 .explore-node-text { font-size: 11.5px; font-weight: 800; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 0.5px; }
 
-/* Consolidated Service Request Card Form Layouts */
+/* Service Request Cards & Workspace Areas */
 .calculator-master-card {
     background: var(--bg-light-panel); width: calc(100% - 40px); max-width: 750px; margin: 30px auto; padding: 30px;
     border-radius: 8px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); border: 1px solid rgba(100, 255, 218, 0.1);
 }
 .calculator-master-card h3 { margin: 0 0 15px 0; color: #FFF; text-align: left; font-size: 20px; font-weight: 800; }
 
+/* Intake Form Input Elements styling layout */
 .embedded-intake-desk { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
 .embedded-intake-desk label { font-size: 13px; font-weight: 700; color: #FFF; text-align: left; display: block; }
 .embedded-intake-desk input, .embedded-intake-desk textarea, .embedded-intake-desk select {
@@ -120,12 +121,12 @@ html, body {
 .upload-picker-input { background: var(--bg-main) !important; border: 1px dashed rgba(100, 255, 218, 0.3) !important; padding: 12px !important; color: var(--text-muted); }
 .upload-picker-label { background: rgba(100,255,218,0.03); padding: 8px; border-radius: 4px; display: block; margin-top: 5px; font-size: 12.5px; }
 
-/* Secure Verification Warning Notice Area */
+/* Secure Verification Protocol Banners */
 .security-trust-box { background-color: rgba(239, 68, 68, 0.04); border-left: 4px solid #EF4444; padding: 20px; border-radius: 6px; }
 .security-trust-box h4 { margin: 0 0 8px 0; color: #EF4444; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
 .security-trust-box p { margin: 0; font-size: 13.5px; color: #FCA5A5; line-height: 1.5; text-align: left; }
 
-/* Cascading Accordion Sub-Pillars Content Styles */
+/* Cascading Accordion Item Cards (CRITICAL FIX FOR TOGGLING VISIBILITY) */
 .faq-master-container { max-width: 800px; margin: 40px auto; padding: 0 20px; width: 100%; }
 .faq-master-container h2 { color: #FFF; font-size: 22px; text-align: center; margin-bottom: 5px; font-weight: 800; }
 .faq-subtitle { text-align: center; font-size: 13.5px; color: var(--text-muted); margin-bottom: 25px; }
@@ -136,18 +137,16 @@ html, body {
 .faq-arrow { font-size: 12px; color: var(--text-muted); }
 .faq-answer-content { margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px; font-size: 13.5px; color: var(--text-muted); line-height: 1.5; text-align: left; }
 
-/* Sub elements utility matrices */
+/* General utility styles */
 .meta-row { font-size: 13.5px; color: var(--text-white); background: var(--bg-main); padding: 12px; border-radius: 4px; margin: 12px 0; border: 1px solid rgba(255,255,255,0.05); line-height: 1.5; }
 .submit-ticket-btn { background-color: var(--neon-cyan); color: var(--bg-main); border: none; padding: 14px; border-radius: 4px; font-weight: 800; font-size: 14.5px; text-transform: uppercase; cursor: pointer; width: 100%; margin-top: 10px; letter-spacing: 0.5px; }
 .submit-ticket-btn:hover { background-color: transparent; color: var(--neon-cyan); border: 1px solid var(--neon-cyan); }
-
-/* Navigation back arrows configuration links */
 .back-nav a:hover { color: #FFF !important; text-shadow: 0 0 8px var(--neon-cyan); }
 
-/* Hidden state controllers layout rules */
+/* Dynamic Class for collapsing and revealing modules via clicks */
 .hidden-faq { display: none !important; }
 
-/* Fluid Mobile Adaptations Blocks Queries */
+/* Fluid Smartphone Adaptations queries */
 @media(max-width: 768px) {
     .portal-header { padding: 50px 15px; }
     .portal-header h1 { font-size: 24px; }
