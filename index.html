@@ -3,131 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vecctapivot Enterprises | Operations Marketplace</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Vecctapivot Enterprises | Operations Marketplace Hub</title>
+    <style>
+        :root {
+            --bg-main: #020C1B;
+            --panel-slate: #0b1329;
+            --border-muted: rgba(255, 255, 255, 0.06);
+            --gold-accent: #d4af37;
+            --text-white: #f3f4f6;
+            --text-muted: #9ca3af;
+            --amber-warning: #FFB300;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.2s ease; }
+        body {
+            background-color: var(--bg-main); color: var(--text-white);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased;
+        }
+        .ticker { background: var(--amber-warning); color: #000; text-align: center; padding: 12px; font-size: 13px; font-weight: 800; }
+        .header { text-align: center; padding: 50px 24px; border-bottom: 1px solid var(--border-muted); }
+        .brand { font-size: 24px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; }
+        .brand span { color: var(--gold-accent); }
+        .tagline { font-size: 14px; color: var(--text-muted); font-style: italic; margin-top: 5px; }
+        .search-box { max-width: 600px; margin: 30px auto 10px auto; padding: 0 20px; }
+        .search-box input { width: 100%; padding: 16px 24px; background: var(--panel-slate); border: 1px solid var(--border-muted); border-radius: 30px; color: #fff; font-size: 14.5px; }
+        .search-box input:focus { outline: none; border-color: var(--gold-accent); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: 30px auto; padding: 0 24px; }
+        .card { background: var(--panel-slate); border: 1px solid var(--border-muted); padding: 30px 24px; border-radius: 8px; text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
+        .card:hover { border-color: var(--gold-accent); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(212,175,55,0.05); }
+        .card.hidden { display: none !important; }
+        .card h2 { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 10px; }
+        .card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; flex: 1; margin-bottom: 15px; }
+        .card span { font-size: 11.5px; font-weight: 700; color: var(--gold-accent); text-transform: uppercase; }
+        .footer { background: #060b18; border-top: 1px solid var(--border-muted); padding: 30px; text-align: center; font-size: 13px; color: var(--text-muted); margin-top: auto; }
+    </style>
 </head>
 <body>
-
-    <!-- Urgency Top Notification Ticker -->
-    <div class="urgency-ticker">
-        <p>📋 Marketplace Live: Submit portal credentials, map agriculture lorry freight tracks, or request ground audits directly below.</p>
-    </div>
-
-    <!-- Premium Visual Header Panel -->
-    <header class="portal-header">
-        <div class="welcome-container">
-            <div class="visual-glow-orb"></div>
-            <img src="logo.png" alt="Vecctapivot Logo" class="corporate-logo" onerror="this.style.display='none'">
-            <div class="welcome-banner">✨ CENTRAL EAST AFRICA DISPATCH & SOURCING TERMINAL</div>
-            <h1>VECCTAPIVOT OPERATIONAL MARKETPLACE</h1>
-            <p class="tagline">"Our priority is seamless workflow clearance, reliable logistics, and your satisfaction."</p>
-            <div class="trust-badge">
-                <span>🛡️ Registered Business Name | BRS Reference: BN-AYSO8LRE</span>
-            </div>
-
-            <!-- Service Driven Philosophy Value Card -->
-            <div class="philosophy-box">
-                <h3>🤝 Service-Driven Transaction Framework</h3>
-                <p>Welcome to your central digital marketplace. Use the search index or select a primary desk node below to configure project files, estimate turnaround timelines, and securely lock your data into our active processing queues.</p>
-            </div>
-            
-            <div class="header-action-container">
-                <a href="#master-intake-section" class="cta-btn-main scroll-btn">📊 Estimate Rate & File Data</a>
-                <a href="#master-intake-section" class="cta-btn-main ticket-btn" onclick="activateCentralHelpDesk()">🎫 Open Central Help Desk</a>
-            </div>
-        </div>
+    <div class="ticker">🔒 Staged & Locked in Queue — Reference Ticket: <strong>VP-TICKET-000000</strong></div>
+    <header class="header">
+        <div class="brand">VECCTAPIVOT <span>ENTERPRISES</span></div>
+        <div class="tagline">Master Operations Routing Portal (BRS: BN-AYSO8LRE)</div>
     </header>
-
-    <!-- AUTOMATED TRANSACTION WORK ORDER MODAL POPUP -->
-    <div id="success-ticket-modal" class="ticket-modal-overlay hidden-popup">
-        <div class="ticket-modal-card">
-            <div class="ticket-badge-icon">🛡️</div>
-            <h3>OPERATION INITIALIZED SUCCESSFULLY</h3>
-            <p class="modal-ticket-id">Your Unique Tracking File: <strong id="generated-ticket-id">VP-REG-0000</strong></p>
-            <div class="modal-notice-box">
-                <p><strong>🔒 Status: Staged & Locked in Queue.</strong> Your credentials, text parameters, and uploaded files have been safely encrypted and transmitted to our desk handler inbox.</p>
-                <p>A copy of this task run layout has been dispatched to our support mail gateway. Please wait—a desk proxy is verifying your files and will contact you via **email or phone text within 15 minutes** to confirm workflow completion schedules.</p>
-            </div>
-            <button type="button" class="modal-close-btn" onclick="closeTicketModal()">Acknowledge & Monitor Status</button>
-        </div>
+    <div class="search-box">
+        <input type="text" id="globalSearch" placeholder="Type core keywords to filter active operational desks instantly...">
     </div>
-
-    <!-- LIVE REAL-TIME MARKETPLACE SEARCH DIRECTORY -->
-    <section class="search-master-section">
-        <h3>🔍 Live Marketplace Resource Search Directory</h3>
-        <p class="faq-subtitle">Type keywords to filter active desks instantly (e.g., 'CPA', 'Mock', 'Lorry', 'Logo', 'Maisha', 'KRA').</p>
-        <div class="search-bar-box">
-            <input type="text" id="marketplace-search" onkeyup="filterMarketplaceSearch()" placeholder="Search through our 49 operational service modules here...">
-        </div>
-    </section>
-
-    <!-- THE 7 PILLARS NAVIGATION INTERFACE GRID -->
-    <main id="portal-grid" class="grid-container">
-        
-        <div class="pillar-card searchable-card" data-tags="digital brand brs registration logo bn2 bn3 cessation particulars link legacy ecitizen kra pin tax returns corporate design profile sole proprietor" onclick="activatePillarDesk('p1-desk', '💻 Digital & Brand Systems', 'REG')">
-            <div class="icon">💻</div>
-            <h2>1. Digital & Brand Systems</h2>
-            <p>BRS Business Registrations, Portal Particulars Alterations & Visual Branding Identity Layouts</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
-
-        <div class="pillar-card searchable-card" data-tags="academic test mock exam high school form cbc revision booklet vault kasneb cpa atd past paper guide tuition papers study notes education portal study" onclick="activatePillarDesk('p2-desk', '📚 Academic & Testing Logistics', 'ACA')">
-            <div class="icon">📚</div>
-            <h2>2. Academic & Testing Logistics</h2>
-            <p>Form 1-4 High School Mock Bundles, CBC Portfolios & KASNEB CPA/ATD Resource Vaults</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
-
-        <div class="pillar-card searchable-card" data-tags="transport ride taxi booking courier dispatch motorcycle lorry cargo freight logistics cold chain truck trailer van routing insurance bike courier" onclick="activatePillarDesk('p3-desk', '🚖 Transport Brokerage Hub', 'TRK')">
-            <div class="icon">🚖</div>
-            <h2>3. Transport Brokerage Hub</h2>
-            <p>Intra-Town Express Couriers, Local Transfers & Long-Haul Freight Lines</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
-
-        <div class="pillar-card searchable-card" data-tags="sourcing merchandise agribusiness crop potato cabbage farm market factory price audit import wholesale b2b supplier check tariff cargo produce" onclick="activatePillarDesk('p4-desk', '🤝 Merchandise Sourcing Links', 'SRC')">
-            <div class="icon">🤝</div>
-            <h2>4. Merchandise Sourcing Links</h2>
-            <p>Farm-Gate Agribusiness Aggregations, Factory Price Audits & Import Tracks</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
-
-        <div class="pillar-card searchable-card" data-tags="fixer desk physical site inspection real estate plot verify consignment count warehouse audit permit county proxy enforcement dispute fence safety land" onclick="activatePillarDesk('p5-desk', '🛠️ Independent Fixer Desk', 'FIX')">
-            <div class="icon">🛠️</div>
-            <h2>5. Independent Fixer Desk</h2>
-            <p>Physical Property Site Verifications, Consignment Counts & Permit Proxy Handling</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
-
-        <div class="pillar-card searchable-card" data-tags="agency general core consolidated billing ledger accounting balance strategy queue override border trade corridor metrics kpi escrow cash flows fund ledger" onclick="activatePillarDesk('p6-desk', '🏢 General Agency Core', 'CRE')">
-            <div class="icon">🏢</div>
-            <h2>6. General Agency Core</h2>
-            <p>Consolidated Firm Accounts, Inter-Desk Escalations & Operations Management Dashboard</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
-
-        <div class="pillar-card searchable-card" data-tags="statutory immigration portal ecitizen passport id replacement maisha card ntsa dl logbook shif sha health conduct dci lands ardhisasa tax filings returns kra pins" onclick="activatePillarDesk('p7-desk', '📄 Statutory & Portal Logistics', 'STAT')">
-            <div class="icon">📄</div>
-            <h2>7. Statutory & Portal Logistics</h2>
-            <p>eCitizen Maisha Cards, NTSA DL Logbook Transfers, KRA iTax Return Filings & Land Searches</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
-
+    <main class="grid">
+        <a href="digital.html" class="card" data-index="digital brand ecitizen registration bn2 form share conversion logo">
+            <h2>Pillar 1: Digital & Brand Systems</h2>
+            <p>eCitizen database verification protocols, name searches, firm configurations layout forms, transformations, and identity asset protection locks.</p>
+            <span>Open Desk 1 →</span>
+        </a>
+        <a href="academic.html" class="card" data-index="academic exam mock booklets kasneb cpa cbc revision kit notes">
+            <h2>Pillar 2: Academic & Testing Logistics</h2>
+            <p>Inter-county evaluation distributions, spiral-bound compilation packs, KASNEB CPA vault access, vocational materials, and institutional portals structures.</p>
+            <span>Open Desk 2 →</span>
+        </a>
+        <a href="transport.html" class="card" data-index="transport courier ride booking lorry cargo canter logistics fleet track">
+            <h2>Pillar 3: Transport Brokerage Hub</h2>
+            <p>Point-to-point corporate executive travel alignments, last-mile courier operators, agricultural long-haul cargo lorry networks, and active telemetry arrays.</p>
+            <span>Open Desk 3 →</span>
+        </a>
+        <a href="sourcing.html" class="card" data-index="sourcing produce farm agriculture wholesale price audit supplier map border import">
+            <h2>Pillar 4: Merchandise Sourcing Links</h2>
+            <p>Farm-gate aggregation fields, corporate factory wholesale value audits, cross-border import corridor supplier tracking maps, and production off-take frameworks.</p>
+            <span>Open Desk 4 →</span>
+        </a>
+        <a href="fixer.html" class="card" data-index="fixer land site inspection proxy permit storefront check subcounty zoning">
+            <h2>Pillar 5: Independent Fixer Desk</h2>
+            <p>Ground proxy units coordinate audits, beacon location mapping runs, sub-county municipal documentation overrides, and storefront tracking activity metrics.</p>
+            <span>Open Desk 5 →</span>
+        </a>
+        <a href="agency.html" class="card" data-index="agency core balance aggregated billing ledger milestone queue override escrow">
+            <h2>Pillar 6: General Agency Core</h2>
+            <p>Multi-desk aggregated dashboard reports mapping layouts, micro-merchant Intake paths shortcut routing links, status counters tracking, and milestone escrow pools.</p>
+            <span>Open Desk 6 →</span>
+        </a>
+        <a href="statutory.html" class="card" data-index="statutory duplicate maisha id travel passport ntsa tims logbook dl transfer shif nssf">
+            <h2>Pillar 7: Statutory & Portal Logistics</h2>
+            <p>eCitizen profile corrections, duplicate national ID updates, passport travel processing bookings, NTSA/TIMS transfer logbooks maps, and SHIF/NSSF roster logs.</p>
+            <span>Open Desk 7 →</span>
+        </a>
     </main>
-
-    <!-- THE UNIFIED DYNAMIC DATA INGESTION WORKSPACE CARD -->
-    <section id="master-intake-section" class="calculator-master-card hidden-popup" style="max-width: 750px; margin: 40px auto;">
-        <h3 id="active-desk-title">🛒 Service Desk Panel</h3>
-        <p style="font-size: 14px; color: #555; margin-bottom: 25px;">Select your precise job module below. The system will dynamically calculate pricing, check delivery SLAs, and generate your custom form parameters.</p>
-
-        <!-- Dropdown Selection Tracks -->
-        <div class="calc-form-row">
-            <label>Select Your Target Job Track Option:</label>
-            
-            <!-- Pillar 1 Dropdowns -->
-            <select id="p1-desk" class="desk-dropdown select-hidden" onchange="syncMarketplaceServiceForm('p1-desk', 'REG')">
-                <option value="" disabled selected>-- Select Digital System Sub-Pillar --</option>
-                <option value="1500|2-5 Days|1.1 Business Name Registration|Owner Full Name,Active Phone Number,Physical Business Address,Proposed Name Choice 1,Proposed Name Choice 2,Proposed Name Choice 3|Scanned National ID copy,Active KRA PIN Certificate">1.1 Business Name eCitizen Registration [KES 1,500]</option>
-                <option value="4000|3-5 Days|1.2 Partnership Firm Setup (Form BN2)|Managing Partner Name,Firm Contact Number,Trading Location Address,Full Names of Co-Partners|Partners ID Scans Zip,Partners KRA PIN Files">1.2 Partnership / Firm Registry Layout Setup [KES 4,000]</option>
-                <option value="1500|2-3 Days|1.3 Particulars Modification (Form BN3)|Registered Business Name,Existing BRS BN Reference Code,Detailed Description of Changes|Copy of Existing BN4 Certificate">1.3 Business Particulars Alterations (Form BN3) [KES 1,500]</option>
-                <option value="2500|3-5 Days|1.4 Business Cessation Closure Filings|Proprietor Full Name,Owner Contact Number,Stated Reason for Closure|Original Registration Certificate file">1.4 Business Cessation Formal Closure Filings [KES 2,500]</option>
+    <footer class="footer"><strong>VECCTAPIVOT ENTERPRISES</strong><p style="margin-top:5px;">© 2026. Static Low-Bandwidth Infrastructure Node. All Rights Reserved.</p></footer>
+    <script>
+        document.getElementById('globalSearch').addEventListener('input', function(e) {
+            const val = e.target.value.toLowerCase().trim();
+            document.querySelectorAll('.card').forEach(card => {
+                const terms = card.getAttribute('data-index');
+                if(val === "" || terms.includes(val)) { card.classList.remove('hidden'); }
+                else { card.classList.add('hidden'); }
+            });
+        });
+    </script>
+</body>
+</html>
