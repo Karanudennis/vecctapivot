@@ -87,12 +87,24 @@ body {
 .meta-row { font-size: 14px; color: #444; background: #F1F5F9; padding: 12px; border-radius: 6px; margin: 12px 0; line-height: 1.6; }
 .final-highlight-price { font-weight: bold; font-size: 16px; color: #000; margin-top: 4px; }
 
-/* Web-Safe Action Communications Utility Ribbons */
+/* NEW Detailed Specifications Inside Layout Boxes */
+.detailed-specs-box {
+    background: #FAFBFD;
+    padding: 18px;
+    border-radius: 8px;
+    border: 1px dashed #CBD5E1;
+    margin: 15px 0;
+}
+.detailed-specs-box h4 { margin: 0 0 8px 0; font-size: 14px; color: var(--primary-navy); text-transform: uppercase; letter-spacing: 0.5px; }
+.detailed-specs-box ul { margin: 0; padding-left: 20px; font-size: 14px; color: #4A5568; line-height: 1.6; }
+.guarantee-badge { display: inline-block; background: #E0F2FE; color: #0369A1; font-size: 12px; font-weight: bold; padding: 5px 12px; border-radius: 4px; margin-top: 12px; }
+
+/* Web-Safe Action Communications Utility Ribbons with Handshake fixes */
 .action-btn-ribbon { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+.action-btn-ribbon a { display: inline-block !important; cursor: pointer !important; pointer-events: auto !important; -webkit-tap-highlight-color: transparent; }
 .ribbon-btn { flex: 1; min-width: 140px; text-align: center; text-decoration: none; color: white; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 14px; }
 .wa-color { background-color: var(--wa-green); }
 .mail-color { background-color: var(--gmail-red); }
-.call-color { background-color: var(--call-blue); }
 
 /* Baseline Corporate Footer Element Layer */
 .portal-footer {
@@ -104,7 +116,6 @@ body {
     margin-top: 80px;
     line-height: 1.6;
 }
-.legal-footer { font-size: 11px; opacity: 0.6; margin-top: 12px; }
 
 /* Adjustments for tight smartphone viewing screens */
 @media(max-width: 600px) {
