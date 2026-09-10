@@ -6,135 +6,241 @@
     <title>Vecctapivot Enterprises | Operations Marketplace Hub</title>
     <style>
         :root {
-            --bg-main: #020C1B;
+            --bg-obsidian: #030712;
             --panel-slate: #0b1329;
             --border-muted: rgba(255, 255, 255, 0.06);
             --gold-accent: #d4af37;
-            --text-white: #f3f4f6;
+            --text-pure: #f3f4f6;
             --text-muted: #9ca3af;
+            --bg-deep-node: #060b18;
             --amber-warning: #FFB300;
+            --success-green: #10b981;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; transition: transform 0.2s ease, border-color 0.2s ease; }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease, background-color 0.2s ease; 
+        }
+
         body {
-            background-color: var(--bg-main); color: var(--text-white);
+            background-color: var(--bg-obsidian);
+            color: var(--text-pure);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
-        .ticker { background: var(--amber-warning); color: #000000; text-align: center; padding: 12px; font-size: 13px; font-weight: 800; letter-spacing: 0.3px; }
-        .header { text-align: center; padding: 50px 24px; border-bottom: 1px solid var(--border-muted); }
-        .brand-identity-block { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 10px; }
-        .corporate-logo { max-height: 90px; width: auto; margin-bottom: 14px; filter: drop-shadow(0 2px 8px rgba(212,175,55,0.2)); }
-        .brand-text-fallback { font-size: 26px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+
+        .urgency-ticker {
+            background-color: var(--amber-warning); 
+            color: #000000;
+            text-align: center; 
+            padding: 12px 20px; 
+            font-size: 13px; 
+            font-weight: 800; 
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+            letter-spacing: 0.3px; 
+        }
+
+        .portal-header {
+            background: linear-gradient(135deg, #060b18 0%, var(--bg-obsidian) 100%);
+            text-align: center;
+            padding: 50px 24px;
+            width: 100%;
+            border-bottom: 1px solid var(--border-muted);
+        }
+
+        .welcome-container { max-width: 850px; margin: 0 auto; }
+        .brand-identity-block { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .corporate-logo { max-height: 85px; width: auto; margin-bottom: 12px; filter: drop-shadow(0 2px 8px rgba(212,175,55,0.2)); }
+        .brand-text-fallback { font-size: 24px; font-weight: 900; letter-spacing: 1.5px; color: #ffffff; text-transform: uppercase; margin-bottom: 4px; }
         .brand-text-fallback span { color: var(--gold-accent); }
-        .welcome-banner { font-size: 11px; font-weight: 700; color: var(--gold-accent); letter-spacing: 2.5px; text-transform: uppercase; margin-top: 8px; margin-bottom: 10px; }
-        .portal-header-title { font-size: 34px; font-weight: 800; color: #ffffff; margin-bottom: 10px; letter-spacing: -0.5px; }
-        .tagline { font-size: 14.5px; color: var(--text-muted); font-style: italic; }
-        .search-box { max-width: 650px; width: 100%; margin: 35px auto 10px auto; padding: 0 24px; }
-        .search-box input { width: 100%; padding: 16px 24px; background: var(--panel-slate); border: 1px solid var(--border-muted); border-radius: 30px; color: #ffffff; font-size: 14.5px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .search-box input:focus { outline: none; border-color: var(--gold-accent); box-shadow: 0 0 12px rgba(212,175,55,0.15); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1300px; width: 100%; margin: 30px auto; padding: 0 24px; }
-        .card { background: var(--panel-slate); border: 1px solid var(--border-muted); padding: 35px 24px; border-radius: 8px; text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
-        .card:hover { border-color: var(--gold-accent); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(212,175,55,0.06); }
-        .card.hidden { display: none !important; }
-        .card h2 { font-size: 18px; font-weight: 800; color: #ffffff; margin-bottom: 12px; }
-        .card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; flex: 1; margin-bottom: 20px; }
-        .card ul { list-style: none; margin-bottom: 15px; font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
-        .card ul li { margin-bottom: 4px; padding-left: 10px; position: relative; }
-        .card ul li::before { content: "•"; position: absolute; left: 0; color: var(--gold-accent); }
-        .card span { font-size: 11.5px; font-weight: 700; color: var(--gold-accent); text-transform: uppercase; letter-spacing: 0.5px; }
-        .footer { background: #060b18; border-top: 1px solid var(--border-muted); padding: 40px 24px; text-align: center; font-size: 13px; color: var(--text-muted); margin-top: auto; }
+        .welcome-banner { font-size: 11px; font-weight: 700; color: var(--gold-accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+        .portal-header h1 { font-size: 32px; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
+        .tagline { font-size: 14px; color: var(--text-muted); font-style: italic; }
+
+        .matrix-breadcrumb-bar {
+            max-width: 1200px;
+            width: 100%;
+            margin: 30px auto 10px auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .crumb-item {
+            color: var(--text-muted);
+            padding: 6px 14px;
+            background: var(--panel-slate);
+            border: 1px solid var(--border-muted);
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .crumb-item.active-layer {
+            color: #000000;
+            background: var(--gold-accent);
+            border-color: var(--gold-accent);
+        }
+
+        .dashboard-matrix-view {
+            max-width: 1200px;
+            width: 100%;
+            margin: 10px auto 40px auto;
+            padding: 0 24px;
+            flex: 1;
+        }
+
+        .matrix-stage-panel {
+            background-color: var(--panel-slate);
+            border: 1px solid var(--border-muted);
+            border-radius: 12px;
+            padding: 35px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .matrix-stage-panel h3 {
+            font-size: 19px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-muted);
+            padding-bottom: 14px;
+        }
+
+        .matrix-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .matrix-clickable-node {
+            background-color: var(--bg-deep-node);
+            border: 1px solid var(--border-muted);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: left;
+            cursor: pointer;
+            width: 100%;
+            color: inherit;
+            font-family: inherit;
+        }
+
+        .matrix-clickable-node:hover {
+            border-color: var(--gold-accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.08);
+        }
+
+        .matrix-clickable-node h4 {
+            font-size: 16px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .matrix-clickable-node p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .action-node-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gold-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 12px;
+            display: block;
+        }
+
+        .ingestion-console-section {
+            max-width: 1200px;
+            width: 100%;
+            margin: 20px auto 60px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+        }
+
+        .action-card-panel {
+            background-color: var(--panel-slate);
+            border: 1px solid var(--border-muted);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .action-card-panel h2 { font-size: 20px; font-weight: 800; color: #ffffff; margin-bottom: 6px; border-bottom: 1px solid var(--border-muted); padding-bottom: 14px; }
+        .action-card-panel p.section-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; }
+        .form-element-block { margin-bottom: 18px; }
+        .form-element-block label { display: block; font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-element-block input[type="text"], .form-element-block textarea { width: 100%; padding: 14px; background-color: var(--bg-deep-node); border: 1px solid var(--border-muted); border-radius: 6px; color: #ffffff; font-size: 14px; font-family: inherit; }
+        
+        .upload-picker-container { background: rgba(255,255,255,0.01); border: 1px dashed var(--border-muted); padding: 18px; border-radius: 6px; text-align: center; }
+        .upload-picker-container input[type="file"] { display: block; margin: 8px auto 0 auto; color: var(--text-muted); }
+
+        .submission-trigger-btn { width: 100%; padding: 16px; background-color: var(--gold-accent); color: #000000; border: none; border-radius: 6px; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
+        .submission-trigger-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
+        .ticket-trigger-btn { background-color: transparent; border: 1px solid rgba(255,255,255,0.2); color: #ffffff; margin-top: 15px; }
+        .ticket-trigger-btn:hover { background-color: rgba(255,255,255,0.05); }
+
+        .hidden-element { display: none !important; }
+        .telemetry-success-receipt { background: rgba(16, 185, 129, 0.05); border: 1px solid var(--success-green); border-radius: 6px; padding: 20px; margin-top: 20px; }
+        .telemetry-success-receipt h4 { color: var(--success-green); margin-bottom: 6px; font-weight: 800; }
+        .telemetry-success-receipt strong { font-family: monospace; color: #ffffff; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; }
+
+        .portal-footer {
+            background-color: #090e1a;
+            border-top: 1px solid var(--border-muted);
+            padding: 40px 24px;
+            font-size: 13.5px;
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+        .footer-branding { font-weight: 700; color: #ffffff; margin-bottom: 4px; }
     </style>
 </head>
 <body>
-    <div class="ticker">🔒 Multidimensional Architecture Grid Operational — Reference Ticket: <strong>VP-TICKET-000000</strong></div>
-    
-    <header class="header">
-        
-            <img src="logo.png" alt="Vecctapivot Logo" class="corporate-logo" onerror="this.style.display='none';">
-            <div class="brand-text-fallback">VECCTAPIVOT <span>ENTERPRISES</span></div>
-            <div class="welcome-banner">343 Matrix Pipeline Marketplace</div>
-        </div>
-        <h1 class="portal-header-title">Master Operations Routing Portal</h1>
-        <div class="tagline">Statutory Account Alignment Hub (BRS Status Verification: BN-AYSO8LRE)</div>
-    </header>
 
-    <div class="search-box">
-        <input type="text" id="globalSearch" placeholder="Search across all 343 execution steps instantly (e.g., BN2, CPA, Lorry, SHA)...">
+    <div class="urgency-ticker">
+        <p>🔒 7 × 7 × 7 Unified Grid System Operational — Staging Reference Ticket: <strong>VP-TICKET-000000</strong></p>
     </div>
 
-    <!-- The 7 Navigation Cards Displaying the 7 Core Pillars and their Sub-Pillars -->
-    <main class="grid">
-        <!-- PILLAR 1 -->
-        <a href="digital.html" class="card" data-index="digital brand ecitizen registration layouts bn2 form share conversion logo particular alterations cessation data control privacy database verification multi proprietor corporate closure vector branding asset vaults">
-            <h2>Pillar 1: Digital & Brand Systems</h2>
-            <p>Access processing frameworks for corporate transformations, eCitizen integration setups, and intellectual asset protections.</p>
-            <ul>
-                <li>1.1: Name Reservation Ingestion</li>
-                <li>1.2: Partnership Layout (BN2)</li>
-                <li>1.3: Particulars Alterations</li>
-                <li>1.4: Cessation Filings</li>
-                <li>1.5: Historical Record Linking</li>
-                <li>1.6: Vector Identity Branding Packs</li>
-                <li>1.7: Secure Document Vaults</li>
-            </ul>
-            <span>Launch Desk 1 Matrix (49 Steps) →</span>
-        </a>
+    <header class="portal-header">
+        <div class="welcome-container">
+            
+                <img src="logo.png" alt="Logo" class="corporate-logo" onerror="this.style.display='none';">
+                <div class="brand-text-fallback">VECCTAPIVOT <span>ENTERPRISES</span></div>
+                <div class="welcome-banner">343 Matrix Pipeline Marketplace</div>
+            </div>
+            <h1>Dynamic Routing Marketplace</h1>
+            <p class="tagline">Single-Page Multi-Level Terminal (BRS Reference: BN-AYSO8LRE)</p>
+        </div>
+    </header>
 
-        <!-- PILLAR 2 -->
-        <a href="academic.html" class="card" data-index="academic exam mock booklets kasneb cpa cbc revision kit notes secondary paper junior student portal knec tveta syllabus joint termly mock booklets print distribution cloud vault technical education evaluation analytic matrix">
-            <h2>Pillar 2: Academic & Testing Logistics</h2>
-            <p>Deploy inter-county mock resources networks, specialized binding revision pipelines, and professional syllabus coordination grids.</p>
-            <ul>
-                <li>2.1: Joint Termly Mock Bundles</li>
-                <li>2.2: Printed Topical Revision Booklets</li>
-                <li>2.3: KASNEB CPA National Archive</li>
-                <li>2.4: KASNEB ATD Revision Kits</li>
-                <li>2.5: Junior Secondary CBC Distribution</li>
-                <li>2.6: Notes Digitization Run</li>
-                <li>2.7: Candidate Profile Portal Setup</li>
-            </ul>
-            <span>Launch Desk 2 Matrix (49 Steps) →</span>
-        </a>
+    <nav class="matrix-breadcrumb-bar">
+        <span class="crumb-item active-layer" id="crumbL1">1. Pillars Matrix</span>
+        <span class="crumb-item" id="crumbL2">2. Sub Pillars</span>
+        <span class="crumb-item" id="crumbL3">3. Sub-Subs Actions</span>
+    </nav>
 
-        <!-- PILLAR 3 -->
-        <a href="transport.html" class="card" data-index="transport courier ride booking lorry cargo canter logistics fleet track last mile motorcycle cold chain executive transit point transfers parcel distribution fleets canters shuttle telemetry third party insurance">
-            <h2>Pillar 3: Transport Brokerage Hub</h2>
-            <p>Coordinate point-to-point commercial route configurations, last-mile express dispatch nodes, and container telemetry runs.</p>
-            <ul>
-                <li>3.1: Executive Ride Bookings</li>
-                <li>3.2: Motorcycle Courier Runs</li>
-                <li>3.3: Inter-County Lorry Sourcing</li>
-                <li>3.4: Cold-Chain Cargo Freight</li>
-                <li>3.5: Fleet Itineraries Scheduling</li>
-                <li>3.6: Highway Cargo Telemetry</li>
-                <li>3.7: Cargo Third-Party Insurance</li>
-            </ul>
-            <span>Launch Desk 3 Matrix (49 Steps) →</span>
-        </a>
-
-        <!-- PILLAR 4 -->
-        <a href="sourcing.html" class="card" data-index="sourcing produce farm agriculture wholesale price audit supplier map border import customs freight manifest contract factory gate price harvest trajectories cross border fraud validation entry metrics sample prototypes production agreements off take pricing">
-            <h2>Pillar 4: Merchandise Sourcing Links</h2>
-            <p>Audit industrial factory-gate wholesale costs, map global supplier import tracks, and manage agriculture value contracts.</p>
-            <ul>
-                <li>4.1: Farm-Gate Produce Sourcing</li>
-                <li>4.2: Factory Wholesale Price Audits</li>
-                <li>4.3: B2B Import Vendor Maps</li>
-                <li>4.4: Supplier Background Audits</li>
-                <li>4.5: Customs Freight Duty Calculations</li>
-                <li>4.6: Prototype Quality Inspections</li>
-                <li>4.7: Contract Farming Frameworks</li>
-            </ul>
-            <span>Launch Desk 4 Matrix (49 Steps) →</span>
-        </a>
-
-        <!-- PILLAR 5 -->
-        <a href="fixer.html" class="card" data-index="fixer land site inspection proxy permit storefront check subcounty zoning real estate beacon security compliance municipal citation land reference codes loading bays administrative offices storefront layout activity activity verification">
-            <h2>Pillar 5: Independent Fixer Desk</h2>
-            <p>Deploy field proxy units to coordinate land reference coordinate surveys, clear stuck local permits, and handle citations.</p>
-            <ul>
-                <li>5.1: Real Estate Site Inspections</li>
-                <li>5.2: Pre-Transit Cargo Tally Counts</li>
-                <li>5.3: Pending Commercial Permits Proxy</li>
-                <li>5.4: Property Safety Compliance Audits</li>
-                <li>5.5: Business Permit Zoning Maps</li>
+    <main class="dashboard-matrix-view">
+        <div class="matrix-stage-panel">
+            <h3 id="matrixPanelTitle">Select Core Operations Sector Pillar</h3>
