@@ -19,56 +19,51 @@
             box-sizing: border-box; 
             margin: 0; 
             padding: 0; 
-            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; 
         }
 
         body {
             background-color: var(--bg-obsidian);
             color: var(--text-pure);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Institutional Corporate Header Panel Layout */
+        /* Premium Header Area Layout */
         .portal-header {
             background: linear-gradient(135deg, #060b18 0%, var(--bg-obsidian) 100%);
             text-align: center;
-            padding: 80px 24px;
+            padding: 60px 24px;
             width: 100%;
             border-bottom: 1px solid var(--border-muted);
-            position: relative;
         }
 
         .welcome-container { 
             max-width: 850px; 
             margin: 0 auto; 
-            position: relative; 
-            z-index: 2; 
         }
 
-        /* Premium Brand Identity Header Area Architecture */
+        /* Brand Identity Header Infrastructure */
         .brand-identity-block {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
         
         .corporate-logo {
-            max-height: 85px;
+            max-height: 80px;
             width: auto;
-            margin-bottom: 12px;
-            object-fit: contain;
+            margin-bottom: 10px;
         }
 
         .brand-text-fallback {
             font-size: 22px;
             font-weight: 900;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             color: #ffffff;
             text-transform: uppercase;
         }
@@ -81,48 +76,47 @@
             font-size: 11px;
             font-weight: 700;
             color: var(--gold-accent);
-            letter-spacing: 2.5px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             margin-top: 6px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .portal-header h1 {
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 800;
-            letter-spacing: -0.75px;
+            letter-spacing: -0.5px;
             color: #ffffff;
             line-height: 1.2;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .tagline {
-            font-size: 16px;
+            font-size: 15px;
             color: var(--text-muted);
             font-style: italic;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .trust-badge {
             display: inline-block;
             background-color: rgba(212, 175, 55, 0.04);
             border: 1px solid rgba(212, 175, 55, 0.15);
-            padding: 6px 18px;
+            padding: 6px 16px;
             border-radius: 30px;
             font-size: 12.5px;
             font-weight: 600;
             color: var(--gold-accent);
-            letter-spacing: 0.3px;
         }
 
         .philosophy-box {
             background-color: var(--panel-slate);
             border-left: 3px solid var(--gold-accent);
             border-radius: 4px;
-            padding: 26px;
-            margin-top: 35px;
+            padding: 24px;
+            margin-top: 30px;
             text-align: left;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .philosophy-box h3 {
@@ -131,56 +125,61 @@
             color: #ffffff;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .philosophy-box p {
-            font-size: 14.5px;
+            font-size: 14px;
             color: var(--text-muted);
             line-height: 1.6;
         }
 
-        /* Real-Time Keyword Search Input Section */
+        /* Keyword Directory Search Input Area Layout */
         .search-master-section {
             max-width: 850px;
             width: 100%;
-            margin: 50px auto 10px auto;
+            margin: 40px auto 10px auto;
             padding: 0 24px;
             text-align: center;
         }
 
         .search-master-section h3 {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
             color: #ffffff;
             margin-bottom: 6px;
         }
 
+        .faq-subtitle {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
         .search-bar-box input {
             width: 100%;
-            padding: 18px 26px;
+            padding: 16px 24px;
             background-color: var(--panel-slate);
             border: 1px solid var(--border-muted);
             border-radius: 30px;
             color: #ffffff;
-            font-size: 15px;
+            font-size: 14.5px;
             font-family: inherit;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
         .search-bar-box input:focus {
             outline: none;
             border-color: var(--gold-accent);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
         }
 
-        /* Navigational Desktop Grid Menu Layout */
+        /* 7 Primary Grid Core Navigational Cards Layout */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 28px;
-            padding: 50px 24px;
-            max-width: 1150px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            padding: 40px 24px;
+            max-width: 1100px;
             margin: 0 auto;
             width: 100%;
         }
@@ -188,52 +187,50 @@
         .pillar-card {
             background-color: var(--panel-slate);
             border: 1px solid var(--border-muted);
-            padding: 40px 26px;
+            padding: 35px 24px;
             border-radius: 8px;
             text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             cursor: pointer;
-            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .pillar-card:hover {
-            transform: translateY(-4px);
             border-color: var(--gold-accent);
-            box-shadow: 0 16px 35px rgba(212, 175, 55, 0.08);
+            transform: translateY(-2px);
         }
 
         .pillar-card .icon {
-            font-size: 44px;
-            margin-bottom: 16px;
+            font-size: 40px;
+            margin-bottom: 14px;
         }
 
         .pillar-card h2 {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 12px;
-            letter-spacing: -0.1px;
+            margin-bottom: 10px;
         }
 
         .pillar-card p {
-            font-size: 14px;
+            font-size: 13.5px;
             color: var(--text-muted);
-            line-height: 1.55;
-            margin-bottom: 24px;
+            line-height: 1.5;
+            margin-bottom: 20px;
             flex: 1;
         }
 
         .explore-node-text {
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 700;
             color: var(--gold-accent);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        /* FAQ Content Styles Layout */
+        /* Accordion FAQ Layout Block */
         .faq-master-container {
             max-width: 850px;
             width: 100%;
@@ -242,24 +239,20 @@
         }
 
         .faq-master-container h2 {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
             color: #ffffff;
             text-align: center;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .faq-item-card {
             background-color: var(--panel-slate);
             border: 1px solid var(--border-muted);
             border-radius: 6px;
-            padding: 22px;
-            margin-bottom: 14px;
+            padding: 20px;
+            margin-bottom: 12px;
             cursor: pointer;
-        }
-
-        .faq-item-card:hover {
-            border-color: rgba(255, 255, 255, 0.12);
         }
 
         .faq-question-row {
@@ -269,7 +262,7 @@
         }
 
         .faq-question-row h4 {
-            font-size: 15px;
+            font-size: 14.5px;
             font-weight: 600;
             color: #ffffff;
             text-align: left;
@@ -285,7 +278,7 @@
             margin-top: 14px;
             padding-top: 14px;
             border-top: 1px solid var(--border-muted);
-            font-size: 14px;
+            font-size: 13.5px;
             color: var(--text-muted);
             line-height: 1.6;
             text-align: left;
@@ -293,11 +286,9 @@
 
         .hidden-faq { display: none !important; }
 
-        /* ==========================================================================
-           PREMIUM INSTITUTIONAL FOOTER (TRUE SINGLE-COLUMN MOBILE RE-ARCHITECTURE)
-           ========================================================================== */
+        /* Professional Stacked Mobile Footer Architecture Layout */
         .portal-footer {
-            background-color: #070b14;
+            background-color: #090e1a;
             border-top: 1px solid var(--border-muted);
             padding: 60px 24px 40px 24px;
             font-size: 14px;
@@ -353,3 +344,22 @@
             padding-top: 25px;
             max-width: 900px;
             margin: 30px auto 0 auto;
+            text-align: center;
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+
+        .legal-footer {
+            font-size: 11.5px;
+            opacity: 0.6;
+            line-height: 1.6;
+            margin-top: 12px;
+            text-align: justify;
+        }
+
+        @media(max-width: 768px) {
+            .portal-header { padding: 50px 16px; }
+            .portal-header h1 { font-size: 24px; }
+            .grid-container { padding: 24px 16px; gap: 16px; }
+            .footer-grid-row { gap: 30px; }
+            .legal-footer { text-align: left; }
