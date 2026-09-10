@@ -41,7 +41,7 @@
             <div class="detailed-specs-box">
                 <h4>📋 Secure Data Ingestion Terminal (Business Name):</h4>
                 
-                <form action="https://formspree.io" method="POST" onsubmit="executeSingleClientSubmission(event, 'REG')" class="embedded-intake-desk">
+                <form action="https://formspree.io" method="POST" onsubmit="executeSingleClientSubmission(event, 'REG')" class="embedded-intake-desk" enctype="multipart/form-data">
                     <input type="hidden" name="_subject" id="subject-p11" value="New Secure Order: Service 1.1 Business Name">
                     <input type="hidden" name="Unique Ticket ID" id="hidden-ticket-p11">
                     
@@ -81,7 +81,7 @@
             </div>
             <div class="detailed-specs-box">
                 <h4>📋 Secure Data Ingestion Terminal (Partnership):</h4>
-                <form action="https://formspree.io" method="POST" onsubmit="executeSingleClientSubmission(event, 'PTN')" class="embedded-intake-desk">
+                <form action="https://formspree.io" method="POST" onsubmit="executeSingleClientSubmission(event, 'PTN')" class="embedded-intake-desk" enctype="multipart/form-data">
                     <input type="hidden" name="_subject" id="subject-p12" value="New Order: Service 1.2 Partnership Setup">
                     <input type="hidden" name="Unique Ticket ID" id="hidden-ticket-p12">
                     
@@ -91,13 +91,13 @@
                     <label>Active Contact Phone Number:</label>
                     <input type="tel" name="Phone Number" placeholder="e.g., 0712345678" required>
 
-                    <label>List All Partners' National ID Numbers & KRA PINs:</label>
-                    <textarea name="Partners Credentials Log" rows="2" placeholder="Partner 1: ID 111111 PIN A123... | Partner 2: ID 222222 PIN A456..." required></textarea>
+                    <label>List All Partners' National ID Numbers, Phone Numbers & Addresses:</label>
+                    <textarea name="Partners Credentials Log" rows="2" placeholder="Partner 1: ID 111111, Ol Kalou... | Partner 2: ID 222222, Dundori..." required></textarea>
                     
                     <label>Proposed Firm Trading Objectives Summary:</label>
                     <textarea name="Firm Objectives" rows="2" placeholder="e.g., Wholesale supply of agricultural inputs and potato grading packaging..." required></textarea>
 
-                    <label class="upload-picker-label">📎 Attach Partners ID Scans (Zip/PDF):</label>
+                    <label class="upload-picker-label">📎 Attach Partners ID Scans & KRA PINs (Zip/PDF/Images):</label>
                     <input type="file" name="Partners ID File Attach" class="upload-picker-input" required>
                     
                     <button type="submit" class="submit-ticket-btn" style="width: 100%; background-color: var(--call-blue);">🚀 Submit Credentials & Lock Slot</button>
@@ -115,7 +115,7 @@
             </div>
             <div class="detailed-specs-box">
                 <h4>📋 Secure Data Ingestion Terminal (BN3 Alteration):</h4>
-                <form action="https://formspree.io" method="POST" onsubmit="executeSingleClientSubmission(event, 'MOD')" class="embedded-intake-desk">
+                <form action="https://formspree.io" method="POST" onsubmit="executeSingleClientSubmission(event, 'MOD')" class="embedded-intake-desk" enctype="multipart/form-data">
                     <input type="hidden" name="_subject" id="subject-p13" value="New Order: Service 1.3 Particulars Alteration">
                     <input type="hidden" name="Unique Ticket ID" id="hidden-ticket-p13">
                     
@@ -147,5 +147,3 @@
                 <p>Engineering Overheads: KES 0 | Bespoke Vector Architecture: KES 3,500</p>
                 <p class="final-highlight-price">Total Invoiced Cost: KES 3,500 Flat</p>
             </div>
-            <div class="detailed-specs-box">
-                <h4>📋 Design Specifications Intake Form:</h4>
