@@ -3,138 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vecctapivot Enterprises | Operations Marketplace Hub</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Vecctapivot Enterprises | Operations Hub</title>
+    <style>
+        :root { --navy: #020C1B; --panel: #112240; --cyan: #64FFDA; --text: #CCD6F6; --muted: #8892B0; }
+        * { box-sizing: border-box; font-family: -apple-system, sans-serif; }
+        body { margin: 0; background: var(--navy); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+        header { padding: 60px 20px; text-align: center; border-bottom: 1px solid rgba(100,255,218,0.1); }
+        h1 { font-size: 26px; color: #FFF; margin: 10px 0; }
+        .box { background: var(--panel); border-radius: 6px; padding: 20px; max-width: 800px; margin: 20px auto; text-align: left; }
+        .search-box { width: 100%; max-width: 800px; margin: 20px auto; padding: 0 20px; }
+        .search-box input { width: 100%; padding: 15px; border-radius: 30px; border: 1px solid var(--cyan); background: var(--panel); color: #fff; font-size: 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1100px; margin: 0 auto; width: 100%; }
+        .card { background: var(--panel); padding: 30px 20px; border-radius: 6px; text-align: center; border: 1px solid rgba(100,255,218,0.05); cursor: pointer; }
+        .card:hover { border-color: var(--cyan); }
+        .faq-sect { max-width: 800px; margin: 30px auto; padding: 0 20px; width: 100%; }
+        .faq-card { background: var(--panel); padding: 20px; border-radius: 6px; margin-bottom: 10px; cursor: pointer; }
+        .faq-row { display: flex; justify-content: space-between; font-weight: bold; color: #FFF; }
+        .faq-ans { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); color: var(--muted); line-height: 1.5; }
+        
+        /* Bulletproof Single-Column Mobile Footer Engine Layout */
+        footer { background: #0A192F; border-top: 1px solid rgba(100,255,218,0.15); padding: 40px 20px; margin-top: auto; width: 100%; }
+        .foot-row { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px; text-align: left; }
+        @media(min-width: 769px) { .foot-row { flex-direction: row; justify-content: space-between; } }
+        .foot-col h4 { color: #FFF; margin: 0 0 10px 0; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; border-bottom: 2px solid var(--cyan); padding-bottom: 4px; display: inline-block; }
+        .foot-col p { margin: 5px 0; font-size: 13.5px; color: var(--muted); }
+    </style>
 </head>
 <body>
 
-    <!-- Elite Corporate Welcome Header Interface Area -->
-    <header class="portal-header">
+    <header>
         <div class="welcome-container">
-            <div class="visual-glow-orb"></div>
-            <img src="logo.png" alt="Vecctapivot Logo" class="corporate-logo" onerror="this.style.display='none'">
-            <div class="welcome-banner">VECCTAPIVOT ENTERPRISES • DISPATCH TERMINAL SYSTEM</div>
+            <div style="font-size: 11px; font-weight: bold; color: var(--cyan); letter-spacing: 2px;">VECCTAPIVOT ENTERPRISES</div>
             <h1>INTEGRATED OPERATIONS TERMINAL</h1>
-            <p class="tagline">"Delivering seamless workflow clearance, cross-border logistics infrastructure, and absolute transaction security."</p>
-            <div class="trust-badge">
-                <span>🛡️ Certified Legal Entity | BRS Reference: BN-AYSO8LRE</span>
-            </div>
-
-            <!-- Balanced Unbiased Value Proposition Card -->
-            <div class="philosophy-box">
-                <h3>🤝 Institutional Ground Execution & Sourcing Brokerage</h3>
-                <p>Welcome to the central operational portal. Vecctapivot Enterprises provides domestic merchants and international enterprise partners with centralized ground fulfillment across seven specialized business tracks. Use the search directory below or select an active service desk node to review project scopes, validation requirements, and fixed delivery timeframes.</p>
+            <div style="margin: 10px 0; font-size: 12px; background: rgba(100,255,218,0.05); display: inline-block; padding: 6px 15px; border-radius: 30px; color: var(--cyan); font-weight: bold; border: 1px solid rgba(100,255,218,0.15);">🛡️ BRS Reference Token: BN-AYSO8LRE</div>
+            <div class="box">
+                <div style="font-weight: bold; color: #FFF; margin-bottom: 5px;">🤝 Institutional Ground Brokerage</div>
+                <p style="margin: 0; font-size: 14px; color: var(--muted); line-height: 1.5;">Welcome to your secure operational interface. Select any primary sector desk below to navigate directly to its dedicated submission workspace, check execution timeframes, or initialize a verified service request ticket panel.</p>
             </div>
         </div>
     </header>
 
-    <!-- LIVE REAL-TIME RESOURCE SEARCH SECTOR DIRECTORY -->
-    <section class="search-master-section">
-        <h3>🔍 Live Resource Search Directory</h3>
-        <p class="faq-subtitle">Type key terms to instantly filter active service tracks (e.g., 'KRA', 'Lorry', 'Mock', 'Good Conduct', 'Maisha').</p>
-        <div class="search-bar-box">
-            <input type="text" id="marketplace-search" onkeyup="filterMarketplaceSearch()" placeholder="Search through our operational service tracks here...">
-        </div>
-    </section>
+    <div class="search-box">
+        <input type="text" id="biz-search" onkeyup="runPortalSearch()" placeholder="Type keywords to filter workspace branches (e.g., 'KRA', 'Lorry', 'CPA')...">
+    </div>
 
-    <!-- THE 7 SMART PRIMARY CORPORATE DESK PILLARS GRID -->
-    <main id="portal-grid" class="grid-container">
-        
-        <!-- Pillar 1 -->
-        <div class="pillar-card searchable-card" data-tags="digital brand brs registration logo bn2 bn3 cessation closure particulars link legacy ecitizen corporate profile name search partnership partners company logotype sticker vector sole proprietor" onclick="window.location.href='digital.html'">
-            <div class="icon">💻</div>
-            <h2>1. Digital & Brand Systems</h2>
-            <p>BRS Business Registrations, Official Profile Alterations, and Premium Visual Corporate Identity Branding Profiles.</p>
-            <div class="explore-node-text">Review Sector Solutions ➡️</div>
+    <main class="grid">
+        <div class="card search-item" data-tags="digital brand registration name search e-citizen company sole proprietor" onclick="window.location.href='digital.html'">
+            <div style="font-size: 40px; margin-bottom: 10px;">💻</div>
+            <h2 style="font-size: 18px; margin: 5px 0; color:#fff;">1. Digital & Brand Systems</h2>
+            <p style="font-size: 13px; color: var(--muted); margin: 0 0 15px 0;">BRS Business Registrations, Particulars Alterations, and Premium Visual Branding Identity Profiles.</p>
+            <div style="font-size: 11px; font-weight: bold; color: var(--cyan);">INITIALIZE SOLUTIONS ➡️</div>
         </div>
 
-        <!-- Pillar 2 -->
-        <div class="pillar-card searchable-card" data-tags="academic test mock exam high school form cbc revision booklet vault kasneb cpa atd past paper guide notes tuition books education study school past papers booklet result slip college study revision papers" onclick="window.location.href='academic.html'">
-            <div class="icon">📚</div>
-            <h2>2. Academic & Testing Logistics</h2>
-            <p>Form 1-4 High School Mock Evaluation Bundles, CBC School Assessment Distributions, and CPA/ATD Revision Portfolios.</p>
-            <div class="explore-node-text">Review Sector Solutions ➡️</div>
+        <div class="card search-item" data-tags="academic mock exam booklets revisions papers high school kasneb cpa atd college tests" onclick="window.location.href='academic.html'">
+            <div style="font-size: 40px; margin-bottom: 10px;">📚</div>
+            <h2 style="font-size: 18px; margin: 5px 0; color:#fff;">2. Academic Logistics</h2>
+            <p style="font-size: 13px; color: var(--muted); margin: 0 0 15px 0;">Form 1-4 High School Mock Evaluation Bundles, CBC Distributions, and KASNEB CPA/ATD Revision Vaults.</p>
+            <div style="font-size: 11px; font-weight: bold; color: var(--cyan);">INITIALIZE SOLUTIONS ➡️</div>
         </div>
 
-        <!-- Pillar 3 -->
-        <div class="pillar-card searchable-card" data-tags="transport ride taxi booking courier dispatch motorcycle lorry cargo freight logistics cold chain truck trailer van courier bike freight transport route logistics run tracking insurance logbook allocation logistics run carrier agricultural transit shipping heavy trucks" onclick="window.location.href='transport.html'">
-            <div class="icon">🚖</div>
-            <h2>3. Transport Brokerage Hub</h2>
-            <p>Intra-Town Express Couriers, Multi-Passenger Fleet Allocations, and High-Tonnage Inter-County Agricultural Freight Lines.</p>
-            <div class="explore-node-text">Review Sector Solutions ➡️</div>
+        <div class="card search-item" data-tags="transport lorry cargo logistics heavy truck dispatch bike courier freight shipping agriculture" onclick="window.location.href='transport.html'">
+            <div style="font-size: 40px; margin-bottom: 10px;">🚖</div>
+            <h2 style="font-size: 18px; margin: 5px 0; color:#fff;">3. Transport Brokerage Hub</h2>
+            <p style="font-size: 13px; color: var(--muted); margin: 0 0 15px 0;">Intra-Town Express Motorcycle Couriers, Fleet Allocations, and High-Tonnage Agricultural Lorry Freight Lines.</p>
+            <div style="font-size: 11px; font-weight: bold; color: var(--cyan);">INITIALIZE SOLUTIONS ➡️</div>
         </div>
 
-        <!-- Pillar 4 -->
-        <div class="pillar-card searchable-card" data-tags="sourcing merchandise agribusiness crop potato cabbage farm market factory price audit import wholesale b2b supplier check tariff cargo produce harvest yield agriculture potato bags raw materials timber supply chain wholesale grading crops bulk allocations" onclick="window.location.href='sourcing.html'">
-            <div class="icon">🤝</div>
-            <h2>4. Merchandise Sourcing Links</h2>
-            <p>Farm-Gate Agriculture Lot Aggregations, Factory Wholesale Price Audits, and Cross-Border Import Corridor Mapping.</p>
-            <div class="explore-node-text">Review Sector Solutions ➡️</div>
+        <div class="card search-item" data-tags="sourcing agriculture produce wholesale factory audit vendor validation commodities crop market" onclick="window.location.href='sourcing.html'">
+            <div style="font-size: 40px; margin-bottom: 10px;">🤝</div>
+            <h2 style="font-size: 18px; margin: 5px 0; color:#fff;">4. Merchandise Sourcing Links</h2>
+            <p style="font-size: 13px; color: var(--muted); margin: 0 0 15px 0;">Farm-Gate Agricultural Aggregations, Factory Wholesale Price Audits, and Cross-Border Trade Corridor Mapping.</p>
+            <div style="font-size: 11px; font-weight: bold; color: var(--cyan);">INITIALIZE SOLUTIONS ➡️</div>
         </div>
 
-        <!-- Pillar 5 -->
-        <div class="pillar-card searchable-card" data-tags="fixer desk physical site inspection real estate plot verify consignment count warehouse audit permit county proxy enforcement dispute beacon layout safety yard land check sub county registry search property fencing structural check beacons tally counting inventory" onclick="window.location.href='fixer.html'">
-            <div class="icon">🛠️</div>
-            <h2>5. Independent Fixer Desk</h2>
-            <p>Physical Real Estate Site Inspections, Pre-Transit Cargo Tally Counts, and Municipal Notice Proxy Mediation.</p>
-            <div class="explore-node-text">Review Sector Solutions ➡️</div>
+        <div class="card search-item" data-tags="fixer plot land inspection warehouse count tally property safety permits county proxy dispute site beacon verifications" onclick="window.location.href='fixer.html'">
+            <div style="font-size: 40px; margin-bottom: 10px;">🛠️</div>
+            <h2 style="font-size: 18px; margin: 5px 0; color:#fff;">5. Independent Fixer Desk</h2>
+            <p style="font-size: 13px; color: var(--muted); margin: 0 0 15px 0;">Physical Real Estate Site Inspections, Pre-Transit Warehouse Tally Counts, and Municipal Notice Proxy Mediation.</p>
+            <div style="font-size: 11px; font-weight: bold; color: var(--cyan);">INITIALIZE SOLUTIONS ➡️</div>
         </div>
 
-        <!-- Pillar 6 -->
-        <div class="pillar-card searchable-card" data-tags="agency general core consolidated billing ledger accounting balance strategy queue override border trade corridor metrics kpi escrow fund cash fees ledger account statements multi desk override strategy accounts balanced statement financial tracking analytics" onclick="window.location.href='agency.html'">
-            <div class="icon">🏢</div>
-            <h2>6. General Agency Core</h2>
-            <p>Consolidated Corporate Accounts, Inter-Desk Project Escalations, and Independent Transaction Escrow Management.</p>
-            <div class="explore-node-text">Review Sector Solutions ➡️</div>
+        <div class="card search-item" data-tags="agency accounts billing multi desk escrow secure transactions statement financial balance analytics retainers" onclick="window.location.href='agency.html'">
+            <div style="font-size: 40px; margin-bottom: 10px;">🏢</div>
+            <h2 style="font-size: 18px; margin: 5px 0; color:#fff;">6. General Agency Core</h2>
+            <p style="font-size: 13px; color: var(--muted); margin: 0 0 15px 0;">Consolidated Account Portfolios, Inter-Desk Escalation Tracks, and Independent Transaction Escrow Holding.</p>
+            <div style="font-size: 11px; font-weight: bold; color: var(--cyan);">INITIALIZE SOLUTIONS ➡️</div>
         </div>
 
-        <!-- Pillar 7 -->
-        <div class="pillar-card searchable-card" data-tags="statutory immigration portal ecitizen passport id replacement maisha card ntsa dl logbook shif sha health conduct dci lands ardhisasa tax return pin filings returns kra itax good conduct police clearance birth certificate fingerprint driving licence" onclick="window.location.href='statutory.html'">
-            <div class="icon">📄</div>
-            <h2>7. Statutory & Portal Logistics</h2>
-            <p>Official eCitizen Maisha Card Entries, NTSA Logbook Transfer Processing, and KRA iTax Mandatory Return Filings.</p>
-            <div class="explore-node-text">Review Sector Solutions ➡️</div>
+        <div class="card search-item" data-tags="statutory ecitizen passport replacement maisha card ntsa dl logbook shif sha health good conduct clearance birth certificate fingerprint driving licence kra itax returns" onclick="window.location.href='statutory.html'">
+            <div style="font-size: 40px; margin-bottom: 10px;">📄</div>
+            <h2 style="font-size: 18px; margin: 5px 0; color:#fff;">7. Statutory & Portal Logistics</h2>
+            <p style="font-size: 13px; color: var(--muted); margin: 0 0 15px 0;">Official eCitizen Maisha Card Applications, NTSA Logbook Transfer Management, and KRA iTax Return Filings.</p>
+            <div style="font-size: 11px; font-weight: bold; color: var(--cyan);">INITIALIZE SOLUTIONS ➡️</div>
         </div>
-
     </main>
 
-    <!-- LIVE INTUITION FAQ INTERACTION DESK PANEL -->
-    <section class="faq-master-container" style="max-width: 850px; margin: 40px auto; padding: 0 20px; width: 100%;">
-        <h2>❓ Frequently Asked Questions (FAQ)</h2>
-        <p class="faq-subtitle">Clear operational guidelines for our domestic and global clients.</p>
-
-        <div class="faq-item-card" onclick="toggleFaqAnswer('faq-ans-1')">
-            <div class="faq-question-row">
-                <h4>Q: How does the Vecctapivot Marketplace guarantee project fulfillment?</h4>
-                <span class="faq-arrow" id="arrow-faq-ans-1">▼ Expand Answer</span>
-            </div>
-            <div id="faq-ans-1" class="faq-answer-content hidden-faq">
-                <p>Every submitted transaction is bound to a unique tracking ticket and assigned to a specialized on-ground proxy handler. We maintain full accountability and update clients via real-time verification checkpoints, completely eliminating standard administrative bottlenecks.</p>
-            </div>
+    <div class="faq-sect">
+        <h2 style="text-align: center; color: #fff; font-size: 20px; margin-bottom: 20px;">❓ Frequently Asked Questions</h2>
+        
+        <div class="faq-card" onclick="toggleFaqBox('ans1', 'arr1')">
+            <div class="faq-row"><span>Q: How does Vecctapivot guarantee project fulfillment?</span><span id="arr1">▼</span></div>
+            <div id="ans1" class="faq-ans" style="display: none;">Every logged task is assigned directly to a verified on-ground proxy handler. We provide end-to-end processing updates, completely clearing out typical regional administrative bottlenecks layers natively.</div>
         </div>
 
-        <div class="faq-item-card" onclick="toggleFaqAnswer('faq-ans-2')">
-            <div class="faq-question-row">
-                <h4>Q: How safe are my identity credentials and payments with your firm?</h4>
-                <span class="faq-arrow" id="arrow-faq-ans-2">▼ Expand Answer</span>
-            </div>
-            <div id="faq-ans-2" class="faq-answer-content hidden-faq">
-                <p>Absolute security is enforced. All client documents, portal access codes, and identification data packages are processed over encrypted standalone network lanes. High-value logistical distributions and physical verification assignments utilize a transparent 50% commitment architecture, with final ledger settlements executed only upon audited proof of delivery.</p>
-            </div>
-        </div>
-
-        <div class="faq-item-card" onclick="toggleFaqAnswer('faq-ans-3')">
-            <div class="faq-question-row">
-                <h4>Q: What happens if an administrative name search is rejected on eCitizen?</h4>
-                <span class="faq-arrow" id="arrow-faq-ans-3">▼ Expand Answer</span>
-            </div>
-            <div id="faq-ans-3" class="faq-answer-content hidden-faq">
-                <p>If the Registrar of Companies triggers an unrecoverable system rejection due to branding similarities, our corporate desk handlers process your fallback name alternatives immediately on the BRS platform at zero additional labor cost to you.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- PREMIUM INSTITUTIONAL FOOTER (STACks NATIVELY ON MOBILE DISPLAYS) -->
-    <footer id="portal-footer" class="portal-footer">
-        <div class="footer-grid-row">
-            <div class="footer-column-block">
+        <div class="faq-card" onclick="toggleFaqBox('ans2', 'arr2')">
+            <div class="faq-row"><span>Q: How secure are my sensitive files and credential records?</span><span id="arr2">▼</span></div>
