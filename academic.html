@@ -2,7 +2,7 @@
 <html lang="en-KE">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Academic & Testing Logistics | Vecctapivot</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,164 +12,131 @@
         <a href="index.html" class="back-btn">⬅️ Back to Home Portal</a>
     </div>
 
+    <!-- UNIQUE TRANSACTION MODAL CONTAINER -->
+    <div id="success-ticket-modal" class="ticket-modal-overlay hidden-popup">
+        <div class="ticket-modal-card">
+            <div class="ticket-badge-icon">📚</div>
+            <h3>ACADEMIC REPOSITORY ORDER SECURED</h3>
+            <p class="modal-ticket-id">Your Unique Tracking File: <strong id="generated-ticket-id">VP-MCK-0000</strong></p>
+            <div class="modal-notice-box">
+                <p><strong>🔒 Status: Staged & Locked in Queue.</strong> Your study resource targets and delivery addresses have been safely processed into our central vault.</p>
+                <p>To preserve portal integrity, this device is limited to one active ticket run. Please wait—a handler is matching your curriculum files and will text or call you within 15 minutes to clear access configurations.</p>
+            </div>
+            <button type="button" class="modal-close-btn" onclick="closeTicketModal()">Acknowledge & Monitor Status</button>
+        </div>
+    </div>
+
     <main class="services-panel-page">
-        <h2>📚 Academic & Testing Logistics — Logistics Desk</h2>
+        <h2>📚 Academic & Testing Logistics — Desk Hub</h2>
+        <p class="section-intro-text">Access validated national examination banks. Provide parameters inside the specific intake form matching your desired resource track.</p>
 
-        <!-- Service 2.1 -->
+        <!-- Service 2.1 Form -->
         <div class="service-item-block">
-            <h3>2.1 Form 1-4 High School Mock Exam Bundles</h3>
+            <h3>2.1 Form 1-4 High School Termly Mock Exam Bundles</h3>
             <div class="meta-row">
-                <p><strong>⏱️ Delivery SLA:</strong> Instant Softcopy Access Link</p>
-                <p>Compilation Cost: KES 0 | Database License Pass: KES 1,500</p>
-                <p class="final-highlight-price">Total Invoiced Cost: KES 1,500 Full Term Bundle</p>
+                <p><strong>⏱️ Delivery SLA:</strong> Instant Email/WhatsApp Softcopy Download Link</p>
+                <p>Resource Access Fee: KES 1,500 Full Package</p>
             </div>
-
             <div class="detailed-specs-box">
-                <h4>📋 Processing Requirements:</h4>
-                <ul>
-                    <li>Specification of target academic term and subject options</li>
-                    <li>Active WhatsApp or Email delivery channel confirmation</li>
-                    <li>Intended class level focus indicators (Form 1 through Form 4)</li>
-                </ul>
-                <div class="guarantee-badge">🛡️ Comprises complete evaluation papers alongside official marking schemes</div>
-            </div>
+                <h4>📋 Secure Data Ingestion Terminal (Mock Exam Packs):</h4>
+                <form action="https://formspree.io" method="POST" onsubmit="executeSingleClientSubmission(event, 'MCK')" class="embedded-intake-desk">
+                    <input type="hidden" name="_subject" id="subject-p21" value="New Resource Order: Service 2.1 Mocks">
+                    <input type="hidden" name="Unique Ticket ID" id="hidden-ticket-p21">
+                    
+                    <label>Your Full Name / Purchasing School Name:</label>
+                    
+                    
+                    <label>Active Contact Phone Number:</label>
+                    <input type="tel" name="Phone Number" placeholder="e.g., 0712345678" required>
 
-            <div class="action-btn-ribbon">
-                <a href="https://wa.me." target="_blank" class="ribbon-btn wa-color">💬 Initialize via WhatsApp</a>
-                <a href="mailto:vecctapivotenterprises@://gmail.com" class="ribbon-btn mail-color">✉️ Email Specifications</a>
+                    <label>Target Delivery Email Address:</label>
+                    <input type="email" name="Email Destination" placeholder="e.g., teacher@gmail.com" required>
+                    
+                    <label>Select Your Preferred Class Target Focus:</label>
+                    <select name="Evaluation Target Level" required>
+                        <option value="Complete Form 1 to 4 Full Joint-Term Set">Complete Form 1 to 4 Full Joint-Term Set (KES 1,500)</option>
+                        <option value="Form 4 Candidate Mock Sets Only">Form 4 Candidate Mock Sets Only</option>
+                    </select>
+                    
+                    <button type="submit" class="submit-ticket-btn">🚀 Request Secure Examination Link</button>
+                </form>
             </div>
         </div>
 
-        <!-- Service 2.2 -->
-        <div class="service-item-block">
-            <h3>2.2 Printed & Bound Topical Revision Packages</h3>
-            <div class="meta-row">
-                <p><strong>⏱️ Delivery SLA:</strong> 2-3 Business Days Print Loop</p>
-                <p>Editorial Prep: KES 0 | Material & Spiral Binding Cost: KES 1,200</p>
-                <p class="final-highlight-price">Total Invoiced Cost: KES 1,200 per Hardcopy Book</p>
-            </div>
-
-            <div class="detailed-specs-box">
-                <h4>📋 Processing Requirements:</h4>
-                <ul>
-                    <li>Selection of specific subject parameters for curriculum compilation</li>
-                    <li>Targeted school level indicator definitions</li>
-                    <li>Delivery logistics drop-off point selection (Local pickup or express courier)</li>
-                </ul>
-                <div class="guarantee-badge">🛡️ Heavy-duty spiral bounding configuration optimized for intense study</div>
-            </div>
-
-            <div class="action-btn-ribbon">
-                <a href="https://wa.me." target="_blank" class="ribbon-btn wa-color">💬 Initialize via WhatsApp</a>
-                <a href="mailto:vecctapivotenterprises@://gmail.com" class="ribbon-btn mail-color">✉️ Email Specifications</a>
-            </div>
-        </div>
-
-        <!-- Service 2.3 -->
+        <!-- Service 2.3 Form -->
         <div class="service-item-block">
             <h3>2.3 KASNEB CPA Past-Paper Vault Access</h3>
             <div class="meta-row">
-                <p><strong>⏱️ Delivery SLA:</strong> Instant Access Grant</p>
-                <p>Archival Cost: KES 0 | Vault Secure Clearance Token: KES 500</p>
-                <p class="final-highlight-price">Total Invoiced Cost: KES 500 per Section Set</p>
+                <p><strong>⏱️ Delivery SLA:</strong> Instant Archive Pass Grant</p>
+                <p>Vault Access Fee: KES 500 per Section Set</p>
             </div>
-
             <div class="detailed-specs-box">
-                <h4>📋 Processing Requirements:</h4>
-                <ul>
-                    <li>Identification of relevant accountancy sectional track (Section 1 through 6)</li>
-                    <li>Preferred file format delivery confirmations</li>
-                    <li>Active digital data delivery pipeline allocation</li>
-                </ul>
-                <div class="guarantee-badge">🛡️ Validated complete answer directories compiled by expert educators</div>
-            </div>
+                <h4>📋 Secure Data Ingestion Terminal (CPA Archives):</h4>
+                <form action="https://formspree.io" method="POST" onsubmit="executeSingleClientSubmission(event, 'CPA')" class="embedded-intake-desk">
+                    <input type="hidden" name="_subject" id="subject-p23" value="New Resource Order: Service 2.3 CPA Vault">
+                    <input type="hidden" name="Unique Ticket ID" id="hidden-ticket-p23">
+                    
+                    <label>Candidate Student Name:</label>
+                    <input type="text" name="Student Name" placeholder="e.g., Dennis Karanu" required>
+                    
+                    <label>Active Contact Phone Number:</label>
+                    <input type="tel" name="Phone Number" placeholder="e.g., 0712345678" required>
 
-            <div class="action-btn-ribbon">
-                <a href="https://wa.me." target="_blank" class="ribbon-btn wa-color">💬 Initialize via WhatsApp</a>
-                <a href="mailto:vecctapivotenterprises@://gmail.com" class="ribbon-btn mail-color">✉️ Email Specifications</a>
+                    <label>Select Your Target CPA Section Level:</label>
+                    <select name="CPA Section Target" required>
+                        <option value="CPA Foundation Level Set">CPA Foundation Level Set (KES 500)</option>
+                        <option value="CPA Intermediate Level Set">CPA Intermediate Level Set (KES 500)</option>
+                        <option value="CPA Advanced Level Set">CPA Advanced Level Set (KES 500)</option>
+                    </select>
+                    
+                    <button type="submit" class="submit-ticket-btn">🚀 Unlock CPA Vault Archives</button>
+                </form>
             </div>
         </div>
-
-        <!-- Service 2.4 -->
-        <div class="service-item-block">
-            <h3>2.4 KASNEB ATD Vocational Revision Kits</h3>
-            <div class="meta-row">
-                <p><strong>⏱️ Delivery SLA:</strong> Instant Access Grant</p>
-                <p>Sourcing Overhead: KES 0 | Resource Database Access: KES 400</p>
-                <p class="final-highlight-price">Total Invoiced Cost: KES 400 per Level Set</p>
-            </div>
-
-            <div class="detailed-specs-box">
-                <h4>📋 Processing Requirements:</h4>
-                <ul>
-                    <li>Stated vocational evaluation tier focus (Level 1 to Level 3)</li>
-                    <li>Digital destination path confirmation parameters</li>
-                    <li>Academic timetable alignments context if required</li>
-                </ul>
-                <div class="guarantee-badge">🛡️ Ideal technical reference frameworks built for quick revisions</div>
-            </div>
-
-            <div class="action-btn-ribbon">
-                <a href="https://wa.me." target="_blank" class="ribbon-btn wa-color">💬 Initialize via WhatsApp</a>
-                <a href="mailto:vecctapivotenterprises@://gmail.com" class="ribbon-btn mail-color">✉️ Email Specifications</a>
-            </div>
-        </div>
-
-        <!-- Service 2.5 -->
-        <div class="service-item-block">
-            <h3>2.5 Bulk School CBC Joint-Exam Packs</h3>
-            <div class="meta-row">
-                <p><strong>⏱️ Delivery SLA:</strong> 3 Business Days Physical Drop</p>
-                <p>Licensing Fee: KES 0 | Institutional Materials Processing: KES 3,500</p>
-                <p class="final-highlight-price">Total Invoiced Cost: KES 3,500 per Institution Pack</p>
-            </div>
-
-            <div class="detailed-specs-box">
-                <h4>📋 Processing Requirements:</h4>
-                <ul>
-                    <li>Official registered name of the purchasing learning center/institution</li>
-                    <li>Explicit total candidate volume matrix metrics</li>
-                    <li>Authorized dean or headteacher authorization confirmation text</li>
-                </ul>
-                <div class="guarantee-badge">🛡️ Strict alignment configurations matching the latest KICD frameworks</div>
-            </div>
-
-            <div class="action-btn-ribbon">
-                <a href="https://wa.me." target="_blank" class="ribbon-btn wa-color">💬 Initialize via WhatsApp</a>
-                <a href="mailto:vecctapivotenterprises@://gmail.com" class="ribbon-btn mail-color">✉️ Email Specifications</a>
-            </div>
-        </div>
-
-        <!-- Service 2.6 -->
-        <div class="service-item-block">
-            <h3>2.6 Revision Notes Digitization (Per Page)</h3>
-            <div class="meta-row">
-                <p><strong>⏱️ Delivery SLA:</strong> 48 Hours Processing Loop</p>
-                <p>Overhead Cost: KES 0 | Scanning and Digital Optimization: KES 5</p>
-                <p class="final-highlight-price">Total Invoiced Cost: KES 5 per Scanned Page</p>
-            </div>
-
-            <div class="detailed-specs-box">
-                <h4>📋 Processing Requirements:</h4>
-                <ul>
-                    <li>Handover alignment setup for the physical written materials directory</li>
-                    <li>Indexing structure preferences for output digital files</li>
-                    <li>Secure output repository designation (Google Drive or Flash storage link)</li>
-                </ul>
-                <div class="guarantee-badge">🛡️ Advanced optical flattening logic ensures clean, legible digital outputs</div>
-            </div>
-
-            <div class="action-btn-ribbon">
-                <a href="https://wa.me." target="_blank" class="ribbon-btn wa-color">💬 Initialize via WhatsApp</a>
-                <a href="mailto:vecctapivotenterprises@://gmail.com" class="ribbon-btn mail-color">✉️ Email Specifications</a>
-            </div>
-        </div>
-
     </main>
 
-    <footer class="portal-footer">
-        <p>Vecctapivot Enterprises | Operations Portal Baseline | Support Hotline: +254 788 099 685</p>
-    </footer>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const activeSessionTicket = localStorage.getItem('vp_active_ticket');
+            if (activeSessionTicket) {
+                document.getElementById('generated-ticket-id').innerText = activeSessionTicket;
+                document.getElementById('success-ticket-modal').classList.remove('hidden-popup');
+            }
+        });
 
+        function executeSingleClientSubmission(event, prefix) {
+            event.preventDefault();
+            if(localStorage.getItem('vp_active_ticket')) {
+                alert("You have an active pending operation locked in our queue.");
+                return;
+            }
+            const form = event.target;
+            const button = form.querySelector('button[type="submit"]');
+            button.disabled = true; button.innerText = "🔒 Securing Portal Queue...";
+            
+            const uniqueID = `VP-${prefix}-${Math.floor(100000 + Math.random() * 900000)}`;
+            form.querySelector('input[name="Unique Ticket ID"]').value = uniqueID;
+            
+            const subjectField = form.querySelector('input[name="_subject"]');
+            if(subjectField) subjectField.value = `Secure Resource Order [${uniqueID}]`;
+            
+            document.getElementById('generated-ticket-id').innerText = uniqueID;
+
+            fetch(form.action, {
+                method: form.method,
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    localStorage.setItem('vp_active_ticket', uniqueID);
+                    document.getElementById('success-ticket-modal').classList.remove('hidden-popup');
+                } else {
+                    alert("Communications timeout. Retry application setup lines.");
+                    button.disabled = false; button.innerText = "🚀 Request Secure Examination Link";
+                }
+            });
+        }
+        function closeTicketModal() { document.getElementById('success-ticket-modal').classList.add('hidden-popup'); }
+    </script>
 </body>
 </html>
