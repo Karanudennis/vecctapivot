@@ -2,8 +2,8 @@
 <html lang="en-KE">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Help Desk & Consultation Portal | Vecctapivot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Central Help Desk | Vecctapivot</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,104 +12,102 @@
         <a href="index.html" class="back-btn">⬅️ Back to Home Portal</a>
     </div>
 
+    <!-- UNIQUE TRANSACTION MODAL CONTAINER -->
+    <div id="success-ticket-modal" class="ticket-modal-overlay hidden-popup">
+        <div class="ticket-modal-card">
+            <div class="ticket-badge-icon">🎫</div>
+            <h3>HELP DESK TICKET REGISTERED</h3>
+            <p class="modal-ticket-id">Your Unique Tracking File: <strong id="generated-ticket-id">VP-HELP-0000</strong></p>
+            <div class="modal-notice-box">
+                <p><strong>🔒 Status: Staged & Locked in Help Queue.</strong> Your support query parameters have been successfully logged into our customer database records.</p>
+                <p>To preserve portal integrity, this device is limited to one active ticket run. Please wait—a customer care proxy has been assigned to your reference slot and will text or call you within 15 minutes.</p>
+            </div>
+            <button type="button" class="modal-close-btn" onclick="closeTicketModal()">Acknowledge & Monitor Status</button>
+        </div>
+    </div>
+
     <main class="services-panel-page">
         <h2>🛠️ Vecctapivot Central Help Desk & Consultation</h2>
-        <p class="section-intro-text">Log a secure operational support ticket or schedule an official corporate consultation call with our desk proxy handlers.</p>
+        <p class="section-intro-text">Log a secure administrative support ticket or request a callback setup directly. Fill out all required fields to lock your session position.</p>
 
         <!-- Dynamic Support Ticket Form -->
         <div class="service-item-block">
             <h3>📋 Open an Official Support Ticket</h3>
-            <p style="font-size: 14px; color: #555; margin-bottom: 20px;">Fill out your parameters below. Our automated gateway will format your ticket and connect you to the designated service desk handler instantly.</p>
             
-            <form class="ticket-intake-form">
-                <label for="client-name"><strong>Full Name / Organization Name:</strong></label>
-                <input type="text" id="client-name" placeholder="e.g., Ol Kalou Farmers Co-operative" required>
+            <form action="https://formspree.io" method="POST" onsubmit="executeSingleClientSubmission(event, 'HELP')" class="ticket-intake-form">
+                <input type="hidden" name="_subject" id="subject-help" value="New Support Desk Ticket">
+                <input type="hidden" name="Unique Ticket ID" id="hidden-ticket-help">
 
-                <label for="client-phone"><strong>Active Contact Mobile Number (M-Pesa Connected):</strong></label>
-                <input type="tel" id="client-phone" placeholder="e.g., 0712345678" required>
+                <label>Full Name / Stated Organization Name:</label>
+                
 
-                <label for="target-pillar"><strong>Select Target Operational Pillar:</strong></label>
-                <select id="target-pillar" required>
-                    <option value="Pillar 1: Digital & Brand Systems">Pillar 1: Digital & Brand Systems (BRS / Compliance)</option>
-                    <option value="Pillar 2: Academic & Testing Logistics">Pillar 2: Academic & Testing Logistics (Mocks / CPA)</option>
-                    <option value="Pillar 3: Transport Brokerage Hub">Pillar 3: Transport Brokerage Hub (Lorries / Courier)</option>
-                    <option value="Pillar 4: Merchandise Sourcing Links">Pillar 4: Merchandise Sourcing Links (Agribusiness / Sourcing)</option>
-                    <option value="Pillar 5: Independent Fixer Desk">Pillar 5: Independent Fixer Desk (Inspections / Verification)</option>
+                <label>Active Contact Phone Number (M-Pesa Connected):</label>
+                <input type="tel" name="Phone Number" placeholder="e.g., 0712345678" required>
+
+                <label>Select Target Operational Pillar Desk:</label>
+                <select name="Target Service Department Desk" required>
+                    <option value="Pillar 1: Digital Systems (BRS Registrations)">Pillar 1: Digital Systems (BRS Registrations / Logos)</option>
+                    <option value="Pillar 2: Academic Logistics (Mock Exam Vaults)">Pillar 2: Academic Logistics (Mock Exam Vaults / CPA Kits)</option>
+                    <option value="Pillar 3: Transport Hub (Lorry Sourcing / Courier)">Pillar 3: Transport Hub (Lorry Sourcing / Courier Runs)</option>
+                    <option value="Pillar 4: Sourcing Links (Crop Aggregation / Audits)">Pillar 4: Sourcing Links (Crop Agribusiness / Supplier Audits)</option>
+                    <option value="Pillar 5: Independent Fixer (Site Checks / Permits)">Pillar 5: Independent Fixer (Site Inspections / Council Proxies)</option>
+                    <option value="Pillar 6: General Agency (Consolidated Firm Ledger Accounts)">Pillar 6: General Agency (Consolidated Accounts)</option>
+                    <option value="Pillar 7: Statutory Logistics (eCitizen Cards / NTSA transfers)">Pillar 7: Statutory Logistics (eCitizen Cards / NTSA Logbooks)</option>
                 </select>
 
-                <label for="urgency-tier"><strong>Urgency Level Status:</strong></label>
-                <select id="urgency-tier" required>
-                    <option value="🟢 STANDARD (Routine Processing Runs)">STANDARD (Normal Queue Timeline)</option>
-                    <option value="⚡ PRIORITY (Requires Fast-Track Overrides)">PRIORITY (Surcharge Overrides Apply)</option>
+                <label>Urgency Allocation Tier Status:</label>
+                <select name="Urgency Priority Tier" required>
+                    <option value="🟢 STANDARD (Routine Timeline Queue)">STANDARD (Normal Queue Processing)</option>
+                    <option value="⚡ PRIORITY (Requires Fast-Track Overrides)">PRIORITY (Express Surcharge Overrides Apply)</option>
                 </select>
 
-                <label for="issue-description"><strong>Detailed Description of Scope / Problem:</strong></label>
-                <textarea id="issue-description" rows="4" placeholder="Describe the specific services, document assistance, or logistics tracking lines you require..." required></textarea>
+                <label>Detailed Description of Scope Requirements or Problem Details:</label>
+                <textarea name="Detailed Issue Logs Description" rows="4" placeholder="Type your specific service inquiries, required document uploads help, or logistics path descriptions directly here..." required></textarea>
 
-                <button type="button" class="submit-ticket-btn" onclick="generateSystemTicket()">🚀 Submit Ticket to WhatsApp Desk</button>
+                <button type="submit" class="submit-ticket-btn">🚀 Log Technical Support Ticket</button>
             </form>
-        </div>
-
-        <!-- Consultation Booking Info Card -->
-        <div class="service-item-block" style="border-left: 5px solid var(--amber-warning);">
-            <h3>📅 Schedule a 1-on-1 Corporate Consultation</h3>
-            <div class="meta-row">
-                <p><strong>⏱️ Duration:</strong> 30 Minutes Structured Call</p>
-                <p>Consultation Retainer: KES 0 | Booking Admin Fee: **FREE**</p>
-            </div>
-            <div class="detailed-specs-box">
-                <h4>📋 Consultation Deliverables:</h4>
-                <ul>
-                    <li>Complete mapping of necessary county business permits and BRS registry paths</li>
-                    <li>Sourcing cost calculations for agricultural long-haul freight operations</li>
-                    <li>Direct alignment configurations for school CBC assessment portfolios</li>
-                </ul>
-            </div>
-            <div class="action-btn-ribbon">
-                <a href="https://wa.me." target="_blank" class="ribbon-btn wa-color">📅 Book Free Consultation</a>
-            </div>
         </div>
     </main>
 
-    <!-- Interactive JavaScript Ticket Compiler Engine -->
     <script>
-        function generateSystemTicket() {
-            // Fetching layout inputs from user text fields
-            const name = document.getElementById('client-name').value;
-            const phone = document.getElementById('client-phone').value;
-            const pillar = document.getElementById('target-pillar').value;
-            const urgency = document.getElementById('urgency-tier').value;
-            const desc = document.getElementById('issue-description').value;
+        window.addEventListener('DOMContentLoaded', () => {
+            const activeSessionTicket = localStorage.getItem('vp_active_ticket');
+            if (activeSessionTicket) {
+                document.getElementById('generated-ticket-id').innerText = activeSessionTicket;
+                document.getElementById('success-ticket-modal').classList.remove('hidden-popup');
+            }
+        });
 
-            // Simple validation layout check
-            if(!name || !phone || !desc) {
-                alert("Please fill out all the configuration fields before generating your ticket.");
+        function executeSingleClientSubmission(event, prefix) {
+            event.preventDefault();
+            if(localStorage.getItem('vp_active_ticket')) {
+                alert("You have an active pending operation locked in our queue.");
                 return;
             }
-
-            // Creating a beautifully structured corporate system log text block
-            const ticketText = `🚨 VECCTAPIVOT HELP DESK SYSTEM LOG 🚨\n\n` +
-                               `🔹 TICKET STATUS: [OPEN]\n` +
-                               `🔹 CLIENT: ${name}\n` +
-                               `🔹 PHONE: ${phone}\n` +
-                               `🔹 TARGET DEPT: ${pillar}\n` +
-                               `🔹 URGENCY TIER: ${urgency}\n\n` +
-                               `📋 OPERATIONAL SCOPE/PROBLEM DETAILS:\n` +
-                               `"${desc}"\n\n` +
-                               `------------------------------------\n` +
-                               `Please assign a proxy handler to initialize this run parameters immediately.`;
-
-            // Encoding the structured string text smoothly for error free mobile app handshakes
-            const encodedTicket = encodeURIComponent(ticketText);
+            const form = event.target;
+            const button = form.querySelector('button[type="submit"]');
+            button.disabled = true; button.innerText = "🔒 Securing Portal Queue...";
             
-            // Redirecting directly to the universal web safe API tracking line
-            window.open(`https://wa.me{encodedTicket}`, '_blank');
+            const uniqueID = `VP-${prefix}-${Math.floor(100000 + Math.random() * 900000)}`;
+            document.getElementById('hidden-ticket-help').value = uniqueID;
+            document.getElementById('subject-help').value = `Help Desk Ticket [${uniqueID}]`;
+            document.getElementById('generated-ticket-id').innerText = uniqueID;
+
+            fetch(form.action, {
+                method: form.method,
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    localStorage.setItem('vp_active_ticket', uniqueID);
+                    document.getElementById('success-ticket-modal').classList.remove('hidden-popup');
+                } else {
+                    alert("Communications timeout. Retry application setup lines.");
+                    button.disabled = false; button.innerText = "🚀 Log Technical Support Ticket";
+                }
+            });
         }
+        function closeTicketModal() { document.getElementById('success-ticket-modal').classList.add('hidden-popup'); }
     </script>
-
-    <footer class="portal-footer">
-        <p>Vecctapivot Enterprises | Help Desk Support | Central Support Box: vecctapivotenterprises@gmail.com</p>
-    </footer>
-
 </body>
 </html>
