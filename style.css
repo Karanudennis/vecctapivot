@@ -1,5 +1,5 @@
 /* ==========================================================================
-   VECCTAPIVOT ENTERPRISES - GLOBAL UI DESIGN SHEET (MOBILE HARMONIZED)
+   VECCTAPIVOT ENTERPRISES - GLOBAL UI DESIGN SHEET (MOBILE STACKING OVERRIDE)
    ========================================================================== */
 
 :root {
@@ -28,27 +28,27 @@ html, body {
     scroll-behavior: smooth; -webkit-font-smoothing: antialiased;
 }
 
-/* Premium Corporate Header */
+/* Premium Corporate Welcome Header Layout Area */
 .portal-header {
     background: linear-gradient(135deg, var(--primary-navy) 0%, var(--bg-main) 100%);
-    text-align: center; padding: 60px 20px; width: 100%; position: relative;
-    border-bottom: 1px solid rgba(100, 255, 218, 0.1); overflow: hidden;
+    text-align: center; padding: 75px 20px; width: 100%; position: relative;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.15); overflow: hidden;
 }
-.welcome-container { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+.welcome-container { position: relative; z-index: 2; max-width: 850px; margin: 0 auto; }
 
 .visual-glow-orb {
     position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
-    width: 400px; height: 400px; background: rgba(100, 255, 218, 0.05);
-    border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 1;
+    width: 400px; height: 400px; background: rgba(100, 255, 218, 0.04);
+    border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 1;
 }
 
-.portal-header h1 { margin: 15px 0 0 0; font-size: 28px; letter-spacing: 0.5px; font-weight: 900; color: #FFF; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-.corporate-logo { max-height: 80px; margin-bottom: 10px; display: inline-block; }
-.tagline { font-style: italic; color: var(--text-muted); margin: 10px 0; font-size: 15px; }
-.welcome-banner { font-size: 10.5px; font-weight: 800; color: var(--neon-cyan); letter-spacing: 2px; margin-bottom: 5px; }
+.portal-header h1 { margin: 15px 0 0 0; font-size: 30px; letter-spacing: 0.5px; font-weight: 900; color: #FFF; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+.corporate-logo { max-height: 85px; margin-bottom: 10px; display: inline-block; }
+.tagline { font-style: italic; color: var(--text-muted); margin: 10px 0; font-size: 15.5px; }
+.welcome-banner { font-size: 11px; font-weight: 800; color: var(--neon-cyan); letter-spacing: 1.5px; margin-bottom: 5px; }
 
 .trust-badge {
-    margin: 12px 0; font-size: 12.5px; background: rgba(100, 255, 218, 0.05);
+    margin: 12px 0; font-size: 12px; background: rgba(100, 255, 218, 0.05);
     display: inline-block; padding: 6px 18px; border-radius: 30px; font-weight: 600;
     border: 1px solid rgba(100, 255, 218, 0.15); color: var(--neon-cyan);
 }
@@ -58,22 +58,22 @@ html, body {
     margin: 25px auto; border-left: 4px solid var(--neon-cyan); text-align: left;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
-.philosophy-box h3 { margin: 0 0 8px 0; font-size: 16px; color: #FFF; font-weight: 700; }
-.philosophy-box p { margin: 0; font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+.philosophy-box h3 { margin: 0 0 8px 0; font-size: 15.5px; color: #FFF; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+.philosophy-box p { margin: 0; font-size: 14px; color: var(--text-muted); line-height: 1.6; }
 
-/* Real-Time Search Box */
-.search-master-section { max-width: 800px; margin: 40px auto 0 auto; padding: 0 20px; width: 100%; text-align: center; }
+/* Real-Time Search Box Configuration Styles */
+.search-master-section { max-width: 850px; margin: 40px auto 0 auto; padding: 0 20px; width: 100%; text-align: center; }
 .search-master-section h3 { color: #FFF; font-size: 18px; font-weight: 800; margin-bottom: 5px; }
 .search-bar-box input {
-    width: 100%; padding: 15px 22px; border: 2px solid rgba(100, 255, 218, 0.15); border-radius: 30px;
+    width: 100%; padding: 15px 22px; border: 2px solid rgba(100, 255, 218, 0.12); border-radius: 30px;
     font-size: 14.5px; background: var(--bg-light-panel); color: white; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
-.search-bar-box input:focus { outline: none; border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(100,255,218,0.3); }
+.search-bar-box input:focus { outline: none; border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(100,255,218,0.2); }
 
-/* Primary Grid Layout */
+/* Primary Grid Layout Menu Configuration */
 .grid-container {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;
-    padding: 40px 20px; max-width: 1100px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;
+    padding: 40px 20px; max-width: 1150px; margin: 0 auto; width: 100%;
 }
 .pillar-card {
     background: var(--bg-light-panel); padding: 35px 25px; border-radius: 6px; text-align: center;
@@ -82,55 +82,59 @@ html, body {
 }
 .pillar-card:hover { transform: translateY(-4px); border-color: var(--neon-cyan); box-shadow: 0 15px 35px rgba(100,255,218,0.15); }
 .pillar-card .icon { font-size: 44px; margin-bottom: 12px; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3)); }
-.pillar-card h2 { font-size: 18px; color: #FFF; margin: 8px 0; font-weight: 800; }
+.pillar-card h2 { font-size: 18px; color: #FFF; margin: 8px 0; font-weight: 800; letter-spacing: 0.3px; }
 .pillar-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin: 0 0 15px 0; flex: 1; }
 .explore-node-text { font-size: 11.5px; font-weight: 800; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 0.5px; }
 
-/* Workspace Containers & Form Elements */
+/* Service Request Cards & Forms Workspace Area */
 .calculator-master-card {
     background: var(--bg-light-panel); width: calc(100% - 40px); max-width: 750px; margin: 30px auto; padding: 30px;
     border-radius: 8px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); border: 1px solid rgba(100, 255, 218, 0.1);
 }
-.calculator-master-card h3 { margin: 0 0 15px 0; color: #FFF; text-align: left; font-size: 20px; font-weight: 800; }
+.calculator-master-card h3 { margin: 0 0 15px 0; color: #FFF; text-align: left; font-size: 19px; font-weight: 800; letter-spacing: 0.3px; }
 
 .embedded-intake-desk { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
 .embedded-intake-desk label { font-size: 13px; font-weight: 700; color: #FFF; text-align: left; display: block; }
 .embedded-intake-desk input, .embedded-intake-desk textarea, .embedded-intake-desk select {
-    width: 100%; padding: 12px; border: 1px solid rgba(100, 255, 218, 0.2); border-radius: 4px; font-size: 14px; background: var(--bg-main); color: var(--text-white);
+    width: 100%; padding: 12px; border: 1px solid rgba(100, 255, 218, 0.2); border-radius: 4px; font-size: 14px; background: var(--bg-main); color: var(--text-white); font-family: inherit;
+}
+.embedded-intake-desk input:focus, .embedded-intake-desk textarea:focus, .embedded-intake-desk select:focus {
+    outline: none; border-color: var(--neon-cyan); box-shadow: 0 0 10px rgba(100,255,218,0.2);
 }
 .upload-picker-input { background: var(--bg-main) !important; border: 1px dashed rgba(100, 255, 218, 0.3) !important; padding: 12px !important; color: var(--text-muted); }
 .upload-picker-label { background: rgba(100,255,218,0.03); padding: 8px; border-radius: 4px; display: block; margin-top: 5px; font-size: 12.5px; }
 
-/* FAQs Layout */
-.faq-master-container { max-width: 800px; margin: 40px auto; padding: 0 20px; width: 100%; }
-.faq-master-container h2 { color: #FFF; font-size: 22px; text-align: center; margin-bottom: 5px; font-weight: 800; }
+/* Cascading Accordion Content Layout Styles */
+.faq-master-container { max-width: 850px; margin: 40px auto; padding: 0 20px; width: 100%; }
+.faq-master-container h2 { color: #FFF; font-size: 22px; text-align: center; margin-bottom: 5px; font-weight: 800; letter-spacing: 0.3px; }
 .faq-subtitle { text-align: center; font-size: 13.5px; color: var(--text-muted); margin-bottom: 25px; }
 .faq-item-card { background: var(--bg-light-panel); padding: 20px; border-radius: 6px; margin-bottom: 12px; cursor: pointer; border: 1px solid rgba(100,255,218,0.03); }
 .faq-item-card:hover { border-color: rgba(100,255,218,0.15); }
 .faq-question-row { display: flex; justify-content: space-between; align-items: center; }
 .faq-question-row h4 { margin: 0; font-size: 15px; color: #FFF; text-align: left; font-weight: 700; }
 .faq-arrow { font-size: 12px; color: var(--text-muted); }
-.faq-answer-content { margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px; font-size: 13.5px; color: var(--text-muted); line-height: 1.5; text-align: left; }
+.faq-answer-content { margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px; font-size: 13.5px; color: var(--text-muted); line-height: 1.6; }
 
 .meta-row { font-size: 13.5px; color: var(--text-white); background: var(--bg-main); padding: 12px; border-radius: 4px; margin: 12px 0; border: 1px solid rgba(255,255,255,0.05); line-height: 1.5; }
-.submit-ticket-btn { background-color: var(--neon-cyan); color: var(--bg-main); border: none; padding: 14px; border-radius: 4px; font-weight: 800; font-size: 14.5px; text-transform: uppercase; cursor: pointer; width: 100%; margin-top: 10px; }
+.submit-ticket-btn { background-color: var(--neon-cyan); color: var(--bg-main); border: none; padding: 14px; border-radius: 4px; font-weight: 800; font-size: 14.5px; text-transform: uppercase; cursor: pointer; width: 100%; margin-top: 10px; letter-spacing: 0.5px; }
+.submit-ticket-btn:hover { background-color: transparent; color: var(--neon-cyan); border: 1px solid var(--neon-cyan); }
 .back-nav a { text-decoration: none; font-weight: 800; }
 .back-nav a:hover { color: #FFF !important; text-shadow: 0 0 8px var(--neon-cyan); }
 
 /* ==========================================================================
-   ELITE HIGH-END FOOTER (FIXED TRANSITION & CLEAN VERTICAL ALIGNMENT)
+   HIGH-END INSTITUTIONAL FOOTER (THE FIX FOR MOBILE GRID LOGJAM)
    ========================================================================== */
 .portal-footer {
     background-color: var(--primary-navy); 
     border-top: 1px solid rgba(100, 255, 218, 0.15);
     color: var(--text-muted); 
-    padding: 50px 24px 30px 24px; 
+    padding: 55px 24px 30px 24px; 
     font-size: 14px; 
     margin-top: auto; 
     width: 100%;
 }
 
-/* Base grid rule for standard desktop layout profiles */
+/* Grid layout metrics optimized exclusively for large desktop layout frames */
 .footer-grid-row {
     display: grid; 
     grid-template-columns: repeat(3, 1fr); 
@@ -148,10 +152,10 @@ html, body {
 
 .footer-column-block h4 { 
     color: #FFF; 
-    font-size: 14px; 
+    font-size: 13.5px; 
     font-weight: 700; 
     margin: 0 0 14px 0; 
-    letter-spacing: 0.5px; 
+    letter-spacing: 0.8px; 
     text-transform: uppercase; 
     border-bottom: 2px solid rgba(100,255,218,0.2); 
     padding-bottom: 4px; 
@@ -191,26 +195,10 @@ html, body {
 .hidden-faq { display: none !important; }
 
 /* ==========================================================================
-   CRITICAL MOBILE RE-ARCHITECTURE MEDIA QUERY
+   CRITICAL RESPONSIVE BREAKPOINT QUERY LAYER FOR MOBILE VIEWPORTS
    ========================================================================== */
 @media(max-width: 768px) {
-    .portal-header { padding: 45px 15px; }
+    .portal-header { padding: 50px 15px; }
     .portal-header h1 { font-size: 24px; }
     .grid-container { padding: 25px 15px; gap: 15px; }
     
-    /* FORCES BLOCKS TO STACK AS A PERFECT CLEAN VERTICAL LIST ON PHONE SCREENS */
-    .footer-grid-row {
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-        text-align: left;
-    }
-    
-    .footer-column-block {
-        width: 100%;
-    }
-    
-    .legal-footer {
-        text-align: left;
-    }
-}
