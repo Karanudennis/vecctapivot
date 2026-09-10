@@ -1,155 +1,153 @@
 /* ==========================================================================
-   VECCTAPIVOT ENTERPRISES - COMPLETE MASTER MARKETPLACE STYLESHEET
+   VECCTAPIVOT ENTERPRISES - ARCHITECTURAL STYLESHEET OVERHAUL
    ========================================================================== */
 
 :root {
     --primary-navy: #0A192F;
     --accent-slate: #172A45;
-    --bg-light: #F8F9FA;
-    --text-dark: #1E2229;
+    --neon-cyan: #64FFDA;
+    --text-white: #CCD6F6;
+    --text-muted: #8892B0;
     --wa-green: #25D366;
-    --gmail-red: #D14836;
     --call-blue: #007AFF;
     --amber-warning: #FFB300;
+    --bg-light-panel: #112240;
+    --bg-main: #020C1B;
 }
 
-* { box-sizing: border-box; }
+* { 
+    box-sizing: border-box; 
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
+}
 
 html, body {
     margin: 0; padding: 0; width: 100%; min-height: 100vh;
     display: flex; flex-direction: column;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    background-color: var(--bg-light); color: var(--text-dark);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--bg-main); color: var(--text-white);
+    scroll-behavior: smooth; -webkit-font-smoothing: antialiased;
 }
 
+/* Urgencies ticker ribbon formatting options */
 .urgency-ticker {
     background-color: var(--amber-warning); color: #000;
-    text-align: center; padding: 12px; font-size: 14px; font-weight: bold; width: 100%;
+    text-align: center; padding: 14px 20px; font-size: 13.5px; font-weight: 800; width: 100%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); letter-spacing: 0.3px; line-height: 1.4;
 }
 .urgency-ticker p { margin: 0; }
 
+/* High end premium marketplace head banner layer components */
 .portal-header {
-    background: linear-gradient(135deg, var(--primary-navy) 0%, var(--accent-slate) 100%);
-    color: white; text-align: center; padding: 75px 20px; width: 100%; position: relative; overflow: hidden;
+    background: linear-gradient(135deg, var(--primary-navy) 0%, var(--bg-main) 100%);
+    color: white; text-align: center; padding: 90px 20px; width: 100%; position: relative;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.1); overflow: hidden;
 }
-.welcome-container { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+.welcome-container { position: relative; z-index: 2; max-width: 850px; margin: 0 auto; }
 
 .visual-glow-orb {
-    position: absolute; top: -50px; left: 50%; transform: translateX(-50%);
-    width: 300px; height: 300px; background: rgba(37, 211, 102, 0.08);
-    border-radius: 50%; filter: blur(60px); pointer-events: none; z-index: 1;
+    position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+    width: 400px; height: 400px; background: rgba(100, 255, 218, 0.05);
+    border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 1;
 }
 
-.portal-header h1 { margin: 0; font-size: 34px; letter-spacing: 1px; font-weight: 800; }
-.corporate-logo { max-height: 80px; margin-bottom: 15px; display: inline-block; }
-.tagline { font-style: italic; color: #8892B0; margin: 10px 0; font-size: 18px; }
-.welcome-banner { font-size: 11px; font-weight: 800; color: var(--amber-warning); letter-spacing: 2px; margin-bottom: 12px; }
+.portal-header h1 { 
+    margin: 15px 0 0 0; font-size: 36px; letter-spacing: 1.5px; font-weight: 900; 
+    color: #FFF; text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
+}
+.corporate-logo { 
+    max-height: 90px; margin-bottom: 10px; display: inline-block; 
+    filter: drop-shadow(0 2px 8px rgba(100,255,218,0.3)); 
+}
+.tagline { font-style: italic; color: var(--text-muted); margin: 12px 0; font-size: 18px; font-weight: 400; }
+.welcome-banner { font-size: 11.5px; font-weight: 800; color: var(--neon-cyan); letter-spacing: 2.5px; margin-bottom: 5px; }
 
 .trust-badge {
-    margin: 15px 0; font-size: 13px; background: rgba(255,255,255,0.08);
-    display: inline-block; padding: 6px 18px; border-radius: 20px; font-weight: 500;
-    border: 1px solid rgba(255,255,255,0.1);
+    margin: 15px 0; font-size: 13px; background: rgba(100, 255, 218, 0.07);
+    display: inline-block; padding: 8px 22px; border-radius: 30px; font-weight: 600;
+    border: 1px solid rgba(100, 255, 218, 0.2); color: var(--neon-cyan);
 }
 
 .philosophy-box {
-    background: rgba(255, 255, 255, 0.04); border-radius: 12px; padding: 22px;
-    margin: 25px auto; border-left: 4px solid var(--wa-green); text-align: left;
-    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+    background: var(--bg-light-panel); border-radius: 12px; padding: 25px;
+    margin: 30px auto; border-left: 4px solid var(--neon-cyan); text-align: left;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
-.philosophy-box h3 { margin: 0 0 8px 0; font-size: 16px; color: white; }
-.philosophy-box p { margin: 0; font-size: 14px; color: #CBD5E1; line-height: 1.6; }
+.philosophy-box h3 { margin: 0 0 10px 0; font-size: 17px; color: #FFF; font-weight: 700; letter-spacing: 0.5px; }
+.philosophy-box p { margin: 0; font-size: 14.5px; color: var(--text-muted); line-height: 1.6; }
 
-.header-action-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 25px; width: 100%; }
+.header-action-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 30px; width: 100%; }
 .cta-btn-main {
-    display: inline-block; background-color: var(--wa-green); color: white; text-decoration: none;
-    padding: 14px 28px; border-radius: 30px; font-weight: bold; font-size: 14px;
-    box-shadow: 0 4px 10px rgba(37,211,102,0.2); transition: all 0.2s ease;
+    display: inline-block; background-color: var(--neon-cyan); color: var(--bg-main); text-decoration: none;
+    padding: 15px 35px; border-radius: 6px; font-weight: 800; font-size: 14.5px; letter-spacing: 0.5px;
+    box-shadow: 0 5px 15px rgba(100,255,218,0.25); border: 1px solid var(--neon-cyan); text-transform: uppercase;
 }
-.cta-btn-main:hover { transform: translateY(-2px); }
-.scroll-btn { background-color: transparent !important; border: 2px solid var(--wa-green); color: var(--wa-green) !important; }
-.scroll-btn:hover { background-color: var(--wa-green) !important; color: white !important; }
-.ticket-btn { background-color: var(--call-blue) !important; box-shadow: 0 4px 10px rgba(0,122,255,0.2) !important; }
+.cta-btn-main:hover { transform: translateY(-3px); background-color: transparent; color: var(--neon-cyan); box-shadow: 0 8px 25px rgba(100,255,218,0.4); }
 
-/* Interactive Calculator Styling Blocks */
+/* Ingestion desk workspace interface containers */
 .calculator-master-card {
-    background: white; max-width: 600px; margin: -30px auto 40px auto; padding: 30px;
-    border-radius: 14px; box-shadow: 0 10px 30px rgba(10,25,47,0.06); position: relative;
-    z-index: 10; width: calc(100% - 40px); border: 1px solid #E2E8F0;
+    background: var(--bg-light-panel); width: calc(100% - 40px); max-width: 750px; margin: 50px auto; padding: 35px;
+    border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); border: 1px solid rgba(100, 255, 218, 0.1);
 }
-.calculator-master-card h3 { margin: 0 0 5px 0; color: var(--primary-navy); text-align: center; font-size: 20px; }
-.calc-form-row { display: flex; flex-direction: column; gap: 8px; margin-top: 15px; }
-.calc-form-row label { font-size: 13px; font-weight: 600; color: #475569; }
-.calc-form-row select { width: 100%; padding: 12px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 14px; background: #F8FAFC; }
-.calc-output-box { display: flex; gap: 15px; margin-top: 20px; background: #F1F5F9; padding: 15px; border-radius: 8px; }
-.calc-stat { flex: 1; font-size: 14px; color: #334155; }
-.calc-stat strong { display: block; font-size: 18px; color: var(--primary-navy); margin-top: 4px; }
+.calculator-master-card h3 { margin: 0 0 8px 0; color: #FFF; text-align: center; font-size: 22px; font-weight: 800; letter-spacing: 0.5px; }
+.desk-form-block h3 { color: var(--neon-cyan); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; margin-bottom: 15px; font-size: 20px; text-align: left; }
 
-/* Search Directory Bar Formats */
-.search-master-section { max-width: 850px; margin: 30px auto 0 auto; padding: 0 20px; width: 100%; text-align: center; }
-.search-master-section h3 { color: var(--primary-navy); font-size: 18px; margin-bottom: 12px; }
+.embedded-intake-desk { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+.embedded-intake-desk label { font-size: 13.5px; font-weight: 700; color: #FFF; text-align: left; display: block; letter-spacing: 0.3px; }
+.embedded-intake-desk input, .embedded-intake-desk textarea, .embedded-intake-desk select {
+    width: 100%; padding: 14px; border: 1px solid rgba(100, 255, 218, 0.2); border-radius: 6px; 
+    font-size: 14.5px; background: var(--bg-main); color: var(--text-white); font-family: inherit;
+}
+.embedded-intake-desk input:focus, .embedded-intake-desk textarea:focus, .embedded-intake-desk select:focus {
+    outline: none; border-color: var(--neon-cyan); box-shadow: 0 0 10px rgba(100,255,218,0.2);
+}
+.upload-picker-input { background: var(--bg-main) !important; border: 1px dashed rgba(100, 255, 218, 0.3) !important; padding: 15px !important; cursor: pointer; color: var(--text-muted) !important; }
+.upload-picker-label { background: rgba(100,255,218,0.03); padding: 10px; border-radius: 4px; display: block; margin-top: 5px; }
+
+/* Real-time search tools interface adjustments */
+.search-master-section { max-width: 850px; margin: 50px auto 0 auto; padding: 0 20px; width: 100%; text-align: center; }
+.search-master-section h3 { color: #FFF; font-size: 20px; font-weight: 800; margin-bottom: 5px; letter-spacing: 0.5px; }
 .search-bar-box input {
-    width: 100%; padding: 14px 20px; border: 2px solid #E2E8F0; border-radius: 30px;
-    font-size: 15px; box-sizing: border-box; background: white;
+    width: 100%; padding: 16px 25px; border: 2px solid rgba(100, 255, 218, 0.15); border-radius: 30px;
+    font-size: 15px; background: var(--bg-light-panel); color: white; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
+.search-bar-box input:focus { outline: none; border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(100,255,218,0.3); }
 
-/* Home Pillars Navigation Layout Dashboard Grid */
+/* The 7 primary grid blocks layout patterns */
 .grid-container {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;
-    padding: 50px 20px; max-width: 1200px; margin: 0 auto; width: 100%; flex: 1;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
+    padding: 50px 20px; max-width: 1200px; margin: 0 auto; width: 100%;
 }
-.pillar-card-link { text-decoration: none; color: inherit; display: block; }
 .pillar-card {
-    background: white; padding: 35px 25px; border-radius: 12px; text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.01); border-bottom: 4px solid transparent;
-    height: 100%; display: flex; flex-direction: column; justify-content: space-between;
-    transition: all 0.25s ease-in-out; border: 1px solid #E2E8F0;
+    background: var(--bg-light-panel); padding: 40px 30px; border-radius: 8px; text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid rgba(100,255,218,0.05);
+    height: 100%; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer;
 }
 .pillar-card:hover {
-    transform: translateY(-5px); border-bottom: 4px solid var(--primary-navy);
-    box-shadow: 0 10px 25px rgba(10,25,47,0.05);
+    transform: translateY(-5px); border-color: var(--neon-cyan);
+    box-shadow: 0 15px 35px rgba(100,255,218,0.15);
 }
-.pillar-card .icon { font-size: 45px; margin-bottom: 12px; }
-.pillar-card h2 { font-size: 19px; color: var(--primary-navy); margin: 10px 0; }
-.pillar-card p { font-size: 14px; color: #555; line-height: 1.5; margin: 0 0 15px 0; flex: 1; }
-.explore-node-text { font-size: 12px; font-weight: bold; color: var(--call-blue); text-transform: uppercase; }
+.pillar-card .icon { font-size: 48px; margin-bottom: 15px; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3)); }
+.pillar-card h2 { font-size: 20px; color: #FFF; margin: 10px 0; font-weight: 800; letter-spacing: 0.3px; }
+.pillar-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0 0 20px 0; flex: 1; }
+.explore-node-text { font-size: 12.5px; font-weight: 800; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 1px; }
 
-/* Ingested Form Layout Fields Inside Sub-Pages */
-.embedded-intake-desk { margin-top: 15px; background: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #E2E8F0; display: flex; flex-direction: column; gap: 8px; }
-.embedded-intake-desk label { font-size: 13px; font-weight: bold; color: var(--primary-navy); margin-top: 4px; text-align: left; display: block; }
-.embedded-intake-desk input, .embedded-intake-desk textarea, .embedded-intake-desk select {
-    width: 100%; padding: 10px; border: 1px solid #CBD5E1; border-radius: 4px; font-size: 13px; background: #F8FAFC; box-sizing: border-box; font-family: inherit;
-}
-.embedded-intake-desk input:focus, .embedded-intake-desk textarea:focus { outline: none; border-color: var(--primary-navy); background: #fff; }
-.upload-picker-input { background: #ffffff !important; border: 1px dashed #CBD5E1 !important; padding: 10px !important; font-size: 13px !important; cursor: pointer; color: #64748B !important; }
+/* Secure One-Client Ticket Success Popup Modal Elements */
+.ticket-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(2, 12, 27, 0.95); z-index: 99999; display: flex; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); }
+.ticket-modal-card { background: var(--bg-light-panel); padding: 45px 30px; border-radius: 12px; max-width: 550px; width: 100%; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.5); border: 1px solid var(--neon-cyan); }
+.ticket-badge-icon { font-size: 60px; margin-bottom: 15px; filter: drop-shadow(0 2px 10px rgba(100,255,218,0.3)); }
+.ticket-modal-card h3 { color: #FFF; margin: 0 0 8px 0; font-size: 22px; font-weight: 900; letter-spacing: 0.5px; }
+.modal-ticket-id { font-size: 15px; color: var(--text-white); margin-bottom: 25px; }
+.modal-ticket-id strong { background-color: rgba(100, 255, 218, 0.1); color: var(--neon-cyan); padding: 6px 16px; border-radius: 4px; font-size: 18px; font-family: monospace; border: 1px solid rgba(100,255,218,0.2); }
+.modal-notice-box { background-color: var(--bg-main); padding: 20px; border-radius: 8px; border: 1px dashed rgba(100, 255, 218, 0.2); font-size: 14.5px; color: var(--text-muted); line-height: 1.6; text-align: left; margin-bottom: 25px; }
+.modal-close-btn { background-color: var(--neon-cyan); color: var(--bg-main); border: none; padding: 15px 30px; border-radius: 6px; font-weight: 800; font-size: 14.5px; text-transform: uppercase; cursor: pointer; width: 100%; letter-spacing: 0.5px; }
+.modal-close-btn:hover { background-color: transparent; color: var(--neon-cyan); border: 1px solid var(--neon-cyan); }
 
-/* Secure One-Client Ticket Success Popup Modal */
-.ticket-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(10, 25, 47, 0.95); z-index: 99999; display: flex; justify-content: center; align-items: center; padding: 20px; }
-.ticket-modal-card { background: #ffffff; padding: 35px 25px; border-radius: 16px; max-width: 500px; width: 100%; text-align: center; box-shadow: 0 15px 40px rgba(0,0,0,0.2); border-top: 5px solid var(--wa-green); }
-.ticket-badge-icon { font-size: 50px; margin-bottom: 10px; }
-.ticket-modal-card h3 { color: var(--primary-navy); margin: 0 0 5px 0; font-size: 20px; font-weight: 800; }
-.modal-ticket-id { font-size: 15px; color: #475569; margin-bottom: 20px; }
-.modal-ticket-id strong { background-color: #FEF3C7; color: #D97706; padding: 4px 12px; border-radius: 4px; font-size: 16px; font-family: monospace; }
-.modal-notice-box { background-color: #F8FAFC; padding: 15px; border-radius: 8px; border: 1px dashed #CBD5E1; font-size: 14px; color: #334155; line-height: 1.6; text-align: left; margin-bottom: 20px; }
-.modal-close-btn { background-color: var(--primary-navy); color: white; border: none; padding: 12px 25px; border-radius: 6px; font-weight: bold; font-size: 14px; cursor: pointer; width: 100%; }
-.hidden-popup { display: none !important; }
+/* Anti-Fraud Banner Layout Styles */
+.security-trust-box { background-color: rgba(239, 68, 68, 0.05); border-left: 5px solid #EF4444; padding: 25px; border-radius: 8px; border-top: 1px solid rgba(239,68,68,0.1); border-right: 1px solid rgba(239,68,68,0.1); border-bottom: 1px solid rgba(239,68,68,0.1); }
+.security-trust-box h4 { margin: 0 0 10px 0; color: #EF4444; font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+.security-trust-box p { margin: 0; font-size: 14px; color: #FCA5A5; line-height: 1.6; text-align: left; }
 
-/* Anti-Fraud Banner Styles */
-.security-trust-box { background-color: #FEF2F2; border-left: 5px solid #EF4444; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(239,68,68,0.05); }
-.security-trust-box h4 { margin: 0 0 8px 0; color: #991B1B; font-size: 15px; font-weight: 800; text-transform: uppercase; }
-.security-trust-box p { margin: 0; font-size: 13.5px; color: #7F1D1D; line-height: 1.6; }
-
-/* FAQ Panels Styling Layout */
-.faq-master-container { max-width: 850px; margin: 50px auto; padding: 0 20px; width: 100%; }
-.faq-master-container h2 { color: var(--primary-navy); font-size: 24px; text-align: center; margin-bottom: 5px; }
-.faq-subtitle { text-align: center; font-size: 14px; color: #666; margin-bottom: 30px; }
-.faq-item-card { background: white; padding: 18px 20px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.01); cursor: pointer; border: 1px solid #E2E8F0; }
-.faq-question-row { display: flex; justify-content: space-between; align-items: center; }
-.faq-question-row h4 { margin: 0; font-size: 15px; color: var(--primary-navy); text-align: left; }
-.faq-arrow { font-size: 12px; color: #94A3B8; }
-.faq-answer-content { margin-top: 12px; border-top: 1px solid #F1F5F9; padding-top: 10px; font-size: 14px; color: #4A5568; line-height: 1.6; text-align: left; }
-.hidden-faq { display: none !important; }
-
-/* Outer Sub-Pages Elements */
-.back-nav { background: var(--primary-navy); padding: 15px 20px; width: 100%; }
-.back-btn { color: white; text-decoration: none; font-weight: bold; font-size: 15px; }
-.services-panel-page { max-width: 850px; margin: 40px auto; padding: 0 20px; width: 100%; flex: 1; }
+/* FAQ Panels Styles */
+.faq-master-container { max-width: 850px; margin: 60px auto; padding: 0 20px; width: 100%; }
+.faq-master-container h2 { color: #FFF; font-size: 26px; text-align: center; margin-bottom: 5px; font-weight: 800; }
+.faq-subtitle { text-align: center; font-size: 14.5px; color: var(--text-muted); margin-bottom: 35px; }
