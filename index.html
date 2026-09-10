@@ -6,110 +6,260 @@
     <title>Vecctapivot Enterprises | Operations Marketplace Hub</title>
     <style>
         :root {
-            --bg-main: #020C1B;
+            --bg-obsidian: #030712;
             --panel-slate: #0b1329;
             --border-muted: rgba(255, 255, 255, 0.06);
             --gold-accent: #d4af37;
-            --text-white: #f3f4f6;
+            --text-pure: #f3f4f6;
             --text-muted: #9ca3af;
+            --bg-deep-node: #060b18;
             --amber-warning: #FFB300;
+            --success-green: #10b981;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; transition: transform 0.2s ease, border-color 0.2s ease; }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease, background-color 0.2s ease; 
+        }
+
         body {
-            background-color: var(--bg-main); color: var(--text-white);
+            background-color: var(--bg-obsidian);
+            color: var(--text-pure);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
-        .ticker { background: var(--amber-warning); color: #000000; text-align: center; padding: 12px; font-size: 13px; font-weight: 800; letter-spacing: 0.3px; }
-        .header { text-align: center; padding: 50px 24px; border-bottom: 1px solid var(--border-muted); }
+
+        .urgency-ticker {
+            background-color: var(--amber-warning); 
+            color: #000000;
+            text-align: center; 
+            padding: 12px 20px; 
+            font-size: 13px; 
+            font-weight: 800; 
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+            letter-spacing: 0.3px; 
+            z-index: 10;
+        }
+
+        .portal-header {
+            background: linear-gradient(135deg, #060b18 0%, var(--bg-obsidian) 100%);
+            text-align: center;
+            padding: 50px 24px;
+            width: 100%;
+            border-bottom: 1px solid var(--border-muted);
+        }
+
+        .welcome-container { max-width: 850px; margin: 0 auto; }
         
-        /* Premium Corporate Logo Integration Elements */
-        .brand-identity-block { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 10px; }
-        .corporate-logo { max-height: 90px; width: auto; margin-bottom: 14px; filter: drop-shadow(0 2px 8px rgba(212,175,55,0.2)); }
-        .brand-text-fallback { font-size: 26px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+        .brand-identity-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .corporate-logo {
+            max-height: 90px;
+            width: auto;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 2px 8px rgba(212,175,55,0.2));
+        }
+
+        .brand-text-fallback {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
         .brand-text-fallback span { color: var(--gold-accent); }
-        
-        .welcome-banner { font-size: 11px; font-weight: 700; color: var(--gold-accent); letter-spacing: 2.5px; text-transform: uppercase; margin-top: 8px; margin-bottom: 10px; }
-        .portal-header-title { font-size: 34px; font-weight: 800; color: #ffffff; margin-bottom: 10px; letter-spacing: -0.5px; }
+        .welcome-banner { font-size: 11px; font-weight: 700; color: var(--gold-accent); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 20px; }
+        .portal-header h1 { font-size: 34px; font-weight: 800; color: #ffffff; margin-bottom: 10px; }
         .tagline { font-size: 14.5px; color: var(--text-muted); font-style: italic; }
-        .search-box { max-width: 650px; width: 100%; margin: 35px auto 10px auto; padding: 0 24px; }
-        .search-box input { width: 100%; padding: 16px 24px; background: var(--panel-slate); border: 1px solid var(--border-muted); border-radius: 30px; color: #ffffff; font-size: 14.5px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .search-box input:focus { outline: none; border-color: var(--gold-accent); box-shadow: 0 0 12px rgba(212,175,55,0.15); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1300px; width: 100%; margin: 30px auto; padding: 0 24px; }
-        .card { background: var(--panel-slate); border: 1px solid var(--border-muted); padding: 35px 24px; border-radius: 8px; text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
-        .card:hover { border-color: var(--gold-accent); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(212,175,55,0.06); }
-        .card.hidden { display: none !important; }
-        .card h2 { font-size: 18px; font-weight: 800; color: #ffffff; margin-bottom: 12px; }
-        .card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; flex: 1; margin-bottom: 20px; }
-        .card span { font-size: 11.5px; font-weight: 700; color: var(--gold-accent); text-transform: uppercase; letter-spacing: 0.5px; }
-        .footer { background: #060b18; border-top: 1px solid var(--border-muted); padding: 40px 24px; text-align: center; font-size: 13px; color: var(--text-muted); margin-top: auto; }
+
+        .search-master-section {
+            max-width: 850px;
+            width: 100%;
+            margin: 40px auto 10px auto;
+            padding: 0 24px;
+            text-align: center;
+        }
+
+        .search-bar-box input {
+            width: 100%;
+            padding: 16px 24px;
+            background-color: var(--panel-slate);
+            border: 1px solid var(--border-muted);
+            border-radius: 30px;
+            color: #ffffff;
+            font-size: 14.5px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar-box input:focus {
+            outline: none;
+            border-color: var(--gold-accent);
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.2);
+        }
+
+        .matrix-wrapper {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px 24px 20px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .core-pillar-block {
+            background-color: var(--panel-slate);
+            border: 1px solid var(--border-muted);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .core-pillar-block.hidden-node { display: none !important; }
+
+        .pillar-title-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 1px solid var(--border-muted);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+
+        .pillar-title-row .icon { font-size: 32px; }
+        .pillar-title-row h2 { font-size: 22px; font-weight: 800; color: #ffffff; }
+
+        .sub-pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .sub-pillar-card {
+            background-color: var(--bg-deep-node);
+            border: 1px solid var(--border-muted);
+            border-radius: 8px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sub-pillar-card.hidden-node { display: none !important; }
+
+        .sub-pillar-card h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gold-accent);
+            margin-bottom: 14px;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            padding-bottom: 8px;
+        }
+
+        .sub-sub-actions-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .sub-sub-item-btn {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            padding: 10px 14px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-muted);
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .sub-sub-item-btn:hover {
+            color: #000000;
+            font-weight: 700;
+            background-color: var(--gold-accent);
+            border-color: var(--gold-accent);
+            transform: translateY(-2px);
+        }
+
+        .sub-sub-item-btn.match-highlight {
+            color: #000000;
+            font-weight: 700;
+            background-color: var(--gold-accent);
+            border-color: var(--gold-accent);
+        }
+
+        .ingestion-console-section {
+            max-width: 1400px;
+            width: 100%;
+            margin: 20px auto 60px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+        }
+
+        .action-card-panel {
+            background-color: var(--panel-slate);
+            border: 1px solid var(--border-muted);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .action-card-panel h2 { font-size: 20px; font-weight: 800; color: #ffffff; margin-bottom: 6px; border-bottom: 1px solid var(--border-muted); padding-bottom: 14px; }
+        .action-card-panel p.section-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; }
+        .form-element-block { margin-bottom: 18px; }
+        .form-element-block label { display: block; font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-element-block input[type="text"], .form-element-block textarea { width: 100%; padding: 14px; background-color: var(--bg-deep-node); border: 1px solid var(--border-muted); border-radius: 6px; color: #ffffff; font-size: 14px; font-family: inherit; }
+        
+        .upload-picker-container { background: rgba(255,255,255,0.01); border: 1px dashed var(--border-muted); padding: 18px; border-radius: 6px; text-align: center; }
+        .upload-picker-container input[type="file"] { display: block; margin: 8px auto 0 auto; color: var(--text-muted); }
+
+        .submission-trigger-btn { width: 100%; padding: 16px; background-color: var(--gold-accent); color: #000000; border: none; border-radius: 6px; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
+        .submission-trigger-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
+        .ticket-trigger-btn { background-color: transparent; border: 1px solid rgba(255,255,255,0.2); color: #ffffff; margin-top: 15px; }
+        .ticket-trigger-btn:hover { background-color: rgba(255,255,255,0.05); }
+
+        .hidden-element { display: none !important; }
+        .telemetry-success-receipt { background: rgba(16, 185, 129, 0.05); border: 1px solid var(--success-green); border-radius: 6px; padding: 20px; margin-top: 20px; }
+        .telemetry-success-receipt h4 { color: var(--success-green); margin-bottom: 6px; font-weight: 800; }
+        .telemetry-success-receipt strong { font-family: monospace; color: #ffffff; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; }
+
+        .portal-footer {
+            background-color: #090e1a;
+            border-top: 1px solid var(--border-muted);
+            padding: 40px 24px;
+            font-size: 13.5px;
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+        .footer-branding { font-weight: 700; color: #ffffff; margin-bottom: 4px; }
     </style>
 </head>
 <body>
-    <div class="ticker">🔒 Multidimensional Architecture Grid Operational — Reference Ticket: <strong>VP-TICKET-000000</strong></div>
-    <header class="header">
-        
-            <!-- logo.png linked dynamically from your GitHub repository asset layer -->
-            <img src="logo.png" alt="Vecctapivot Logo" class="corporate-logo" onerror="this.style.display='none';">
-            <div class="brand-text-fallback">VECCTAPIVOT <span>ENTERPRISES</span></div>
-            <div class="welcome-banner">343 Matrix Pipeline Marketplace</div>
-        </div>
-        <h1 class="portal-header-title">Master Operations Routing Portal</h1>
-        <div class="tagline">Statutory Account Alignment Hub (BRS Status Verification: BN-AYSO8LRE)</div>
-    </header>
-    <div class="search-box">
-        <input type="text" id="globalSearch" placeholder="Type key processes (e.g., KRA, CPA, BN2, TIMMS) to isolate active desks instantly...">
+
+    <div class="urgency-ticker">
+        <p>🔒 7 × 7 × 7 Operational Pipeline Matrix Active [343 Systems Verified] — Reference Ticket: <strong>VP-TICKET-000000</strong></p>
     </div>
-    <main class="grid">
-        <a href="digital.html" class="card" data-index="digital brand ecitizen registration layouts bn2 form share conversion logo particular alterations cessation data control privacy">
-            <h2>Pillar 1: Digital & Brand Systems</h2>
-            <p>eCitizen registration entry nodes, name query validation files, partnership configurations setup (BN2), articles alterations, share conversions, and identity brand protection protocols.</p>
-            <span>Open Desk 1 Operations →</span>
-        </a>
-        <a href="academic.html" class="card" data-index="academic exam mock booklets kasneb cpa cbc revision kit notes secondary paper junior student portal knec tveta syllabus">
-            <h2>Pillar 2: Academic & Testing Logistics</h2>
-            <p>Form 1-4 termly county evaluation packs, spiral-bound topic compilation resource materials, KASNEB CPA / ATD revision matrices archives, and CBC primary routing portals maps.</p>
-            <span>Open Desk 2 Operations →</span>
-        </a>
-        <a href="transport.html" class="card" data-index="transport courier ride booking lorry cargo canter logistics fleet track last mile motorcycle cold chain executive transit">
-            <h2>Pillar 3: Transport Brokerage Hub</h2>
-            <p>Point-to-point urban transfer configurations, last-mile certificate courier dispatches, inter-county agricultural freight cargo tracking setups, and continuous telemetry arrays.</p>
-            <span>Open Desk 3 Operations →</span>
-        </a>
-        <a href="sourcing.html" class="card" data-index="sourcing produce farm agriculture wholesale price audit supplier map border import customs freight manifest contract factory">
-            <h2>Pillar 4: Merchandise Sourcing Links</h2>
-            <p>Farm-gate produce asset collection metrics, factory wholesale cost verification audits, B2B cross-border supply trajectory charts layout, and long-term contract off-take agriculture rules.</p>
-            <span>Open Desk 4 Operations →</span>
-        </a>
-        <a href="fixer.html" class="card" data-index="fixer land site inspection proxy permit storefront check subcounty zoning real estate beacon security compliance municipal citation">
-            <h2>Pillar 5: Independent Fixer Desk</h2>
-            <p>Ground proxy coordinates verifications, manual loading bay pre-transit inventory checks, local sub-county administrative permit clearance overrides, and zoning layout inspections.</p>
-            <span>Open Desk 5 Operations →</span>
-        </a>
-        <a href="agency.html" class="card" data-index="agency core balance aggregated billing ledger milestone queue override escrow retainers intake redirection kpi dashboard">
-            <h2>Pillar 6: General Agency Core</h2>
-            <p>Multi-sector consolidated performance matrices tracking, micro-merchant intake pathway shortcuts link grids, automated macro ledger updates statements, and secure escrow holding pools.</p>
-            <span>Open Desk 6 Operations →</span>
-        </a>
-        <a href="statutory.html" class="card" data-index="statutory duplicate maisha id travel passport ntsa timms logbook dl transfer shif nssf nea dci fingerprint good conduct gazette">
-            <h2>Pillar 7: Statutory & Portal Logistics</h2>
-            <p>Maisha entry updates processing, national passport tracking bookings, NTSA/TIMS transfer profiles setup, health authority social transition rosters logs, and Gazette listings validations.</p>
-            <span>Open Desk 7 Operations →</span>
-        </a>
-    </main>
-    <footer class="footer">
-        <div class="footer-branding"><strong>VECCTAPIVOT ENTERPRISES</strong></div>
-        <p style="margin-top:6px; font-size:12px; opacity:0.6;">© 2026. Low-Bandwidth Infrastructure Node Framework. All Protocols Observed.</p>
-    </footer>
-    <script>
-        document.getElementById('globalSearch').addEventListener('input', function(e) {
-            const val = e.target.value.toLowerCase().trim();
-            document.querySelectorAll('.card').forEach(card => {
-                const terms = card.getAttribute('data-index') || "";
-                if(val === "" || terms.includes(val)) { card.classList.remove('hidden'); }
-                else { card.classList.add('hidden'); }
-            });
-        });
-    </script>
-</body>
-</html>
+
+    <header class="portal-header">
+        <div class="welcome-container">
+            
+                <img src="logo.png" alt="Vecctapivot Enterprises Logo" class="corporate-logo" onerror="this.style.display='none';">
