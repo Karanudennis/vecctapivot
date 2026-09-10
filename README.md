@@ -1,19 +1,20 @@
 # 🏢 VECCTAPIVOT ENTERPRISES
-### *Official Multi-Scope Hub for Logistics, Agribusiness, and General Trade Supplies across East Africa.*
+### *Official Multi-Page Ground Operations & Sourcing Agency Terminal for East Africa.*
 
 ---
 
-## 🌐 Project Overview
-Vecctapivot Enterprises is a registered Operations & Sourcing Agency built for an agile economy. This repository houses the complete front-end multi-page web architecture for our centralized service routing portal, designed to serve modern enterprises, retail merchants, and independent traders smoothly across Kenya and the broader East African region.
-
-* **Tagline:** *"One Pivot. Endless Possibilities."*
-* **BRS Status:** Legally Registered Agency | Name Reservation Reference: `BN-AYSO8LRE`
-* **Official Hotline:** `+254 788 099 685`
-* **Central Inbox:** `vecctapivotenterprises@gmail.com`
+## 🌐 Central Business Parameters
+* **Business Registration Status:** Legally Registered Agency 
+* **BRS Reference Module ID:** `BN-AYSO8LRE`
+* **Central Enterprise Inbox:** `vecctapivotenterprises@gmail.com`
+* **Official Corporate Hotline:** `+254 788 099 685`
+* **Primary Sourcing Hub:** Ol Kalou Town, Nyandarua County, Kenya
 
 ---
 
-## 🗂️ Repository Architecture & File Mapping
+## 📂 Multi-Page Repository Architecture & File Mapping
 
-This platform runs on a mobile-optimized multi-page static framework with embedded on-screen secure forms and a single-session client ticket-locking engine. Below is the blueprint of how files inside this root directory interact:
+To eliminate mobile browser memory freezes and dynamic array splitting errors on smartphone viewports, this platform operates strictly on a clean, native multi-page static framework. 
+
+Below is the active directory structure inside this root folder:
 
