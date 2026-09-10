@@ -2,112 +2,13 @@
 <html lang="en-KE">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Central Help Desk | Vecctapivot</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Vecctapivot Enterprises | Redirecting...</title>
+    <script>
+        // Pushes the mobile phone's browser instantly back to the master homepage
+        window.location.href = "index.html";
+    </script>
 </head>
 <body>
-
-    <div class="back-nav">
-        <a href="index.html" class="back-btn">⬅️ Back to Home Portal</a>
-    </div>
-
-    <!-- UNIQUE TRANSACTION MODAL CONTAINER -->
-    <div id="success-ticket-modal" class="ticket-modal-overlay hidden-popup">
-        <div class="ticket-modal-card">
-            <div class="ticket-badge-icon">🎫</div>
-            <h3>HELP DESK TICKET REGISTERED</h3>
-            <p class="modal-ticket-id">Your Unique Tracking File: <strong id="generated-ticket-id">VP-HELP-0000</strong></p>
-            <div class="modal-notice-box">
-                <p><strong>🔒 Status: Staged & Locked in Help Queue.</strong> Your support query parameters have been successfully logged into our customer database records.</p>
-                <p>To preserve portal integrity, this device is limited to one active ticket run. Please wait—a customer care proxy has been assigned to your reference slot and will text or call you within 15 minutes.</p>
-            </div>
-            <button type="button" class="modal-close-btn" onclick="closeTicketModal()">Acknowledge & Monitor Status</button>
-        </div>
-    </div>
-
-    <main class="services-panel-page">
-        <h2>🛠️ Vecctapivot Central Help Desk & Consultation</h2>
-        <p class="section-intro-text">Log a secure administrative support ticket or request a callback setup directly. Fill out all required fields to lock your session position.</p>
-
-        <!-- Dynamic Support Ticket Form -->
-        <div class="service-item-block">
-            <h3>📋 Open an Official Support Ticket</h3>
-            
-            <form action="https://formspree.io" method="POST" onsubmit="executeSingleClientSubmission(event, 'HELP')" class="ticket-intake-form">
-                <input type="hidden" name="_subject" id="subject-help" value="New Support Desk Ticket">
-                <input type="hidden" name="Unique Ticket ID" id="hidden-ticket-help">
-
-                <label>Full Name / Stated Organization Name:</label>
-                
-
-                <label>Active Contact Phone Number (M-Pesa Connected):</label>
-                <input type="tel" name="Phone Number" placeholder="e.g., 0712345678" required>
-
-                <label>Select Target Operational Pillar Desk:</label>
-                <select name="Target Service Department Desk" required>
-                    <option value="Pillar 1: Digital Systems (BRS Registrations)">Pillar 1: Digital Systems (BRS Registrations / Logos)</option>
-                    <option value="Pillar 2: Academic Logistics (Mock Exam Vaults)">Pillar 2: Academic Logistics (Mock Exam Vaults / CPA Kits)</option>
-                    <option value="Pillar 3: Transport Hub (Lorry Sourcing / Courier)">Pillar 3: Transport Hub (Lorry Sourcing / Courier Runs)</option>
-                    <option value="Pillar 4: Sourcing Links (Crop Aggregation / Audits)">Pillar 4: Sourcing Links (Crop Agribusiness / Supplier Audits)</option>
-                    <option value="Pillar 5: Independent Fixer (Site Checks / Permits)">Pillar 5: Independent Fixer (Site Inspections / Council Proxies)</option>
-                    <option value="Pillar 6: General Agency (Consolidated Firm Ledger Accounts)">Pillar 6: General Agency (Consolidated Accounts)</option>
-                    <option value="Pillar 7: Statutory Logistics (eCitizen Cards / NTSA transfers)">Pillar 7: Statutory Logistics (eCitizen Cards / NTSA Logbooks)</option>
-                </select>
-
-                <label>Urgency Allocation Tier Status:</label>
-                <select name="Urgency Priority Tier" required>
-                    <option value="🟢 STANDARD (Routine Timeline Queue)">STANDARD (Normal Queue Processing)</option>
-                    <option value="⚡ PRIORITY (Requires Fast-Track Overrides)">PRIORITY (Express Surcharge Overrides Apply)</option>
-                </select>
-
-                <label>Detailed Description of Scope Requirements or Problem Details:</label>
-                <textarea name="Detailed Issue Logs Description" rows="4" placeholder="Type your specific service inquiries, required document uploads help, or logistics path descriptions directly here..." required></textarea>
-
-                <button type="submit" class="submit-ticket-btn">🚀 Log Technical Support Ticket</button>
-            </form>
-        </div>
-    </main>
-
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            const activeSessionTicket = localStorage.getItem('vp_active_ticket');
-            if (activeSessionTicket) {
-                document.getElementById('generated-ticket-id').innerText = activeSessionTicket;
-                document.getElementById('success-ticket-modal').classList.remove('hidden-popup');
-            }
-        });
-
-        function executeSingleClientSubmission(event, prefix) {
-            event.preventDefault();
-            if(localStorage.getItem('vp_active_ticket')) {
-                alert("You have an active pending operation locked in our queue.");
-                return;
-            }
-            const form = event.target;
-            const button = form.querySelector('button[type="submit"]');
-            button.disabled = true; button.innerText = "🔒 Securing Portal Queue...";
-            
-            const uniqueID = `VP-${prefix}-${Math.floor(100000 + Math.random() * 900000)}`;
-            document.getElementById('hidden-ticket-help').value = uniqueID;
-            document.getElementById('subject-help').value = `Help Desk Ticket [${uniqueID}]`;
-            document.getElementById('generated-ticket-id').innerText = uniqueID;
-
-            fetch(form.action, {
-                method: form.method,
-                body: new FormData(form),
-                headers: { 'Accept': 'application/json' }
-            }).then(response => {
-                if (response.ok) {
-                    localStorage.setItem('vp_active_ticket', uniqueID);
-                    document.getElementById('success-ticket-modal').classList.remove('hidden-popup');
-                } else {
-                    alert("Communications timeout. Retry application setup lines.");
-                    button.disabled = false; button.innerText = "🚀 Log Technical Support Ticket";
-                }
-            });
-        }
-        function closeTicketModal() { document.getElementById('success-ticket-modal').classList.add('hidden-popup'); }
-    </script>
+    <p>Redirecting securely to the centralized Vecctapivot Operational Marketplace... <a href="index.html">Click here if page does not redirect</a>.</p>
 </body>
 </html>
