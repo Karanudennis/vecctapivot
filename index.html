@@ -15,7 +15,12 @@
             --action-blue: #1d4ed8;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.2s ease-in-out; }
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            transition: all 0.2s ease-in-out; 
+        }
 
         body {
             background-color: var(--bg-obsidian);
@@ -27,7 +32,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Institutional Corporate Header Panel Layout */
+        /* Institutional Header Layout area */
         .portal-header {
             background: linear-gradient(135deg, #091224 0%, var(--bg-obsidian) 100%);
             text-align: center;
@@ -37,9 +42,14 @@
             position: relative;
         }
 
-        .welcome-container { max-width: 850px; margin: 0 auto; position: relative; z-index: 2; }
+        .welcome-container { 
+            max-width: 850px; 
+            margin: 0 auto; 
+            position: relative; 
+            z-index: 2; 
+        }
 
-        /* Premium Brand Identity Area Architecture */
+        /* Brand Identity Layout Frame */
         .brand-identity-block {
             display: flex;
             flex-direction: column;
@@ -115,7 +125,7 @@
         }
 
         .philosophy-box h3 {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
             color: #ffffff;
             text-transform: uppercase;
@@ -129,7 +139,7 @@
             line-height: 1.6;
         }
 
-        /* Real-Time Keyword Search Input Section */
+        /* Keyword Filter Search Section */
         .search-master-section {
             max-width: 850px;
             width: 100%;
@@ -166,10 +176,9 @@
         .search-bar-box input:focus {
             outline: none;
             border-color: var(--gold-accent);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
         }
 
-        /* Navigational Desktop Grid Menu Layout */
+        /* 7 Primary Grid Core Layout */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -228,7 +237,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* FAQ Content Styles Layout */
+        /* FAQ Interactive Panel Layout */
         .faq-master-container {
             max-width: 850px;
             width: 100%;
@@ -253,44 +262,15 @@
             cursor: pointer;
         }
 
-        .faq-item-card:hover {
-            border-color: rgba(255, 255, 255, 0.12);
-        }
-
-        .faq-question-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .faq-question-row h4 {
-            font-size: 14.5px;
-            font-weight: 600;
-            color: #ffffff;
-            text-align: left;
-        }
-
-        .faq-arrow {
-            font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 700;
-        }
-
-        .faq-answer-content {
-            margin-top: 14px;
-            padding-top: 14px;
-            border-top: 1px solid var(--border-muted);
-            font-size: 13.5px;
-            color: var(--text-muted);
-            line-height: 1.6;
-            text-align: left;
-        }
+        .faq-item-card:hover { border-color: rgba(255, 255, 255, 0.12); }
+        .faq-question-row { display: flex; justify-content: space-between; align-items: center; }
+        .faq-question-row h4 { font-size: 14.5px; font-weight: 600; color: #ffffff; text-align: left; }
+        .faq-arrow { font-size: 11px; color: var(--text-muted); font-weight: 700; }
+        .faq-answer-content { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-muted); font-size: 13.5px; color: var(--text-muted); line-height: 1.6; text-align: left; }
 
         .hidden-faq { display: none !important; }
 
-        /* ==========================================================================
-           PREMIUM INSTUTIONAL FOOTER (TRUE SINGLE-COLUMN MOBILE RE-ARCHITECTURE)
-           ========================================================================== */
+        /* Professional Stacked Mobile Footer layout */
         .portal-footer {
             background-color: #090e1a;
             border-top: 1px solid var(--border-muted);
@@ -316,37 +296,27 @@
             }
         }
 
-        .footer-column {
-            flex: 1;
-        }
+        .footer-column { flex: 1; }
+        .footer-column h4 { color: #ffffff; font-size: 12.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; border-bottom: 2px solid var(--gold-accent); padding-bottom: 4px; display: inline-block; }
+        .footer-column p { font-size: 13.5px; color: var(--text-muted); margin: 6px 0; line-height: 1.5; }
+        .footer-column strong { color: #ffffff; }
+        .footer-bottom-legal-row { border-top: 1px solid var(--border-muted); padding-top: 25px; max-width: 900px; margin: 30px auto 0 auto; text-align: center; font-size: 12.5px; color: var(--text-muted); }
+        .legal-footer { font-size: 11.5px; opacity: 0.6; line-height: 1.6; margin-top: 12px; text-align: justify; }
 
-        .footer-column h4 {
-            color: #ffffff;
-            font-size: 12.5px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-            border-bottom: 2px solid var(--gold-accent);
-            padding-bottom: 4px;
-            display: inline-block;
+        @media(max-width: 768px) {
+            .portal-header { padding: 50px 16px; }
+            .portal-header h1 { font-size: 24px; }
+            .grid-container { padding: 24px 16px; gap: 16px; }
+            .footer-grid-row { gap: 30px; }
+            .legal-footer { text-align: left; }
         }
+    </style>
+</head>
+<body>
 
-        .footer-column p {
-            font-size: 13.5px;
-            color: var(--text-muted);
-            margin: 6px 0;
-            line-height: 1.5;
-        }
-
-        .footer-column strong {
-            color: #ffffff;
-        }
-
-        .footer-bottom-legal-row {
-            border-top: 1px solid var(--border-muted);
-            padding-top: 25px;
-            max-width: 900px;
-            margin: 30px auto 0 auto;
-            text-align: center;
-            font-size: 12.5px;
+    <!-- Header Panel Area -->
+    <header class="portal-header">
+        <div class="welcome-container">
+            <div class="visual-glow-orb"></div>
+            
+            
