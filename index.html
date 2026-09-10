@@ -3,152 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vecctapivot Enterprises | All-in-One Marketplace</title>
+    <title>Vecctapivot Enterprises | Operations Marketplace</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Marketplace Notification Ticker -->
+    <!-- Urgency Top Notification Ticker -->
     <div class="urgency-ticker">
-        <p>📋 Marketplace Status: Secure eCitizen portal runs, active cargo route tracking, and technical revision keys are fully operational.</p>
+        <p>📋 Marketplace Live: Submit portal credentials, map agriculture lorry freight tracks, or request ground audits directly below.</p>
     </div>
 
-    <!-- Premium Welcoming Header Layer -->
+    <!-- Premium Visual Header Panel -->
     <header class="portal-header">
         <div class="welcome-container">
             <div class="visual-glow-orb"></div>
             <img src="logo.png" alt="Vecctapivot Logo" class="corporate-logo" onerror="this.style.display='none'">
             <div class="welcome-banner">✨ CENTRAL EAST AFRICA DISPATCH & SOURCING TERMINAL</div>
-            
             <h1>VECCTAPIVOT OPERATIONAL MARKETPLACE</h1>
             <p class="tagline">"Our priority is seamless workflow clearance, reliable logistics, and your satisfaction."</p>
-            
             <div class="trust-badge">
                 <span>🛡️ Registered Business Name | BRS Reference: BN-AYSO8LRE</span>
             </div>
 
-            <!-- Customer Centric Philosophy Value Card -->
+            <!-- Service Driven Philosophy Value Card -->
             <div class="philosophy-box">
                 <h3>🤝 Service-Driven Transaction Framework</h3>
-                <p>Welcome to your central multi-scope marketplace. We connect remote merchants, educational systems, and inter-county agricultural traders directly to verified portal processing, secure supplier tracing networks, and on-demand heavy freight brokerage lines.</p>
+                <p>Welcome to your central digital marketplace. Use the search index or select a primary desk node below to configure project files, estimate turnaround timelines, and securely lock your data into our active processing queues.</p>
             </div>
             
-            <!-- Header Action Node Cluster Layout -->
             <div class="header-action-container">
-                <a href="#portal-grid" class="cta-btn-main scroll-btn">⚡ Access Service Desks</a>
-                <a href="ticket.html" class="cta-btn-main ticket-btn">🎫 Log a Free Help Ticket</a>
+                <a href="#portal-grid" class="cta-btn-main scroll-btn">📊 Estimate Rate & File Data</a>
+                <a href="#master-intake-section" class="cta-btn-main ticket-btn" onclick="activateCentralHelpDesk()">🎫 Open Central Help Desk</a>
             </div>
         </div>
     </header>
 
-    <!-- INTERACTIVE SERVICE FEE CALCULATOR WIDGET -->
-    <section class="calculator-master-card">
-        <h3>🧮 Instant Marketplace Rate & SLA Calculator</h3>
-        <p style="font-size: 14px; color: #555; margin-bottom: 20px;">Select your parameters to estimate processing fees and standard turnaround delivery timelines instantly.</p>
-        
-        <div class="calc-form-row">
-            <label for="calc-select">Select Target Service Track:</label>
-            <select id="calc-select" onchange="runMarketplaceSummaryEstimation()">
-                <option value="1500|2-5 Days|BRS Business Name Registration Setup">BRS Business Name Registration Setup</option>
-                <option value="4000|3-5 Days|Partnership / Firm Registry Setup (Form BN2)">Partnership / Firm Registry Setup (BN2)</option>
-                <option value="1500|2-3 Days|Business Particulars Alterations (Form BN3)">Business Particulars Alterations (Form BN3)</option>
-                <option value="2500|3-5 Days|Business Cessation Formal Closure Filings">Business Cessation Formal Closure Filings</option>
-                Bespoke Vector Branding Logo Pack</option>
-                <option value="1500|Instant|Full Class Form 1-4 High School Mock Bundle">Full Class Form 1-4 High School Mock Bundle</option>
-                <option value="500|Instant|KASNEB CPA / ATD Past-Paper Archive Pass">KASNEB CPA / ATD Past-Paper Archive Pass</option>
-                <option value="3000|12-24 Hours|Inter-County Bulk Crop Produce Lorry Sourcing">Inter-County Bulk Crop Lorry Sourcing</option>
-                <option value="3000|24-48 Hours|Real Estate / Plot Location Physical Site Audit">Real Estate Plot Physical Inspection</option>
-                <option value="1200|3-5 Days|Duplicate ID Replacement or Maisha Card Portal Application">Duplicate ID / Maisha Card Portal Application</option>
-                <option value="200|24 Hours|KRA iTax Nil Tax Return Filing">KRA iTax Nil Tax Return Filing</option>
-            </select>
+    <!-- AUTOMATED TRANSACTION WORK ORDER MODAL POPUP -->
+    <div id="success-ticket-modal" class="ticket-modal-overlay hidden-popup">
+        <div class="ticket-modal-card">
+            <div class="ticket-badge-icon">🛡️</div>
+            <h3>OPERATION INITIALIZED SUCCESSFULLY</h3>
+            <p class="modal-ticket-id">Your Unique Tracking File: <strong id="generated-ticket-id">VP-REG-0000</strong></p>
+            <div class="modal-notice-box">
+                <p><strong>🔒 Status: Staged & Locked in Queue.</strong> Your credentials, text parameters, and uploaded files have been safely encrypted and transmitted to our desk handler inbox.</p>
+                <p>A copy of this task run layout has been dispatched to our support mail gateway. Please wait—a desk proxy is verifying your files and will contact you via **email or phone text within 15 minutes** to confirm workflow completion schedules.</p>
+            </div>
+            <button type="button" class="modal-close-btn" onclick="closeTicketModal()">Acknowledge & Monitor Status</button>
         </div>
+    </div>
 
-        <div id="calc-display-panel" class="calc-output-box">
-            <div class="calc-stat"><span class="lbl">💵 Value Price:</span> <strong id="out-price">KES 1,500</strong></div>
-            <div class="calc-stat"><span class="lbl">⏱️ Delivery SLA:</span> <strong id="out-sla">2-5 Days</strong></div>
-        </div>
-        <button type="button" class="submit-ticket-btn" style="width:100%; margin-top:15px;" onclick="forwardCalculatedEstimate()">🚀 Initialize This Calculated Order</button>
-    </section>
-
-    <!-- LIVE REAL-TIME FILTER SEARCH DIRECTORY -->
+    <!-- LIVE REAL-TIME MARKETPLACE SEARCH DIRECTORY -->
     <section class="search-master-section">
         <h3>🔍 Live Marketplace Resource Search Directory</h3>
+        <p class="faq-subtitle">Type keywords to filter active desks instantly (e.g., 'CPA', 'Mock', 'Lorry', 'Logo', 'Maisha', 'KRA').</p>
         <div class="search-bar-box">
-            <input type="text" id="marketplace-search" onkeyup="filterMarketplaceSearch()" placeholder="Type keys to filter (e.g., 'CPA', 'Mock', 'Lorry', 'Logo', 'Maisha', 'KRA')...">
+            <input type="text" id="marketplace-search" onkeyup="filterMarketplaceSearch()" placeholder="Search through our 49 operational service modules here...">
         </div>
     </section>
 
-    <!-- The 7 Pillars Routing Dashboard Grid Menu -->
+    <!-- THE 7 PILLARS NAVIGATION INTERFACE GRID -->
     <main id="portal-grid" class="grid-container">
         
-        <a href="digital.html" class="pillar-card-link searchable-card" data-tags="digital brand brs registration logo bn2 bn3 cessation particulars link legacy ecitizen kra pin tax returns">
-            <section class="pillar-card">
-                <div class="icon">💻</div>
-                <h2>1. Digital & Brand Systems</h2>
-                <p>BRS Business Registrations, Portal Particulars Changes & Visual Branding Identity Layouts</p>
-                <div class="explore-node-text">Open Desk Terminal ➡️</div>
-            </section>
-        </a>
+        <div class="pillar-card searchable-card" data-tags="digital brand brs registration logo bn2 bn3 cessation particulars link legacy ecitizen kra pin tax returns corporate design profile" onclick="activatePillarDesk('p1-desk', '💻 Digital & Brand Systems', 'REG')">
+            <div class="icon">💻</div>
+            <h2>1. Digital & Brand Systems</h2>
+            <p>BRS Business Registrations, Portal Particulars Alterations & Visual Branding Identity Layouts</p>
+            <div class="explore-node-text">Open Desk Terminal ➡️</div>
+        </div>
 
-        <a href="academic.html" class="pillar-card-link searchable-card" data-tags="academic test mock exam high school form cbc revision booklet vault kasneb cpa atd past paper guide">
-            <section class="pillar-card">
-                <div class="icon">📚</div>
-                <h2>2. Academic & Testing Logistics</h2>
-                <p>Form 1-4 High School Mock Bundles, CBC Portfolios & KASNEB CPA/ATD Resource Vaults</p>
-                <div class="explore-node-text">Open Desk Terminal ➡️</div>
-            </section>
-        </a>
+        <div class="pillar-card searchable-card" data-tags="academic test mock exam high school form cbc revision booklet vault kasneb cpa atd past paper guide tuition papers study notes education portal" onclick="activatePillarDesk('p2-desk', '📚 Academic & Testing Logistics', 'ACA')">
+            <div class="icon">📚</div>
+            <h2>2. Academic & Testing Logistics</h2>
+            <p>Form 1-4 High School Mock Bundles, CBC Portfolios & KASNEB CPA/ATD Resource Vaults</p>
+            <div class="explore-node-text">Open Desk Terminal ➡️</div>
+        </div>
 
-        <a href="transport.html" class="pillar-card-link searchable-card" data-tags="transport ride taxi booking courier dispatch motorcycle lorry cargo freight logistics cold chain truck">
-            <section class="pillar-card">
-                <div class="icon">🚖</div>
-                <h2>3. Transport Brokerage Hub</h2>
-                <p>Intra-Town Express Couriers, Local Transfers & Long-Haul Freight Lines</p>
-                <div class="explore-node-text">Open Desk Terminal ➡️</div>
-            </section>
-        </a>
+        <div class="pillar-card searchable-card" data-tags="transport ride taxi booking courier dispatch motorcycle lorry cargo freight logistics cold chain truck trailer van routing insurance" onclick="activatePillarDesk('p3-desk', '🚖 Transport Brokerage Hub', 'TRK')">
+            <div class="icon">🚖</div>
+            <h2>3. Transport Brokerage Hub</h2>
+            <p>Intra-Town Express Couriers, Local Transfers & Long-HaUL Freight Lines</p>
+            <div class="explore-node-text">Open Desk Terminal ➡️</div>
+        </div>
 
-        <a href="sourcing.html" class="pillar-card-link searchable-card" data-tags="sourcing merchandise agribusiness crop potato cabbage farm market factory price audit import wholesale b2b supplier check">
-            <section class="pillar-card">
-                <div class="icon">🤝</div>
-                <h2>4. Merchandise Sourcing Links</h2>
-                <p>Farm-Gate Agribusiness Aggregations, Factory Price Audits & Import Tracks</p>
-                <div class="explore-node-text">Open Desk Terminal ➡️</div>
-            </section>
-        </a>
+        <div class="pillar-card searchable-card" data-tags="sourcing merchandise agribusiness crop potato cabbage farm market factory price audit import wholesale b2b supplier check tariff cargo" onclick="activatePillarDesk('p4-desk', '🤝 Merchandise Sourcing Links', 'SRC')">
+            <div class="icon">🤝</div>
+            <h2>4. Merchandise Sourcing Links</h2>
+            <p>Farm-Gate Agribusiness Aggregations, Factory Price Audits & Import Tracks</p>
+            <div class="explore-node-text">Open Desk Terminal ➡️</div>
+        </div>
 
-        <a href="fixer.html" class="pillar-card-link searchable-card" data-tags="fixer desk physical site inspection real estate plot verify consignment count warehouse audit permit county proxy">
-            <section class="pillar-card">
-                <div class="icon">🛠️</div>
-                <h2>5. Independent Fixer Desk</h2>
-                <p>Physical Property Site Verifications, Consignment Counts & Permit Proxy Handling</p>
-                <div class="explore-node-text">Open Desk Terminal ➡️</div>
-            </section>
-        </a>
+        <div class="pillar-card searchable-card" data-tags="fixer desk physical site inspection real estate plot verify consignment count warehouse audit permit county proxy enforcement dispute fence safety" onclick="activatePillarDesk('p5-desk', '🛠️ Independent Fixer Desk', 'FIX')">
+            <div class="icon">🛠️</div>
+            <h2>5. Independent Fixer Desk</h2>
+            <p>Physical Property Site Verifications, Consignment Counts & Permit Proxy Handling</p>
+            <div class="explore-node-text">Open Desk Terminal ➡️</div>
+        </div>
 
-        <a href="agency.html" class="pillar-card-link searchable-card" data-tags="agency general core consolidated billing ledger accounting balance strategy queue override border trade corridor metrics kpi">
-            <section class="pillar-card">
-                <div class="icon">🏢</div>
-                <h2>6. General Agency Core</h2>
-                <p>Consolidated Firm Accounts, Inter-Desk Escalations & Operations Management</p>
-                <div class="explore-node-text">Open Desk Terminal ➡️</div>
-            </section>
-        </a>
+        <div class="pillar-card searchable-card" data-tags="agency general core consolidated billing ledger accounting balance strategy queue override border trade corridor metrics kpi escrow cash flows fund" onclick="activatePillarDesk('p6-desk', '🏢 General Agency Core', 'CRE')">
+            <div class="icon">🏢</div>
+            <h2>6. General Agency Core</h2>
+            <p>Consolidated Firm Accounts, Inter-Desk Escalations & Operations Management Dashboard</p>
+            <div class="explore-node-text">Open Desk Terminal ➡️</div>
+        </div>
 
-        <!-- THE STRATEGIC SEVENTH PILLAR DATA LINK CARD -->
-        <a href="statutory.html" class="pillar-card-link searchable-card" data-tags="statutory immigration portal ecitizen passport id replacement maisha card ntsa dl logbook shif sha health conduct dci lands ardhisasa kra pins nil active tax returns">
-            <section class="pillar-card">
-                <div class="icon">📄</div>
-                <h2>7. Statutory & Portal Logistics</h2>
-                <p>eCitizen Maisha Cards, NTSA DL Logbook Transfers, KRA iTax Return Filings & Land Searches</p>
-                <div class="explore-node-text">Open Desk Terminal ➡️</div>
-            </section>
-        </a>
+        <div class="pillar-card searchable-card" data-tags="statutory immigration portal ecitizen passport id replacement maisha card ntsa dl logbook shif sha health conduct dci lands ardhisasa tax filings returns kra" onclick="activatePillarDesk('p7-desk', '📄 Statutory & Portal Logistics', 'STAT')">
+            <div class="icon">📄</div>
+            <h2>7. Statutory & Portal Logistics</h2>
+            <p>eCitizen Maisha Cards, NTSA DL Logbook Transfers, KRA iTax Return Filings & Land Searches</p>
+            <div class="explore-node-text">Open Desk Terminal ➡️</div>
+        </div>
 
     </main>
 
-    <!-- CENTRAL ANTI-FRAUD TRUST INFRASTRUCTURE BANNER -->
-    <section class="security-trust-banner-wrapper" style="max-width: 850px; margin: 40px auto; padding: 0 20px; width: 100%;">
-        <div class="security-trust-box">
-            <h4>🛡️ Vecctapivot Secure Escrow & Anti-Fraud Trust Protocol</h4>
-            <p>
+    <!-- THE UNIFIED DYNAMIC DATA INGESTION WORKSPACE CARD -->
+    <section id="master-intake-section" class="calculator-master-card hidden-popup" style="max-width: 750px; margin: 40px auto;">
+        <h3 id="active-desk-title">🛒 Service Desk Panel</h3>
+        <p style="font-size: 14px; color: #555; margin-bottom: 25px;">Select your precise job module below. The system will dynamically calculate pricing, check delivery SLAs, and generate your custom form parameters.</p>
+
+        <!-- Dropdown Selection Tracks -->
+        <div class="calc-form-row">
+            <label>Select Your Target Job Track Option:</label>
+            
+            <!-- Pillar 1 Dropdowns -->
+            <select id="p1-desk" class="desk-dropdown select-hidden" onchange="syncMarketplaceServiceForm('p1-desk', 'REG')">
+                <option value="" disabled selected>-- Select Digital System Sub-Pillar --</option>
+                <option value="1500|2-5 Days|1.1 Business Name Registration|Owner Full Name,Active Phone Number,Physical Business Address,Proposed Name Choice 1,Proposed Name Choice 2,Proposed Name Choice 3|Scanned National ID copy,Active KRA PIN Certificate">1.1 Business Name eCitizen Registration [KES 1,500]</option>
+                <option value="4000|3-5 Days|1.2 Partnership Firm Setup (Form BN2)|Managing Partner Name,Firm Contact Number,Trading Location Address,Full Names of Co-Partners|Partners ID Scans Zip,Partners KRA PIN Files">1.2 Partnership / Firm Registry Layout Setup [KES 4,000]</option>
+                <option value="1500|2-3 Days|1.3 Particulars Modification (Form BN3)|Registered Business Name,Existing BRS BN Reference Code,Detailed Description of Changes|Copy of Existing BN4 Certificate">1.3 Business Particulars Alterations (Form BN3) [KES 1,500]</option>
+                <option value="2500|3-5 Days|1.4 Business Cessation Closure Filings|Proprietor Full Name,Owner Contact Number,Stated Reason for Closure|Original Registration Certificate file">1.4 Business Cessation Formal Closure Filings [KES 2,500]</option>
