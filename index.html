@@ -1,75 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-KE">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vecctapivot Enterprises | Operations Hub</title>
-    <style>
-        :root { --primary: #0A192F; --accent: #00F0FF; --gold: #D4AF37; --bg: #f4f6f9; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background: var(--bg); color: #333; }
-        header { background: var(--primary); color: #fff; padding: 45px 20px; text-align: center; border-bottom: 4px solid var(--accent); }
-        header img { height: 110px; width: auto; border-radius: 50%; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        header h1 { margin: 0; font-size: 34px; letter-spacing: 2px; text-transform: uppercase; }
-        header p { margin: 8px 0 0 0; font-style: italic; color: var(--gold); font-size: 16px; font-weight: bold; }
-        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
-        .intro-box { background: #fff; border-radius: 8px; padding: 40px 30px; text-align: center; box-shadow: 0 4px 20 rgba(0,0,0,0.03); margin-bottom: 35px; border-top: 5px solid var(--accent); }
-        .intro-box p { font-size: 16px; line-height: 1.8; color: #2d3748; margin: 0; font-weight: 500; }
-        .section-title { text-align: center; margin: 40px 0 25px 0; font-size: 18px; color: var(--primary); letter-spacing: 2px; font-weight: 800; text-transform: uppercase; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .card { background: #ffffff; border-radius: 8px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-top: 5px solid var(--primary); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        .card.digital { border-top-color: #00F0FF; } .card.academic { border-top-color: #EF4444; } .card.transport { border-top-color: #0A192F; } .card.sourcing { border-top-color: #097969; } .card.fixer { border-top-color: #D4AF37; }
-        .card h3 { margin-top: 0; color: #111; font-size: 18px; font-weight: bold; }
-        .card p { font-size: 14px; line-height: 1.6; color: #555; margin-bottom: 25px; min-height: 70px; }
-        .btn { display: block; background-color: var(--primary); color: white; padding: 12px; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 14px; text-align: center; text-transform: uppercase; }
-        .footer { text-align: center; padding: 35px 20px; background: var(--primary); color: white; margin-top: 60px; font-size: 13px; border-top: 4px solid var(--accent); }
-        .footer a { color: var(--accent); text-decoration: none; font-weight: bold; }
-    </style>
+    <title>Vecctapivot Enterprises | Operations Portal</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <img src="logo.png" alt="VECCTAPIVOT ENTERPRISES Logo" onerror="this.style.display='none'">
+
+    <!-- Urgency Ticker Ribbon -->
+    <div class="urgency-ticker">
+        <p>⏰ Avoid BRS Late Penalty Fees — File your Corporate Annual Returns on time. Check your exam entry limits via Desk 2.</p>
+    </div>
+
+    <!-- Header Section -->
+    <header class="portal-header">
         <h1>VECCTAPIVOT ENTERPRISES</h1>
-        <p>"One Pivot. Endless Possibilities."</p>
+        <p class="tagline">"One Pivot. Endless Possibilities."</p>
+        <div class="trust-badge">
+            <span>🛡️ Government Registered Agency | BRS Reference: BN-AYSO8LRE</span>
+        </div>
+        <a href="#portal-grid" class="cta-btn-main">Launch Operations Portal</a>
     </header>
-    <div class="container">
-        <div class="intro-box">
-            <h2>Multi-Scope Operations Portal & General Agency</h2>
-            <p>We are East Africa’s premier independent Operations & Sourcing Agency. Built for an agile economy, we leverage cross-functional digital expertise, on-demand logistics networks, and deep supply chain linkages to deliver rapid solutions for modern enterprises and independent traders alike. Operating on a highly optimized, asset-light structure, we deploy instant support across five elite service desks.</p>
-        </div>
-        <div class="section-title">SELECT AN OPERATIONAL DESK TO VIEW FULL SOLUTIONS</div>
-        <div class="grid">
-            <div class="card digital">
-                <h3>💻 Digital & Brand Systems</h3>
-                <p>Portal filings, custom vector identity logo branding, remote virtual assistant hub, and freelance placement matrices.</p>
-                <a href="digital.html" class="btn">Open Digital Desk</a>
-            </div>
-            <div class="card academic">
-                <h3>📚 Academic & Testing Logistics</h3>
-                <p>Form 1-4 high school mocks papers bundles, bound topical revision check packs, and KASNEB CPA / ATD past paper libraries.</p>
-                <a href="academic.html" class="btn" style="background-color: #EF4444;">Open Academic Desk</a>
-            </div>
-            <div class="card transport">
-                <h3>🚖 Transport Brokerage Hub</h3>
-                <p>On-demand town transfer ride-bookings, motorcycle couriers dispatching networks, and heavy cargo lorry brokerage lines.</p>
-                <a href="transport.html" class="btn" style="background-color: #0A192F;">Open Transport Hub</a>
-            </div>
-            <div class="card sourcing">
-                <h3>🤝 Merchandise Sourcing Links</h3>
-                <p>Agribusiness crops aggregation supply pathways, primary manufacturer depots tracing, and wholesale imports links.</p>
-                <a href="sourcing.html" class="btn" style="background-color: #097969;">Open Sourcing Hub</a>
-            </div>
-            <div class="card fixer">
-                <h3>🛠️ Independent Fixer Desk</h3>
-                <p>Physical assets field verifications agency, wholesale order audits checks, and regional paperwork logjam proxy clearing.</p>
-                <a href="fixer.html" class="btn" style="background-color: #D4AF37; color: #111;">Open Fixer Desk</a>
-            </div>
-        </div>
+
+    <!-- The 6 Pillars Grid -->
+    <main id="portal-grid" class="grid-container">
+        <section class="pillar-card" onclick="togglePillar('pillar-1')">
+            <div class="icon">💻</div>
+            <h2>1. Digital & Brand Systems</h2>
+            <p>BRS Private LLC Formations, Compliance Records & Corporate Visual Identities</p>
+        </section>
+
+        <section class="pillar-card" onclick="togglePillar('pillar-2')">
+            <div class="icon">📚</div>
+            <h2>2. Academic & Testing Logistics</h2>
+            <p>Form 1-4 Mock Bundles, CBC Portfolios & KASNEB CPA/ATD Resource Vaults</p>
+        </section>
+
+        <section class="pillar-card" onclick="togglePillar('pillar-3')">
+            <div class="icon">🚖</div>
+            <h2>3. Transport Brokerage Hub</h2>
+            <p>Intra-Town Express Couriers, Local Transfers & Long-Haul Freight Lines</p>
+        </section>
+
+        <section class="pillar-card" onclick="togglePillar('pillar-4')">
+            <div class="icon">🤝</div>
+            <h2>4. Merchandise Sourcing Links</h2>
+            <p>Farm-Gate Agribusiness Aggregations, Factory Price Audits & Import Tracks</p>
+        </section>
+
+        <section class="pillar-card" onclick="togglePillar('pillar-5')">
+            <div class="icon">🛠️</div>
+            <h2>5. Independent Fixer Desk</h2>
+            <p>Physical Property Site Verifications, Consignment Counts & Permit Proxy Handling</p>
+        </section>
+
+        <section class="pillar-card" onclick="togglePillar('pillar-6')">
+            <div class="icon">🏢</div>
+            <h2>6. General Agency Core</h2>
+            <p>Consolidated Corporate Accounts, Inter-Desk Escalations & Dashboard Management</p>
+        </section>
+    </main>
+
+    <!-- PANEL Container for Services -->
+    <div id="services-panel" class="services-panel hidden">
+        <button class="close-btn" onclick="closePanel()">× Close Panel</button>
+        <div id="panel-content"></div>
     </div>
-    <div class="footer">
-        <p><strong>VECCTAPIVOT ENTERPRISES</strong> | Premium Operations Consortium</p>
-        <p>📧 Email Support: <a href="mailto:vecctapivotenterprises@gmail.com">vecctapivotenterprises@gmail.com</a></p>
-        <p>📱 Hotlines: <a href="https://wa.me" target="_blank">+254 788 099 685</a></p>
-    </div>
-</body>
-</html>
+
+    <!-- Sticky Corporate Footer Baseline Layer -->
+    <footer class="portal-footer">
+        <p>Vecctapivot Enterprises | Central Support Box: vecctapivotenterprises@gmail.com | Hotline: +254 788 099 685</p>
+        <p class="legal-footer">Disclaimer: Vecctapivot Enterprises is an independent operations agency registered under the Kenya Registrar of Companies, Reference Module: BN-AYSO8LRE.</p>
+    </footer>
+
+    <!-- Injecting the full 36-Service Database & Navigation Engine via JavaScript -->
+    <script>
+        const database = {
+            'pillar-1': {
+                title: '💻 Digital & Brand Systems',
+                services: [
+                    { name: '1.1 Business Name Registration', government: 'KES 925', labor: 'KES 575', total: 'KES 1,500', sla: '2-5 Days', code: 'P1-S1' },
+                    { name: '1.2 Private Limited Company Formation (Ltd)', government: 'KES 10,650', labor: 'KES 1,850', total: 'KES 12,500', sla: '3-5 Days', code: 'P1-S2' },
+                    { name: '1.3 Mandatory CR12 Annual Returns Filing', government: 'Varies', labor: 'KES 2,500', total: 'KES 2,500 + Gov', sla: '2-3 Days', code: 'P1-S3' },
+                    { name: '1.4 Director Resignations / Share Transfers (CR9)', government: 'Varies', labor: 'KES 4,000', total: 'KES 4,000 + Gov', sla: '3-5 Days', code: 'P1-S4' },
+                    { name: '1.5 Historical Legacy Record Linking', government: 'KES 0', labor: 'KES 2,000', total: 'KES 2,000', sla: '5-7 Days', code: 'P1-S5' },
+                    { name: '1.6 Visual Identity Branding (Logo Assets)', government: 'KES 0', labor: 'KES 3,500', total: 'KES 3,500', sla: '3-5 Days', code: 'P1-S6' }
+                ]
+            },
+            'pillar-2': {
+                title: '📚 Academic & Testing Logistics',
+                services: [
+                    { name: '2.1 Form 1-4 High School Mock Bundles', government: 'KES 0', labor: 'KES 1,500', total: 'KES 1,500', sla: 'Instant Download', code: 'P2-S1' },
+                    { name: '2.2 Printed & Bound Topical Revision Packages', government: 'KES 0', labor: 'KES 1,200', total: 'KES 1,200', sla: '2-3 Days', code: 'P2-S2' },
+                    { name: '2.3 KASNEB CPA Past-Paper Vault Access', government: 'KES 0', labor: 'KES 500', total: 'KES 500', sla: 'Instant Access', code: 'P2-S3' },
+                    { name: '2.4 KASNEB ATD Vocational Revision Kits', government: 'KES 0', labor: 'KES 400', total: 'KES 400', sla: 'Instant Access', code: 'P2-S4' },
+                    { name: '2.5 Bulk School CBC Joint-Exam Packs', government: 'KES 0', labor: 'KES 3,500', total: 'KES 3,500', sla: '3 Days', code: 'P2-S5' },
+                    { name: '2.6 Revision Notes Digitization (Per Page)', government: 'KES 0', labor: 'KES 5', total: 'KES 5 Per Page', sla: '48 Hours', code: 'P2-S6' }
+                ]
+            },
+            'pillar-3': {
+                title: '🚖 Transport Brokerage Hub',
+                services: [
+                    { name: '3.1 Local Town Point-to-Point Ride Bookings', government: 'KES 0', labor: 'KES 50/Km', total: 'KES 50/Km (Base 300)', sla: '15-45 Mins', code: 'P3-S1' },
+                    { name: '3.2 Motorcycle Express Document Courier', government: 'KES 0', labor: 'KES 200', total: 'KES 200 Flat', sla: '1-2 Hours', code: 'P3-S2' },
+                    { name: '3.3 Inter-County Produce Lorry Sourcing', government: 'KES 0', labor: 'KES 3,000', total: 'KES 3,000 (To Driver)', sla: '12-24 Hours', code: 'P3-S3' },
+                    { name: '3.4 Cold-Chain Ventilated Freight Brokerage', government: 'KES 0', labor: 'KES 4,500', total: 'KES 4,500 Commission', sla: '24 Hours', code: 'P3-S4' },
+                    { name: '3.5 Multi-Vans Institutional Fleet Scheduling', government: 'KES 0', labor: 'KES 2,000', total: 'KES 2,000 Fee', sla: '48 Hours', code: 'P3-S5' },
+                    { name: '3.6 Transit Route Telemetry & Security Monitoring', government: 'KES 0', labor: 'KES 1,000', total: 'KES 1,000 Run', sla: 'Real-Time', code: 'P3-S6' }
+                ]
+            },
+            'pillar-4': {
+                title: '🤝 Merchandise Sourcing Links',
+                services: [
+                    { name: '4.1 Farm-Gate Produce Sourcing & Grading', government: 'KES 0', labor: 'KES 50', total: 'KES 50 Per Bag', sla: '3-5 Days', code: 'P4-S1' },
+                    { name: '4.2 Manufacturer Factory Price-Ledger Auditing', government: 'KES 0', labor: 'KES 4,000', total: 'KES 4,000', sla: '3-5 Days', code: 'P4-S2' },
+                    { name: '4.3 B2B Wholesale Import Corridor Mapping', government: 'KES 0', labor: 'KES 8,000', total: 'KES 8,000 Retainer', sla: '7-10 Days', code: 'P4-S3' },
+                    { name: '4.4 Supplier Identity & Compliance Verification', government: 'KES 0', labor: 'KES 2,500', total: 'KES 2,500 Run', sla: '48 Hours', code: 'P4-S4' },
+                    { name: '4.5 Freight Duty & Tariff Pre-Calculations', government: 'KES 0', labor: 'KES 3,000', total: 'KES 3,000 Report', sla: '2 Days', code: 'P4-S5' },
+                    { name: '4.6 Factory Prototype Quality Inspection', government: 'KES 0', labor: 'KES 2,000', total: 'KES 2,000', sla: '5-7 Days', code: 'P4-S6' }
+                ]
+            },
+            'pillar-5': {
+                title: '🛠️ Independent Fixer Desk',
+                services: [
+                    { name: '5.1 Real Estate Plot Location Inspection', government: 'KES 0', labor: 'KES 3,000', total: 'KES 3,000 Site Run', sla: '24-48 Hours', code: 'P5-S1' },
+                    { name: '5.2 Pre-Transit Bulk Consignment Counts', government: 'KES 0', labor: 'KES 3,500', total: 'KES 3,500 Count', sla: 'Same-Day', code: 'P5-S2' },
+                    { name: '5.3 Pending Permits & Land Registry Search Proxy', government: 'Varies', labor: 'KES 3,000', total: 'KES 3,000 + Gov', sla: 'Daily Updates', code: 'P5-S3' },
+                    { name: '5.4 Commercial Safety Infrastructure Appraisal', government: 'KES 0', labor: 'KES 5,000', total: 'KES 5,000', sla: '3 Days', code: 'P5-S4' },
+                    { name: '5.5 County Single Business Permit Guide Mapping', government: 'KES 0', labor: 'KES 2,500', total: 'KES 2,500 Blueprint', sla: '2 Days', code: 'P5-S5' },
+                    { name: '5.6 Anti-Fraud Office Storefront Spot Checks', government: 'KES 0', labor: 'KES 2,000', total: 'KES 2,000 Stop-Scam', sla: '24-48 Hours', code: 'P5-S6' }
+                ]
+            },
+            'pillar-6': {
+                title: '🏢 Operations Portal & General Agency',
+                services: [
+                    { name: '6.1 Multi-Desk Cross-Functional Strategy Setup', government: 'KES 0', labor: 'KES 6,000', total: 'KES 6,000', sla: '5-7 Days', code: '6.1' },
+                    { name: '6.2 Micro-Merchant WhatsApp Intake Configuration', government: 'KES 0', labor: 'KES 2,000', total: 'KES 2,000 Configuration', sla: '48 Hours', code: '6.2' },
+                    { name: '6.3 Aggregated Corporate Billing Ledger Reports', government: 'KES 0', labor: 'KES 500', total: 'KES 500 (Free for Accounts)', sla: '12 Hours', code: '6.3' },
