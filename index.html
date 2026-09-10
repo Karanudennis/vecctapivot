@@ -35,7 +35,6 @@
             overflow-x: hidden;
         }
 
-        /* Urgencies Ribbon Ticker Layout Options */
         .urgency-ticker {
             background-color: var(--amber-warning); 
             color: #000000;
@@ -49,24 +48,21 @@
             z-index: 10;
         }
 
-        /* Institutional Corporate Header Panel Layout */
         .portal-header {
             background: linear-gradient(135deg, #060b18 0%, var(--bg-obsidian) 100%);
             text-align: center;
-            padding: 60px 24px 40px 24px;
+            padding: 50px 24px;
             width: 100%;
             border-bottom: 1px solid var(--border-muted);
-            position: relative;
         }
 
         .welcome-container { max-width: 850px; margin: 0 auto; }
-        .brand-text-fallback { font-size: 24px; font-weight: 900; letter-spacing: 2px; color: #ffffff; text-transform: uppercase; margin-bottom: 4px; text-shadow: 0 0 20px rgba(255,255,255,0.05); }
+        .brand-text-fallback { font-size: 24px; font-weight: 900; letter-spacing: 2px; color: #ffffff; text-transform: uppercase; margin-bottom: 4px; }
         .brand-text-fallback span { color: var(--gold-accent); }
         .welcome-banner { font-size: 11px; font-weight: 700; color: var(--gold-accent); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 20px; }
-        .portal-header h1 { font-size: 34px; font-weight: 800; color: #ffffff; margin-bottom: 10px; letter-spacing: -0.5px; }
+        .portal-header h1 { font-size: 34px; font-weight: 800; color: #ffffff; margin-bottom: 10px; }
         .tagline { font-size: 14.5px; color: var(--text-muted); font-style: italic; }
 
-        /* Dynamic Progress Matrix Map Indicators */
         .matrix-breadcrumb-bar {
             max-width: 1200px;
             width: 100%;
@@ -85,6 +81,7 @@
             border: 1px solid var(--border-muted);
             border-radius: 20px;
             font-weight: 600;
+            cursor: pointer;
         }
 
         .crumb-item.active-layer {
@@ -93,7 +90,6 @@
             border-color: var(--gold-accent);
         }
 
-        /* Premium Multidimensional Grid View Layout */
         .dashboard-matrix-view {
             max-width: 1200px;
             width: 100%;
@@ -121,7 +117,6 @@
             padding-bottom: 14px;
         }
 
-        /* System Grid Layout Blocks Buttons */
         .matrix-buttons-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -172,7 +167,6 @@
             display: block;
         }
 
-        /* Ingestion Desk Workspace Forms Layout */
         .ingestion-console-section {
             max-width: 1200px;
             width: 100%;
@@ -203,14 +197,12 @@
         .submission-trigger-btn { width: 100%; padding: 16px; background-color: var(--gold-accent); color: #000000; border: none; border-radius: 6px; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
         .submission-trigger-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
         .ticket-trigger-btn { background-color: transparent; border: 1px solid rgba(255,255,255,0.2); color: #ffffff; margin-top: 15px; }
-        .ticket-trigger-btn:hover { background-color: rgba(255,255,255,0.05); }
 
         .hidden-element { display: none !important; }
         .telemetry-success-receipt { background: rgba(16, 185, 129, 0.05); border: 1px solid var(--success-green); border-radius: 6px; padding: 20px; margin-top: 20px; }
         .telemetry-success-receipt h4 { color: var(--success-green); margin-bottom: 6px; font-weight: 800; }
         .telemetry-success-receipt strong { font-family: monospace; color: #ffffff; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; }
 
-        /* Professional Stacked Mobile Footer Architecture Layout */
         .portal-footer {
             background-color: #090e1a;
             border-top: 1px solid var(--border-muted);
@@ -220,7 +212,7 @@
             color: var(--text-muted);
             margin-top: auto;
         }
-        .footer-branding { font-weight: 700; color: #ffffff; margin-bottom: 4px; letter-spacing: 0.5px; }
+        .footer-branding { font-weight: 700; color: #ffffff; margin-bottom: 4px; }
     </style>
 </head>
 <body>
@@ -229,7 +221,6 @@
         <p>🔒 7 × 7 × 7 Multidimensional Pipeline Active — Verification Staging Reference Ticket: <strong>VP-TICKET-000000</strong></p>
     </div>
 
-    <!-- Institutional Corporate Header Panel Layout -->
     <header class="portal-header">
         <div class="welcome-container">
             
@@ -237,10 +228,25 @@
                 <div class="welcome-banner">343 Matrix Pipeline Marketplace</div>
             </div>
             <h1>Interactive Routing Terminal</h1>
-            <p class="tagline">Statutory Account Alignment Hub (BRS Reference Verification Account Enabled: BN-AYSO8LRE)</p>
+            <p class="tagline">Statutory Account Alignment Hub (BRS Reference: BN-AYSO8LRE)</p>
         </div>
     </header>
 
-    <!-- Dynamic Progress Navigation Tags Map -->
     <nav class="matrix-breadcrumb-bar">
         <span class="crumb-item active-layer" id="crumbL1">Pillars Matrix</span>
+        <span class="crumb-item" id="crumbL2">Sub Pillars</span>
+        <span class="crumb-item" id="crumbL3">Sub-Subs Actions</span>
+    </nav>
+
+    <main class="dashboard-matrix-view">
+        <div class="matrix-stage-panel">
+            <h3 id="matrixPanelTitle">Select Core Operations Sector Pillar</h3>
+            <div class="matrix-buttons-grid" id="matrixGridElement">
+            </div>
+        </div>
+    </main>
+
+    <section class="ingestion-console-section hidden-element" id="intakeConsoleSection">
+        
+        <div class="action-card-panel">
+            <h2 id="intakeFormTitle">Service Pipeline Configuration</h2>
