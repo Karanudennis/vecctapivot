@@ -3,98 +3,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Academic & Testing Logistics | Vecctapivot</title>
+    <title>Academic & Testing Logistics | Corporate Workspace</title>
     <style>
-        :root { --navy: #020C1B; --panel: #112240; --cyan: #64FFDA; --text: #CCD6F6; --muted: #8892B0; --blue: #007AFF; }
-        * { box-sizing: border-box; font-family: -apple-system, sans-serif; }
-        body { margin: 0; background: var(--navy); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
-        .wrapper { max-width: 850px; width: calc(100% - 40px); margin: 30px auto; background: var(--panel); border-radius: 8px; padding: 25px; border: 1px solid rgba(100,255,218,0.1); }
-        .sub-card { background: rgba(2,12,27,0.4); padding: 18px; border-radius: 6px; margin-bottom: 12px; cursor: pointer; border: 1px solid rgba(100,255,218,0.03); }
-        .sub-row { display: flex; justify-content: space-between; font-weight: bold; color: #FFF; font-size: 15px; }
-        .sub-details { margin-top: 12px; padding: 15px; background: var(--navy); border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); font-size: 13.5px; line-height: 1.5; }
-        
-        /* Fixed Grid Rules for the 7 Sub-Sub Parameter Columns */
-        .matrix-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 5px; }
-        .matrix-item { background: var(--panel); padding: 12px; border-radius: 4px; border-left: 3px solid var(--cyan); }
-        .matrix-item strong { color: #FFF; display: block; margin-bottom: 3px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-        
-        .form-box { margin-top: 40px; background: rgba(2,12,27,0.6); padding: 25px; border-radius: 6px; border: 1px solid rgba(100,255,218,0.15); }
-        label { display: block; margin: 12px 0 5px 0; font-size: 13px; font-weight: bold; color: #FFF; text-align: left; }
-        input, select, textarea { width: 100%; padding: 12px; background: var(--navy); border: 1px solid rgba(100,255,218,0.2); border-radius: 4px; color: #fff; font-size: 14px; }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--cyan); }
-        .btn { background: var(--blue); color: #fff; border: none; padding: 14px; border-radius: 4px; font-weight: bold; width: 100%; font-size: 15px; text-transform: uppercase; cursor: pointer; margin-top: 15px; }
-        
-        footer { background: #0A192F; border-top: 1px solid rgba(100,255,218,0.15); padding: 40px 20px; margin-top: auto; width: 100%; }
-        .foot-row { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px; text-align: left; }
-        @media(min-width: 769px) { .foot-row { flex-direction: row; justify-content: space-between; } }
-        .foot-col h4 { color: #FFF; margin: 0 0 10px 0; text-transform: uppercase; font-size: 13px; border-bottom: 2px solid var(--cyan); padding-bottom: 4px; display: inline-block; }
-        .foot-col p { margin: 5px 0; font-size: 13.5px; color: var(--muted); }
+        :root {
+            --bg-obsidian: #030712;
+            --panel-slate: #0b1329;
+            --border-muted: rgba(255, 255, 255, 0.06);
+            --gold-accent: #d4af37;
+            --text-pure: #f3f4f6;
+            --text-muted: #9ca3af;
+            --action-blue: #1d4ed8;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; padding: 0; 
+        }
+
+        body {
+            background-color: var(--bg-obsidian);
+            color: var(--text-pure);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .workspace-container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 24px;
+            flex: 1;
+        }
+
+        .back-nav-bar {
+            margin-bottom: 40px;
+        }
+
+        .back-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .back-link:hover {
+            color: var(--text-pure);
+        }
+
+        .header-block {
+            margin-bottom: 50px;
+            text-align: left;
+        }
+
+        .sector-tag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--gold-accent);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .header-block h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .header-description {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 700px;
+        }
+
+        /* Institutional Operational Row Architecture */
+        .section-divider {
+            border-bottom: 1px solid var(--border-muted);
+            margin-bottom: 30px;
+        }
+
+        .accordion-row-item {
+            border-bottom: 1px solid var(--border-muted);
+            padding: 24px 0;
+            cursor: pointer;
+        }
+
+        .accordion-trigger-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-trigger-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.1px;
+        }
+
+        .toggle-status-icon {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .expanded-matrix-panel {
+            margin-top: 20px;
+            padding-left: 20px;
+            border-left: 1px solid var(--border-muted);
+        }
+
+        /* Premium Minimalist 7-Item Listing Block */
+        .parameter-list-block {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .parameter-row-line {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            text-align: left;
+        }
+
+        .parameter-row-line span.label-index {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gold-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .parameter-row-line p.data-wording {
+            font-size: 14px;
+            color: var(--text-pure);
+            line-height: 1.5;
+        }
+
+        .parameter-row-line a.consultation-anchor {
+            font-size: 14px;
+            color: var(--text-pure);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        /* Premium Form Terminal Block */
+        .secure-form-card {
+            background-color: var(--panel-slate);
+            border: 1px solid var(--border-muted);
+            border-radius: 8px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-title-area h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .form-title-area p {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .input-group-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group-row label {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .input-group-row input, 
+        .input-group-row select, 
+        .input-group-row textarea {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--bg-obsidian);
+            border: 1px solid var(--border-muted);
+            border-radius: 4px;
+            color: #ffffff;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .input-group-row input:focus, 
+        .input-group-row select:focus, 
+        .input-group-row textarea:focus {
+            outline: none;
+            border-color: var(--gold-accent);
+        }
+
+        .file-picker-container {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px dashed var(--border-muted);
+            padding: 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .privacy-protocol-banner {
+            border-left: 2px solid #10b981;
+            background-color: rgba(16, 185, 129, 0.02);
+            padding: 16px;
+            margin: 24px 0;
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .submit-action-btn {
+            background-color: var(--action-blue);
+            color: #ffffff;
+            border: none;
+            padding: 16px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 14.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* Professional Stacked Corporate Footer */
+        .portal-footer {
+            background-color: #090e1a;
+            border-top: 1px solid var(--border-muted);
+            padding: 60px 24px 40px 24px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .footer-grid-row {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            text-align: left;
+        }
+
+        @media(min-width: 769px) {
+            .footer-grid-row {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .footer-column {
+            flex: 1;
+        }
+
+        .footer-column h4 {
+            color: #ffffff;
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            border-bottom: 2px solid var(--gold-accent);
+            padding-bottom: 4px;
+            display: inline-block;
+        }
+
+        .footer-column p {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin: 6px 0;
+            line-height: 1.5;
+        }
+
+        .footer-column strong {
+            color: #ffffff;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Top Return Anchor Link -->
-    <div style="padding: 20px; max-width: 850px; margin: 0 auto; width: 100%;">
-        <a href="index.html" style="color: var(--cyan); text-decoration: none; font-weight: bold; font-size: 14px;">⬅️ Return to Main Operations Gateway</a>
-    </div>
-
-    <!-- Main Workspace Container -->
-    <main class="wrapper">
-        <h2 style="color: #FFF; font-size: 24px; font-weight: 900; margin: 0 0 5px 0;">📚 Desk 2: Academic & Testing Logistics</h2>
-        <p style="color: var(--muted); font-size: 14px; margin: 0 0 25px 0;">Tap any operational sub-pillar below to instantly expand its complete 7x7 parameter matrix schedule.</p>
-
-        <!-- SUB PILLAR 2.1 -->
-        <div class="sub-card" onclick="toggleSubPillar('box21', 'arr21')">
-            <div class="sub-row"><span>📂 2.1 Form 1-4 High School Termly Joint Mock Exam Bundles</span><span id="arr21">▼</span></div>
-            <div id="box21" class="sub-details" style="display: none;">
-                <div class="matrix-grid">
-                    <div class="matrix-item"><strong>① Core Sector Classification</strong>Academic Evaluation Distributions Desk</div>
-                    <div class="matrix-item"><strong>② Service Description Scope</strong>Compiling verified regional high school joint mock evaluation papers sets complete with official scoring markings guides schemas.</div>
-                    <div class="matrix-item"><strong>③ Mandatory Filing Requirements</strong>Purchasing school name title, director full name, and destination delivery email address records.</div>
-                    <div class="matrix-item"><strong>④ Fixed Surcharge Fee</strong>KES 1,500 Complete Evaluation Pack Block</div>
-                    <div class="matrix-item"><strong>⑤ Turnaround Timeline SLA</strong>Instant Digital softcopy download channel</div>
-                    <div class="matrix-item"><strong>⑥ Direct Voice Consultation</strong>Authorized Hotline Link Available: <a href="tel:+254788099685" style="color: var(--cyan); text-decoration: none;">+254 788 099 685</a></div>
-                    <div class="matrix-item"><strong>⑦ Direct Mail Consultation</strong>Secure Mailbox Route Attached: <a href="mailto:vecctapivotenterprises@gmail.com" style="color: var(--cyan); text-decoration: none;">vecctapivotenterprises@gmail.com</a></div>
-                </div>
-            </div>
+    <div class="workspace-container">
+        <!-- Navigation Back Anchor -->
+        <div class="back-nav-bar">
+            <a href="index.html" class="back-link">⬅️ Main Gateway Terminal</a>
         </div>
 
-        <!-- SUB PILLAR 2.2 -->
-        <div class="sub-card" onclick="toggleSubPillar('box22', 'arr22')">
-            <div class="sub-row"><span>📂 2.2 Spiral Printed & Bound Topical Evaluation Revision Packs</span><span id="arr22">▼</span></div>
-            <div id="box22" class="sub-details" style="display: none;">
-                <div class="matrix-grid">
-                    <div class="matrix-item"><strong>① Core Sector Classification</strong>Physical Academic Resource Production</div>
-                    <div class="matrix-item"><strong>② Service Description Scope</strong>Fabricating high-fidelity physical spiral-bound evaluation review packs notes across selected curriculum subject categories lines blocks.</div>
-                    <div class="matrix-item"><strong>③ Mandatory Filing Requirements</strong>Student name strings parameters, targeted evaluation topic description, parent contact carrier phone number, and regional parcel pickup node station choice.</div>
-                    <div class="matrix-item"><strong>④ Fixed Surcharge Fee</strong>KES 1,200 Per Booklet Item</div>
-                    <div class="matrix-item"><strong>⑤ Turnaround Timeline SLA</strong>2 - 3 Days National Courier Dispatch Corridor</div>
-                    <div class="matrix-item"><strong>⑥ Direct Voice Consultation</strong>Authorized Hotline Link Available: <a href="tel:+254788099685" style="color: var(--cyan); text-decoration: none;">+254 788 099 685</a></div>
-                    <div class="matrix-item"><strong>⑦ Direct Mail Consultation</strong>Secure Mailbox Route Attached: <a href="mailto:vecctapivotenterprises@gmail.com" style="color: var(--cyan); text-decoration: none;">vecctapivotenterprises@gmail.com</a></div>
-                </div>
-            </div>
-        </div>
+        <!-- Section Header Area -->
+        <header class="header-block">
+            <div class="sector-tag">Operations Desk 02</div>
+            <h1>Academic & Testing Logistics</h1>
+            <p class="header-description">Providing institutional validation processing, resource portfolio coordination, and secure credential logistics across local and international sectors.</p>
+        </header>
 
-        <!-- SUB PILLAR 2.3 -->
-        <div class="faq-item-card" onclick="toggleSubPillar('box23', 'arr23')">
-            <div class="sub-row"><span>📂 2.3 KASNEB CPA National Examination Past-Paper Vault Access</span><span id="arr23">▼</span></div>
-            <div id="box23" class="sub-details" style="display: none;">
-                <div class="matrix-grid">
-                    <div class="matrix-item"><strong>① Core Sector Classification</strong>Vocational Professional Resource Archives</div>
-                    <div class="matrix-item"><strong>② Service Description Scope</strong>Unlocking secure corporate cloud database passes parameters to multi-year CPA assessment sheets archives logs files libraries ports.</div>
-                    <div class="matrix-item"><strong>③ Mandatory Filing Requirements</strong>Candidate profile name identity strings parameters, active mobile connection lines, and targeted CPA section level code index paths.</div>
-                    <div class="matrix-item"><strong>④ Fixed Surcharge Fee</strong>KES 500 Per Section Layer Tier</div>
-                    <div class="matrix-item"><strong>⑤ Turnaround Timeline SLA</strong>Instant Secure Database Access pass grant</div>
-                    <div class="matrix-item"><strong>⑥ Direct Voice Consultation</strong>Authorized Hotline Link Available: <a href="tel:+254788099685" style="color: var(--cyan); text-decoration: none;">+254 788 099 685</a></div>
-                    <div class="matrix-item"><strong>⑦ Direct Mail Consultation</strong>Secure Mailbox Route Attached: <a href="mailto:vecctapivotenterprises@gmail.com" style="color: var(--cyan); text-decoration: none;">vecctapivotenterprises@gmail.com</a></div>
-                </div>
-            </div>
-        </div>
+        <div class="section-divider"></div>
 
-        <!-- SUB PILLAR 2.4 -->
-        <div class="faq-item-card" onclick="toggleSubPillar('box24', 'arr24')">
-            <div class="sub-row"><span>📂 2.4 KASNEB ATD College Level Vocational Revision Kits</span><span id="arr24">▼</span></div>
-            <div id="box24" class="sub-details" style="display: none;">
-                <div class="matrix-grid">
-                    <div class="matrix-item"><strong>① Core Sector Classification</strong>Vocational Professional Resource Archives</div>
-                    <div class="matrix-item"><strong>② Service Description Scope</strong>Extracting consolidated assessment kits matching the Accounting Technicians Diploma vocational training logs maps layers fields curriculum profiles.</div>
+        <!-- 7x7 EXECUTED ACCORDION MATRIX MAP -->
+        
+        <!-- SUB-PILLAR 2.1 -->
+        <div class="accordion-row-item" onclick="toggleMatrixRow('box21', 'lbl21')">
+            <div class="accordion-trigger-header">
+                <h3>2.1 High School Evaluation Mock Materials</h3>
+                <span class="toggle-status-icon" id="lbl21">View Details [+]</span>
+            </div>
+            <div id="box21" class="expanded-matrix-panel" style="display: none;">
+                <div class="parameter-list-block">
+                    <div class="parameter-row-line"><span class="label-index">① Sector Classification</span><p class="data-wording">Academic Evaluation Distributions Desk</p></div>
+                    <div class="parameter-row-line"><span class="label-index">② Operational Scope of Work</span><p class="data-wording">Compiling verified regional high school joint mock evaluation papers sets complete with official scoring marking guides schemas.</p></div>
