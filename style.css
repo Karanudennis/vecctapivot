@@ -1,9 +1,9 @@
 /* ==========================================================================
    VECCTAPIVOT ENTERPRISES - GLOBAL UI STYLESHEET
-   Optimized for Fast Mobile Loading & Structured App Redirections
+   Optimized for Full-Screen Edge-to-Edge Mobile & Web Interfaces
    ========================================================================== */
 
-/* 1. CORE DESIGN VARIABLES & RESET */
+/* 1. CORE DESIGN VARIABLES & RESET CONFIGURATION */
 :root {
     --primary-navy: #0A192F;
     --accent-slate: #172A45;
@@ -19,16 +19,20 @@
     box-sizing: border-box;
 }
 
-body {
+html, body {
     margin: 0;
     padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--bg-light);
     color: var(--text-dark);
     line-height: 1.5;
 }
 
-/* 2. HEADER ELEMENTS & NOTIFICATION SYSTEMS */
+/* 2. HEADER TOP NOTIFICATION BAR & HERO INTERFACE */
 .urgency-ticker {
     background-color: var(--amber-warning);
     color: #000;
@@ -36,6 +40,7 @@ body {
     padding: 12px;
     font-size: 14px;
     font-weight: bold;
+    width: 100%;
 }
 .urgency-ticker p {
     margin: 0;
@@ -46,6 +51,7 @@ body {
     color: white;
     text-align: center;
     padding: 60px 20px;
+    width: 100%;
 }
 .portal-header h1 {
     margin: 0;
@@ -73,7 +79,17 @@ body {
     font-weight: 500;
 }
 
-/* Header Buttons Layout */
+/* Header Action Buttons Container Alignment */
+.header-action-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    padding: 0 10px;
+    width: 100%;
+}
+
 .cta-btn-main {
     display: inline-block;
     background-color: var(--wa-green);
@@ -83,15 +99,18 @@ body {
     border-radius: 30px;
     font-weight: bold;
     font-size: 14px;
-    margin-top: 15px;
     box-shadow: 0 4px 10px rgba(37,211,102,0.3);
     transition: transform 0.2s ease;
 }
 .cta-btn-main:hover {
     transform: translateY(-2px);
 }
+.ticket-btn {
+    background-color: var(--call-blue) !important;
+    box-shadow: 0 4px 10px rgba(0,122,255,0.3) !important;
+}
 
-/* 3. HOMEPAGE HUB PILLARS GRID LAYOUT */
+/* 3. HOMEPAGE PORTAL MODULES NAVIGATION GRID */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -99,6 +118,8 @@ body {
     padding: 40px 20px;
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
+    flex: 1; /* Pushes footer baseline downward if screen is tall */
 }
 .pillar-card-link {
     text-decoration: none;
@@ -136,10 +157,11 @@ body {
     margin: 0;
 }
 
-/* 4. SUB-PAGES & CATALOGUE ITEM LAYOUTS */
+/* 4. SEPARATE SUB-PAGES WORK CATALOGUE LAYOUTS */
 .back-nav {
     background: var(--primary-navy);
     padding: 15px 20px;
+    width: 100%;
 }
 .back-btn {
     color: white;
@@ -152,6 +174,8 @@ body {
     max-width: 850px;
     margin: 40px auto;
     padding: 0 20px;
+    width: 100%;
+    flex: 1; /* Ensures full height structure across outer windows */
 }
 .services-panel-page h2 {
     color: var(--primary-navy);
@@ -161,7 +185,7 @@ body {
     margin-top: 0;
 }
 
-/* Service Item Block Cards */
+/* Service Item Block Cards inside Outer Sub-Pages */
 .service-item-block {
     background: white;
     padding: 25px;
@@ -194,7 +218,7 @@ body {
     margin-top: 4px;
 }
 
-/* Detailed Specifications Layout Sub-Boxes */
+/* Detailed Information Specification Sub-Boxes */
 .detailed-specs-box {
     background: #FAFBFD;
     padding: 18px;
@@ -227,7 +251,7 @@ body {
     margin-top: 12px;
 }
 
-/* 5. DYNAMIC TICKETING & CONSULTATION INPUT FORMS */
+/* 5. CONSULTATION TICKETING PANEL LAYOUTS (`ticket.html`) */
 .section-intro-text {
     font-size: 15px;
     color: #555;
@@ -282,7 +306,7 @@ body {
     background-color: var(--accent-slate);
 }
 
-/* 6. WEB-SAFE APP REDIRECTION ACTION BUTTONS */
+/* 6. WEB-SAFE APP REDIRECTION ACTION BUTTON HANDSHAKES */
 .action-btn-ribbon {
     display: flex;
     flex-wrap: wrap;
@@ -315,14 +339,15 @@ body {
 .mail-color { background-color: var(--gmail-red); }
 .call-color { background-color: var(--call-blue); }
 
-/* 7. REVENUE LAYER BASELINE FOOTERS */
+/* 7. FIXED BASELINE CORPORATE FOOTERS */
 .portal-footer {
     background-color: var(--primary-navy);
     color: #8892B0;
     text-align: center;
     padding: 40px 20px;
     font-size: 13px;
-    margin-top: 80px;
+    margin-top: auto; /* Forces footer to stick edge-to-edge at absolute bottom */
+    width: 100%;
     line-height: 1.6;
 }
 .portal-footer p {
@@ -337,7 +362,7 @@ body {
     display: none !important;
 }
 
-/* 8. MOBILE RESPONSIVE ADAPTATIONS */
+/* 8. MOBILE VIEWPORTS FLUID RESPONSIVE OVERRIDES */
 @media(max-width: 600px) {
     .action-btn-ribbon {
         flex-direction: column;
@@ -355,9 +380,22 @@ body {
     .pillar-card {
         padding: 25px 15px;
     }
+    .header-action-container {
+        flex-direction: column;
+        gap: 8px;
+    }
     .cta-btn-main {
         display: block;
+        width: 100%;
         margin-left: 0 !important;
-        margin-top: 10px;
+        text-align: center;
+    }
+    .services-panel-page {
+        margin: 20px auto;
+        padding: 0 10px;
+    }
+    .service-item-block {
+        padding: 20px 15px;
+        border-radius: 8px;
     }
 }
