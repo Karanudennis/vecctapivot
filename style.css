@@ -1,14 +1,363 @@
-/* Help Desk Ticket Form Styling Layout */
-.section-intro-text { font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 25px; }
-.ticket-intake-form { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
-.ticket-intake-form label { font-size: 14px; color: var(--primary-navy); }
-.ticket-intake-form input, .ticket-intake-form select, .ticket-intake-form textarea {
-    width: 100%; padding: 12px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 14px; box-sizing: border-box; background-color: #F8FAFC;
+/* ==========================================================================
+   VECCTAPIVOT ENTERPRISES - GLOBAL UI STYLESHEET
+   Optimized for Fast Mobile Loading & Structured App Redirections
+   ========================================================================== */
+
+/* 1. CORE DESIGN VARIABLES & RESET */
+:root {
+    --primary-navy: #0A192F;
+    --accent-slate: #172A45;
+    --bg-light: #F8F9FA;
+    --text-dark: #1E2229;
+    --wa-green: #25D366;
+    --gmail-red: #D14836;
+    --call-blue: #007AFF;
+    --amber-warning: #FFB300;
 }
-.ticket-intake-form input:focus, .ticket-intake-form select:focus, .ticket-intake-form textarea:focus {
-    outline: none; border-color: var(--primary-navy); background-color: #white;
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.5;
+}
+
+/* 2. HEADER ELEMENTS & NOTIFICATION SYSTEMS */
+.urgency-ticker {
+    background-color: var(--amber-warning);
+    color: #000;
+    text-align: center;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.urgency-ticker p {
+    margin: 0;
+}
+
+.portal-header {
+    background: linear-gradient(135deg, var(--primary-navy) 0%, var(--accent-slate) 100%);
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+}
+.portal-header h1 {
+    margin: 0;
+    font-size: 32px;
+    letter-spacing: 1px;
+}
+.corporate-logo {
+    max-height: 80px;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+.tagline {
+    font-style: italic;
+    color: #8892B0;
+    margin: 10px 0;
+    font-size: 17px;
+}
+.trust-badge {
+    margin: 15px 0 5px 0;
+    font-size: 13px;
+    background: rgba(255,255,255,0.1);
+    display: inline-block;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+/* Header Buttons Layout */
+.cta-btn-main {
+    display: inline-block;
+    background-color: var(--wa-green);
+    color: white;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 15px;
+    box-shadow: 0 4px 10px rgba(37,211,102,0.3);
+    transition: transform 0.2s ease;
+}
+.cta-btn-main:hover {
+    transform: translateY(-2px);
+}
+
+/* 3. HOMEPAGE HUB PILLARS GRID LAYOUT */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.pillar-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.pillar-card {
+    background: white;
+    padding: 35px 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    border-bottom: 4px solid transparent;
+    height: 100%;
+    transition: all 0.2s ease-in-out;
+}
+.pillar-card:hover {
+    transform: translateY(-4px);
+    border-bottom: 4px solid var(--primary-navy);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+}
+.pillar-card .icon {
+    font-size: 45px;
+    margin-bottom: 12px;
+}
+.pillar-card h2 {
+    font-size: 19px;
+    color: var(--primary-navy);
+    margin: 10px 0;
+}
+.pillar-card p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* 4. SUB-PAGES & CATALOGUE ITEM LAYOUTS */
+.back-nav {
+    background: var(--primary-navy);
+    padding: 15px 20px;
+}
+.back-btn {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.services-panel-page {
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+.services-panel-page h2 {
+    color: var(--primary-navy);
+    font-size: 24px;
+    border-bottom: 2px solid #E2E8F0;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+/* Service Item Block Cards */
+.service-item-block {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    border-left: 5px solid var(--primary-navy);
+}
+.service-item-block h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: var(--primary-navy);
+}
+.meta-row {
+    font-size: 14px;
+    color: #444;
+    background: #F1F5F9;
+    padding: 12px;
+    border-radius: 6px;
+    margin: 12px 0;
+    line-height: 1.6;
+}
+.meta-row p {
+    margin: 4px 0;
+}
+.final-highlight-price {
+    font-weight: bold;
+    font-size: 16px;
+    color: #000;
+    margin-top: 4px;
+}
+
+/* Detailed Specifications Layout Sub-Boxes */
+.detailed-specs-box {
+    background: #FAFBFD;
+    padding: 18px;
+    border-radius: 8px;
+    border: 1px dashed #CBD5E1;
+    margin: 15px 0;
+}
+.detailed-specs-box h4 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: var(--primary-navy);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.detailed-specs-box ul {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 14px;
+    color: #4A5568;
+    line-height: 1.6;
+}
+.guarantee-badge {
+    display: inline-block;
+    background: #E0F2FE;
+    color: #0369A1;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 4px;
+    margin-top: 12px;
+}
+
+/* 5. DYNAMIC TICKETING & CONSULTATION INPUT FORMS */
+.section-intro-text {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+.ticket-intake-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+}
+.ticket-intake-form label {
+    font-size: 14px;
+    color: var(--primary-navy);
+    font-weight: 600;
+}
+.ticket-intake-form input, 
+.ticket-intake-form select, 
+.ticket-intake-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background-color: #F8FAFC;
+    font-family: inherit;
+}
+.ticket-intake-form input:focus, 
+.ticket-intake-form select:focus, 
+.ticket-intake-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-navy);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(10,25,47,0.05);
 }
 .submit-ticket-btn {
-    background-color: var(--primary-navy); color: white; border: none; padding: 15px; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 10px; transition: background 0.2s;
+    background-color: var(--primary-navy);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 4px 10px rgba(10,25,47,0.2);
+    transition: background 0.2s;
 }
-.submit-ticket-btn:hover { background-color: var(--accent-slate); }
+.submit-ticket-btn:hover {
+    background-color: var(--accent-slate);
+}
+
+/* 6. WEB-SAFE APP REDIRECTION ACTION BUTTONS */
+.action-btn-ribbon {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+.action-btn-ribbon a {
+    display: inline-block !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    -webkit-tap-highlight-color: transparent;
+}
+.ribbon-btn {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: opacity 0.2s ease;
+}
+.ribbon-btn:hover {
+    opacity: 0.9;
+}
+.wa-color { background-color: var(--wa-green); }
+.mail-color { background-color: var(--gmail-red); }
+.call-color { background-color: var(--call-blue); }
+
+/* 7. REVENUE LAYER BASELINE FOOTERS */
+.portal-footer {
+    background-color: var(--primary-navy);
+    color: #8892B0;
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 13px;
+    margin-top: 80px;
+    line-height: 1.6;
+}
+.portal-footer p {
+    margin: 5px 0;
+}
+.legal-footer {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-top: 12px;
+}
+.hidden {
+    display: none !important;
+}
+
+/* 8. MOBILE RESPONSIVE ADAPTATIONS */
+@media(max-width: 600px) {
+    .action-btn-ribbon {
+        flex-direction: column;
+    }
+    .portal-header {
+        padding: 40px 15px;
+    }
+    .portal-header h1 {
+        font-size: 24px;
+    }
+    .grid-container {
+        padding: 20px 15px;
+        gap: 15px;
+    }
+    .pillar-card {
+        padding: 25px 15px;
+    }
+    .cta-btn-main {
+        display: block;
+        margin-left: 0 !important;
+        margin-top: 10px;
+    }
+}
