@@ -15,10 +15,7 @@
             --action-blue: #1d4ed8;
         }
 
-        * { 
-            box-sizing: border-box; 
-            margin: 0; padding: 0; 
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--bg-obsidian);
@@ -38,279 +35,55 @@
             flex: 1;
         }
 
-        .back-nav-bar {
-            margin-bottom: 40px;
-        }
+        .back-nav-bar { margin-bottom: 40px; }
+        .back-link { color: var(--text-muted); text-decoration: none; font-size: 13.5px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; }
+        .back-link:hover { color: var(--text-pure); }
 
-        .back-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 13.5px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
+        .header-block { margin-bottom: 50px; text-align: left; }
+        .sector-tag { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--gold-accent); text-transform: uppercase; margin-bottom: 8px; }
+        .header-block h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; color: #ffffff; margin-bottom: 12px; }
+        .header-description { font-size: 15px; color: var(--text-muted); line-height: 1.6; max-width: 700px; }
 
-        .back-link:hover {
-            color: var(--text-pure);
-        }
+        .section-divider { border-bottom: 1px solid var(--border-muted); margin-bottom: 30px; }
+        .accordion-row-item { border-bottom: 1px solid var(--border-muted); padding: 24px 0; cursor: pointer; }
+        .accordion-trigger-header { display: flex; justify-content: space-between; align-items: center; }
+        .accordion-trigger-header h3 { font-size: 16px; font-weight: 600; color: #ffffff; letter-spacing: -0.1px; }
+        .toggle-status-icon { font-size: 12px; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
 
-        .header-block {
-            margin-bottom: 50px;
-            text-align: left;
-        }
+        .expanded-matrix-panel { margin-top: 20px; padding-left: 20px; border-left: 1px solid var(--border-muted); }
+        .parameter-list-block { display: flex; flex-direction: column; gap: 16px; }
+        .parameter-row-line { display: flex; flex-direction: column; gap: 4px; text-align: left; }
+        .parameter-row-line span.label-index { font-size: 11px; font-weight: 700; color: var(--gold-accent); text-transform: uppercase; letter-spacing: 0.5px; }
+        .parameter-row-line p.data-wording { font-size: 14px; color: var(--text-pure); line-height: 1.5; }
+        .parameter-row-line a.consultation-anchor { font-size: 14px; color: var(--text-pure); font-weight: 600; text-decoration: underline; }
 
-        .sector-tag {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            color: var(--gold-accent);
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
+        .secure-form-card { background-color: var(--panel-slate); border: 1px solid var(--border-muted); border-radius: 8px; padding: 40px; margin-top: 60px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); }
+        .form-title-area h3 { font-size: 18px; font-weight: 700; color: #ffffff; margin-bottom: 6px; }
+        .form-title-area p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 30px; }
+        .input-group-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; text-align: left; }
+        .input-group-row label { font-size: 12.5px; font-weight: 600; color: #ffffff; }
+        .input-group-row input, .input-group-row select, .input-group-row textarea { width: 100%; padding: 14px; background-color: var(--bg-obsidian); border: 1px solid var(--border-muted); border-radius: 4px; color: #ffffff; font-size: 14px; font-family: inherit; }
+        .input-group-row input:focus, .input-group-row select:focus, .input-group-row textarea:focus { outline: none; border-color: var(--gold-accent); }
+        .file-picker-container { background-color: rgba(255, 255, 255, 0.02); border: 1px dashed var(--border-muted); padding: 16px; border-radius: 4px; font-size: 13px; color: var(--text-muted); }
+        .privacy-protocol-banner { border-left: 2px solid #10b981; background-color: rgba(16, 185, 129, 0.02); padding: 16px; margin: 24px 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.5; text-align: left; }
+        .submit-action-btn { background-color: var(--action-blue); color: #ffffff; border: none; padding: 16px; border-radius: 4px; font-weight: 700; font-size: 14.5px; text-transform: uppercase; letter-spacing: 0.5px; width: 100%; cursor: pointer; }
 
-        .header-block h1 {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: #ffffff;
-            margin-bottom: 12px;
-        }
-
-        .header-description {
-            font-size: 15px;
-            color: var(--text-muted);
-            line-height: 1.6;
-            max-width: 700px;
-        }
-
-        /* Institutional Operational Row Architecture */
-        .section-divider {
-            border-bottom: 1px solid var(--border-muted);
-            margin-bottom: 30px;
-        }
-
-        .accordion-row-item {
-            border-bottom: 1px solid var(--border-muted);
-            padding: 24px 0;
-            cursor: pointer;
-        }
-
-        .accordion-trigger-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .accordion-trigger-header h3 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #ffffff;
-            letter-spacing: -0.1px;
-        }
-
-        .toggle-status-icon {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .expanded-matrix-panel {
-            margin-top: 20px;
-            padding-left: 20px;
-            border-left: 1px solid var(--border-muted);
-        }
-
-        /* Premium Minimalist 7-Item Listing Block */
-        .parameter-list-block {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .parameter-row-line {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            text-align: left;
-        }
-
-        .parameter-row-line span.label-index {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--gold-accent);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .parameter-row-line p.data-wording {
-            font-size: 14px;
-            color: var(--text-pure);
-            line-height: 1.5;
-        }
-
-        .parameter-row-line a.consultation-anchor {
-            font-size: 14px;
-            color: var(--text-pure);
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        /* Premium Form Terminal Block */
-        .secure-form-card {
-            background-color: var(--panel-slate);
-            border: 1px solid var(--border-muted);
-            border-radius: 8px;
-            padding: 40px;
-            margin-top: 60px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .form-title-area h3 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 6px;
-        }
-
-        .form-title-area p {
-            font-size: 13.5px;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-        }
-
-        .input-group-row {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .input-group-row label {
-            font-size: 12.5px;
-            font-weight: 600;
-            color: #ffffff;
-        }
-
-        .input-group-row input, 
-        .input-group-row select, 
-        .input-group-row textarea {
-            width: 100%;
-            padding: 14px;
-            background-color: var(--bg-obsidian);
-            border: 1px solid var(--border-muted);
-            border-radius: 4px;
-            color: #ffffff;
-            font-size: 14px;
-            font-family: inherit;
-        }
-
-        .input-group-row input:focus, 
-        .input-group-row select:focus, 
-        .input-group-row textarea:focus {
-            outline: none;
-            border-color: var(--gold-accent);
-        }
-
-        .file-picker-container {
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 1px dashed var(--border-muted);
-            padding: 16px;
-            border-radius: 4px;
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .privacy-protocol-banner {
-            border-left: 2px solid #10b981;
-            background-color: rgba(16, 185, 129, 0.02);
-            padding: 16px;
-            margin: 24px 0;
-            font-size: 12.5px;
-            color: var(--text-muted);
-            line-height: 1.5;
-            text-align: left;
-        }
-
-        .submit-action-btn {
-            background-color: var(--action-blue);
-            color: #ffffff;
-            border: none;
-            padding: 16px;
-            border-radius: 4px;
-            font-weight: 700;
-            font-size: 14.5px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            width: 100%;
-            cursor: pointer;
-        }
-
-        /* Professional Stacked Corporate Footer */
-        .portal-footer {
-            background-color: #090e1a;
-            border-top: 1px solid var(--border-muted);
-            padding: 60px 24px 40px 24px;
-            font-size: 14px;
-            width: 100%;
-        }
-
-        .footer-grid-row {
-            max-width: 900px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            text-align: left;
-        }
-
-        @media(min-width: 769px) {
-            .footer-grid-row {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-        }
-
-        .footer-column {
-            flex: 1;
-        }
-
-        .footer-column h4 {
-            color: #ffffff;
-            font-size: 12.5px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-            border-bottom: 2px solid var(--gold-accent);
-            padding-bottom: 4px;
-            display: inline-block;
-        }
-
-        .footer-column p {
-            font-size: 13.5px;
-            color: var(--text-muted);
-            margin: 6px 0;
-            line-height: 1.5;
-        }
-
-        .footer-column strong {
-            color: #ffffff;
-        }
+        .portal-footer { background-color: #090e1a; border-top: 1px solid var(--border-muted); padding: 60px 24px 40px 24px; font-size: 14px; width: 100%; }
+        .footer-grid-row { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; text-align: left; }
+        @media(min-width: 769px) { .footer-grid-row { flex-direction: row; justify-content: space-between; } }
+        .footer-column { flex: 1; }
+        .footer-column h4 { color: #ffffff; font-size: 12.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; border-bottom: 2px solid var(--gold-accent); padding-bottom: 4px; display: inline-block; }
+        .footer-column p { font-size: 13.5px; color: var(--text-muted); margin: 6px 0; line-height: 1.5; }
+        .footer-column strong { color: #ffffff; }
     </style>
 </head>
 <body>
 
     <div class="workspace-container">
-        <!-- Navigation Back Anchor -->
         <div class="back-nav-bar">
             <a href="index.html" class="back-link">⬅️ Main Gateway Terminal</a>
         </div>
 
-        <!-- Section Header Area -->
         <header class="header-block">
             <div class="sector-tag">Operations Desk 02</div>
             <h1>Academic & Testing Logistics</h1>
@@ -319,9 +92,7 @@
 
         <div class="section-divider"></div>
 
-        <!-- 7x7 EXECUTED ACCORDION MATRIX MAP -->
-        
-        <!-- SUB-PILLAR 2.1 -->
+        <!-- 2.1 -->
         <div class="accordion-row-item" onclick="toggleMatrixRow('box21', 'lbl21')">
             <div class="accordion-trigger-header">
                 <h3>2.1 High School Evaluation Mock Materials</h3>
@@ -331,3 +102,24 @@
                 <div class="parameter-list-block">
                     <div class="parameter-row-line"><span class="label-index">① Sector Classification</span><p class="data-wording">Academic Evaluation Distributions Desk</p></div>
                     <div class="parameter-row-line"><span class="label-index">② Operational Scope of Work</span><p class="data-wording">Compiling verified regional high school joint mock evaluation papers sets complete with official scoring marking guides schemas.</p></div>
+                    <div class="parameter-row-line"><span class="label-index">③ Mandatory Filing Parameters</span><p class="data-wording">Purchasing institution name title, administrator full name, and destination delivery email address coordinates.</p></div>
+                    <div class="parameter-row-line"><span class="label-index">④ Fixed Surcharge Fee</span><p class="data-wording">KES 1,500 Complete Evaluation Pack Block</p></div>
+                    <div class="parameter-row-line"><span class="label-index">⑤ Service Delivery Turnaround SLA</span><p class="data-wording">Instant digital transmission channel via secure server download</p></div>
+                    <div class="parameter-row-line"><span class="label-index">⑥ Direct Voice Consultation Line</span><a href="tel:+254788099685" class="consultation-anchor" onclick="event.stopPropagation();">+254 788 099 685</a></div>
+                    <div class="parameter-row-line"><span class="label-index">⑦ Direct Mail Consultation Lane</span><a href="mailto:vecctapivotenterprises@gmail.com" class="consultation-anchor" onclick="event.stopPropagation();">vecctapivotenterprises@gmail.com</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2.2 -->
+        <div class="accordion-row-item" onclick="toggleMatrixRow('box22', 'lbl22')">
+            <div class="accordion-trigger-header">
+                <h3>2.2 Topical Curriculum Review Booklets</h3>
+                <span class="toggle-status-icon" id="lbl22">View Details [+]</span>
+            </div>
+            <div id="box22" class="expanded-matrix-panel" style="display: none;">
+                <div class="parameter-list-block">
+                    <div class="parameter-row-line"><span class="label-index">① Sector Classification</span><p class="data-wording">Physical Academic Resource Production</p></div>
+                    <div class="parameter-row-line"><span class="label-index">② Operational Scope of Work</span><p class="data-wording">Fabricating high-fidelity physical spiral-bound evaluation review packs notes across selected curriculum subject categories lines blocks.</p></div>
+                    <div class="parameter-row-line"><span class="label-index">③ Mandatory Filing Parameters</span><p class="data-wording">Student name strings parameters, targeted evaluation topic description, parent contact phone, and regional courier pickup node station selection.</p></div>
+                    <div class="parameter-row-line"><span class="label-index">④ Fixed Surcharge Fee</span><p class="data-wording">KES 1,200 Per Fabricated Unit</p></div>
