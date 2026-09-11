@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VECCTA Admin</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body{background:#0b1220;color:#eef2fa;padding:20px}
+.admin-card{background:#121c30;border:1px solid rgba(230,195,106,.3);border-left:5px solid #f59e0b;border-radius:16px;padding:16px;margin:12px 0}
+select,input,textarea{width:100%;background:#0b1220;color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px;margin:6px 0}
+.btn{background:#e6c36a;color:#000;border:none;padding:10px 16px;border-radius:10px;font-weight:700;cursor:pointer;margin-right:6px}
+</style>
+</head>
+<body>
+<h1 style="color:#e6c36a">VECCTA ADMIN - Tickets & Jobs</h1>
+<p id="count"></p>
+<div id="adminList"></div>
+
+<script>
+function load(){
+  let tickets = JSON.parse(localStorage.getItem('veccta_bookings')||'[]');
+  // also check old keys
+  let extra = JSON.parse(localStorage.getItem('tickets')||'[]');
+  let all = [...tickets,...extra];
+  document.getElementById('count').innerText = `Total: ${all.length} (JOB + VECCTA)`;
+  let html='';
+  all.slice().reverse().forEach((t,i)=>{
+    let realIndex = all.length-1-i;
+    html+=`<div class="admin-card">
+      <b style="color:#e6c36a">${t.id||t.ticket||'VECCTA-'+realIndex}</b> - ${t.date||new Date().toLocaleString()}<br>
+      <b>Client:</b> ${t.clientName||t.name||'Dennis'} - ${t.phone||''}<br>
+      <b>Service:</b> ${t.service||t.serviceName||''}<br>
+      <b>Area:</b> ${t.area||t.serviceArea||''}<br>
+      Status: <select onchange="updateStatus(${realIndex},this.value)">
+        <option ${t.status=='Logged'?'selected':''}>Logged</option>
+        <option ${t.status=='In Progress'?'selected':''}>In Progress</option>
+        <option ${t.status=='Quoted'?'selected':''}>Quoted</option>
+        <option ${t.status=='Booked'?'selected':''}>Booked</option>
+        <option ${t.status=='Done'?'selected':''}>Done</option>
+      </select>
+      Notes: <textarea onchange="updateNotes(${realIndex},this.value)">${t.notes||''}</textarea>
+      <button class="btn" onclick="deleteT(${realIndex})">Delete</button>
+      <a class="btn" style="text-decoration:none" href="https://wa.me/${(t.phone||'').replace(/[^0-9]/g,'')}">WhatsApp</a>
+    </div>`;
+  });
+  document.getElementById('adminList').innerHTML = html||'No tickets yet on this device';
+}
+function updateStatus(i,v){
+  let a=JSON.parse(localStorage.getItem('veccta_bookings')||'[]');
+  if(a[i]){a[i].status=v; localStorage.setItem('veccta_bookings',JSON.stringify(a));}
+}
+function updateNotes(i,v){
+  let a=JSON.parse(localStorage.getItem('veccta_bookings')||'[]');
+  if(a[i]){a[i].notes=v; localStorage.setItem('veccta_bookings',JSON.stringify(a));}
+}
+function deleteT(i){
+  if(!confirm('Delete?')) return;
+  let a=JSON.parse(localStorage.getItem('veccta_bookings')||'[]');
+  a.splice(i,1); localStorage.setItem('veccta_bookings',JSON.stringify(a)); load();
+}
+load();
+</script>
+</body>
+</html>
