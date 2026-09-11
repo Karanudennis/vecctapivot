@@ -1,21 +1,92 @@
-<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Track</title><style>body{background:#0f172a;color:#fff;font-family:system-ui;padding:12px;max-width:600px;margin:auto}.card{background:#1e293b;padding:14px;border-radius:12px;border:1px solid #334155;margin:8px 0}input{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}button{padding:12px;width:100%;border:none;border-radius:8px;font-weight:800;cursor:pointer}.btn-y{background:#facc15}.btn-b{background:#3b82f6;color:#fff}.tabs{display:flex;gap:6px}.tabs button{flex:1;background:#1e293b;color:#94a3b8}.tabs button.active{background:#facc15;color:#000}</style></head><body>
-<div class="tabs"><button id="bJ" class="active" onclick="tab('job')">Track JOB</button><button id="bT" onclick="tab('ticket')">Track TICKET</button></div>
-<div id="jobSec"><div class="card"><input id="jobInput" placeholder="JOB-XXXX"><button class="btn-y" onclick="trackJob()">Track JOB</button><div id="jobRes"></div></div></div>
-<div id="ticketSec" style="display:none"><div class="card"><input id="ticketInput" placeholder="TICKET-XXXX"><button class="btn-b" onclick="trackTicket()">Track TICKET</button><div id="ticketRes"></div></div></div>
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Track - VECCTAPIVOT</title><style>
+body{background:#0f172a;color:#fff;font-family:system-ui;padding:12px;max-width:700px;margin:auto}
+.card{background:#1e293b;padding:14px;border-radius:12px;border:1px solid #334155;margin:10px 0}
+input{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
+button{padding:12px;width:100%;border:none;border-radius:8px;font-weight:800;cursor:pointer}
+.btn-y{background:#facc15;color:#000}.btn-b{background:#3b82f6;color:#fff}
+.tabs{display:flex;gap:6px}.tabs button{flex:1;background:#1e293b;color:#94a3b8;padding:10px;border:none;border-radius:8px}
+.tabs button.active{background:#facc15;color:#000}
+.badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:800}
+.price-box{background:#0f172a;border:2px solid #facc15;padding:12px;border-radius:10px;text-align:center;margin:10px 0}
+.admin-box{background:#052e16;border:1px solid #22c55e;padding:12px;border-radius:10px;margin:10px 0}
+</style></head><body>
+
+<div class="tabs">
+<button id="bJ" class="active" onclick="tab('job')">Track JOB</button>
+<button id="bT" onclick="tab('ticket')">Track TICKET</button>
+</div>
+
+<div id="jobSec">
+<div class="card">
+<input id="jobInput" placeholder="Enter JOB- ID e.g JOB-20260911-1234">
+<button class="btn-y" onclick="trackJob()">TRACK JOB</button>
+<div id="jobRes"></div>
+</div>
+</div>
+
+<div id="ticketSec" style="display:none">
+<div class="card">
+<input id="ticketInput" placeholder="Enter TICKET- ID e.g TICKET-1234">
+<button class="btn-b" onclick="trackTicket()">TRACK TICKET</button>
+<div id="ticketRes"></div>
+</div>
+</div>
+
 <script>
 function getJobs(){return JSON.parse(localStorage.getItem('veccta_jobs')||localStorage.getItem('karanu_jobs')||'[]')}
 function getTickets(){return JSON.parse(localStorage.getItem('veccta_tickets')||localStorage.getItem('karanu_tickets')||'[]')}
 function tab(t){document.getElementById('jobSec').style.display=t=='job'?'block':'none';document.getElementById('ticketSec').style.display=t=='ticket'?'block':'none';bJ.classList.toggle('active',t=='job');bT.classList.toggle('active',t=='ticket');}
+
 function trackJob(){
- let id=jobInput.value.trim(); let jobs=getJobs(); let j=jobs.find(x=>x.id===id);
- if(!j){jobRes.innerHTML=`<p style=color:#f87171>JOB ${id} NOT FOUND on this device. Submit JOB on same device or add backend.</p>`;return;}
+ let id=jobInput.value.trim().toUpperCase(); let j=getJobs().find(x=>x.id.toUpperCase()===id);
+ if(!j){jobRes.innerHTML=`<p style=color:#f87171>JOB ${id} NOT FOUND on this device.<br>Note: GitHub Pages saves only on same browser. Use same phone where you submitted JOB.</p>`;return;}
  let tickets=getTickets().filter(t=>t.jobId===j.id);
- jobRes.innerHTML=`<div style="border-left:4px solid #facc15;padding:8px"><b style="color:#facc15;font-size:18px">${j.id}</b><br>Service: ${j.service}<br><b>PRICE: ${j.price? 'KSH '+j.price : 'Quote Pending'}</b><br>STATUS: <b>${j.status}</b><br>ADMIN: ${j.adminMessage}<br><small>${j.logged}</small><br><br><a href="ticket.html?job=${j.id}" style="background:#3b82f6;color:#fff;padding:8px 12px;border-radius:6px;text-decoration:none">Raise Ticket for this JOB</a></div><h4>Tickets: ${tickets.length}</h4>`+tickets.map(t=>`<div class=card> ${t.id} - ${t.status}<br>Q: ${t.message}<br>A: ${t.adminReply||'Waiting'}</div>`).join('');
+ let dyn=j.dynamicFields? Object.entries(j.dynamicFields).map(([k,v])=>`<div><b>${k}:</b> ${v}</div>`).join('') : '';
+ jobRes.innerHTML=`
+ <div class=card style="border-left:5px solid #facc15">
+  <div style="display:flex;justify-content:space-between"><b style="color:#facc15;font-size:20px">${j.id}</b><span class=badge style="background:${j.status=='Completed'?'#22c55e':j.status=='In Progress'?'#3b82f6':'#facc15'};color:#000">${j.status}</span></div>
+  <div style="color:#94a3b8;font-size:12px">${j.logged} | Priority: ${j.priority}</div>
+  <div style="margin:8px 0"><b>${j.fullService||j.service}</b><br><small>${j.pillar} > ${j.category}</small></div>
+  <div style="background:#0f172a;padding:8px;border-radius:6px;font-size:13px">${dyn}<br>Details: ${j.details||'None'}</div>
+
+  <div class=price-box>
+   <div style="font-size:12px;color:#94a3b8">TOTAL PRICE</div>
+   <div style="font-size:28px;color:#facc15;font-weight:900">${j.price? 'KSH '+j.price : 'QUOTE PENDING'}</div>
+   ${j.price?'':'<small>Admin will update price</small>'}
+  </div>
+
+  <div class=admin-box>
+   <div style="font-size:11px;color:#22c55e;font-weight:800">ADMIN MESSAGE</div>
+   <div style="font-size:15px;margin-top:4px"><i>"${j.adminMessage||'No message yet - Admin will comment'}"</i></div>
+  </div>
+
+  <div style="display:flex;gap:6px;margin-top:10px">
+   <a href="ticket.html?job=${j.id}" style="flex:1;background:#3b82f6;color:#fff;padding:10px;border-radius:8px;text-decoration:none;text-align:center">Raise Ticket</a>
+   <a href="https://wa.me/254700000000?text=Hi,%20about%20${j.id}" style="flex:1;background:#22c55e;color:#000;padding:10px;border-radius:8px;text-decoration:none;text-align:center">WhatsApp</a>
+  </div>
+ </div>
+
+ <div class=card>
+  <h4 style="color:#3b82f6">Tickets for this JOB (${tickets.length})</h4>
+  ${tickets.length? tickets.map(t=>`<div style="background:#0f172a;padding:10px;border-radius:8px;margin:6px 0;border-left:3px solid ${t.status=='Answered'?'#22c55e':'#3b82f6'}"><b>${t.id}</b> [${t.category||t.tType}] - <span class=badge style="background:#1e293b">${t.status}</span><br><div style="margin:6px 0">Q: ${t.message}</div><div style="background:#1e293b;padding:8px;border-radius:6px"><b style="color:#22c55e">ADMIN REPLY:</b><br><i>${t.adminReply||'Waiting admin reply...'}</i></div><small>${t.logged}</small></div>`).join('') : '<small>No tickets yet. Raise one above.</small>'}
+ </div>`;
 }
+
 function trackTicket(){
- let id=ticketInput.value.trim(); let t=getTickets().find(x=>x.id===id);
- if(!t){ticketRes.innerHTML='TICKET Not Found on this device';return;}
- ticketRes.innerHTML=`<div style="border-left:4px solid #3b82f6;padding:8px"><b style="color:#3b82f6">${t.id}</b><br>For: ${t.jobId} (${t.type})<br>STATUS: ${t.status}<br>Q: ${t.message}<br>A: ${t.adminReply||'Waiting admin'}<br><small>${t.logged}</small></div>`;
+ let id=ticketInput.value.trim().toUpperCase(); let t=getTickets().find(x=>x.id.toUpperCase()===id);
+ if(!t){ticketRes.innerHTML='<p style=color:#f87171>TICKET not found on this device</p>';return;}
+ ticketRes.innerHTML=`
+ <div class=card style="border-left:5px solid #3b82f6">
+  <div style="display:flex;justify-content:space-between"><b style="color:#3b82f6;font-size:18px">${t.id}</b><span class=badge style="background:${t.status=='Answered'?'#22c55e':'#3b82f6'};color:#fff">${t.status}</span></div>
+  <div style="font-size:12px;color:#94a3b8">Linked to: ${t.jobId} | Type: ${t.tType||''} | Cat: ${t.category||''} | Priority: ${t.priority||''}</div>
+  <div style="background:#0f172a;padding:10px;border-radius:8px;margin:10px 0">YOUR MESSAGE:<br>${t.message}</div>
+  <div class=admin-box><div style="font-size:11px;color:#22c55e;font-weight:800">ADMIN REPLY - WELL DISPLAYED</div><div style="font-size:16px;margin-top:6px;line-height:1.5"><i>"${t.adminReply||'Admin has not replied yet. Please check later.'}"</i></div></div>
+  <div style="font-size:12px;color:#94a3b8">${t.logged}</div>
+  ${t.jobId!='CONSULTATION'? `<a href="#" onclick="jobInput.value='${t.jobId}';tab('job');trackJob();return false;" style="background:#facc15;color:#000;padding:8px 12px;border-radius:6px;text-decoration:none;display:inline-block;margin-top:8px">View JOB ${t.jobId}</a>`:''}
+ </div>`;
 }
-let q=new URLSearchParams(location.search); if(q.get('job')){jobInput.value=q.get('job'); trackJob();} if(q.get('ticket')){tab('ticket'); ticketInput.value=q.get('ticket'); trackTicket();}
+
+let q=new URLSearchParams(location.search);
+if(q.get('job')){jobInput.value=q.get('job'); setTimeout(trackJob,300);}
+if(q.get('ticket')){tab('ticket'); ticketInput.value=q.get('ticket'); setTimeout(trackTicket,300);}
 </script></body></html>
