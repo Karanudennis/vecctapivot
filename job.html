@@ -1,20 +1,48 @@
-<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Job</title><style>body{background:#0f172a;color:#fff;font-family:system-ui;padding:16px;max-width:600px;margin:auto}.card{background:#1e293b;padding:16px;border-radius:12px;border:1px solid #334155}input,select,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}button{padding:14px;width:100%;border:none;border-radius:8px;font-weight:800;cursor:pointer}.btn-y{background:#facc15}</style></head><body>
-<div class="card"><h3 style="color:#facc15;text-align:center">Request Job</h3>
-<input id="cName" placeholder="Name"><input id="cPhone" placeholder="Phone 07..."><input id="cEmail" placeholder="Email optional">
-<select id="pillar"><option>Digital & Brand Systems</option><option>Academic & Testing Logistics</option><option>Transport Brokerage Hub</option><option>General Agency Core</option></select>
-<input id="service" placeholder="Exact Service e.g BRS Registration">
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Job Request</title><style>body{background:#0f172a;color:#fff;font-family:system-ui;padding:16px;max-width:650px;margin:auto}.card{background:#1e293b;padding:16px;border-radius:12px;border:1px solid #334155}input,select,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}button{padding:14px;width:100%;border:none;border-radius:8px;font-weight:800}.btn-y{background:#facc15;color:#000}label{font-size:11px;color:#facc15;margin-top:10px;display:block}.dynamic{background:#0f172a;border:1px dashed #facc15;padding:10px;border-radius:8px;margin:8px 0}</style></head><body>
+<div class="card">
+<h3 style="color:#facc15;text-align:center">Job Request - VECCTAPIVOT</h3>
+<input id="cName" placeholder="Full Name"><input id="cPhone" placeholder="Phone / WhatsApp">
+<label>PILLAR</label><select id="pillar" onchange="updateForm()"></select>
+<label>CATEGORY</label><select id="cat" onchange="updateService()"></select>
+<label>SERVICE</label><select id="service" onchange="updateSub()"></select>
+<label>SUB-SERVICE</label><select id="sub"></select>
+
+<div id="dynamicFields" class="dynamic"></div>
+
+<textarea id="details" placeholder="Additional details"></textarea>
 <select id="priority"><option>Standard</option><option>Express</option><option>Priority</option></select>
-<textarea id="details" placeholder="Details / deadline"></textarea>
-<button class="btn-y" onclick="createJob()">Submit JOB</button><div id="res"></div></div>
+<button class="btn-y" onclick="createJob()">Submit JOB</button><div id="res"></div>
+</div>
 <script>
+const DATA={
+"Digital & Brand Systems":{"Web & Systems":["Website Design","E-commerce","System Dev"],"Brand & Design":["Logo","Poster","Brand Identity"],"Marketing":["SEO","Social Media"]},
+"Academic & Testing Logistics":{"Academic":["Assignment","Research Project","Thesis"],"Testing":["Driver Test","PTE/IELTS","Certification"]},
+"Transport Brokerage Hub":{"Vehicle":["Sourcing","Import","Logbook"],"Transport":["Truck Hire","Movers","Car Hire"]},
+"General Agency Core":{"Govt":["KRA","BRS","eCitizen","NTSA"],"Consultation":["Business","Career","Legal"]}
+};
+const SUBS={"Website Design":["Business","E-commerce","Portfolio"],"Assignment":["Essay","Report","Presentation"],"Sourcing":["Toyota","Mazda","Budget Search"],"KRA":["PIN","Returns","Compliance"]};
+
+// PILLAR SPECIFIC FIELDS
+const PILLAR_FIELDS={
+"Digital & Brand Systems":`<label>Business Name</label><input id="f_business"><label>Reference Website (if any)</label><input id="f_ref"><label>Number of Pages</label><select id="f_pages"><option>1 Page</option><option>3-5 Pages</option><option>5-10 Pages</option><option>10+</option></select><label>Logo Available?</label><select id="f_logo"><option>Yes</option><option>No - Design for me</option></select>`,
+"Academic & Testing Logistics":`<label>Subject / Course</label><input id="f_subject"><label>Level</label><select id="f_level"><option>High School</option><option>College</option><option>University</option><option>Masters</option></select><label>Deadline</label><input id="f_deadline" type="date"><label>Pages / Words</label><input id="f_words" placeholder="e.g 5 pages / 1500 words"><label>School / Institution</label><input id="f_school">`,
+"Transport Brokerage Hub":`<label>Pickup Location</label><input id="f_pickup"><label>Destination</label><input id="f_dest"><label>Vehicle Type Needed</label><select id="f_vehicle"><option>Pickup</option><option>Lorry 3T</option><option>Lorry 5T</option><option>Canter</option><option>Small Car</option><option>Boda</option></select><label>Date Needed</label><input id="f_date" type="date"><label>Budget (KSH)</label><input id="f_budget">`,
+"General Agency Core":`<label>ID Number</label><input id="f_idnum"><label>Service Urgency</label><select id="f_urgency"><option>Normal (2-3 days)</option><option>Urgent (24hrs)</option><option>Same Day</option></select><label>Have eCitizen Account?</label><select id="f_ecit"><option>Yes</option><option>No</option></select>`
+};
+
 function getJobs(){return JSON.parse(localStorage.getItem('veccta_jobs')||'[]')}
 function saveJobs(j){localStorage.setItem('veccta_jobs',JSON.stringify(j)); localStorage.setItem('karanu_jobs',JSON.stringify(j));}
+const pillarEl=pillar, catEl=cat, servEl=service, subEl=sub;
+function init(){pillarEl.innerHTML=Object.keys(DATA).map(k=>`<option>${k}</option>`).join(''); updateForm();}
+function updateForm(){let p=pillarEl.value; catEl.innerHTML=Object.keys(DATA[p]||{}).map(k=>`<option>${k}</option>`).join(''); document.getElementById('dynamicFields').innerHTML=PILLAR_FIELDS[p]||''; updateService();}
+function updateService(){let p=pillarEl.value,c=catEl.value; servEl.innerHTML=(DATA[p]?.[c]||[]).map(k=>`<option>${k}</option>`).join(''); updateSub();}
+function updateSub(){let s=servEl.value; subEl.innerHTML=(SUBS[s]||["General"]).map(k=>`<option>${k}</option>`).join('');}
+function collectDynamic(){let d={}; document.querySelectorAll('#dynamicFields input, #dynamicFields select').forEach(el=>{d[el.id.replace('f_','')]=el.value}); return d;}
 function createJob(){
- let name=cName.value.trim(), phone=cPhone.value.trim(), serviceVal=service.value.trim();
- if(!name||!phone||!serviceVal){alert('Name Phone Service required');return;}
  let id='JOB-'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'-'+Math.floor(1000+Math.random()*9000);
- let job={id,clientName:name,clientPhone:phone,clientEmail:cEmail.value,pillar:pillar.value,service:serviceVal,priority:priority.value,details:details.value,price:'',status:'Logged',adminMessage:'Received. Admin will quote shortly.',logged:new Date().toLocaleString()};
+ let job={id,clientName:cName.value,clientPhone:cPhone.value,pillar:pillarEl.value,category:catEl.value,service:servEl.value,subService:subEl.value,fullService:`${pillarEl.value} > ${catEl.value} > ${servEl.value} > ${subEl.value}`,dynamicFields:collectDynamic(),details:details.value,priority:priority.value,price:'',status:'Logged',adminMessage:'Received. We will quote shortly.',logged:new Date().toLocaleString()};
  let jobs=getJobs(); jobs.push(job); saveJobs(jobs);
- res.innerHTML=`<div style="text-align:center;margin-top:10px"><b style="color:#facc15;font-size:20px">${id}</b><br>Saved! <br><a href="track.html?job=${id}" style="background:#facc15;color:#000;padding:10px 16px;border-radius:8px;text-decoration:none;display:inline-block;margin:6px">Track Job</a><a href="ticket.html?job=${id}" style="background:#3b82f6;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;display:inline-block">Raise Ticket</a></div>`;
+ res.innerHTML=`<div style=text-align:center><b style=color:#facc15;font-size:20px>${id}</b><br>${job.fullService}<br><a href=track.html?job=${id} style="background:#facc15;color:#000;padding:10px 16px;border-radius:8px;text-decoration:none;display:inline-block;margin-top:8px">Track</a></div>`;
 }
+init();
 </script></body></html>
