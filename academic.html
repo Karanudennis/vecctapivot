@@ -1,129 +1,156 @@
 <!DOCTYPE html>
-<html lang="en-KE">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Academic & Testing Logistics | Corporate Workspace</title>
-    <style>
-        :root {
-            --bg-obsidian: #030712;
-            --panel-slate: #0b1329;
-            --border-muted: rgba(255, 255, 255, 0.06);
-            --gold-accent: #d4af37;
-            --text-pure: #f3f4f6;
-            --text-muted: #9ca3af;
-            --action-blue: #1d4ed8;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            background-color: var(--bg-obsidian);
-            color: var(--text-pure);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .workspace-container {
-            max-width: 900px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 40px 24px;
-            flex: 1;
-        }
-
-        .back-nav-bar { margin-bottom: 40px; }
-        .back-link { color: var(--text-muted); text-decoration: none; font-size: 13.5px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; }
-        .back-link:hover { color: var(--text-pure); }
-
-        .header-block { margin-bottom: 50px; text-align: left; }
-        .sector-tag { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--gold-accent); text-transform: uppercase; margin-bottom: 8px; }
-        .header-block h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; color: #ffffff; margin-bottom: 12px; }
-        .header-description { font-size: 15px; color: var(--text-muted); line-height: 1.6; max-width: 700px; }
-
-        .section-divider { border-bottom: 1px solid var(--border-muted); margin-bottom: 30px; }
-        .accordion-row-item { border-bottom: 1px solid var(--border-muted); padding: 24px 0; cursor: pointer; }
-        .accordion-trigger-header { display: flex; justify-content: space-between; align-items: center; }
-        .accordion-trigger-header h3 { font-size: 16px; font-weight: 600; color: #ffffff; letter-spacing: -0.1px; }
-        .toggle-status-icon { font-size: 12px; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
-
-        .expanded-matrix-panel { margin-top: 20px; padding-left: 20px; border-left: 1px solid var(--border-muted); }
-        .parameter-list-block { display: flex; flex-direction: column; gap: 16px; }
-        .parameter-row-line { display: flex; flex-direction: column; gap: 4px; text-align: left; }
-        .parameter-row-line span.label-index { font-size: 11px; font-weight: 700; color: var(--gold-accent); text-transform: uppercase; letter-spacing: 0.5px; }
-        .parameter-row-line p.data-wording { font-size: 14px; color: var(--text-pure); line-height: 1.5; }
-        .parameter-row-line a.consultation-anchor { font-size: 14px; color: var(--text-pure); font-weight: 600; text-decoration: underline; }
-
-        .secure-form-card { background-color: var(--panel-slate); border: 1px solid var(--border-muted); border-radius: 8px; padding: 40px; margin-top: 60px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); }
-        .form-title-area h3 { font-size: 18px; font-weight: 700; color: #ffffff; margin-bottom: 6px; }
-        .form-title-area p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 30px; }
-        
-        .input-group-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; text-align: left; }
-        .input-group-row label { font-size: 12.5px; font-weight: 600; color: #ffffff; }
-        .input-group-row input, .input-group-row select, .input-group-row textarea { width: 100%; padding: 14px; background-color: var(--bg-obsidian); border: 1px solid var(--border-muted); border-radius: 4px; color: #ffffff; font-size: 14px; font-family: inherit; }
-        .input-group-row input:focus, .input-group-row select:focus, .input-group-row textarea:focus { outline: none; border-color: var(--gold-accent); }
-        .file-picker-container { background-color: rgba(255, 255, 255, 0.02); border: 1px dashed var(--border-muted); padding: 16px; border-radius: 4px; font-size: 13px; color: var(--text-muted); }
-        .privacy-protocol-banner { border-left: 2px solid #10b981; background-color: rgba(16, 185, 129, 0.02); padding: 16px; margin: 24px 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.5; text-align: left; }
-        .submit-action-btn { background-color: var(--action-blue); color: #ffffff; border: none; padding: 16px; border-radius: 4px; font-weight: 700; font-size: 14.5px; text-transform: uppercase; letter-spacing: 0.5px; width: 100%; cursor: pointer; }
-
-        .portal-footer { background-color: #090e1a; border-top: 1px solid var(--border-muted); padding: 60px 24px 40px 24px; font-size: 14px; width: 100%; }
-        .footer-grid-row { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; text-align: left; }
-        @media(min-width: 769px) { .footer-grid-row { flex-direction: row; justify-content: space-between; } }
-        .footer-column { flex: 1; }
-        .footer-column h4 { color: #ffffff; font-size: 12.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; border-bottom: 2px solid var(--gold-accent); padding-bottom: 4px; display: inline-block; }
-        .footer-column p { font-size: 13.5px; color: var(--text-muted); margin: 6px 0; line-height: 1.5; }
-        .footer-column strong { color: #ffffff; }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Academic & Testing Logistics — VECCTAPIVOT Enterprises</title>
+  <meta name="description" content="Mock archives, revision booklets, KASNEB vaults and CBC distribution runs. Part of the One Pivot service architecture — 49 services scoped, quoted and tracked end to end, wherever you trade.">
+  <link rel="icon" href="logo.png">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div class="workspace-container">
-        <!-- Navigation Back Anchor -->
-        <div class="back-nav-bar">
-            <a href="index.html" class="back-link">⬅️ Main Gateway Terminal</a>
-        </div>
-
-        <!-- Section Header Area -->
-        <header class="header-block">
-            <div class="sector-tag">Operations Desk 02</div>
-            <h1>Academic & Testing Logistics</h1>
-            <p class="header-description">Providing institutional validation processing, resource portfolio coordination, and secure credential logistics across local and international sectors.</p>
-        </header>
-
-        <div class="section-divider"></div>
-
-        <!-- 7x7 EXECUTED ACCORDION MATRIX MAP -->
-        
-        <!-- SUB-PILLAR 2.1 -->
-        <div class="accordion-row-item" onclick="toggleSubPillar('box21', 'lbl21')">
-            <div class="accordion-trigger-header">
-                <h3>2.1 High School Evaluation Mock Materials</h3>
-                <span class="toggle-status-icon" id="lbl21">View Details [+]</span>
-            </div>
-            <div id="box21" class="expanded-matrix-panel" style="display: none;">
-                <div class="parameter-list-block">
-                    <div class="parameter-row-line"><span class="label-index">① Sector Classification</span><p class="data-wording">Academic Evaluation Distributions Desk</p></div>
-                    <div class="parameter-row-line"><span class="label-index">② Operational Scope of Work</span><p class="data-wording">Compiling verified regional high school joint mock evaluation papers sets complete with official scoring marking guides schemas.</p></div>
-                    <div class="parameter-row-line"><span class="label-index">③ Mandatory Filing Parameters</span><p class="data-wording">Purchasing institution name title, administrator full name, and destination delivery email address coordinates.</p></div>
-                    <div class="parameter-row-line"><span class="label-index">④ Fixed Surcharge Fee</span><p class="data-wording">KES 1,500 Complete Evaluation Pack Block</p></div>
-                    <div class="parameter-row-line"><span class="label-index">⑤ Service Delivery Turnaround SLA</span><p class="data-wording">Instant digital transmission channel via secure server download</p></div>
-                    <div class="parameter-row-line"><span class="label-index">⑥ Direct Voice Consultation Line</span><a href="tel:+254788099685" class="consultation-anchor" onclick="event.stopPropagation();">Call Support: +254 788 099 685</a></div>
-                    <div class="parameter-row-line"><span class="label-index">⑦ Direct Mail Consultation Lane</span><a href="mailto:vecctapivotenterprises@gmail.com" class="consultation-anchor" onclick="event.stopPropagation();">Mail Desk: vecctapivotenterprises@gmail.com</a></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SUB-PILLAR 2.2 -->
-        <div class="accordion-row-item" onclick="toggleSubPillar('box22', 'lbl22')">
-            <div class="accordion-trigger-header">
-                <h3>2.2 Topical Curriculum Review Booklets</h3>
-                <span class="toggle-status-icon" id="lbl22">View Details [+]</span>
-            </div>
-            <div id="box22" class="expanded-matrix-panel" style="display: none;">
-                <div class="parameter-list-block">
-                    <div class="parameter-row-line"><span class="label-index">① Sector Classification</span><p class="data-wording">Physical Academic Resource Production</p></div>
-                    <div class="parameter-row-line"><span class="label-index">② Operational Scope of Work</span><p class="data-wording">Fabricating high-fidelity physical spiral-bound evaluation review packs notes across selected curriculum subject categories lines blocks.</p></div>
-                    <div class="parameter-row-line"><span class="label-index">③ Mandatory Filing Parameters</span><p class="data-wording">Student name strings parameters, targeted evaluation topic description, parent contact phone, and regional courier pickup node station selection.</p></div>
+  <div class="utility">
+    <div class="uwrap">
+      <span class="uitem"><span class="ubadge">BRS BN-AYSO8LRE</span></span>
+      <span class="uitem">Unified Cross-Border Service Architecture &middot; 49 services</span>
+      <a class="uitem" href="https://wa.me/254788099685">WhatsApp +254 788 099 685</a>
+    </div>
+  </div>
+  <header class="top">
+    <div class="navrow">
+      <a class="brand" href="index.html">
+        <img src="logo.png" alt="Vecctapivot Enterprises logo">
+        <span class="brandname">Vecctapivot<em>Enterprises &middot; Service Desk</em></span>
+      </a>
+      <nav class="mainnav" aria-label="Primary">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#process">How We Work</a>
+        <a href="track.html">Track</a>
+        <a href="index.html#faq">FAQ</a>
+      </nav>
+      <div class="navcta">
+        <a class="btn line sm2" href="job.html">Request a Job</a>
+        <a class="btn gold sm2" href="ticket.html">Book a Ticket</a>
+      </div>
+    </div>
+  </header>
+  <main>
+  <p class="backline"><a href="index.html">&#8592; All Services</a></p>
+  <section class="deskhead">
+    <span class="kicker">Academic & Testing Logistics</span>
+    <h1>Academic & Testing Logistics</h1>
+    <p>Mock archives, revision booklets, KASNEB vaults and CBC distribution runs. Open a service below to read each engagement&rsquo;s exact description, requirements and turnaround &mdash; then book a ticket, request a job or start the conversation on WhatsApp.</p>
+  </section>
+  <section class="schedule" id="slots">
+    <article class="slot" data-slot="1">
+      <button class="slothead" type="button" aria-expanded="false" aria-controls="drawer-1">
+        <h2>Form 1-4 Joint Termly Mock Bundles</h2>
+        <p>Assembling inter-county mock assessment archives logs complete with marking schemas keys.</p>
+        <span class="chev" aria-hidden="true">&#9662;</span>
+      </button>
+      <div class="drawer" id="drawer-1" hidden></div>
+    </article>
+    <article class="slot" data-slot="2">
+      <button class="slothead" type="button" aria-expanded="false" aria-controls="drawer-2">
+        <h2>Printed Bound Topical Revision Booklets</h2>
+        <p>Processing physical spiral-bound evaluation notes booklets print distributions pipelines.</p>
+        <span class="chev" aria-hidden="true">&#9662;</span>
+      </button>
+      <div class="drawer" id="drawer-2" hidden></div>
+    </article>
+    <article class="slot" data-slot="3">
+      <button class="slothead" type="button" aria-expanded="false" aria-controls="drawer-3">
+        <h2>KASNEB CPA National Paper Archive Vault</h2>
+        <p>Unlocking direct cloud vault access portals to multiple multi-year CPA examination resources.</p>
+        <span class="chev" aria-hidden="true">&#9662;</span>
+      </button>
+      <div class="drawer" id="drawer-3" hidden></div>
+    </article>
+    <article class="slot" data-slot="4">
+      <button class="slothead" type="button" aria-expanded="false" aria-controls="drawer-4">
+        <h2>KASNEB ATD Vocational Revision Kits</h2>
+        <p>Exporting complete kit portfolios tailored for Accounting Technicians Diploma levels.</p>
+        <span class="chev" aria-hidden="true">&#9662;</span>
+      </button>
+      <div class="drawer" id="drawer-4" hidden></div>
+    </article>
+    <article class="slot" data-slot="5">
+      <button class="slothead" type="button" aria-expanded="false" aria-controls="drawer-5">
+        <h2>Primary/Junior Secondary CBC Distribution</h2>
+        <p>Shipping joint school assessment packages bundles out to cluster distribution points channels.</p>
+        <span class="chev" aria-hidden="true">&#9662;</span>
+      </button>
+      <div class="drawer" id="drawer-5" hidden></div>
+    </article>
+    <article class="slot" data-slot="6">
+      <button class="slothead" type="button" aria-expanded="false" aria-controls="drawer-6">
+        <h2>Hardcopy Revision Notes Digitization Run</h2>
+        <p>Scanning raw hand-written notes pages structures into clean indexed digital PDF folders.</p>
+        <span class="chev" aria-hidden="true">&#9662;</span>
+      </button>
+      <div class="drawer" id="drawer-6" hidden></div>
+    </article>
+    <article class="slot" data-slot="7">
+      <button class="slothead" type="button" aria-expanded="false" aria-controls="drawer-7">
+        <h2>Candidate Profile Student Portal Setup</h2>
+        <p>Standardizing academic uploads constraints maps layers on institutional student portals.</p>
+        <span class="chev" aria-hidden="true">&#9662;</span>
+      </button>
+      <div class="drawer" id="drawer-7" hidden></div>
+    </article>
+  </section>
+  <section class="ctarow">
+    <a class="btn gold" href="ticket.html">Book a Ticket &rarr;</a>
+    <a class="btn line" href="job.html">Request a Job &rarr;</a>
+    <a class="btn line" href="track.html">Track a Reference</a>
+  </section>
+  </main>
+  <div id="guaranteeBar" class="guarantees"></div>
+  <nav class="contactbar" aria-label="Contact channels">
+    <a class="wa" href="https://wa.me/254788099685" aria-label="Chat on WhatsApp">&#9993; WhatsApp</a>
+    <a href="tel:+254788099685" aria-label="Call hotline">&#9742; Call</a>
+    <a href="sms:+254788099685" aria-label="Send SMS text">&#9993; SMS</a>
+    <a href="mailto:vecctapivotenterprises@gmail.com" aria-label="Email secure tunnel">&#9990; Email</a>
+  </nav>
+  <footer class="sitefoot" id="siteFoot"></footer>
+  <script src="js/matrix.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+    (function () {
+      var M = window.VP_MATRIX["2"];
+      var wa = function (txt) { return 'https://wa.me/254788099685?text=' + encodeURIComponent(txt); };
+      document.querySelectorAll('.slot').forEach(function (slot) {
+        var n = Number(slot.getAttribute('data-slot'));
+        var svc = M.services[n - 1];
+        var head = slot.querySelector('.slothead');
+        var drawer = slot.querySelector('.drawer');
+        head.addEventListener('click', function () {
+          if (!drawer.dataset.ready) {
+            var h = '<ol class="steps">';
+            svc.engagements.forEach(function (e, i) {
+              h += '<li class="step">'
+                + '<div class="stephead"><h3>' + e.t + '</h3><span class="tf">' + e.tf + '</span></div>'
+                + '<p class="stepdesc">' + e.desc + '</p>'
+                + '<div class="steplabel">Requirements</div><ul class="reqs">'
+                + e.req.map(function (r) { return '<li>' + r + '</li>'; }).join('')
+                + '</ul>'
+                + '<div class="stepbtns">'
+                + '<a class="btn sm gold" href="ticket.html?desk=' + M.id + '&service=' + encodeURIComponent(svc.title) + '&engagement=' + encodeURIComponent(e.t) + '">Book Ticket</a>'
+                + '<a class="btn sm line" href="job.html?desk=' + M.id + '&service=' + encodeURIComponent(svc.title) + '&engagement=' + encodeURIComponent(e.t) + '">Request Job</a>'
+                + '<a class="btn sm ghost" target="_blank" rel="noopener" href="' + wa('Hello VECCTAPIVOT, I need ' + M.name + ' / ' + svc.title + ' / ' + e.t + '. Please advise on scope and quote.') + '">WhatsApp</a>'
+                + '</div></li>';
+            });
+            h += '</ol>';
+            drawer.innerHTML = h;
+            drawer.dataset.ready = '1';
+          }
+          var open = !drawer.hidden;
+          drawer.hidden = open;
+          head.setAttribute('aria-expanded', String(!open));
+          slot.classList.toggle('open', !open);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

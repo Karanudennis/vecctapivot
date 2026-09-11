@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Request a Job — VECCTAPIVOT Enterprises</title>
+  <meta name="description" content="File a full job request with a unique tracking number: engagement-specific data entry fields, upload/document checklist, deadline and priority tier.">
+  <link rel="icon" href="logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="utility">
+    <div class="uwrap">
+      <span class="uitem"><span class="ubadge">BRS BN-AYSO8LRE</span></span>
+      <span class="uitem">Unified Cross-Border Service Architecture &middot; 49 services</span>
+      <a class="uitem" href="https://wa.me/254788099685">WhatsApp +254 788 099 685</a>
+    </div>
+  </div>
+  <header class="top">
+    <div class="navrow">
+      <a class="brand" href="index.html">
+        <img src="logo.png" alt="Vecctapivot Enterprises logo">
+        <span class="brandname">Vecctapivot<em>Enterprises &middot; Service Desk</em></span>
+      </a>
+      <nav class="mainnav" aria-label="Primary">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#process">How We Work</a>
+        <a href="track.html">Track</a>
+        <a href="index.html#faq">FAQ</a>
+      </nav>
+      <div class="navcta">
+        <a class="btn line sm2" href="job.html">Request a Job</a>
+        <a class="btn gold sm2" href="ticket.html">Book a Ticket</a>
+      </div>
+    </div>
+  </header>
+  <main>
+  <p class="backline"><a href="index.html">&#8592; All Services</a></p>
+  <section class="deskhead">
+    <span class="kicker">Job Request</span>
+    <h1>Request a Job</h1>
+    <p>Choose the service and engagement, and the form adapts: it shows the data-entry fields and the exact upload/document checklist that engagement requires, plus your deadline and priority tier. Submitting issues a unique <strong>JOB</strong> tracking number &mdash; your file is then worked by a named desk officer.</p>
+  </section>
+
+  <section class="formcard reveal">
+    <form id="jobForm" novalidate>
+      <fieldset>
+        <legend>Your service</legend>
+        <div class="field"><label for="fDesk">Service area</label>
+          <select id="fDesk" required><option value="">Select a pillar&hellip;</option></select></div>
+        <div class="field"><label for="fService">Service</label>
+          <select id="fService" required disabled><option value="">Select a pillar first&hellip;</option></select></div>
+        <div class="field"><label for="fEngagement">Engagement</label>
+          <select id="fEngagement" required disabled><option value="">Select a service first&hellip;</option></select></div>
+        <p class="fieldhint" id="tfHint">The engagement&rsquo;s timeframe will appear here once you choose.</p>
+      </fieldset>
+
+      <fieldset id="deBlock">
+        <legend>Data entry &mdash; specific to your engagement</legend>
+        <div id="deFields"><p class="fieldhint">Choose an engagement above and its data-entry fields load here.</p></div>
+      </fieldset>
+
+      <fieldset id="upBlock">
+        <legend>Uploads &amp; documents required</legend>
+        <div id="upFields"><p class="fieldhint">The document checklist for your engagement loads here.</p></div>
+        <div class="field">
+          <label for="fDocLinks">Where can we collect the documents? <span class="opt">(paste links, note physical drop-off, or write &ldquo;bring to desk&rdquo;)</span></label>
+          <textarea id="fDocLinks" rows="2" maxlength="600" placeholder="e.g. Google Drive link, WhatsApp this number, drop hardcopies at the desk&hellip;"></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Client &amp; schedule</legend>
+        <div class="frow">
+          <div class="field"><label for="fName">Full name</label>
+            <input id="fName" required autocomplete="name" maxlength="80" placeholder="e.g. Otieno D. Kiplagat"></div>
+          <div class="field"><label for="fPhone">Phone (WhatsApp-preferred)</label>
+            <input id="fPhone" type="tel" required autocomplete="tel" maxlength="24" placeholder="+254 7XX XXX XXX"></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label for="fEmail">Email <span class="opt">(optional)</span></label>
+            <input id="fEmail" type="email" autocomplete="email" placeholder="you@example.com"></div>
+          <div class="field"><label for="fDeadline">Needed by <span class="opt">(optional)</span></label>
+            <input id="fDeadline" type="date"></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label for="fPriority">Priority tier</label>
+            <select id="fPriority">
+              <option value="STANDARD">Standard &mdash; normal desk queue</option>
+              <option value="EXPRESS">Express &mdash; jumps the queue (surcharge)</option>
+              <option value="PRIORITY">Priority &mdash; named officer, daily pings</option>
+            </select></div>
+          <div class="field"><label for="fNotes">Anything else <span class="opt">(optional)</span></label>
+            <input id="fNotes" maxlength="300" placeholder="Access notes, portal status, prior references&hellip;"></div>
+        </div>
+      </fieldset>
+
+      <p class="formerr" id="formErr" hidden></p>
+      <button type="submit" class="btn gold big" id="submitBtn">Submit Job Request &rarr; issue my JOB number</button>
+      <p class="formnote">Uploads are not transferred here &mdash; this form records <em>what</em> must be uploaded and where you will send it. A desk officer opens the document lane on WhatsApp or email once your tracking number is issued.</p>
+    </form>
+  </section>
+
+  <section class="confcard" id="confCard" hidden>
+    <span class="kicker">Job registered</span>
+    <h2 id="confRef">JOB-&mdash;</h2>
+    <p class="confsub">Your unique job tracking number. Quote it on every channel.</p>
+    <dl class="confdl" id="confDl"></dl>
+    <div class="checkrecap">
+      <h3>Data entry on record</h3><ul id="recapDe"></ul>
+      <h3>Uploads expected</h3><ul id="recapUp"></ul>
+    </div>
+    <div class="confbtns">
+      <a class="btn gold" id="waConfirm" target="_blank" rel="noopener" href="#">Send tracking number on WhatsApp</a>
+      <a class="btn line" href="track.html">Track this reference</a>
+      <button class="btn ghost" type="button" id="copyRef">Copy number</button>
+    </div>
+    <p class="confnote">Now send the listed documents through the lane you chose &mdash; processing starts the moment your uploads verify complete.</p>
+  </section>
+  </main>
+
+  <div id="guaranteeBar" class="guarantees"></div>
+
+  <nav class="contactbar" aria-label="Contact channels">
+    <a class="wa" href="https://wa.me/254788099685" aria-label="Chat on WhatsApp">&#9993; WhatsApp</a>
+    <a href="tel:+254788099685" aria-label="Call hotline">&#9742; Call</a>
+    <a href="sms:+254788099685" aria-label="Send SMS text">&#9993; SMS</a>
+    <a href="mailto:vecctapivotenterprises@gmail.com" aria-label="Email secure tunnel">&#9990; Email</a>
+  </nav>
+  <footer class="sitefoot" id="siteFoot"></footer>
+
+  <script src="js/matrix.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+    (function () {
+      var M = window.VP_MATRIX, P = window.VP.params();
+      var dSel = document.getElementById("fDesk"), sSel = document.getElementById("fService"), eSel = document.getElementById("fEngagement");
+      var tfHint = document.getElementById("tfHint"), errBox = document.getElementById("formErr");
+      var btn = document.getElementById("submitBtn"), card = document.getElementById("confCard");
+      var deFields = document.getElementById("deFields"), upFields = document.getElementById("upFields");
+      var current = null;
+
+      Object.keys(M).forEach(function (k) {
+        dSel.add(new Option(M[k].name, k));
+      });
+      function findSvc() {
+        return (M[dSel.value] || { services: [] }).services.filter(function (s) { return s.title === sSel.value; })[0];
+      }
+      function findEng() {
+        var svc = findSvc();
+        return svc && svc.engagements.filter(function (x) { return x.t === eSel.value; })[0];
+      }
+      function fillServices() {
+        sSel.innerHTML = ""; eSel.innerHTML = ""; sSel.disabled = eSel.disabled = true;
+        sSel.add(new Option("Select a service\u2026", ""));
+        eSel.add(new Option("Select a service first\u2026", ""));
+        deFields.innerHTML = '<p class="fieldhint">Choose an engagement above and its data-entry fields load here.</p>';
+        upFields.innerHTML = '<p class="fieldhint">The document checklist for your engagement loads here.</p>';
+        current = null;
+        if (!dSel.value) return;
+        M[dSel.value].services.forEach(function (s) { sSel.add(new Option(s.title, s.title)); });
+        sSel.disabled = false;
+      }
+      function fillEngagements() {
+        eSel.innerHTML = ""; eSel.disabled = true;
+        eSel.add(new Option("Select an engagement\u2026", ""));
+        var svc = findSvc();
+        if (!svc) return;
+        svc.engagements.forEach(function (e) { eSel.add(new Option(e.t, e.t)); });
+        eSel.disabled = false;
+      }
+      function renderDynamic() {
+        var eng = findEng(), svc = findSvc();
+        if (!eng) {
+          tfHint.textContent = "The engagement\u2019s timeframe will appear here once you choose.";
+          return;
+        }
+        current = { svc: svc, eng: eng };
+        tfHint.innerHTML = "Timeframe: <strong>" + eng.tf + "</strong>";
+
+        var h = "";
+        M[dSel.value].services[svc.n - 1].de.forEach(function (label) {
+          h += '<div class="field"><label>' + label + '</label><input type="text" class="deInput" data-label="' + label + '" maxlength="300"></div>';
+        });
+        if (eng.t === "Document & Data Ingestion") {
+          h += '<div class="field"><label>Daytime window for our verification call</label><input type="text" class="deInput" data-label="Daytime window for verification call" maxlength="120"></div>';
+        }
+        deFields.innerHTML = h;
+
+        var docs = M[dSel.value].services[svc.n - 1].docs || [];
+        var extra = eng.t === "Document & Data Ingestion" ? docs : docs.slice(0, 3);
+        var uh = "";
+        extra.concat(["Legible scan or sharp photo of every original listed above"]).forEach(function (label) {
+          uh += '<label class="uprow"><input type="checkbox" class="upCheck" data-label="' + label + '"><span>' + label + '</span></label>';
+        });
+        upFields.innerHTML = uh + '<p class="fieldhint">Tick what you can already provide. The desk verifies the rest with you on WhatsApp before processing starts.</p>';
+      }
+      dSel.addEventListener("change", fillServices);
+      sSel.addEventListener("change", fillEngagements);
+      eSel.addEventListener("change", renderDynamic);
+
+      if (P.get("desk")) { dSel.value = P.get("desk"); fillServices(); }
+      if (P.get("service")) {
+        var opt = Array.prototype.find.call(sSel.options, function (o) { return o.value === P.get("service"); });
+        if (opt) { sSel.value = opt.value; fillEngagements(); }
+      }
+      if (P.get("engagement")) {
+        var opt2 = Array.prototype.find.call(eSel.options, function (o) { return o.value === P.get("engagement"); });
+        if (opt2) { eSel.value = opt2.value; renderDynamic(); }
+      }
+
+      function fail(msg) {
+        errBox.textContent = msg; errBox.hidden = false;
+        errBox.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      document.getElementById("jobForm").addEventListener("submit", function (ev) {
+        ev.preventDefault();
+        errBox.hidden = true;
+        var payload = {
+          clientName: document.getElementById("fName").value.trim(),
+          phone: document.getElementById("fPhone").value.trim(),
+          email: document.getElementById("fEmail").value.trim(),
+          desk: dSel.value,
+          service: sSel.value,
+          engagement: eSel.value,
+          deadline: document.getElementById("fDeadline").value,
+          priority: document.getElementById("fPriority").value,
+          notes: document.getElementById("fNotes").value.trim(),
+          dataEntry: Array.prototype.map.call(document.querySelectorAll(".deInput"), function (i) {
+            return i.value.trim() ? i.dataset.label + ": " + i.value.trim() : null;
+          }).filter(Boolean),
+          uploads: Array.prototype.map.call(document.querySelectorAll(".upCheck"), function (c) {
+            return (c.checked ? "READY: " : "PENDING: ") + c.dataset.label;
+          }).concat(document.getElementById("fDocLinks").value.trim() ? ["Delivery lane: " + document.getElementById("fDocLinks").value.trim()] : []),
+        };
+        if (!payload.desk || !payload.service || !payload.engagement) return fail("Complete the service path: pillar, service and engagement.");
+        if (!payload.clientName) return fail("Enter your full name as it should appear on the job file.");
+        if (payload.phone.replace(/[^0-9]/g, "").length < 9) return fail("Enter a reachable phone number, including country code.");
+        if (payload.email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(payload.email)) return fail("That email address looks invalid.");
+        if (!payload.dataEntry.length) return fail("Fill the engagement-specific data-entry fields before submitting.");
+
+        btn.disabled = true; btn.textContent = "Issuing your JOB tracking number\u2026";
+        fetch("/api/job", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }).then(function (r) { return r.json().then(function (j) { return { s: r.status, j: j }; }); }).then(function (res) {
+          if (!res.j.ok) throw new Error(res.j.error || "Submission failed. Please retry.");
+          showConfirmation(res.j.reference, payload);
+        }).catch(function (err) {
+          btn.disabled = false; btn.textContent = "Submit Job Request \u2192 issue my JOB number";
+          fail(err.message);
+        });
+      });
+
+      function li(arr) { return arr.map(function (x) { return "<li>" + x + "</li>"; }).join(""); }
+      function showConfirmation(ref, p) {
+        document.getElementById("confRef").textContent = ref;
+        document.getElementById("confDl").innerHTML =
+          "<div><dt>Client</dt><dd>" + p.clientName + "</dd></div>"
+          + "<div><dt>Service area</dt><dd>" + M[p.desk].name + "</dd></div>"
+          + "<div><dt>Service</dt><dd>" + p.service + "</dd></div>"
+          + "<div><dt>Engagement</dt><dd>" + p.engagement + "</dd></div>"
+          + "<div><dt>Timeframe</dt><dd>" + current.eng.tf + "</dd></div>"
+          + "<div><dt>Priority</dt><dd>" + p.priority + "</dd></div>"
+          + (p.deadline ? "<div><dt>Needed by</dt><dd>" + p.deadline + "</dd></div>" : "")
+          + "<div><dt>Logged</dt><dd>" + window.VP.fmtDate(new Date().toISOString()) + "</dd></div>";
+        document.getElementById("recapDe").innerHTML = li(p.dataEntry);
+        document.getElementById("recapUp").innerHTML = li(p.uploads);
+        document.getElementById("waConfirm").href =
+          "https://wa.me/254788099685?text=" + encodeURIComponent("Hello VECCTAPIVOT, job " + ref + " (" + M[p.desk].name + " / " + p.service + " / " + p.engagement + "). Sending my documents as listed in the checklist.");
+        document.getElementById("copyRef").onclick = function () {
+          if (navigator.clipboard) navigator.clipboard.writeText(ref);
+          this.textContent = "Copied";
+        };
+        document.getElementById("jobForm").hidden = true;
+        document.querySelector(".formcard").hidden = true;
+        card.hidden = false;
+        card.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    })();
+  </script>
+</body>
+</html>

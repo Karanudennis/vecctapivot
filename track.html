@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Track a Reference — VECCTAPIVOT Enterprises</title>
+  <meta name="description" content="Track your VECCTAPIVOT ticket (TKT) or job (JOB) reference: status, desk, service, engagement and logged time.">
+  <link rel="icon" href="logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="utility">
+    <div class="uwrap">
+      <span class="uitem"><span class="ubadge">BRS BN-AYSO8LRE</span></span>
+      <span class="uitem">Unified Cross-Border Service Architecture &middot; 49 services</span>
+      <a class="uitem" href="https://wa.me/254788099685">WhatsApp +254 788 099 685</a>
+    </div>
+  </div>
+  <header class="top">
+    <div class="navrow">
+      <a class="brand" href="index.html">
+        <img src="logo.png" alt="Vecctapivot Enterprises logo">
+        <span class="brandname">Vecctapivot<em>Enterprises &middot; Service Desk</em></span>
+      </a>
+      <nav class="mainnav" aria-label="Primary">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#process">How We Work</a>
+        <a href="track.html">Track</a>
+        <a href="index.html#faq">FAQ</a>
+      </nav>
+      <div class="navcta">
+        <a class="btn line sm2" href="job.html">Request a Job</a>
+        <a class="btn gold sm2" href="ticket.html">Book a Ticket</a>
+      </div>
+    </div>
+  </header>
+  <main>
+  <p class="backline"><a href="index.html">&#8592; All Services</a></p>
+  <section class="deskhead">
+    <span class="kicker">Reference Tracking</span>
+    <h1>Track a Reference</h1>
+    <p>Enter the unique number issued when you booked or filed &mdash; <strong>TKT-</strong> for booked tickets, <strong>JOB-</strong> for job requests. You see exactly what the desk sees. Quote the reference on WhatsApp and an officer takes it personally.</p>
+  </section>
+
+  <section class="formcard reveal">
+    <form id="trackForm">
+      <div class="field inline">
+        <label for="refInput">Reference number</label>
+        <div class="trackrow">
+          <input id="refInput" placeholder="TKT-26A001ABC" spellcheck="false" autocapitalize="characters" maxlength="24" required>
+          <button type="submit" class="btn gold" id="trackBtn">Track</button>
+        </div>
+      </div>
+      <p class="formerr" id="formErr" hidden></p>
+    </form>
+  </section>
+
+  <section class="confcard" id="result" hidden></section>
+  </main>
+
+  <div id="guaranteeBar" class="guarantees"></div>
+
+  <nav class="contactbar" aria-label="Contact channels">
+    <a class="wa" href="https://wa.me/254788099685" aria-label="Chat on WhatsApp">&#9993; WhatsApp</a>
+    <a href="tel:+254788099685" aria-label="Call hotline">&#9742; Call</a>
+    <a href="sms:+254788099685" aria-label="Send SMS text">&#9993; SMS</a>
+    <a href="mailto:vecctapivotenterprises@gmail.com" aria-label="Email secure tunnel">&#9990; Email</a>
+  </nav>
+  <footer class="sitefoot" id="siteFoot"></footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    (function () {
+      var form = document.getElementById("trackForm");
+      var input = document.getElementById("refInput");
+      var errBox = document.getElementById("formErr");
+      var out = document.getElementById("result");
+      var btn = document.getElementById("trackBtn");
+
+      var P = window.VP.params();
+      if (P.get("ref")) { input.value = P.get("ref"); }
+
+      function esc(s) {
+        return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+      function row(dt, dd) { return "<div><dt>" + dt + "</dt><dd>" + dd + "</dd></div>"; }
+
+      form.addEventListener("submit", function (ev) {
+        ev.preventDefault();
+        errBox.hidden = true;
+        var ref = input.value.trim().toUpperCase();
+        if (!ref) { errBox.textContent = "Enter your reference number."; errBox.hidden = false; return; }
+        btn.disabled = true; btn.textContent = "Tracking\u2026";
+        fetch("/api/track?ref=" + encodeURIComponent(ref))
+          .then(function (r) { return r.json().then(function (j) { return { s: r.status, j: j }; }); })
+          .then(function (res) {
+            btn.disabled = false; btn.textContent = "Track";
+            if (!res.j.ok) {
+              out.hidden = true;
+              errBox.textContent = res.j.error || "Lookup failed.";
+              errBox.hidden = false;
+              return;
+            }
+            var j = res.j;
+            var h = '<span class="kicker">' + (j.kind === "JOB" ? "Job request" : "Booked ticket") + ' &middot; on the desk</span>'
+              + "<h2>" + esc(j.reference) + "</h2>"
+              + '<p class="confsub">' + (j.kind === "JOB" ? "Full job file" : "Queue ticket") + " &middot; logged " + esc(window.VP.fmtDate(j.logged)) + "</p>"
+              + '<dl class="confdl">'
+              + row("Client", esc(j.clientName))
+              + row("Service area", esc(String(j.desk).replace(/^\\d+\\.\\s*/, "")))
+              + row("Service", esc(j.service))
+              + row("Engagement", esc(j.engagement));
+            if (j.kind === "JOB") {
+              h += row("Priority", esc(j.priority || "STANDARD"));
+              if (j.deadline) h += row("Needed by", esc(j.deadline));
+              if (j.timeframe) h += row("Timeframe", esc(j.timeframe));
+              if (j.dataEntryFields) h += row("Data entry on record", esc(j.dataEntryFields).split(" | ").join("<br>"));
+              if (j.uploadChecklist) h += row("Uploads expected", esc(j.uploadChecklist).split(" | ").join("<br>"));
+              if (j.notes) h += row("Notes", esc(j.notes));
+            } else if (j.details) {
+              h += row("Notes", esc(j.details));
+            }
+            h += "</dl>"
+              + '<div class="confbtns"><a class="btn gold" target="_blank" rel="noopener" href="https://wa.me/254788099685?text='
+              + encodeURIComponent("Hello VECCTAPIVOT, following up on reference " + j.reference + ".") + '">Follow up on WhatsApp</a>'
+              + '<a class="btn line" href="tel:+254788099685">Call the hotline</a></div>';
+            out.innerHTML = h;
+            out.hidden = false;
+            out.scrollIntoView({ behavior: "smooth", block: "start" });
+          })
+          .catch(function () {
+            btn.disabled = false; btn.textContent = "Track";
+            errBox.textContent = "Network issue. Check connectivity and retry.";
+            errBox.hidden = false;
+          });
+      });
+    })();
+  </script>
+</body>
+</html>

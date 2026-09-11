@@ -1,48 +1,52 @@
-==========================================================================
-VECCTAPIVOT ENTERPRISES - MACRO CODES & TRANSACTIONAL QUICK REPLIES
-==========================================================================
+VECCTAPIVOT GATEWAY — COPY / CONTENT TEMPLATES
+================================================
 
-[TEMPLATE 1: AUTOMATED INCOMING HANDSHAKE (WhatsApp / SMS Alert)]
---------------------------------------------------------------------------
-🛠️ VECCTAPIVOT OPERATIONAL CORE DESK 
-Hello [Client Name], your digital marketplace file track has been securely staged.
+This file holds the reusable corporate copy blocks used across the static
+workspace files, so future edits stay consistent. All copy is "unbiased
+corporate" tone per the Master System Blueprint (BRS Status: BN-AYSO8LRE).
 
-• Assigned Task Reference ID: [Insert e.g., VP-STAT-829104]
-• Target Processing SLA: On track for delivery within [Insert Timeline, e.g., 48 Hours]
-• Allocated Proxy Handler: [Your Name / Operator Name]
+1. GLOBAL CHANNEL TEMPLATE (used on every page footer bar)
+   WhatsApp : https://wa.me/254788099685  (pre-filled: service + engagement + reference)
+   Call     : tel:+254788099685
+   SMS      : sms:+254788099685
+   Email    : vecctapivotenterprises@gmail.com
 
-Our ground system has successfully verified your submitted text parameters and encrypted document scans. To activate your position in the eCitizen/BRS portal tracking run, please clear your value pricing invoice of KES [Insert Price] to our active business payment terminal lines.
+2. PAGE HEADER TEMPLATE
+   Brand line : VECCTAPIVOT ENTERPRISES
+   Motto      : One Pivot, Endless Possibilities
+   Positioning: Unified Cross-Border Service Architecture
 
-Thank you for choosing Vecctapivot Enterprises. Our goal is your seamless workflow clearance.
+3. DESK HEADER TEMPLATE
+   Kicker : Desk <N>
+   Title  : <Desk Name>
+   Blurb  : <One-line desk summary>
 
---------------------------------------------------------------------------
+4. SERVICE SLOT TEMPLATE (7 per desk, 49 total)
+   Ref   : <Desk>.<Slot>  (e.g. 3.2)
+   Title : <Service title>
+   Body  : <One-sentence corporate description>
+   CTA   : "Request via Email" -> mailto with service title pre-filled
 
-[TEMPLATE 2: ANTI-FRAUD VERIFICATION HOLD (When a client pushes unverified payment)]
---------------------------------------------------------------------------
-⚠️ VECCTAPIVOT ACCOUNT STATEMENT NOTICE
-Hello [Client Name], we have received your milestone clearance request for File [Insert Ticket ID].
+5. FOOTER TEMPLATE
+   VECCTAPIVOT ENTERPRISES · One Pivot, Endless Possibilities · BRS Status BN-AYSO8LRE
+   Rendered by js/common.js (id="siteFoot"): 4-column footer — brand block,
+   7 pillar links, gateway links (matrix / ticket / job / track / FAQ),
+   and all four contact channels.
 
-Please note that under our Secure Escrow & Anti-Fraud Trust Protocol, Vecctapivot Enterprises does not clear processing tracks or dispatch heavy cargo transport operators based on payment screenshots alone. 
+6. INDEX EMPTY-STATE TEMPLATE
+   "No desk matches that keyword. Try "BRS", "cargo", "portal"…"
 
-Your file status is currently [STAGED - PENDING BALANCE STATEMENT]. The moment our central business ledger statement reflects your transaction log update, your task run will shift to [ACTIVE] status instantly. We appreciate your patience and transaction integrity.
+7. 7×7×7 MATRIX TEMPLATE (generated — do not hand-edit)
+   Source of truth: scripts/gen-matrix.mjs → js/matrix.js + 7 desk pages.
+   Level 1: 7 pillars (desks)        — index.html cards
+   Level 2: 7 services per pillar    — desk page .slot headers (N.M)
+   Level 3: 7 engagements per service — .drawer steps (N.M.K), each with
+            description, requirements list, timeframe chip, and
+            Book Ticket / Request Job / WhatsApp buttons.
+   Engagement refs: <desk>.<slot>.<k>, e.g. 7.3.2.
 
---------------------------------------------------------------------------
-
-[TEMPLATE 3: OPERATION COMPLETE CLOSURE (Email / WhatsApp dispatch)]
---------------------------------------------------------------------------
-🚀 VECCTAPIVOT TASK COMPLETION STATUS
-Dear [Client Name],
-
-We are proud to inform you that your operational project under Reference File [Insert Ticket ID] has been successfully cleared and closed by our desk proxy handler team.
-
-• Service Executed: [Insert e.g., BRS Business Name Registration Setup / KRA Tax Return Filing]
-• Attached Files: [Your BN4 Certificate PDF / KRA iTax Acknowledgment Receipt Slips]
-• System Log Status: [CLOSED / SECURED]
-
-Your business portal parameters are now fully compliant under Kenya Revenue Authority and BRS guidelines. Thank you for partnering with Vecctapivot Enterprises near Nyandarua County and beyond. 
-
-Please take 60 seconds to review our live marketplace search directories for your future transport brokerage, agribusiness sourcing links, or fixer field proxy needs!
-
-Central Dispatch Team,
-Vecctapivot Enterprises.
-==========================================================================
+8. REFERENCE NUMBER FORMAT
+   Tickets : TKT-<YY><M><DDD><4 rand>  e.g. TKT-26A001ABCD  (M = base-36 month, A..L)
+   Jobs    : JOB-<YY><M><DDD><4 rand>  e.g. JOB-26A001WXYZ
+   Issued server-side by /api/ticket and /api/job (netlify/functions), stored
+   in Netlify Database (Postgres) and lookup-able at /api/track?ref=…

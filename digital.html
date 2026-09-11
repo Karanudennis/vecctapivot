@@ -1,165 +1,156 @@
 <!DOCTYPE html>
-<html lang="en-KE">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Digital & Brand Systems | Corporate Workspace</title>
-    <style>
-        :root {
-            --bg-obsidian: #030712;
-            --panel-slate: #0b1329;
-            --border-muted: rgba(255, 255, 255, 0.06);
-            --gold-accent: #d4af37;
-            --text-pure: #f3f4f6;
-            --text-muted: #9ca3af;
-            --action-blue: #1d4ed8;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            background-color: var(--bg-obsidian);
-            color: var(--text-pure);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .workspace-container {
-            max-width: 900px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 40px 24px;
-            flex: 1;
-        }
-
-        .back-nav-bar { margin-bottom: 40px; }
-        .back-link { color: var(--text-muted); text-decoration: none; font-size: 13.5px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; }
-        .back-link:hover { color: var(--text-pure); }
-
-        .header-block { margin-bottom: 50px; text-align: left; }
-        .sector-tag { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--gold-accent); text-transform: uppercase; margin-bottom: 8px; }
-        .header-block h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; color: #ffffff; margin-bottom: 12px; }
-        .header-description { font-size: 15px; color: var(--text-muted); line-height: 1.6; max-width: 700px; }
-
-        .section-divider { border-bottom: 1px solid var(--border-muted); margin-bottom: 30px; }
-        
-        /* Premium Minimalist Item Matrix Layout */
-        .solution-row-card {
-            background-color: var(--panel-slate);
-            border: 1px solid var(--border-muted);
-            border-radius: 6px;
-            padding: 24px;
-            margin-bottom: 20px;
-        }
-
-        .solution-row-card h3 {
-            font-size: 16px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 14px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding-bottom: 6px;
-        }
-
-        .parameter-line {
-            margin-bottom: 10px;
-            font-size: 14px;
-            line-height: 1.5;
-            text-align: left;
-        }
-
-        .parameter-line span.label-tag {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--gold-accent);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: inline-block;
-            margin-right: 6px;
-        }
-
-        .parameter-line a.direct-link {
-            color: var(--text-pure);
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        /* Form Layout Area */
-        .secure-form-card { background-color: var(--panel-slate); border: 1px solid var(--border-muted); border-radius: 8px; padding: 40px; margin-top: 60px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); }
-        .form-title-area h3 { font-size: 18px; font-weight: 700; color: #ffffff; margin-bottom: 6px; text-align: left; }
-        .form-title-area p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 30px; text-align: left; }
-        
-        .input-group-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; text-align: left; }
-        .input-group-row label { font-size: 12.5px; font-weight: 600; color: #ffffff; }
-        .input-group-row input, .input-group-row select, .input-group-row textarea { width: 100%; padding: 14px; background-color: var(--bg-obsidian); border: 1px solid var(--border-muted); border-radius: 4px; color: #ffffff; font-size: 14px; font-family: inherit; }
-        .input-group-row input:focus, .input-group-row select:focus, .input-group-row textarea:focus { outline: none; border-color: var(--gold-accent); }
-        .file-picker-container { background-color: rgba(255, 255, 255, 0.02); border: 1px dashed var(--border-muted); padding: 16px; border-radius: 4px; font-size: 13px; color: var(--text-muted); }
-        
-        .privacy-protocol-banner { border-left: 2px solid #10b981; background-color: rgba(16, 185, 129, 0.02); padding: 16px; margin: 24px 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.5; text-align: left; }
-        .submit-action-btn { background-color: var(--action-blue); color: #ffffff; border: none; padding: 16px; border-radius: 4px; font-weight: 700; font-size: 14.5px; text-transform: uppercase; letter-spacing: 0.5px; width: 100%; cursor: pointer; }
-
-        /* Centered Mobile-Optimized Footer */
-        .portal-footer { background-color: #090e1a; border-top: 1px solid var(--border-muted); padding: 60px 24px 40px 24px; font-size: 14px; width: 100%; margin-top: auto; }
-        .footer-grid-row { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; text-align: left; }
-        @media(min-width: 769px) { .footer-grid-row { flex-direction: row; justify-content: space-between; } }
-        .footer-column { flex: 1; }
-        .footer-column h4 { color: #ffffff; font-size: 12.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; border-bottom: 2px solid var(--gold-accent); padding-bottom: 4px; display: inline-block; }
-        .footer-column p { font-size: 13.5px; color: var(--text-muted); margin: 6px 0; line-height: 1.5; }
-        .footer-column strong { color: #ffffff; }
-        .footer-bottom-legal-row { border-top: 1px solid var(--border-muted); padding-top: 25px; max-width: 900px; margin: 30px auto 0 auto; text-align: center; font-size: 12.5px; color: var(--text-muted); }
-        .legal-footer { font-size: 11.5px; opacity: 0.6; line-height: 1.6; margin-top: 12px; text-align: justify; }
-
-        @media(max-width: 768px) {
-            .footer-grid-row { gap: 30px; }
-            .legal-footer { text-align: left; }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Digital & Brand Systems — VECCTAPIVOT Enterprises</title>
+  <meta name="description" content="BRS registry filings, brand identity packs and secure document vaults. Part of the One Pivot service architecture — 49 services scoped, quoted and tracked end to end, wherever you trade.">
+  <link rel="icon" href="logo.png">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div class="workspace-container">
-        <!-- Return Anchor Link -->
-        <div class="back-nav-bar">
-            <a href="index.html" class="back-link">⬅️ Main Operations Gateway</a>
-        </div>
-
-        <!-- Section Header -->
-        <header class="header-block">
-            <div class="sector-tag">Operations Desk 01</div>
-            <h1>Digital & Brand Systems</h1>
-            <p class="header-description">Managing eCitizen database verification protocols, multi-proprietor business firm configuration parameters, and premium visual identity branding modules.</p>
-        </header>
-
-        <div class="section-divider"></div>
-
-        <!-- 1.1 SOLUTION CARD -->
-        <div class="solution-row-card">
-            <h3>1.1 BRS Name Reservation Ingestion</h3>
-            <div class="parameter-line"><span class="label-tag">① Classification:</span>Digital Brand Registry Management</div>
-            <div class="parameter-line"><span class="label-tag">② Scope of Work:</span>Managing eCitizen database verification protocols to clear corporate business name paths.</div>
-            <div class="parameter-line"><span class="label-tag">③ Requirements:</span>Three fallback alternate company names variations list inputs data [25.4].</div>
-            <div class="parameter-line"><span class="label-tag">④ Processing Fee:</span>KES 200 Flat Reservation Surcharge [25.4]</div>
-            <div class="parameter-line"><span class="label-tag">⑤ Turnaround SLA:</span>24 Hours Official Portal Clearance Corridor [25.4]</div>
-            <div class="parameter-line"><span class="label-tag">⑥ Support Line:</span><a href="tel:+254788099685" class="direct-link">+254 788 099 685</a></div>
-            <div class="parameter-line"><span class="label-tag">⑦ Support Mail:</span><a href="mailto:vecctapivotenterprises@gmail.com" class="direct-link">vecctapivotenterprises@gmail.com</a></div>
-        </div>
-
-        <!-- 1.2 SOLUTION CARD -->
-        <div class="solution-row-card">
-            <h3>1.2 Partnership Layout Setup (BN2 Form)</h3>
-            <div class="parameter-line"><span class="label-tag">① Classification:</span>Legal Entity Structural Mapping</div>
-            <div class="parameter-line"><span class="label-tag">② Scope of Work:</span>Compiling multi-proprietor business firm configuration layout parameters sheets.</div>
-            <div class="parameter-line"><span class="label-tag">③ Requirements:</span>Scanned high-resolution color copies of National IDs and active KRA PIN certificates [25.4].</div>
-            <div class="parameter-line"><span class="label-tag">④ Processing Fee:</span>KES 2,500 Invoiced Flat Layout Surcharge [25.4]</div>
-            <div class="parameter-line"><span class="label-tag">⑤ Turnaround SLA:</span>3 Business Days Business Registration Service Settle [25.4]</div>
-            <div class="parameter-line"><span class="label-tag">⑥ Support Line:</span><a href="tel:+254788099685" class="direct-link">+254 788 099 685</a></div>
-            <div class="parameter-line"><span class="label-tag">⑦ Support Mail:</span><a href="mailto:vecctapivotenterprises@gmail.com" class="direct-link">vecctapivotenterprises@gmail.com</a></div>
-        </div>
-
-        <!-- 1.3 SOLUTION CARD -->
-        <div class="solution-row-card">
-            <h3>1.3 Business Particulars Official Alterations</h3>
-            <div class="parameter-line"><span class="label-tag">① Classification:</span>Registry Data Profile Modifications</div>
+  <div class="utility">
+    <div class="uwrap">
+      <span class="uitem"><span class="ubadge">BRS BN-AYSO8LRE</span></span>
+      <span class="uitem">Unified Cross-Border Service Architecture &middot; 49 services</span>
+      <a class="uitem" href="https://wa.me/254788099685">WhatsApp +254 788 099 685</a>
+    </div>
+  </div>
+  <header class="top">
+    <div class="navrow">
+      <a class="brand" href="index.html">
+        <img src="logo.png" alt="Vecctapivot Enterprises logo">
+        <span class="brandname">Vecctapivot<em>Enterprises &middot; Service Desk</em></span>
+      </a>
+      <nav class="mainnav" aria-label="Primary">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#process">How We Work</a>
+        <a href="track.html">Track</a>
+        <a href="index.html#faq">FAQ</a>
+      </nav>
+      <div class="navcta">
+        <a class="btn line sm2" href="job.html">Request a Job</a>
+        <a class="btn gold sm2" href="ticket.html">Book a Ticket</a>
+      </div>
+    </div>
+  </header>
+  <main>
+  <p class="backline"><a href="index.html">&#8592; All Services</a></p>
+  <section class="deskhead">
+    <span class="kicker">Digital & Brand Systems</span>
+    <h1>Digital & Brand Systems</h1>
+    <p>BRS registry filings, brand identity packs and secure document vaults. Open a service below to read each engagement&rsquo;s exact description, requirements and turnaround &mdash; then book a ticket, request a job or start the conversation on WhatsApp.</p>
+  </section>
+  <section class="schedule" id="slots">
+    <article class="slot" data-slot="1">
+      <button class="slothead" type="button" aria-expanded="false" aria-controls="drawer-1">
+        <h2>BRS Name Reservation Ingestion</h2>
+        <p>Managing eCitizen database verification protocols to clear corporate business name paths.</p>
+        <span class="chev" aria-hidden="true">&#9662;</span>
+      </button>
+      <div class="drawer" id="drawer-1" hidden></div>
+    </article>
+    <article class="slot" data-slot="2">
+      <button class="slothead" type="button" aria-expanded="false" aria-controls="drawer-2">
+        <h2>Partnership Layout Setup (BN2 Form)</h2>
+        <p>Compiling multi-proprietor business firm configuration layout parameters sheets.</p>
+        <span class="chev" aria-hidden="true">&#9662;</span>
+      </button>
+      <div class="drawer" id="drawer-2" hidden></div>
+    </article>
+    <article class="slot" data-slot="3">
+      <button class="slothead" type="button" aria-expanded="false" aria-controls="drawer-3">
+        <h2>Business Particulars Official Alterations</h2>
+        <p>Modifying active registry details parameters or updating county layout boundaries.</p>
+        <span class="chev" aria-hidden="true">&#9662;</span>
+      </button>
+      <div class="drawer" id="drawer-3" hidden></div>
+    </article>
+    <article class="slot" data-slot="4">
+      <button class="slothead" type="button" aria-expanded="false" aria-controls="drawer-4">
+        <h2>Cessation &amp; Form Deregistration Filings</h2>
+        <p>Processing corporate closure documentation runs to terminate administrative tax loops.</p>
+        <span class="chev" aria-hidden="true">&#9662;</span>
+      </button>
+      <div class="drawer" id="drawer-4" hidden></div>
+    </article>
+    <article class="slot" data-slot="5">
+      <button class="slothead" type="button" aria-expanded="false" aria-controls="drawer-5">
+        <h2>Historical Legacy Record Linking</h2>
+        <p>Migrating manual pre-2017 hardcopy registration credentials into the live BRS portal profile layer.</p>
+        <span class="chev" aria-hidden="true">&#9662;</span>
+      </button>
+      <div class="drawer" id="drawer-5" hidden></div>
+    </article>
+    <article class="slot" data-slot="6">
+      <button class="slothead" type="button" aria-expanded="false" aria-controls="drawer-6">
+        <h2>Vector Identity Branding Packs</h2>
+        <p>Custom crafting high-fidelity corporate brand logos, stamps layouts, and merchandise vectors.</p>
+        <span class="chev" aria-hidden="true">&#9662;</span>
+      </button>
+      <div class="drawer" id="drawer-6" hidden></div>
+    </article>
+    <article class="slot" data-slot="7">
+      <button class="slothead" type="button" aria-expanded="false" aria-controls="drawer-7">
+        <h2>Secure Digital Document Vaults</h2>
+        <p>Provisioning encrypted offline data vaults storage networks to mitigate local record losses.</p>
+        <span class="chev" aria-hidden="true">&#9662;</span>
+      </button>
+      <div class="drawer" id="drawer-7" hidden></div>
+    </article>
+  </section>
+  <section class="ctarow">
+    <a class="btn gold" href="ticket.html">Book a Ticket &rarr;</a>
+    <a class="btn line" href="job.html">Request a Job &rarr;</a>
+    <a class="btn line" href="track.html">Track a Reference</a>
+  </section>
+  </main>
+  <div id="guaranteeBar" class="guarantees"></div>
+  <nav class="contactbar" aria-label="Contact channels">
+    <a class="wa" href="https://wa.me/254788099685" aria-label="Chat on WhatsApp">&#9993; WhatsApp</a>
+    <a href="tel:+254788099685" aria-label="Call hotline">&#9742; Call</a>
+    <a href="sms:+254788099685" aria-label="Send SMS text">&#9993; SMS</a>
+    <a href="mailto:vecctapivotenterprises@gmail.com" aria-label="Email secure tunnel">&#9990; Email</a>
+  </nav>
+  <footer class="sitefoot" id="siteFoot"></footer>
+  <script src="js/matrix.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+    (function () {
+      var M = window.VP_MATRIX["1"];
+      var wa = function (txt) { return 'https://wa.me/254788099685?text=' + encodeURIComponent(txt); };
+      document.querySelectorAll('.slot').forEach(function (slot) {
+        var n = Number(slot.getAttribute('data-slot'));
+        var svc = M.services[n - 1];
+        var head = slot.querySelector('.slothead');
+        var drawer = slot.querySelector('.drawer');
+        head.addEventListener('click', function () {
+          if (!drawer.dataset.ready) {
+            var h = '<ol class="steps">';
+            svc.engagements.forEach(function (e, i) {
+              h += '<li class="step">'
+                + '<div class="stephead"><h3>' + e.t + '</h3><span class="tf">' + e.tf + '</span></div>'
+                + '<p class="stepdesc">' + e.desc + '</p>'
+                + '<div class="steplabel">Requirements</div><ul class="reqs">'
+                + e.req.map(function (r) { return '<li>' + r + '</li>'; }).join('')
+                + '</ul>'
+                + '<div class="stepbtns">'
+                + '<a class="btn sm gold" href="ticket.html?desk=' + M.id + '&service=' + encodeURIComponent(svc.title) + '&engagement=' + encodeURIComponent(e.t) + '">Book Ticket</a>'
+                + '<a class="btn sm line" href="job.html?desk=' + M.id + '&service=' + encodeURIComponent(svc.title) + '&engagement=' + encodeURIComponent(e.t) + '">Request Job</a>'
+                + '<a class="btn sm ghost" target="_blank" rel="noopener" href="' + wa('Hello VECCTAPIVOT, I need ' + M.name + ' / ' + svc.title + ' / ' + e.t + '. Please advise on scope and quote.') + '">WhatsApp</a>'
+                + '</div></li>';
+            });
+            h += '</ol>';
+            drawer.innerHTML = h;
+            drawer.dataset.ready = '1';
+          }
+          var open = !drawer.hidden;
+          drawer.hidden = open;
+          head.setAttribute('aria-expanded', String(!open));
+          slot.classList.toggle('open', !open);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
