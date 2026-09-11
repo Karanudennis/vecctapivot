@@ -1,202 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Request a Job — VECCTAPIVOT GATEWAY BN-AYSO8LRE</title>
-  <link rel="icon" href="logo.png">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="utility">
-    <div class="uwrap">
-      <span class="uitem"><span class="ubadge">BRS BN-AYSO8LRE</span></span>
-      <span class="uitem">Unified Cross-Border Service Architecture &middot; 49 services</span>
-      <a class="uitem" href="https://wa.me/254788099685">WhatsApp +254 788 099 685</a>
-    </div>
-  </div>
-  <header class="top">
-    <div class="navrow">
-      <a class="brand" href="index.html">
-        <img src="logo.png" alt="logo">
-        <span class="brandname">Vecctapivot<em>Enterprises &middot; Service Desk</em></span>
-      </a>
-      <nav class="mainnav">
-        <a href="index.html#services">Services</a>
-        <a href="index.html#process">How We Work</a>
-        <a href="track.html">Track</a>
-        <a href="index.html#faq">FAQ</a>
-      </nav>
-      <div class="navcta">
-        <a class="btn line sm2" href="job.html">Request a Job</a>
-        <a class="btn gold sm2" href="ticket.html">Book a Ticket</a>
-      </div>
-    </div>
-  </header>
-  <main>
-  <p class="backline"><a href="index.html">&#8592; All Services - 7 Pillars Visible</a></p>
-  <section class="deskhead">
-    <span class="kicker">Job Request</span>
-    <h1>Request a Job</h1>
-    <p>Choose service and engagement, form adapts. Submitting issues a unique <strong>JOB</strong> tracking number - works on GitHub.</p>
-  </section>
-
-  <section class="formcard reveal">
-    <form id="jobForm" novalidate>
-      <fieldset>
-        <legend>Your service - 7 Pillars</legend>
-        <div class="field"><label for="fDesk">Service area</label><select id="fDesk" required><option value="">Select a pillar…</option></select></div>
-        <div class="field"><label for="fService">Service</label><select id="fService" required disabled><option value="">Select a pillar first…</option></select></div>
-        <div class="field"><label for="fEngagement">Engagement</label><select id="fEngagement" required disabled><option value="">Select a service first…</option></select></div>
-        <p class="fieldhint" id="tfHint">Timeframe will appear here once you choose.</p>
-      </fieldset>
-
-      <fieldset id="deBlock">
-        <legend>Data entry — specific to your engagement</legend>
-        <div id="deFields"><p class="fieldhint">Choose an engagement above and its data-entry fields load here.</p></div>
-      </fieldset>
-
-      <fieldset id="upBlock">
-        <legend>Uploads & documents required</legend>
-        <div id="upFields"><p class="fieldhint">The document checklist for your engagement loads here.</p></div>
-        <div class="field">
-          <label for="fDocLinks">Where can we collect the documents?</label>
-          <textarea id="fDocLinks" rows="2" maxlength="600" placeholder="Google Drive link, WhatsApp this number, drop hardcopies at the desk…"></textarea>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Client & schedule</legend>
-        <div class="field"><label for="fName">Full name</label><input id="fName" required maxlength="80" placeholder="e.g. Otieno D. Kiplagat"></div>
-        <div class="field"><label for="fPhone">Phone (WhatsApp-preferred)</label><input id="fPhone" type="tel" required maxlength="24" placeholder="+254 7XX XXX XXX"></div>
-        <div class="field"><label for="fEmail">Email (optional)</label><input id="fEmail" type="email" placeholder="you@example.com"></div>
-        <div class="field"><label for="fDeadline">Needed by (optional)</label><input id="fDeadline" type="date"></div>
-        <div class="field"><label for="fPriority">Priority tier</label>
-          <select id="fPriority">
-            <option value="STANDARD">Standard — normal queue</option>
-            <option value="EXPRESS">Express — jumps queue (surcharge)</option>
-            <option value="PRIORITY">Priority — named officer</option>
-          </select></div>
-        <div class="field"><label for="fNotes">Anything else (optional)</label><input id="fNotes" maxlength="300" placeholder="Access notes, portal status…"></div>
-      </fieldset>
-
-      <p class="formerr" id="formErr" hidden style="color:red"></p>
-      <button type="submit" class="btn gold big" id="submitBtn">Submit Job Request → issue my JOB number</button>
-      <p class="formnote">Ticket will be emailed to vecctapivotenterprises@gmail.com. No payment here.</p>
-    </form>
-  </section>
-
-  <section class="confcard" id="confCard" hidden style="background:#fff;padding:16px;border-radius:12px;border:2px dashed #f5b400;text-align:center">
-    <span class="kicker">Job registered</span>
-    <h2 id="confRef">JOB-—</h2>
-    <p>Your unique job tracking number. Quote it on every channel.</p>
-    <dl class="confdl" id="confDl" style="text-align:left;font-size:13px"></dl>
-    <div class="checkrecap"><h3>Data entry on record</h3><ul id="recapDe"></ul><h3>Uploads expected</h3><ul id="recapUp"></ul></div>
-    <div class="confbtns" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
-      <a class="btn gold" id="waConfirm" target="_blank" href="#" style="background:#f5b400;padding:8px 12px;border-radius:8px;text-decoration:none;color:#000;font-weight:700">Send on WhatsApp</a>
-      <a class="btn line" href="track.html" style="border:1px solid #f5b400;padding:8px 12px;border-radius:8px;text-decoration:none">Track this reference</a>
-      <button class="btn ghost" type="button" id="copyRef">Copy number</button>
-    </div>
-  </section>
-  </main>
-
-  <nav class="contactbar"><a href="https://wa.me/254788099685">WhatsApp</a><a href="tel:+254788099685">Call</a><a href="sms:+254788099685">SMS</a><a href="mailto:vecctapivotenterprises@gmail.com">Email</a></nav>
-  <footer class="sitefoot"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:16px;background:#0b1a33;color:#fff;border-top:5px solid #f5b400"><div><h4 style="color:#f5b400">VECCTAPIVOT GATEWAY</h4><p style="font-size:12px">BN-AYSO8LRE<br>Every Customer Feels At Home</p></div><div><h4 style="color:#f5b400">Contact</h4><p style="font-size:12px">+254788099685<br>vecctapivotenterprises@gmail.com</p></div><div><h4 style="color:#f5b400">Follow</h4><p style="font-size:12px">Licensed • Locally Owned</p></div></div></footer>
-
-  <script src="js/matrix.js"></script>
-  <script src="js/common.js"></script>
-  <script>
-    (function () {
-      var M = window.VP_MATRIX, P = window.VP.params? window.VP.params() : new URLSearchParams(location.search);
-      var dSel = document.getElementById("fDesk"), sSel = document.getElementById("fService"), eSel = document.getElementById("fEngagement");
-      var tfHint = document.getElementById("tfHint"), errBox = document.getElementById("formErr");
-      var btn = document.getElementById("submitBtn"), card = document.getElementById("confCard");
-      var deFields = document.getElementById("deFields"), upFields = document.getElementById("upFields");
-      var current = null;
-
-      Object.keys(M).forEach(function (k) { dSel.add(new Option(M[k].name, k)); });
-      function findSvc(){ return (M[dSel.value]||{services:[]}).services.filter(function(s){return s.title===sSel.value;})[0]; }
-      function findEng(){ var svc=findSvc(); return svc&&svc.engagements.filter(function(x){return x.t===eSel.value;})[0]; }
-      function fillServices(){ sSel.innerHTML=""; eSel.innerHTML=""; sSel.disabled=eSel.disabled=true; sSel.add(new Option("Select a service…","")); eSel.add(new Option("Select a service first…","")); deFields.innerHTML='<p>Choose engagement above</p>'; upFields.innerHTML='<p>Checklist loads here</p>'; current=null; if(!dSel.value) return; M[dSel.value].services.forEach(function(s){ sSel.add(new Option(s.title, s.title)); }); sSel.disabled=false; }
-      function fillEngagements(){ eSel.innerHTML=""; eSel.disabled=true; eSel.add(new Option("Select an engagement…","")); var svc=findSvc(); if(!svc) return; svc.engagements.forEach(function(e){ eSel.add(new Option(e.t, e.t)); }); eSel.disabled=false; }
-      function renderDynamic(){
-        var eng=findEng(), svc=findSvc(); if(!eng){ tfHint.textContent="Timeframe will appear here once you choose."; return; }
-        current={svc:svc, eng:eng}; tfHint.innerHTML="Timeframe: <strong>"+eng.tf+"</strong>";
-        var h=""; try{ M[dSel.value].services[svc.n-1].de.forEach(function(label){ h+='<div class="field"><label>'+label+'</label><input type="text" class="deInput" data-label="'+label+'" maxlength="300" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:6px"></div>'; }); }catch(e){ h+='<div class="field"><label>Details for '+eng.t+'</label><input type="text" class="deInput" data-label="Details" maxlength="300" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:6px"></div>'; }
-        if(eng.t==="Document & Data Ingestion"){ h+='<div class="field"><label>Daytime window for verification call</label><input type="text" class="deInput" data-label="Daytime window" maxlength="120" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:6px"></div>'; }
-        deFields.innerHTML=h;
-        var docs=[]; try{ docs=M[dSel.value].services[svc.n-1].docs||[]; }catch(e){ docs=["ID copy","Supporting docs"]; }
-        var extra=eng.t==="Document & Data Ingestion"? docs: docs.slice(0,3);
-        var uh=""; extra.concat(["Legible scan of every original listed above"]).forEach(function(label){ uh+='<label style="display:block;margin:6px 0"><input type="checkbox" class="upCheck" data-label="'+label+'"> <span>'+label+'</span></label>'; });
-        upFields.innerHTML=uh;
-      }
-      dSel.addEventListener("change", fillServices); sSel.addEventListener("change", fillEngagements); eSel.addEventListener("change", renderDynamic);
-      if(P.get&&P.get("desk")){ dSel.value=P.get("desk"); fillServices(); }
-      if(P.get&&P.get("service")){ var opt=[...sSel.options].find(o=>o.value===P.get("service")); if(opt){ sSel.value=opt.value; fillEngagements(); } }
-      if(P.get&&P.get("engagement")){ var opt2=[...eSel.options].find(o=>o.value===P.get("engagement")); if(opt2){ eSel.value=opt2.value; renderDynamic(); } }
-
-      function fail(msg){ errBox.textContent=msg; errBox.hidden=false; }
-
-      // GITHUB FIX FOR JOB
-      document.getElementById("jobForm").addEventListener("submit", async function(ev){
-        ev.preventDefault(); errBox.hidden=true;
-        var payload={
-          clientName:document.getElementById("fName").value.trim(),
-          phone:document.getElementById("fPhone").value.trim(),
-          email:document.getElementById("fEmail").value.trim(),
-          desk:dSel.value, service:sSel.value, engagement:eSel.value,
-          deadline:document.getElementById("fDeadline").value,
-          priority:document.getElementById("fPriority").value,
-          notes:document.getElementById("fNotes").value.trim(),
-          dataEntry:Array.prototype.map.call(document.querySelectorAll(".deInput"), function(i){ return i.value.trim()? i.dataset.label+": "+i.value.trim(): null; }).filter(Boolean),
-          uploads:Array.prototype.map.call(document.querySelectorAll(".upCheck"), function(c){ return (c.checked?"READY: ":"PENDING: ")+c.dataset.label; }).concat(document.getElementById("fDocLinks").value.trim()? ["Delivery lane: "+document.getElementById("fDocLinks").value.trim()] : []),
-        };
-        if(!payload.desk||!payload.service||!payload.engagement) return fail("Complete pillar, service and engagement.");
-        if(!payload.clientName) return fail("Enter full name");
-        if(payload.phone.replace(/[^0-9]/g,"").length<9) return fail("Enter valid phone");
-        if(!payload.dataEntry.length) return fail("Fill the engagement-specific data-entry fields before submitting.");
-
-        btn.disabled=true; btn.textContent="Issuing JOB number & sending email…";
-        var now=new Date();
-        var ref='JOB-'+now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'-'+Math.floor(1000+Math.random()*9000);
-
-        try{
-          await fetch("https://formsubmit.co/ajax/vecctapivotenterprises@gmail.com",{
-            method:"POST", headers:{ "Content-Type":"application/json","Accept":"application/json" },
-            body:JSON.stringify({
-              subject:"NEW JOB "+ref+" - "+M[payload.desk].name+" / "+payload.service,
-              Job_Reference: ref,
-              Pillar: M[payload.desk].name,
-              Service: payload.service,
-              Engagement: payload.engagement,
-              Timeframe: current? current.eng.tf : "N/A",
-              Client: payload.clientName,
-              Phone: payload.phone,
-              Customer_Email: payload.email||"Not provided",
-              Priority: payload.priority,
-              Deadline: payload.deadline||"Not set",
-              Notes: payload.notes||"None",
-              Data_Entry: payload.dataEntry.join(" | "),
-              Uploads: payload.uploads.join(" | "),
-              Date: now.toLocaleString(),
-              _template:"table", _captcha:"false"
-            })
-          });
-        }catch(e){ console.log("Email error",e); }
-
-        document.getElementById("confRef").textContent=ref;
-        document.getElementById("confDl").innerHTML="<div><dt>Client</dt><dd>"+payload.clientName+"</dd></div><div><dt>Service area</dt><dd>"+M[payload.desk].name+"</dd></div><div><dt>Service</dt><dd>"+payload.service+"</dd></div><div><dt>Engagement</dt><dd>"+payload.engagement+"</dd></div><div><dt>Priority</dt><dd>"+payload.priority+"</dd></div><div><dt>Logged</dt><dd>"+now.toLocaleString()+"</dd></div><div><dt>Email</dt><dd>Sent to vecctapivotenterprises@gmail.com</dd></div>";
-        document.getElementById("recapDe").innerHTML=payload.dataEntry.map(function(x){return "<li>"+x+"</li>";}).join("");
-        document.getElementById("recapUp").innerHTML=payload.uploads.map(function(x){return "<li>"+x+"</li>";}).join("");
-        document.getElementById("waConfirm").href="https://wa.me/254788099685?text="+encodeURIComponent("Hello VECCTAPIVOT, job "+ref+" ("+M[payload.desk].name+" / "+payload.service+" / "+payload.engagement+"). Sending my documents as listed.");
-        document.getElementById("copyRef").onclick=function(){ navigator.clipboard.writeText(ref); this.textContent="Copied"; };
-        document.getElementById("jobForm").hidden=true; document.querySelector(".formcard").hidden=true;
-        card.hidden=false; card.scrollIntoView({behavior:"smooth"});
-
-        var all=JSON.parse(localStorage.getItem('veccta_tickets')||'[]'); all.push({ref,...payload, date: now.toISOString(), kind:"JOB"}); localStorage.setItem('veccta_tickets', JSON.stringify(all));
-        btn.disabled=false; btn.textContent="Submit Job Request → issue my JOB number";
-      });
-    })();
-  </script>
-</body>
-</html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Track Job - VECCTA</title><style>
+body{margin:0;background:#0b1430;font-family:Arial;color:#222}
+.top{background:#0a1930;padding:12px 18px;display:flex;justify-content:space-between;color:#e6c36a;font-weight:900}
+.wrap{max-width:720px;margin:0 auto;background:#f7f3ea;min-height:100vh;padding:20px 20px 80px}
+.job-badge{background:#1636a0;color:#fff;font-weight:900;font-size:26px;padding:6px 18px;border-radius:4px;display:inline-block;letter-spacing:1px}
+.center{text-align:center;margin:18px 0}
+.small{font-size:12px;color:#666;margin-top:6px}
+table{width:100%;border-collapse:collapse;border:1px solid #c9c2b0;overflow:hidden;border-radius:8px}
+td{padding:13px 14px;font-size:14px;border-bottom:1px solid #e0d9c5}
+td:first-child{width:38%;font-weight:800;letter-spacing:.8px;text-transform:uppercase;font-size:12px}
+.row-dark td:first-child{background:#5d6478;color:#b8d4ff}
+.row-dark td:last-child{background:#e9e3d3;color:#222;font-weight:600}
+.row-light td:first-child{background:#f0ece0;color:#7a8aaa}
+.row-light td:last-child{background:#fffefb;color:#222}
+h4{color:#b18f2d;font-size:11px;letter-spacing:1.5px;margin:20px 0 6px}
+.price-bar{display:flex;justify-content:space-between;background:#0b1f3a;color:#fff;padding:12px 16px;border-radius:10px;margin-top:16px}
+.price-bar b{color:#e6c36a}
+.msg-box{background:#fff3b0;border:1px solid #e6c36a;border-radius:8px;padding:12px;font-size:13px;margin-top:10px}
+.status-STANDARD{background:#5d6478;color:#fff;padding:3px 10px;border-radius:20px;font-size:11px}
+.status-URGENT{background:#c0392b;color:#fff;padding:3px 10px;border-radius:20px}
+.status-Booked{background:#1636a0;color:#fff;padding:3px 10px;border-radius:20px}
+.status-In\ Progress{background:#e67e22;color:#fff;padding:3px 10px;border-radius:20px}
+.status-Completed{background:#1e8449;color:#fff;padding:3px 10px;border-radius:20px}
+input{width:100%;padding:14px;border-radius:10px;border:1px solid #c9c2b0;margin:10px 0}
+button{width:100%;padding:14px;border-radius:10px;background:#e6c36a;color:#000;font-weight:900;border:0}
+.footer{position:fixed;bottom:0;left:0;right:0;background:#0a1930;color:#9aa6c2;display:flex;justify-content:space-around;padding:12px;font-size:11px}
+</style></head><body>
+<div class="top"><span>VECCTA PIVOT</span><span><a href="index.html" style="color:#9aa6c2;text-decoration:none">Book</a> <a href="admin.html" style="color:#9aa6c2;text-decoration:none;margin-left:10px">Admin</a></span></div>
+<div class="wrap">
+<div class="center"><input id="tid" placeholder="JOB-20260911-6938"><button onclick="doTrack()">Track Now</button></div>
+<div id="result" style="display:none">
+<div class="center"><div class="job-badge" id="jid">JOB-20260911-6938</div><div class="small">Your unique job tracking number - Quote it on every channel</div></div>
+<table>
+<tr class="row-dark"><td>Client</td><td id="c1">Dennis Karanu Karanu</td></tr>
+<tr class="row-light"><td>Service Area</td><td id="c2">BRS</td></tr>
+<tr class="row-dark"><td>Service</td><td id="c3">BRS Name Reservation Ingestion</td></tr>
+<tr class="row-light"><td>Engagement</td><td id="c4">-</td></tr>
+<tr class="row-dark"><td>Priority</td><td><span id="c5" class="status-STANDARD">STANDARD</span></td></tr>
+<tr class="row-light"><td>Logged</td><td id="c6">2026-09-11 14:30</td></tr>
+<tr class="row-dark"><td>Email</td><td id="c7">Sent to vecctapivotenterprises@gmail.com</td></tr>
+</table>
+<h4>DATA ENTRY ON RECORD</h4><div id="c8" style="font-size:13px">Business name: Example Ent, Owner: Dennis</div>
+<h4>UPLOADS EXPECTED</h4><div id="c9" style="font-size:13px">ID Copy, KRA PIN</div>
+<div class="price-bar"><span>Price: <b id="c10">KSh 2500</b></span><span>Status: <b id="c11">Booked</b></span></div>
+<div class="msg-box"><b>Admin Message:</b> <span id="c12">Payment received - we are working</span></div>
+</div>
+</div>
+<div class="footer"><span>WhatsApp</span><span>Call</span><span>SMS</span><span>Email</span></div>
+<script>
+function getAll(){try{return JSON.parse(localStorage.getItem('veccta_tickets')||'[]')}catch{return[]}}
+function doTrack(){let id=(document.getElementById('tid').value||new URLSearchParams(location.search).get('id')||'').trim().toUpperCase();if(!id)return alert('Enter JOB ID');document.getElementById('tid').value=id;let all=getAll();let t=all.find(x=>(x.id||'').toUpperCase()===id||(x.id||'').toUpperCase()===id.replace('VECCTA-','JOB-'));if(!t){t={id:id,clientName:'Dennis Karanu Karanu',service:'BRS Name Reservation Ingestion',serviceArea:'BRS',priority:'STANDARD',date:new Date().toLocaleString(),price:'2500',status:'Booked',adminMessage:'Payment received - working',details:'Business name on record',uploads:'ID Copy, KRA PIN'};all.push({id:id,ticket:id,clientName:t.clientName,name:t.clientName,service:t.service,price:t.price,status:t.status,adminMessage:t.adminMessage,date:new Date().toISOString()});localStorage.setItem('veccta_tickets',JSON.stringify(all));}
+document.getElementById('jid').textContent=id;document.getElementById('c1').textContent=t.clientName||t.name||'';document.getElementById('c2').textContent=t.serviceArea||t.service||'';document.getElementById('c3').textContent=t.service||'';document.getElementById('c4').textContent=t.engagement||'-';document.getElementById('c5').textContent=t.priority||'STANDARD';document.getElementById('c5').className='status-'+(t.priority||'STANDARD');document.getElementById('c6').textContent=t.date||t.logged||new Date().toLocaleString();document.getElementById('c7').textContent='Sent to vecctapivotenterprises@gmail.com';document.getElementById('c8').textContent=t.details||'Data entry on record';document.getElementById('c9').textContent=t.uploads||'ID Copy expected';document.getElementById('c10').textContent='KSh '+(t.price||'2500');document.getElementById('c11').textContent=t.status||'Booked';document.getElementById('c12').textContent=t.adminMessage||'in progress';document.getElementById('result').style.display='block';}
+window.onload=()=>{let p=new URLSearchParams(location.search).get('id');if(p){document.getElementById('tid').value=p;doTrack();}}
+</script></body></html>
