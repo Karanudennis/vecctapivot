@@ -1,67 +1,90 @@
-<!DOCTYPE html>
-<html><head>
+<!DOCTYPE html><html><head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VECCTA ADMIN - Fixed Save</title>
+<title>Admin - VECCTAPIVOT</title>
 <style>
-body{background:#0b1220;color:#eef2fa;font-family:Inter,sans-serif;padding:18px}
-h1{color:#e6c36a}
-.card{background:#121c30;border:1px solid rgba(230,195,106,.3);border-left:5px solid #f59e0b;border-radius:16px;padding:16px;margin:14px 0}
-input,select,textarea{width:100%;background:#0b1220;color:#fff;border:1px solid #2a395c;border-radius:10px;padding:10px;margin:6px 0}
-.btn{background:#e6c36a;color:#000;border:none;padding:10px 14px;border-radius:10px;font-weight:800;cursor:pointer;margin:4px}
-label{color:#96a0ba;font-size:11px;text-transform:uppercase}
+body{background:#0f172a;color:#fff;font-family:system-ui;padding:16px;max-width:900px;margin:auto}
+.card{background:#1e293b;padding:14px;border-radius:12px;border:1px solid #334155;margin:8px 0}
+input,textarea,select{width:100%;padding:10px;margin:5px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
+button{padding:10px 14px;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin:3px}
+.btn-y{background:#facc15;color:#000} .btn-b{background:#3b82f6;color:#fff} .btn-g{background:#22c55e;color:#000}
+.flex{display:flex;gap:10px;flex-wrap:wrap} .flex>*{flex:1}
 </style>
 </head><body>
-<h1>VECCTA ADMIN - All Tickets</h1>
-<button class="btn" onclick="load()">Refresh</button> <span id="count"></span>
-<div id="list"></div>
+<h3 style="color:#facc15">VECCTAPIVOT Admin</h3>
+
+<div class="card">
+<input type="password" id="pass" placeholder="Enter admin pass">
+<button class="btn-y" onclick="login()">Login</button>
+<p id="loginMsg"></p>
+</div>
+
+<div id="adminArea" style="display:none">
+<div class="flex">
+<div class="card"><h4>Jobs: <span id="jobCount">0</span></h4><div id="jobs"></div></div>
+<div class="card"><h4>Tickets: <span id="ticketCount">0</span></h4><div id="tickets"></div></div>
+</div>
+</div>
+
 <script>
-function load(){
- let key='veccta_tickets';
- let all=JSON.parse(localStorage.getItem(key)||'[]');
- document.getElementById('count').innerText=`Total: ${all.length}`;
- let h='';
- all.forEach((t,i)=>{
-  h+=`<div class="card">
-  <b style="color:#e6c36a;font-size:18px">${t.id||t.ticket||'VECCTA-'+i}</b><br>
-  <b>${t.clientName||t.name||''}</b> | ${t.phone||''}<br>
-  <b>Service:</b> ${t.service||''}<br>
-  <b>Logged:</b> ${t.date||t.logged||''}<br>
-  <label>Price (KSh)</label><input value="${t.price||''}" id="price-${i}" placeholder="25000">
-  <label>Admin Message to Client</label><textarea id="msg-${i}">${t.adminMessage||''}</textarea>
-  <label>Status</label><select id="status-${i}">
-    <option ${t.status=='Logged'?'selected':''}>Logged</option>
-    <option ${t.status=='In Progress'?'selected':''}>In Progress</option>
-    <option ${t.status=='Quoted'?'selected':''}>Quoted</option>
-    <option ${t.status=='Booked'?'selected':''}>Booked</option>
-    <option ${t.status=='Paid'?'selected':''}>Paid</option>
-    <option ${t.status=='Done'?'selected':''}>Done</option>
-  </select>
-  <div style="margin-top:8px">
-   <button class="btn" onclick="saveEdit(${i})">Save Price/Message</button>
-   <button class="btn" style="background:#ff6b6b" onclick="delTicket(${i})">Delete</button>
-  </div>
-  </div>`;
- });
- document.getElementById('list').innerHTML=h;
+const ADMIN_PASS='veccta2024'; // change this
+
+function login(){
+ if(document.getElementById('pass').value!==ADMIN_PASS){document.getElementById('loginMsg').innerHTML='Wrong pass';return;}
+ document.getElementById('adminArea').style.display='block';
+ loadAll();
 }
-function saveEdit(idx){
- let key='veccta_tickets';
- let all=JSON.parse(localStorage.getItem(key)||'[]');
- all[idx].price=document.getElementById(`price-${idx}`).value;
- all[idx].adminMessage=document.getElementById(`msg-${idx}`).value;
- all[idx].status=document.getElementById(`status-${idx}`).value;
- localStorage.setItem(key,JSON.stringify(all));
- alert('SAVED! Price: KSh '+all[idx].price+' | Status: '+all[idx].status);
- load();
+
+function loadAll(){
+ let jobs=JSON.parse(localStorage.getItem('veccta_jobs')||'[]');
+ let tickets=JSON.parse(localStorage.getItem('veccta_tickets')||'[]');
+ document.getElementById('jobCount').textContent=jobs.length;
+ document.getElementById('ticketCount').textContent=tickets.length;
+
+ document.getElementById('jobs').innerHTML=jobs.map((j,i)=>`
+  <div class=card style="border-left:4px solid #facc15">
+   <b>${j.id}</b> - ${j.clientName} (${j.clientPhone})<br>
+   Service: ${j.service} | Priority: ${j.priority}<br>
+   Logged: ${j.logged}
+   <label>Price (KSH)</label><input id="price_${i}" value="${j.price||''}" placeholder="e.g. 5000">
+   <label>Status</label><select id="status_${i}"><option ${j.status=='Logged'?'selected':''}>Logged</option><option ${j.status=='Quoted'?'selected':''}>Quoted</option><option ${j.status=='In Progress'?'selected':''}>In Progress</option><option ${j.status=='Completed'?'selected':''}>Completed</option><option ${j.status=='Cancelled'?'selected':''}>Cancelled</option></select>
+   <label>Admin Message (client sees this)</label><textarea id="msg_${i}">${j.adminMessage||''}</textarea>
+   <button class="btn-y" onclick="saveJob(${i})">Save Job</button>
+   <button class="btn-b" onclick="waJob(${i})">WhatsApp Client</button>
+   <div style="margin-top:8px;font-size:12px;color:#94a3b8">Tickets: ${tickets.filter(t=>t.jobId===j.id).length}</div>
+  </div>`).join('')||'No jobs';
+
+ document.getElementById('tickets').innerHTML=tickets.map((t,i)=>`
+  <div class=card style="border-left:4px solid #3b82f6">
+   <b>${t.id}</b><br>For: <b>${t.jobId}</b> - ${t.status}<br>
+   Client: ${t.message}<br>
+   Logged: ${t.logged}
+   <label>Admin Reply (client sees this)</label><textarea id="reply_${i}">${t.adminReply||''}</textarea>
+   <label>Status</label><select id="tstatus_${i}"><option ${t.status=='Open'?'selected':''}>Open</option><option ${t.status=='Answered'?'selected':''}>Answered</option><option ${t.status=='Closed'?'selected':''}>Closed</option></select>
+   <button class="btn-b" onclick="saveTicket(${i})">Save Ticket</button>
+  </div>`).join('')||'No tickets';
 }
-function delTicket(idx){
- if(!confirm('Delete?')) return;
- let key='veccta_tickets';
- let all=JSON.parse(localStorage.getItem(key)||'[]');
- all.splice(idx,1);
- localStorage.setItem(key,JSON.stringify(all));
- load();
+
+function saveJob(i){
+ let jobs=JSON.parse(localStorage.getItem('veccta_jobs')||'[]');
+ jobs[i].price=document.getElementById('price_'+i).value;
+ jobs[i].status=document.getElementById('status_'+i).value;
+ jobs[i].adminMessage=document.getElementById('msg_'+i).value;
+ localStorage.setItem('veccta_jobs',JSON.stringify(jobs));
+ alert('Job saved - Client will see new PRICE/STATUS when they track '+jobs[i].id);
 }
-load();
+
+function saveTicket(i){
+ let tickets=JSON.parse(localStorage.getItem('veccta_tickets')||'[]');
+ tickets[i].adminReply=document.getElementById('reply_'+i).value;
+ tickets[i].status=document.getElementById('tstatus_'+i).value;
+ localStorage.setItem('veccta_tickets',JSON.stringify(tickets));
+ alert('Ticket reply saved - Client sees it when tracking '+tickets[i].id);
+}
+
+function waJob(i){
+ let jobs=JSON.parse(localStorage.getItem('veccta_jobs')||'[]');
+ let j=jobs[i];
+ window.open(`https://wa.me/${j.clientPhone.replace(/[^0-9]/g,'')}?text=Hi ${j.clientName}, your ${j.id} - Price: KSH ${j.price}, Status: ${j.status}. ${j.adminMessage}`);
+}
 </script>
 </body></html>
