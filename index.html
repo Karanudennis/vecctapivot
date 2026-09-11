@@ -32,7 +32,7 @@
             </div>
             
             <div class="header-action-container">
-                <a href="#portal-grid" class="cta-btn-main scroll-btn">⚡ Access Service Desks</a>
+                <a href="#portal-grid" class="cta-btn-main scroll-btn">📊 Estimate Rate & File Data</a>
                 <a href="#master-intake-section" class="cta-btn-main ticket-btn" onclick="activateCentralHelpDesk()">🎫 Open Central Help Desk</a>
             </div>
         </div>
@@ -81,7 +81,7 @@
         <div class="pillar-card searchable-card" data-tags="transport ride taxi booking courier dispatch motorcycle lorry cargo freight logistics cold chain truck trailer van routing insurance" onclick="activatePillarDesk('p3-desk', '🚖 Transport Brokerage Hub', 'TRK')">
             <div class="icon">🚖</div>
             <h2>3. Transport Brokerage Hub</h2>
-            <p>Intra-Town Express Couriers, Local Transfers & Long-Haul Freight Lines</p>
+            <p>Intra-Town Express Couriers, Local Transfers & Long-HaUL Freight Lines</p>
             <div class="explore-node-text">Open Desk Terminal ➡️</div>
         </div>
 
@@ -116,7 +116,7 @@
     </main>
 
     <!-- THE UNIFIED DYNAMIC DATA INGESTION WORKSPACE CARD -->
-    <section id="master-intake-section" class="calculator-master-card hidden-popup">
+    <section id="master-intake-section" class="calculator-master-card hidden-popup" style="max-width: 750px; margin: 40px auto;">
         <h3 id="active-desk-title">🛒 Service Desk Panel</h3>
         <p style="font-size: 14px; color: #555; margin-bottom: 25px;">Select your precise job module below. The system will dynamically calculate pricing, check delivery SLAs, and generate your custom form parameters.</p>
 
@@ -127,8 +127,7 @@
             <!-- Pillar 1 Dropdowns -->
             <select id="p1-desk" class="desk-dropdown select-hidden" onchange="syncMarketplaceServiceForm('p1-desk', 'REG')">
                 <option value="" disabled selected>-- Select Digital System Sub-Pillar --</option>
-                <option value="1500|2-5 Days|1.1 Business Name Registration|Owner Full Name,Active Phone Number,Physical Business Address,Proposed Name Choice 1,Proposed Name Choice 2,Proposed Name Choice 3|Scanned National ID copy,Active KRA PIN Certificate">1.1 Business Name Registration Setup [KES 1,500]</option>
-                <option value="4000|3-5 Days|1.2 Partnership Firm Setup (Form BN2)|Managing Partner Name,Firm Contact Number,Trading Location Address,Full Names of Co-Partners|Partners ID Scans Zip,Partners KRA PIN Files,Signed Partnership Deed">1.2 Partnership / Firm Registry Layout Setup [KES 4,000]</option>
+                <option value="1500|2-5 Days|1.1 Business Name Registration|Owner Full Name,Active Phone Number,Physical Business Address,Proposed Name Choice 1,Proposed Name Choice 2,Proposed Name Choice 3|Scanned National ID copy,Active KRA PIN Certificate">1.1 Business Name eCitizen Registration [KES 1,500]</option>
+                <option value="4000|3-5 Days|1.2 Partnership Firm Setup (Form BN2)|Managing Partner Name,Firm Contact Number,Trading Location Address,Full Names of Co-Partners|Partners ID Scans Zip,Partners KRA PIN Files">1.2 Partnership / Firm Registry Layout Setup [KES 4,000]</option>
                 <option value="1500|2-3 Days|1.3 Particulars Modification (Form BN3)|Registered Business Name,Existing BRS BN Reference Code,Detailed Description of Changes|Copy of Existing BN4 Certificate">1.3 Business Particulars Alterations (Form BN3) [KES 1,500]</option>
                 <option value="2500|3-5 Days|1.4 Business Cessation Closure Filings|Proprietor Full Name,Owner Contact Number,Stated Reason for Closure|Original Registration Certificate file">1.4 Business Cessation Formal Closure Filings [KES 2,500]</option>
-                <option value="2000|5-7 Days|1.5 Historical Legacy Record Linking|Original Owner Full Name,Contact Mobile Number,Pre-2017 Trading Name|Manual Hardcopy Registration Certificate scan">1.5 Historical Legacy Record Linking [KES 2,000]</option>
