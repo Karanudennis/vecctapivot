@@ -39,7 +39,7 @@
     </header>
 
     <!-- AUTOMATED TRANSACTION WORK ORDER MODAL POPUP -->
-    <div id="success-ticket-modal" class="ticket-modal-overlay hidden-popup">
+    <div id="success-ticket-modal" class="ticket-modal-overlay hidden-popup" style="display: none;">
         <div class="ticket-modal-card">
             <div class="ticket-badge-icon">🛡️</div>
             <h3>OPERATION INITIALIZED SUCCESSFULLY</h3>
@@ -116,8 +116,30 @@
     </main>
 
     <!-- THE UNIFIED DYNAMIC DATA INGESTION WORKSPACE CARD -->
-    <section id="master-intake-section" class="calculator-master-card hidden-popup" style="max-width: 750px; margin: 40px auto;">
+    <section id="master-intake-section" class="calculator-master-card" style="max-width: 750px; margin: 40px auto; display: none;">
         <h3 id="active-desk-title">🛒 Service Desk Panel</h3>
         <p style="font-size: 14px; color: #555; margin-bottom: 25px;">Select your precise job module below. The system will dynamically calculate pricing, check delivery SLAs, and generate your custom form parameters.</p>
 
-        <!
+        <!-- Dynamic Dropdown Options Managed by JS -->
+        <form id="intake-form" onsubmit="handleFormSubmission(event)">
+            <input type="hidden" id="current-prefix" value="GEN">
+            
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label for="sub-service-select" style="display:block; font-weight:bold; margin-bottom:5px;">Select Service Package:</label>
+                <select id="sub-service-select" onchange="calculateDynamicPrice()" style="width:100%; padding:10px; border-radius:4px;" required>
+                    <!-- Populated dynamically via JS -->
+                </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label for="client-name" style="display:block; font-weight:bold; margin-bottom:5px;">Your Full Name / Business Identity:</label>
+                <input type="text" id="client-name" style="width:100%; padding:10px; border-radius:4px;" required placeholder="e.g., Jane Doe / Veccta Logistics Ltd">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label for="client-contact" style="display:block; font-weight:bold; margin-bottom:5px;">Phone Number or Email Address:</label>
+                <input type="text" id="client-contact" style="width:100%; padding:10px; border-radius:4px;" required placeholder="e.g., 0712345678 or info@domain.com">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label for="operational-notes" style="display:block; font-weight:bold; margin-bottom:5px;">Specific Instructions or Credentials/Portal Notes:</label>
