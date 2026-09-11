@@ -1,49 +1,21 @@
-<!DOCTYPE html><html><head>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Raise Ticket - VECCTAPIVOT</title>
-<style>
-body{background:#0f172a;color:#fff;font-family:system-ui;padding:16px;max-width:600px;margin:auto}
-.card{background:#1e293b;padding:18px;border-radius:12px;border:1px solid #334155}
-input,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
-button{padding:14px;border:none;border-radius:8px;font-weight:800;width:100%;cursor:pointer}
-.btn-blue{background:#3b82f6;color:#fff}
-label{font-size:13px;color:#94a3b8;display:block;margin-top:8px}
-</style>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Raise Ticket</title>
+<style>body{font-family:system-ui;background:#0f172a;color:white;padding:16px;max-width:600px;margin:auto}.card{background:#1e293b;padding:16px;border-radius:12px;border:1px solid #334155}input,textarea,select{width:100%;padding:10px;margin:6px 0;border-radius:8px;background:#0f172a;color:white;border:1px solid #334155}button{width:100%;padding:12px;background:#3b82f6;color:white;font-weight:800;border:none;border-radius:10px}</style>
 </head><body>
-<h3 style="color:#3b82f6;text-align:center">Raise Ticket</h3>
+<h2>Raise Ticket - Consultation / Follow-up</h2>
 <div class="card">
-<label>JOB ID (linked)</label>
-<input id="jobId" placeholder="JOB-20260911-XXXX">
-<label>Your Question / Issue</label>
-<textarea id="msg" rows="4" placeholder="Type your question about this job..."></textarea>
-<button class="btn-blue" onclick="raiseTicket()">RAISE TICKET</button>
-<div id="res"></div>
+<input id="tPhone" placeholder="Your Phone">
+<select id="tType"><option>Consultation - Uncertain about job</option><option>Follow-up - About existing JOB</option><option>General Inquiry</option></select>
+<input id="tJobId" placeholder="If follow-up, enter JOB ID (optional)">
+<textarea id="tMsg" placeholder="Your question... e.g., What docs needed for KRA PIN?"></textarea>
+<button onclick="raiseTicket()">SUBMIT TICKET</button>
 </div>
-
 <script>
-// Auto fill from URL ?job=JOB-xxx
-let p=new URLSearchParams(window.location.search);
-if(p.get('job')) document.getElementById('jobId').value=p.get('job');
-
 function raiseTicket(){
- let jobId=document.getElementById('jobId').value.trim();
- let message=document.getElementById('msg').value.trim();
- if(!jobId||!message){alert('Enter JOB ID and message');return;}
-
- let tickets=JSON.parse(localStorage.getItem('veccta_tickets')||'[]');
- let t={
-   id:'TICKET-'+Date.now(),
-   jobId:jobId,
-   message:message,
-   from:'Client',
-   adminReply:'',
-   status:'Open',
-   logged:new Date().toLocaleString()
- };
- tickets.push(t);
- localStorage.setItem('veccta_tickets',JSON.stringify(tickets));
-
- document.getElementById('res').innerHTML=`<div class=card style="border-left:4px solid #3b82f6;text-align:center"><b style="color:#3b82f6">${t.id}</b><br>Ticket raised for ${jobId}<br><br><a href="track.html" style="background:#3b82f6;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none">Go Track</a> <a href="https://wa.me/254788099685?text=${t.id} for ${jobId}" style="color:#25D366;font-weight:700;margin-left:10px">WhatsApp</a></div>`;
+ let tickets=JSON.parse(localStorage.getItem('karanu_tickets')||'[]');
+ let t={id:`TICKET-${Date.now()}`, phone:document.getElementById('tPhone').value,
+  type:document.getElementById('tType').value, jobId:document.getElementById('tJobId').value||"General",
+  message:document.getElementById('tMsg').value, adminReply:"", status:"Open", logged:new Date().toLocaleString()};
+ tickets.push(t); localStorage.setItem('karanu_tickets',JSON.stringify(tickets));
+ alert(`TICKET Created: ${t.id}`); location.href=`track.html?ticket=${t.id}`;
 }
-</script>
-</body></html>
+</script></body></html>
