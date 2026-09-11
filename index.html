@@ -12,15 +12,16 @@
             --gold-accent: #d4af37;
             --text-pure: #f3f4f6;
             --text-muted: #9ca3af;
-            --action-blue: #1d4ed8;
+            --bg-deep-node: #060b18;
             --amber-warning: #FFB300;
+            --success-green: #10b981;
         }
 
         * { 
             box-sizing: border-box; 
             margin: 0; 
             padding: 0; 
-            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; 
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease, background-color 0.2s ease; 
         }
 
         body {
@@ -31,9 +32,9 @@
             display: flex;
             flex-direction: column;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        /* Urgencies Ribbon Ticker Layout Options */
         .urgency-ticker {
             background-color: var(--amber-warning); 
             color: #000000;
@@ -44,130 +45,54 @@
             width: 100%;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
             letter-spacing: 0.3px; 
-            line-height: 1.4;
+            z-index: 10;
         }
-        .urgency-ticker p { margin: 0; }
 
-        /* Institutional Corporate Header Panel Layout */
         .portal-header {
             background: linear-gradient(135deg, #060b18 0%, var(--bg-obsidian) 100%);
             text-align: center;
-            padding: 60px 24px;
+            padding: 50px 24px;
             width: 100%;
             border-bottom: 1px solid var(--border-muted);
         }
 
         .welcome-container { max-width: 850px; margin: 0 auto; }
-
-        /* Premium Brand Identity Header Area Architecture */
+        
         .brand-identity-block {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-bottom: 24px;
+            margin-bottom: 15px;
         }
         
         .corporate-logo {
-            max-height: 80px;
+            max-height: 90px;
             width: auto;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 2px 8px rgba(212,175,55,0.2));
         }
 
         .brand-text-fallback {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 900;
-            letter-spacing: 1.5px;
-            color: #ffffff;
-            text-transform: uppercase;
-        }
-
-        .brand-text-fallback span {
-            color: var(--gold-accent);
-        }
-
-        .welcome-banner {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--gold-accent);
             letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-top: 6px;
-            margin-bottom: 12px;
-        }
-
-        .portal-header h1 {
-            font-size: 30px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: #ffffff;
-            line-height: 1.2;
-            margin-bottom: 14px;
-        }
-
-        .tagline {
-            font-size: 15px;
-            color: var(--text-muted);
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-
-        .trust-badge {
-            display: inline-block;
-            background-color: rgba(212, 175, 55, 0.04);
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 12.5px;
-            font-weight: 600;
-            color: var(--gold-accent);
-        }
-
-        .philosophy-box {
-            background-color: var(--panel-slate);
-            border-left: 3px solid var(--gold-accent);
-            border-radius: 4px;
-            padding: 24px;
-            margin-top: 30px;
-            text-align: left;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .philosophy-box h3 {
-            font-size: 14px;
-            font-weight: 700;
             color: #ffffff;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
-        .philosophy-box p {
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
+        .brand-text-fallback span { color: var(--gold-accent); }
+        .welcome-banner { font-size: 11px; font-weight: 700; color: var(--gold-accent); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 20px; }
+        .portal-header h1 { font-size: 34px; font-weight: 800; color: #ffffff; margin-bottom: 10px; }
+        .tagline { font-size: 14.5px; color: var(--text-muted); font-style: italic; }
 
-        /* Real-Time Keyword Search Input Section */
         .search-master-section {
             max-width: 850px;
             width: 100%;
             margin: 40px auto 10px auto;
             padding: 0 24px;
             text-align: center;
-        }
-
-        .search-master-section h3 {
-            font-size: 17px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 6px;
-        }
-
-        .faq-subtitle {
-            font-size: 13.5px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
         }
 
         .search-bar-box input {
@@ -178,7 +103,6 @@
             border-radius: 30px;
             color: #ffffff;
             font-size: 14.5px;
-            font-family: inherit;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
@@ -188,131 +112,154 @@
             box-shadow: 0 0 12px rgba(212, 175, 55, 0.2);
         }
 
-        /* Navigational Grid Menu Layout Container */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            padding: 40px 24px;
-            max-width: 1200px;
-            margin: 0 auto;
+        .matrix-wrapper {
+            max-width: 1400px;
             width: 100%;
-        }
-
-        .pillar-card {
-            background-color: var(--panel-slate);
-            border: 1px solid var(--border-muted);
-            padding: 35px 24px;
-            border-radius: 8px;
-            text-align: center;
+            margin: 0 auto;
+            padding: 20px 24px 20px 24px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            gap: 40px;
         }
 
-        .pillar-card:hover {
-            border-color: var(--gold-accent);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.1);
+        .core-pillar-block {
+            background-color: var(--panel-slate);
+            border: 1px solid var(--border-muted);
+            border-radius: 12px;
+            padding: 24px;
         }
 
-        .pillar-card.hidden-node {
-            display: none !important;
+        .core-pillar-block.hidden-node { display: none !important; }
+
+        .pillar-title-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 1px solid var(--border-muted);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
         }
 
-        .pillar-card .icon {
-            font-size: 40px;
-            margin-bottom: 14px;
+        .pillar-title-row .icon { font-size: 32px; }
+        .pillar-title-row h2 { font-size: 22px; font-weight: 800; color: #ffffff; }
+
+        .sub-pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
         }
 
-        .pillar-card h2 {
-            font-size: 17px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 10px;
+        .sub-pillar-card {
+            background-color: var(--bg-deep-node);
+            border: 1px solid var(--border-muted);
+            border-radius: 8px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .pillar-card p {
-            font-size: 13.5px;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 20px;
-            flex: 1;
-        }
+        .sub-pillar-card.hidden-node { display: none !important; }
 
-        .explore-node-text {
-            font-size: 11.5px;
+        .sub-pillar-card h3 {
+            font-size: 15px;
             font-weight: 700;
             color: var(--gold-accent);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            margin-bottom: 14px;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            padding-bottom: 8px;
         }
 
-        /* Professional Stacked Mobile Footer Architecture Layout */
+        .sub-sub-actions-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .sub-sub-item-btn {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            padding: 10px 14px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-muted);
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .sub-sub-item-btn:hover {
+            color: #000000;
+            font-weight: 700;
+            background-color: var(--gold-accent);
+            border-color: var(--gold-accent);
+            transform: translateY(-2px);
+        }
+
+        .sub-sub-item-btn.match-highlight {
+            color: #000000;
+            font-weight: 700;
+            background-color: var(--gold-accent);
+            border-color: var(--gold-accent);
+        }
+
+        .ingestion-console-section {
+            max-width: 1400px;
+            width: 100%;
+            margin: 20px auto 60px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+        }
+
+        .action-card-panel {
+            background-color: var(--panel-slate);
+            border: 1px solid var(--border-muted);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .action-card-panel h2 { font-size: 20px; font-weight: 800; color: #ffffff; margin-bottom: 6px; border-bottom: 1px solid var(--border-muted); padding-bottom: 14px; }
+        .action-card-panel p.section-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; }
+        .form-element-block { margin-bottom: 18px; }
+        .form-element-block label { display: block; font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-element-block input[type="text"], .form-element-block textarea { width: 100%; padding: 14px; background-color: var(--bg-deep-node); border: 1px solid var(--border-muted); border-radius: 6px; color: #ffffff; font-size: 14px; font-family: inherit; }
+        
+        .upload-picker-container { background: rgba(255,255,255,0.01); border: 1px dashed var(--border-muted); padding: 18px; border-radius: 6px; text-align: center; }
+        .upload-picker-container input[type="file"] { display: block; margin: 8px auto 0 auto; color: var(--text-muted); }
+
+        .submission-trigger-btn { width: 100%; padding: 16px; background-color: var(--gold-accent); color: #000000; border: none; border-radius: 6px; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
+        .submission-trigger-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
+        .ticket-trigger-btn { background-color: transparent; border: 1px solid rgba(255,255,255,0.2); color: #ffffff; margin-top: 15px; }
+        .ticket-trigger-btn:hover { background-color: rgba(255,255,255,0.05); }
+
+        .hidden-element { display: none !important; }
+        .telemetry-success-receipt { background: rgba(16, 185, 129, 0.05); border: 1px solid var(--success-green); border-radius: 6px; padding: 20px; margin-top: 20px; }
+        .telemetry-success-receipt h4 { color: var(--success-green); margin-bottom: 6px; font-weight: 800; }
+        .telemetry-success-receipt strong { font-family: monospace; color: #ffffff; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; }
+
         .portal-footer {
             background-color: #090e1a;
             border-top: 1px solid var(--border-muted);
-            padding: 60px 24px 40px 24px;
-            font-size: 14px;
+            padding: 40px 24px;
+            font-size: 13.5px;
             text-align: center;
-            margin-top: auto;
             color: var(--text-muted);
+            margin-top: auto;
         }
-
-        .footer-branding {
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .footer-meta {
-            font-size: 12px;
-            margin-top: 15px;
-            color: rgba(255, 255, 255, 0.2);
-        }
+        .footer-branding { font-weight: 700; color: #ffffff; margin-bottom: 4px; }
     </style>
 </head>
 <body>
 
-    <!-- Urgencies Live Ribbon Ticker -->
     <div class="urgency-ticker">
-        <p>🔒 Tracking Active Status: Staged & Locked in Queue — Reference Ticket: <strong>VP-TICKET-000000</strong></p>
+        <p>🔒 7 × 7 × 7 Operational Pipeline Matrix Active [343 Systems Verified] — Reference Ticket: <strong>VP-TICKET-000000</strong></p>
     </div>
 
-    <!-- Institutional Corporate Header Panel Layout -->
     <header class="portal-header">
         <div class="welcome-container">
             
-                <!-- Image tag linked dynamically to your GitHub repository layout asset layer -->
                 <img src="logo.png" alt="Vecctapivot Enterprises Logo" class="corporate-logo" onerror="this.style.display='none';">
-                <div class="brand-text-fallback">VECCTAPIVOT <span>ENTERPRISES</span></div>
-                <div class="welcome-banner">Master Operations Marketplace Hub</div>
-            </div>
-            <h1>Operational Routing Portal</h1>
-            <p class="tagline">Registered Business Name Verification Terminal (BRS Reference: BN-AYSO8LRE)</p>
-            <div class="trust-badge">Secure Client Encrypted Gateway Account Enabled</div>
-            
-            <div class="philosophy-box">
-                <h3>System Framework Protocol</h3>
-                <p>Welcome to your central architecture desk interface. Select an operations desk module below to manage active logging configurations, localized parameters, or query statutory processing systems.</p>
-            </div>
-        </div>
-    </header>
-
-    <!-- Real-Time Keyword Search Input Section -->
-    <section class="search-master-section">
-        <h3>Search Operations Matrix</h3>
-        <p class="faq-subtitle">Filter cross-functional service pillars instantly by keywords</p>
-        <div class="search-bar-box">
-            <input type="text" id="deskSearchInput" placeholder="Type core phrases (e.g., KRA, eCitizen, Courier, Audit)...">
-        </div>
-    </section>
-
-    <!-- Navigational Grid Menu Layout Container (7 Main Pillars) -->
-    <main class="grid-container" id="gridContainer">
-        
