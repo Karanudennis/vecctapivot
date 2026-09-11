@@ -1,11 +1,11 @@
 <!DOCTYPE html><html><head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Track - VECCTA</title>
+<title>Track - VECCTAPIVOT</title>
 <style>body{background:#0b1220;color:#eef2fa;font-family:Inter,sans-serif;padding:18px}.box{background:#121c30;border:1px solid rgba(230,195,106,.35);border-radius:16px;padding:22px;max-width:620px;margin:20px auto}h1{color:#e6c36a;text-align:center}input{width:100%;padding:14px;border-radius:10px;border:1px solid #2a395c;background:#0b1220;color:#fff;margin:10px 0;box-sizing:border-box}.btn{background:#e6c36a;color:#000;border:none;padding:14px;width:100%;border-radius:10px;font-weight:800;cursor:pointer}.result{margin-top:20px;padding:16px;border-left:5px solid #e6c36a;background:#0b1a33;border-radius:12px;display:none}.price{font-size:28px;color:#e6c36a;font-weight:900}.status{padding:6px 14px;border-radius:20px;font-weight:800;display:inline-block;background:#f59e0b;color:#000}.msgBox{margin-top:12px;padding:14px;background:#0b1220;border-radius:10px;border:1px solid #2a395c}</style>
 </head><body>
 <div class="box">
 <h1>Track Your Ticket</h1>
-<input id="searchId" placeholder="Enter VECCTA-20260911-4228">
+<input id="searchId" placeholder="Enter VECCTA- or JOB- ID">
 <button class="btn" onclick="track()">Track Now</button>
 <div id="result" class="result"></div>
 </div>
@@ -14,7 +14,7 @@ function getAllTickets(){
  let keys=['veccta_tickets','veccta_jobs','tickets','jobs','veccta_bookings'];
  let all=[];
  keys.forEach(k=>{
-   try{ let arr=JSON.parse(localStorage.getItem(k)||'[]'); if(Array.isArray(arr)) all=all.concat(arr.map((t,i)=>({...t,_idx:i,_key:k}))); }catch(e){}
+   try{ let arr=JSON.parse(localStorage.getItem(k)||'[]'); if(Array.isArray(arr)) all=all.concat(arr); }catch(e){}
  });
  return all;
 }
@@ -22,22 +22,19 @@ function track(){
  let id=document.getElementById('searchId').value.trim();
  if(!id){alert('Enter ID');return;}
  let all=getAllTickets();
- // search by ANY field containing the ID
  let t=all.find(x=> 
    (x.id && x.id.toUpperCase()==id.toUpperCase()) ||
    (x.ticket && x.ticket.toUpperCase()==id.toUpperCase()) ||
-   (x.ticketId && x.ticketId.toUpperCase()==id.toUpperCase()) ||
-   (x.id && x.id.includes(id)) ||
-   (x.ticket && x.ticket.includes(id))
+   (x.id && x.id.toUpperCase().includes(id.toUpperCase()))
  );
  let div=document.getElementById('result');
  if(!t){
    div.style.display='block';
-   div.innerHTML=`<b style="color:#ff6b6b">Not found: ${id}</b><br>Total in storage: ${all.length}<br>Found IDs: ${all.map(x=>x.id||x.ticket||'VECCTA-'+x._idx).slice(0,10).join(', ')}<br><br>Try: VECCTA-0, VECCTA-1, etc or your full ID`;
+   div.innerHTML=`<b style="color:#ff6b6b">Not found: ${id}</b><br>Total: ${all.length}`;
    return;
  }
  div.style.display='block';
- div.innerHTML=`<b style="color:#e6c36a">${t.id||t.ticket||'Ticket'}</b><br><b>${t.clientName||t.name||''}</b><br>Service: ${t.service||''}<br><div class="price">${t.price?'KSh '+t.price:'Quote Pending'}</div><div class="status">${t.status||'Logged'}</div><div class="msgBox"><b>Update from Admin:</b><br>${t.adminMessage||'Admin will update price & message here.'}</div><div style="margin-top:10px;font-size:12px;color:#96a0ba">Logged: ${t.date||t.logged||''}</div><br><a href="https://wa.me/254768309956?text=Ticket ${t.id||id}" style="color:#25D366;font-weight:700">WhatsApp Us</a>`;
+ div.innerHTML=`<b style="color:#e6c36a">${t.id||t.ticket}</b><br><b>${t.clientName||t.name||''}</b><br>Service: ${t.service||''}<br><div class="price">${t.price?'KSh '+t.price:'Quote Pending'}</div><div class="status">${t.status||'Logged'}</div><div class="msgBox"><b>Update from Admin:</b><br>${t.adminMessage||'Admin will update here.'}</div><br><a href="https://wa.me/254788099685?text=Ticket ${t.id||id}" style="color:#25D366;font-weight:700">WhatsApp Us</a>`;
 }
 </script>
 </body></html>
