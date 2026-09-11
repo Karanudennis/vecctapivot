@@ -1,230 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Book a Service Ticket — VECCTAPIVOT GATEWAY BN-AYSO8LRE</title>
-  <meta name="description" content="Lock your engagement with a unique ticket number. Choose pillar, service and engagement, leave your details, submit.">
-  <link rel="icon" href="logo.png">
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* GitHub fix - colour blending + footer if style.css missing */
-    :root{--navy:#0b1a33;--gold:#f5b400}
-   .ticket-gold{border:2px dashed var(--gold);padding:12px;border-radius:10px;text-align:center;background:#fffbe6;font-size:22px;font-weight:900;color:var(--navy)}
-  </style>
-</head>
-<body>
-  <div class="utility">
-    <div class="uwrap">
-      <span class="uitem"><span class="ubadge">BRS BN-AYSO8LRE</span></span>
-      <span class="uitem">Unified Cross-Border Service Architecture &middot; 49 services</span>
-      <a class="uitem" href="https://wa.me/254788099685">WhatsApp +254 788 099 685</a>
-    </div>
-  </div>
-  <header class="top">
-    <div class="navrow">
-      <a class="brand" href="index.html">
-        <img src="logo.png" alt="Vecctapivot Enterprises logo">
-        <span class="brandname">Vecctapivot<em>Enterprises &middot; Service Desk</em></span>
-      </a>
-      <nav class="mainnav" aria-label="Primary">
-        <a href="index.html#services">Services</a>
-        <a href="index.html#process">How We Work</a>
-        <a href="track.html">Track</a>
-        <a href="index.html#faq">FAQ</a>
-      </nav>
-      <div class="navcta">
-        <a class="btn line sm2" href="job.html">Request a Job</a>
-        <a class="btn gold sm2" href="ticket.html">Book a Ticket</a>
-      </div>
-    </div>
-  </header>
-  <main>
-  <p class="backline"><a href="index.html">&#8592; All Services - 7 Pillars Visible</a></p>
-  <section class="deskhead">
-    <span class="kicker">Ticket Booking</span>
-    <h1>Book a Service Ticket</h1>
-    <p>Choose the service and the exact engagement you read on the desk pages. Submitting issues a unique <strong>TKT / VECCTA</strong> ticket number and records your place in the queue &mdash; a desk officer confirms scope and a fixed quote with you before any work starts.</p>
-  </section>
+<!DOCTYPE html><html><head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Raise Ticket - VECCTAPIVOT</title>
+<style>
+body{background:#0f172a;color:#fff;font-family:system-ui;padding:16px;max-width:600px;margin:auto}
+.card{background:#1e293b;padding:18px;border-radius:12px;border:1px solid #334155}
+input,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
+button{padding:14px;border:none;border-radius:8px;font-weight:800;width:100%;cursor:pointer}
+.btn-blue{background:#3b82f6;color:#fff}
+label{font-size:13px;color:#94a3b8;display:block;margin-top:8px}
+</style>
+</head><body>
+<h3 style="color:#3b82f6;text-align:center">Raise Ticket</h3>
+<div class="card">
+<label>JOB ID (linked)</label>
+<input id="jobId" placeholder="JOB-20260911-XXXX">
+<label>Your Question / Issue</label>
+<textarea id="msg" rows="4" placeholder="Type your question about this job..."></textarea>
+<button class="btn-blue" onclick="raiseTicket()">RAISE TICKET</button>
+<div id="res"></div>
+</div>
 
-  <section class="formcard reveal">
-    <form id="ticketForm" novalidate>
-      <fieldset>
-        <legend>Your service - 7 Pillars on Interface</legend>
-        <div class="field"><label for="fDesk">Service area (Pillar 1-7)</label>
-          <select id="fDesk" required><option value="">Select a pillar&hellip;</option></select></div>
-        <div class="field"><label for="fService">Service (7 per pillar)</label>
-          <select id="fService" required disabled><option value="">Select a pillar first&hellip;</option></select></div>
-        <div class="field"><label for="fEngagement">Engagement (7 tasks - 343 total)</label>
-          <select id="fEngagement" required disabled><option value="">Select a service first&hellip;</option></select></div>
-        <p class="fieldhint" id="tfHint">Each engagement carries its own timeframe &mdash; it will appear here once you choose.</p>
-      </fieldset>
+<script>
+// Auto fill from URL ?job=JOB-xxx
+let p=new URLSearchParams(window.location.search);
+if(p.get('job')) document.getElementById('jobId').value=p.get('job');
 
-      <fieldset>
-        <legend>Client details</legend>
-        <div class="field"><label for="fName">Full name</label>
-          <input id="fName" required autocomplete="name" maxlength="80" placeholder="e.g. Wanjiru A. Mwangi"></div>
-        <div class="field"><label for="fPhone">Phone (WhatsApp-preferred)</label>
-          <input id="fPhone" type="tel" required autocomplete="tel" maxlength="24" placeholder="+254 7XX XXX XXX"></div>
-        <div class="field"><label for="fEmail">Email <span class="opt">(optional)</span></label>
-          <input id="fEmail" type="email" autocomplete="email" placeholder="you@example.com"></div>
-        <div class="field"><label for="fDetails">Anything the desk should know <span class="opt">(optional)</span></label>
-          <textarea id="fDetails" rows="3" maxlength="600" placeholder="Preferred meeting point, portal status, prior reference numbers&hellip;"></textarea></div>
-      </fieldset>
+function raiseTicket(){
+ let jobId=document.getElementById('jobId').value.trim();
+ let message=document.getElementById('msg').value.trim();
+ if(!jobId||!message){alert('Enter JOB ID and message');return;}
 
-      <p class="formerr" id="formErr" hidden></p>
-      <button type="submit" class="btn gold big" id="submitBtn">Submit Booking &rarr; issue my TKT number</button>
-      <p class="formnote">No payment is taken here. A desk officer confirms scope and quote on WhatsApp, call or SMS before any work starts. Ticket will be emailed to vecctapivotenterprises@gmail.com</p>
-    </form>
-  </section>
+ let tickets=JSON.parse(localStorage.getItem('veccta_tickets')||'[]');
+ let t={
+   id:'TICKET-'+Date.now(),
+   jobId:jobId,
+   message:message,
+   from:'Client',
+   adminReply:'',
+   status:'Open',
+   logged:new Date().toLocaleString()
+ };
+ tickets.push(t);
+ localStorage.setItem('veccta_tickets',JSON.stringify(tickets));
 
-  <section class="confcard" id="confCard" hidden>
-    <span class="kicker">Booking confirmed</span>
-    <h2 id="confRef">TKT-&mdash;</h2>
-    <p class="confsub">Your unique ticket number. Screenshot this &mdash; it is your queue reference. Email sent to you and to VECCTAPIVOT.</p>
-    <dl class="confdl" id="confDl"></dl>
-    <div class="confbtns">
-      <a class="btn gold" id="waConfirm" target="_blank" rel="noopener" href="#">Send reference on WhatsApp</a>
-      <a class="btn line" href="track.html">Track this reference</a>
-      <button class="btn ghost" type="button" id="copyRef">Copy number</button>
-    </div>
-    <p class="confnote">Prefer offline? Call or SMS <a href="tel:+254788099685">+254 788 099 685</a> with the reference and a desk officer takes it from there.</p>
-  </section>
-  </main>
-
-  <div id="guaranteeBar" class="guarantees"></div>
-  <nav class="contactbar" aria-label="Contact channels">
-    <a class="wa" href="https://wa.me/254788099685">WhatsApp</a>
-    <a href="tel:+254788099685">Call</a>
-    <a href="sms:+254788099685">SMS</a>
-    <a href="mailto:vecctapivotenterprises@gmail.com">Email</a>
-  </nav>
-  <footer class="sitefoot" id="siteFoot">
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:16px;background:#0b1a33;color:#fff;border-top:5px solid #f5b400">
-      <div><h4 style="color:#f5b400">VECCTAPIVOT GATEWAY</h4><p style="font-size:12px">BN-AYSO8LRE - Every Customer Feels At Home<br>Gilgil, Kenya</p></div>
-      <div><h4 style="color:#f5b400">Contact</h4><p style="font-size:12px">+254788099685<br>vecctapivotenterprises@gmail.com</p></div>
-      <div><h4 style="color:#f5b400">Follow</h4><p style="font-size:12px">Licensed • Locally Owned • 24/7 Care</p></div>
-    </div>
-  </footer>
-
-  <script src="js/matrix.js"></script>
-  <script src="js/common.js"></script>
-  <script>
-    (function () {
-      var M = window.VP_MATRIX, P = window.VP.params? window.VP.params() : new URLSearchParams(location.search);
-      var dSel = document.getElementById("fDesk"), sSel = document.getElementById("fService"), eSel = document.getElementById("fEngagement");
-      var tfHint = document.getElementById("tfHint"), errBox = document.getElementById("formErr");
-      var btn = document.getElementById("submitBtn");
-
-      // Show 7 pillars immediately
-      Object.keys(M).forEach(function (k) { dSel.add(new Option(M[k].name, k)); });
-
-      function fillServices() {
-        sSel.innerHTML = ""; eSel.innerHTML = ""; sSel.disabled = eSel.disabled = true;
-        sSel.add(new Option("Select a service…", ""));
-        eSel.add(new Option("Select a service first…", ""));
-        if (!dSel.value) return;
-        M[dSel.value].services.forEach(function (s) { sSel.add(new Option(s.title, s.title)); });
-        sSel.disabled = false;
-      }
-      function fillEngagements() {
-        eSel.innerHTML = ""; eSel.disabled = true;
-        eSel.add(new Option("Select an engagement…", ""));
-        tfHint.textContent = "Each engagement carries its own timeframe — it will appear here once you choose.";
-        var svc = (M[dSel.value] || { services: [] }).services.filter(function (s) { return s.title === sSel.value; })[0];
-        if (!svc) return;
-        svc.engagements.forEach(function (e) { eSel.add(new Option(e.t, e.t)); });
-        eSel.disabled = false;
-      }
-      function showTf() {
-        var svc = (M[dSel.value] || { services: [] }).services.filter(function (s) { return s.title === sSel.value; })[0];
-        var e = svc && svc.engagements.filter(function (x) { return x.t === eSel.value; })[0];
-        tfHint.innerHTML = e? "Timeframe: <strong>" + e.tf + "</strong>" : "Each engagement carries its own timeframe — it will appear here once you choose.";
-      }
-      dSel.addEventListener("change", fillServices);
-      sSel.addEventListener("change", fillEngagements);
-      eSel.addEventListener("change", showTf);
-
-      if (P.get && P.get("desk")) { dSel.value = P.get("desk"); fillServices(); }
-      if (P.get && P.get("service")) {
-        var opt = Array.prototype.find.call(sSel.options, function (o) { return o.value === P.get("service"); });
-        if (opt) { sSel.value = opt.value; fillEngagements(); }
-      }
-      if (P.get && P.get("engagement")) {
-        var opt2 = Array.prototype.find.call(eSel.options, function (o) { return o.value === P.get("engagement"); });
-        if (opt2) { eSel.value = opt2.value; showTf(); }
-      }
-
-      function fail(msg) { errBox.textContent = msg; errBox.hidden = false; errBox.scrollIntoView({ behavior: "smooth", block: "center" }); }
-
-      // GITHUB FIX - No /api/ticket, generate locally + email
-      document.getElementById("ticketForm").addEventListener("submit", async function (ev) {
-        ev.preventDefault(); errBox.hidden = true;
-        var payload = {
-          clientName: document.getElementById("fName").value.trim(),
-          phone: document.getElementById("fPhone").value.trim(),
-          email: document.getElementById("fEmail").value.trim(),
-          desk: dSel.value,
-          service: sSel.value,
-          engagement: eSel.value,
-          details: document.getElementById("fDetails").value.trim(),
-        };
-        if (!payload.desk ||!payload.service ||!payload.engagement) return fail("Complete the service path: pillar, service and engagement.");
-        if (!payload.clientName) return fail("Enter your full name as it should appear on the ticket.");
-        if (payload.phone.replace(/[^0-9]/g, "").length < 9) return fail("Enter a reachable phone number, including country code.");
-        if (payload.email &&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(payload.email)) return fail("That email address looks invalid.");
-
-        btn.disabled = true; btn.textContent = "Issuing your ticket & sending email…";
-
-        var now = new Date();
-        var ref = 'VECCTA-' + now.getFullYear() + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0') + '-' + Math.floor(1000+Math.random()*9000);
-
-        try {
-          await fetch("https://formsubmit.co/ajax/vecctapivotenterprises@gmail.com", {
-            method: "POST",
-            headers: { "Content-Type": "application/json", "Accept": "application/json" },
-            body: JSON.stringify({
-              subject: "NEW TICKET " + ref + " - " + M[payload.desk].name,
-              Ticket: ref,
-              Pillar: M[payload.desk].name,
-              Service: payload.service,
-              Engagement: payload.engagement,
-              Client: payload.clientName,
-              Phone: payload.phone,
-              Customer_Email: payload.email || "Not provided",
-              Details: payload.details || "None",
-              Date: now.toLocaleString(),
-              _template: "table",
-              _captcha: "false"
-            })
-          });
-        } catch (e) { console.log("Email send error but ticket still valid", e); }
-
-        // Show confirmation
-        document.getElementById("confRef").textContent = ref;
-        document.getElementById("confDl").innerHTML =
-          "<div><dt>Client</dt><dd>" + payload.clientName + "</dd></div>"
-          + "<div><dt>Service area</dt><dd>" + M[payload.desk].name + "</dd></div>"
-          + "<div><dt>Service</dt><dd>" + payload.service + "</dd></div>"
-          + "<div><dt>Engagement</dt><dd>" + payload.engagement + "</dd></div>"
-          + "<div><dt>Logged</dt><dd>" + now.toLocaleString() + "</dd></div>"
-          + "<div><dt>Email</dt><dd>Sent to vecctapivotenterprises@gmail.com</dd></div>";
-        document.getElementById("waConfirm").href =
-          "https://wa.me/254788099685?text=" + encodeURIComponent("Hello VECCTAPIVOT, I booked ticket " + ref + " (" + M[payload.desk].name + " / " + payload.service + " / " + payload.engagement + "). Confirming my booking.");
-        document.getElementById("copyRef").onclick = function () {
-          if (navigator.clipboard) navigator.clipboard.writeText(ref);
-          this.textContent = "Copied!";
-        };
-        document.getElementById("ticketForm").hidden = true;
-        document.querySelector(".formcard").hidden = true;
-        document.getElementById("confCard").hidden = false;
-        document.getElementById("confCard").scrollIntoView({ behavior: "smooth", block: "start" });
-        btn.disabled = false; btn.textContent = "Submit Booking → issue my TKT number";
-
-        // Save locally
-        var all = JSON.parse(localStorage.getItem('veccta_tickets')||'[]'); all.push({ref,...payload, date: now.toISOString()}); localStorage.setItem('veccta_tickets', JSON.stringify(all));
-      });
-    })();
-  </script>
-</body>
-</html>
+ document.getElementById('res').innerHTML=`<div class=card style="border-left:4px solid #3b82f6;text-align:center"><b style="color:#3b82f6">${t.id}</b><br>Ticket raised for ${jobId}<br><br><a href="track.html" style="background:#3b82f6;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none">Go Track</a> <a href="https://wa.me/254788099685?text=${t.id} for ${jobId}" style="color:#25D366;font-weight:700;margin-left:10px">WhatsApp</a></div>`;
+}
+</script>
+</body></html>
