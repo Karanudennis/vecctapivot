@@ -10,7 +10,7 @@
 
     <!-- Urgency Top Notification Ticker -->
     <div class="urgency-ticker">
-        <p>📋 Marketplace Live: Submit portal credentials, map agriculture lorry freight tracks, or request ground audits directly below.</p>
+        <p>📋 Marketplace Live: Submit portal credentials, map agriculture lorry freight tracks, or request ground audits directly inside the specialized terminals below.</p>
     </div>
 
     <!-- Premium Visual Header Panel -->
@@ -32,25 +32,11 @@
             </div>
             
             <div class="header-action-container">
-                <a href="#portal-grid" class="cta-btn-main scroll-btn">📊 Estimate Rate & File Data</a>
-                <a href="#master-intake-section" class="cta-btn-main ticket-btn" onclick="activateCentralHelpDesk()">🎫 Open Central Help Desk</a>
+                <a href="#portal-grid" class="cta-btn-main scroll-btn">📊 Browse 7 Operational Desks</a>
+                <a href="agency.html" class="cta-btn-main ticket-btn">🎫 Open Central Help Desk</a>
             </div>
         </div>
     </header>
-
-    <!-- AUTOMATED TRANSACTION WORK ORDER MODAL POPUP -->
-    <div id="success-ticket-modal" class="ticket-modal-overlay hidden-popup" style="display: none;">
-        <div class="ticket-modal-card">
-            <div class="ticket-badge-icon">🛡️</div>
-            <h3>OPERATION INITIALIZED SUCCESSFULLY</h3>
-            <p class="modal-ticket-id">Your Unique Tracking File: <strong id="generated-ticket-id">VP-REG-0000</strong></p>
-            <div class="modal-notice-box">
-                <p><strong>🔒 Status: Staged & Locked in Queue.</strong> Your credentials, text parameters, and uploaded files have been safely encrypted and transmitted to our desk handler inbox.</p>
-                <p>A copy of this task run layout has been dispatched to our support mail gateway. Please wait—a desk proxy is verifying your files and will contact you via **email or phone text within 15 minutes** to confirm workflow completion schedules.</p>
-            </div>
-            <button type="button" class="modal-close-btn" onclick="closeTicketModal()">Acknowledge & Monitor Status</button>
-        </div>
-    </div>
 
     <!-- LIVE REAL-TIME MARKETPLACE SEARCH DIRECTORY -->
     <section class="search-master-section">
@@ -64,82 +50,80 @@
     <!-- THE 7 PILLARS NAVIGATION INTERFACE GRID -->
     <main id="portal-grid" class="grid-container">
         
-        <div class="pillar-card searchable-card" data-tags="digital brand brs registration logo bn2 bn3 cessation particulars link legacy ecitizen kra pin tax returns corporate design profile" onclick="activatePillarDesk('p1-desk', '💻 Digital & Brand Systems', 'REG')">
+        <!-- Pillar 1 -->
+        <a href="digital.html" class="pillar-card searchable-card" data-tags="digital brand brs registration logo bn2 bn3 cessation particulars link legacy ecitizen kra pin tax returns corporate design profile">
             <div class="icon">💻</div>
             <h2>1. Digital & Brand Systems</h2>
             <p>BRS Business Registrations, Portal Particulars Alterations & Visual Branding Identity Layouts</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
+            <div class="explore-node-text">Launch Specialized Terminal ➡️</div>
+        </a>
 
-        <div class="pillar-card searchable-card" data-tags="academic test mock exam high school form cbc revision booklet vault kasneb cpa atd past paper guide tuition papers study notes education portal" onclick="activatePillarDesk('p2-desk', '📚 Academic & Testing Logistics', 'ACA')">
+        <!-- Pillar 2 -->
+        <a href="academic.html" class="pillar-card searchable-card" data-tags="academic test mock exam high school form cbc revision booklet vault kasneb cpa atd past paper guide tuition papers study notes education portal">
             <div class="icon">📚</div>
             <h2>2. Academic & Testing Logistics</h2>
             <p>Form 1-4 High School Mock Bundles, CBC Portfolios & KASNEB CPA/ATD Resource Vaults</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
+            <div class="explore-node-text">Launch Specialized Terminal ➡️</div>
+        </a>
 
-        <div class="pillar-card searchable-card" data-tags="transport ride taxi booking courier dispatch motorcycle lorry cargo freight logistics cold chain truck trailer van routing insurance" onclick="activatePillarDesk('p3-desk', '🚖 Transport Brokerage Hub', 'TRK')">
+        <!-- Pillar 3 -->
+        <a href="transport.html" class="pillar-card searchable-card" data-tags="transport ride taxi booking courier dispatch motorcycle lorry cargo freight logistics cold chain truck trailer van routing insurance">
             <div class="icon">🚖</div>
             <h2>3. Transport Brokerage Hub</h2>
             <p>Intra-Town Express Couriers, Local Transfers & Long-HaUL Freight Lines</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
+            <div class="explore-node-text">Launch Specialized Terminal ➡️</div>
+        </a>
 
-        <div class="pillar-card searchable-card" data-tags="sourcing merchandise agribusiness crop potato cabbage farm market factory price audit import wholesale b2b supplier check tariff cargo" onclick="activatePillarDesk('p4-desk', '🤝 Merchandise Sourcing Links', 'SRC')">
+        <!-- Pillar 4 -->
+        <a href="sourcing.html" class="pillar-card searchable-card" data-tags="sourcing merchandise agribusiness crop potato cabbage farm market factory price audit import wholesale b2b supplier check tariff cargo">
             <div class="icon">🤝</div>
             <h2>4. Merchandise Sourcing Links</h2>
             <p>Farm-Gate Agribusiness Aggregations, Factory Price Audits & Import Tracks</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
+            <div class="explore-node-text">Launch Specialized Terminal ➡️</div>
+        </a>
 
-        <div class="pillar-card searchable-card" data-tags="fixer desk physical site inspection real estate plot verify consignment count warehouse audit permit county proxy enforcement dispute fence safety" onclick="activatePillarDesk('p5-desk', '🛠️ Independent Fixer Desk', 'FIX')">
+        <!-- Pillar 5 -->
+        <a href="fixer.html" class="pillar-card searchable-card" data-tags="fixer desk physical site inspection real estate plot verify consignment count warehouse audit permit county proxy enforcement dispute fence safety">
             <div class="icon">🛠️</div>
             <h2>5. Independent Fixer Desk</h2>
             <p>Physical Property Site Verifications, Consignment Counts & Permit Proxy Handling</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
+            <div class="explore-node-text">Launch Specialized Terminal ➡️</div>
+        </a>
 
-        <div class="pillar-card searchable-card" data-tags="agency general core consolidated billing ledger accounting balance strategy queue override border trade corridor metrics kpi escrow cash flows fund" onclick="activatePillarDesk('p6-desk', '🏢 General Agency Core', 'CRE')">
+        <!-- Pillar 6 -->
+        <a href="agency.html" class="pillar-card searchable-card" data-tags="agency general core consolidated billing ledger accounting balance strategy queue override border trade corridor metrics kpi escrow cash flows fund">
             <div class="icon">🏢</div>
             <h2>6. General Agency Core</h2>
             <p>Consolidated Firm Accounts, Inter-Desk Escalations & Operations Management Dashboard</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
+            <div class="explore-node-text">Launch Specialized Terminal ➡️</div>
+        </a>
 
-        <div class="pillar-card searchable-card" data-tags="statutory immigration portal ecitizen passport id replacement maisha card ntsa dl logbook shif sha health conduct dci lands ardhisasa tax filings returns kra" onclick="activatePillarDesk('p7-desk', '📄 Statutory & Portal Logistics', 'STAT')">
+        <!-- Pillar 7 -->
+        <a href="statutory.html" class="pillar-card searchable-card" data-tags="statutory immigration portal ecitizen passport id replacement maisha card ntsa dl logbook shif sha health conduct dci lands ardhisasa tax filings returns kra">
             <div class="icon">📄</div>
             <h2>7. Statutory & Portal Logistics</h2>
             <p>eCitizen Maisha Cards, NTSA DL Logbook Transfers, KRA iTax Return Filings & Land Searches</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
+            <div class="explore-node-text">Launch Specialized Terminal ➡️</div>
+        </a>
 
     </main>
 
-    <!-- THE UNIFIED DYNAMIC DATA INGESTION WORKSPACE CARD -->
-    <section id="master-intake-section" class="calculator-master-card" style="max-width: 750px; margin: 40px auto; display: none;">
-        <h3 id="active-desk-title">🛒 Service Desk Panel</h3>
-        <p style="font-size: 14px; color: #555; margin-bottom: 25px;">Select your precise job module below. The system will dynamically calculate pricing, check delivery SLAs, and generate your custom form parameters.</p>
-
-        <!-- Dynamic Dropdown Options Managed by JS -->
-        <form id="intake-form" onsubmit="handleFormSubmission(event)">
-            <input type="hidden" id="current-prefix" value="GEN">
+    <script>
+        // Real-Time Ingress Keyword Filtering System
+        function filterMarketplaceSearch() {
+            const query = document.getElementById('marketplace-search').value.toLowerCase();
+            const cards = document.querySelectorAll('.searchable-card');
             
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label for="sub-service-select" style="display:block; font-weight:bold; margin-bottom:5px;">Select Service Package:</label>
-                <select id="sub-service-select" onchange="calculateDynamicPrice()" style="width:100%; padding:10px; border-radius:4px;" required>
-                    <!-- Populated dynamically via JS -->
-                </select>
-            </div>
-
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label for="client-name" style="display:block; font-weight:bold; margin-bottom:5px;">Your Full Name / Business Identity:</label>
-                <input type="text" id="client-name" style="width:100%; padding:10px; border-radius:4px;" required placeholder="e.g., Jane Doe / Veccta Logistics Ltd">
-            </div>
-
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label for="client-contact" style="display:block; font-weight:bold; margin-bottom:5px;">Phone Number or Email Address:</label>
-                <input type="text" id="client-contact" style="width:100%; padding:10px; border-radius:4px;" required placeholder="e.g., 0712345678 or info@domain.com">
-            </div>
-
-            <div class="form-group" style="margin-bottom: 20px;">
-                <label for="operational-notes" style="display:block; font-weight:bold; margin-bottom:5px;">Specific Instructions or Credentials/Portal Notes:</label>
+            cards.forEach(card => {
+                const tags = card.getAttribute('data-tags').toLowerCase();
+                const content = card.textContent.toLowerCase();
+                if (tags.includes(query) || content.includes(query)) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
