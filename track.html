@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Track a Reference — VECCTAPIVOT Enterprises</title>
-  <meta name="description" content="Track your VECCTAPIVOT ticket (TKT) or job (JOB) reference: status, desk, service, engagement and logged time.">
+  <title>Track a Reference — VECCTAPIVOT GATEWAY BN-AYSO8LRE</title>
   <link rel="icon" href="logo.png">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -12,17 +11,17 @@
   <div class="utility">
     <div class="uwrap">
       <span class="uitem"><span class="ubadge">BRS BN-AYSO8LRE</span></span>
-      <span class="uitem">Unified Cross-Border Service Architecture &middot; 49 services</span>
+      <span class="uitem">Unified Cross-Border Service Architecture · 49 services</span>
       <a class="uitem" href="https://wa.me/254788099685">WhatsApp +254 788 099 685</a>
     </div>
   </div>
   <header class="top">
     <div class="navrow">
       <a class="brand" href="index.html">
-        <img src="logo.png" alt="Vecctapivot Enterprises logo">
-        <span class="brandname">Vecctapivot<em>Enterprises &middot; Service Desk</em></span>
+        <img src="logo.png" alt="logo">
+        <span class="brandname">Vecctapivot<em>Enterprises · Service Desk</em></span>
       </a>
-      <nav class="mainnav" aria-label="Primary">
+      <nav class="mainnav">
         <a href="index.html#services">Services</a>
         <a href="index.html#process">How We Work</a>
         <a href="track.html">Track</a>
@@ -39,100 +38,100 @@
   <section class="deskhead">
     <span class="kicker">Reference Tracking</span>
     <h1>Track a Reference</h1>
-    <p>Enter the unique number issued when you booked or filed &mdash; <strong>TKT-</strong> for booked tickets, <strong>JOB-</strong> for job requests. You see exactly what the desk sees. Quote the reference on WhatsApp and an officer takes it personally.</p>
+    <p>Enter the unique number - <strong>VECCTA-</strong> for booked tickets, <strong>JOB-</strong> for jobs. Works on GitHub via local storage.</p>
   </section>
 
-  <section class="formcard reveal">
+  <section class="formcard">
     <form id="trackForm">
       <div class="field inline">
-        <label for="refInput">Reference number</label>
-        <div class="trackrow">
-          <input id="refInput" placeholder="TKT-26A001ABC" spellcheck="false" autocapitalize="characters" maxlength="24" required>
+        <label for="refInput">Reference number (VECCTA-...)</label>
+        <div class="trackrow" style="display:flex;gap:8px">
+          <input id="refInput" placeholder="VECCTA-20260912-1234" spellcheck="false" autocapitalize="characters" maxlength="24" required style="flex:1;padding:10px;border-radius:8px;border:1px solid #ccc">
           <button type="submit" class="btn gold" id="trackBtn">Track</button>
         </div>
       </div>
-      <p class="formerr" id="formErr" hidden></p>
+      <p class="formerr" id="formErr" hidden style="color:red"></p>
     </form>
   </section>
 
-  <section class="confcard" id="result" hidden></section>
+  <section class="confcard" id="result" hidden style="background:#fff;padding:16px;border-radius:12px;margin-top:12px;border-left:6px solid #f5b400"></section>
+  <section id="allTickets" style="margin-top:20px"></section>
   </main>
 
-  <div id="guaranteeBar" class="guarantees"></div>
-
-  <nav class="contactbar" aria-label="Contact channels">
-    <a class="wa" href="https://wa.me/254788099685" aria-label="Chat on WhatsApp">&#9993; WhatsApp</a>
-    <a href="tel:+254788099685" aria-label="Call hotline">&#9742; Call</a>
-    <a href="sms:+254788099685" aria-label="Send SMS text">&#9993; SMS</a>
-    <a href="mailto:vecctapivotenterprises@gmail.com" aria-label="Email secure tunnel">&#9990; Email</a>
+  <nav class="contactbar">
+    <a class="wa" href="https://wa.me/254788099685">WhatsApp</a>
+    <a href="tel:+254788099685">Call</a>
+    <a href="sms:+254788099685">SMS</a>
+    <a href="mailto:vecctapivotenterprises@gmail.com">Email</a>
   </nav>
-  <footer class="sitefoot" id="siteFoot"></footer>
+  <footer class="sitefoot" id="siteFoot">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:16px;background:#0b1a33;color:#fff;border-top:5px solid #f5b400">
+      <div><h4 style="color:#f5b400">VECCTAPIVOT GATEWAY</h4><p style="font-size:12px">BN-AYSO8LRE<br>Every Customer Feels At Home</p></div>
+      <div><h4 style="color:#f5b400">Contact</h4><p style="font-size:12px">+254788099685<br>vecctapivotenterprises@gmail.com</p></div>
+      <div><h4 style="color:#f5b400">Follow</h4><p style="font-size:12px">Licensed • Locally Owned</p></div>
+    </div>
+  </footer>
 
   <script src="js/common.js"></script>
+  <script src="js/matrix.js"></script>
   <script>
     (function () {
       var form = document.getElementById("trackForm");
       var input = document.getElementById("refInput");
       var errBox = document.getElementById("formErr");
       var out = document.getElementById("result");
-      var btn = document.getElementById("trackBtn");
+      var allDiv = document.getElementById("allTickets");
 
-      var P = window.VP.params();
+      function getTickets(){ return JSON.parse(localStorage.getItem('veccta_tickets')||'[]'); }
+
+      // Show all tickets booked on this device
+      function showAll(){
+        var tickets = getTickets();
+        if(tickets.length===0){ allDiv.innerHTML="<p style='font-size:12px;color:#666'>No tickets yet on this device. Book one at <a href='ticket.html'>ticket.html</a></p>"; return; }
+        var h="<h3 style='font-size:14px'>Your Tickets on this device ("+tickets.length+")</h3><div style='display:grid;gap:8px'>";
+        tickets.slice().reverse().forEach(function(t){
+          h+="<div style='background:#fff;padding:10px;border-radius:8px;border:1px solid #eee'><strong>"+t.ref+"</strong> - "+(t.service||'')+" - "+t.clientName+"<br><small>"+new Date(t.date).toLocaleString()+"</small> <a href='#' onclick=\"document.getElementById('refInput').value='"+t.ref+"';document.getElementById('trackForm').dispatchEvent(new Event('submit'));return false;\">Track this</a></div>";
+        });
+        h+="</div>"; allDiv.innerHTML=h;
+      }
+      showAll();
+
+      var P = new URLSearchParams(location.search);
       if (P.get("ref")) { input.value = P.get("ref"); }
 
-      function esc(s) {
-        return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-      }
-      function row(dt, dd) { return "<div><dt>" + dt + "</dt><dd>" + dd + "</dd></div>"; }
+      function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
       form.addEventListener("submit", function (ev) {
-        ev.preventDefault();
-        errBox.hidden = true;
+        ev.preventDefault(); errBox.hidden=true;
         var ref = input.value.trim().toUpperCase();
-        if (!ref) { errBox.textContent = "Enter your reference number."; errBox.hidden = false; return; }
-        btn.disabled = true; btn.textContent = "Tracking\u2026";
-        fetch("/api/track?ref=" + encodeURIComponent(ref))
-          .then(function (r) { return r.json().then(function (j) { return { s: r.status, j: j }; }); })
-          .then(function (res) {
-            btn.disabled = false; btn.textContent = "Track";
-            if (!res.j.ok) {
-              out.hidden = true;
-              errBox.textContent = res.j.error || "Lookup failed.";
-              errBox.hidden = false;
-              return;
-            }
-            var j = res.j;
-            var h = '<span class="kicker">' + (j.kind === "JOB" ? "Job request" : "Booked ticket") + ' &middot; on the desk</span>'
-              + "<h2>" + esc(j.reference) + "</h2>"
-              + '<p class="confsub">' + (j.kind === "JOB" ? "Full job file" : "Queue ticket") + " &middot; logged " + esc(window.VP.fmtDate(j.logged)) + "</p>"
-              + '<dl class="confdl">'
-              + row("Client", esc(j.clientName))
-              + row("Service area", esc(String(j.desk).replace(/^\\d+\\.\\s*/, "")))
-              + row("Service", esc(j.service))
-              + row("Engagement", esc(j.engagement));
-            if (j.kind === "JOB") {
-              h += row("Priority", esc(j.priority || "STANDARD"));
-              if (j.deadline) h += row("Needed by", esc(j.deadline));
-              if (j.timeframe) h += row("Timeframe", esc(j.timeframe));
-              if (j.dataEntryFields) h += row("Data entry on record", esc(j.dataEntryFields).split(" | ").join("<br>"));
-              if (j.uploadChecklist) h += row("Uploads expected", esc(j.uploadChecklist).split(" | ").join("<br>"));
-              if (j.notes) h += row("Notes", esc(j.notes));
-            } else if (j.details) {
-              h += row("Notes", esc(j.details));
-            }
-            h += "</dl>"
-              + '<div class="confbtns"><a class="btn gold" target="_blank" rel="noopener" href="https://wa.me/254788099685?text='
-              + encodeURIComponent("Hello VECCTAPIVOT, following up on reference " + j.reference + ".") + '">Follow up on WhatsApp</a>'
-              + '<a class="btn line" href="tel:+254788099685">Call the hotline</a></div>';
-            out.innerHTML = h;
-            out.hidden = false;
-            out.scrollIntoView({ behavior: "smooth", block: "start" });
-          })
-          .catch(function () {
-            btn.disabled = false; btn.textContent = "Track";
-            errBox.textContent = "Network issue. Check connectivity and retry.";
-            errBox.hidden = false;
-          });
+        if(!ref){ errBox.textContent="Enter your reference number."; errBox.hidden=false; return; }
+
+        var tickets = getTickets();
+        var found = tickets.find(function(t){ return t.ref.toUpperCase()===ref; });
+
+        if(!found){
+          errBox.textContent="Not found on this device. Ticket "+ref+" was not booked on this browser. If you booked on another phone, check your email vecctapivotenterprises@gmail.com - all tickets are emailed there. Or WhatsApp us +254788099685 with the number.";
+          errBox.hidden=false; out.hidden=true; return;
+        }
+
+        // Found
+        var M = window.VP_MATRIX||{};
+        var pillarName = M[found.desk]? M[found.desk].name : found.desk;
+        out.innerHTML='<span class="kicker" style="background:#0b1a33;color:#f5b400;padding:4px 8px;border-radius:20px;font-size:11px">Booked ticket · on the desk</span>'
+          +'<h2 style="margin:8px 0">'+esc(found.ref)+'</h2>'
+          +'<p>Logged '+esc(new Date(found.date).toLocaleString())+'</p>'
+          +'<dl style="font-size:13px;line-height:1.8">'
+          +'<div><dt><strong>Client</strong></dt><dd>'+esc(found.clientName)+' - '+esc(found.phone)+'</dd></div>'
+          +'<div><dt><strong>Service area</strong></dt><dd>'+esc(pillarName)+'</dd></div>'
+          +'<div><dt><strong>Service</strong></dt><dd>'+esc(found.service)+'</dd></div>'
+          +'<div><dt><strong>Engagement</strong></dt><dd>'+esc(found.engagement)+'</dd></div>'
+          +'<div><dt><strong>Details</strong></dt><dd>'+esc(found.details||'None')+'</dd></div>'
+          +'<div><dt><strong>Email Status</strong></dt><dd>Sent to vecctapivotenterprises@gmail.com & '+esc(found.email||'no customer email')+'</dd></div>'
+          +'</dl>'
+          +'<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn gold" style="background:#f5b400;padding:8px 12px;border-radius:8px;text-decoration:none;color:#000;font-weight:700" target="_blank" href="https://wa.me/254788099685?text='+encodeURIComponent("Hello VECCTAPIVOT, following up on reference "+found.ref)+ '">Follow up on WhatsApp</a>'
+          +'<a class="btn line" style="border:1px solid #f5b400;padding:8px 12px;border-radius:8px;text-decoration:none;color:#0b1a33" href="tel:+254788099685">Call hotline</a></div>';
+        out.hidden=false;
+        out.scrollIntoView({behavior:"smooth"});
       });
     })();
   </script>
