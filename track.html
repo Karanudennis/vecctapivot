@@ -38,23 +38,23 @@
   <section class="deskhead">
     <span class="kicker">Reference Tracking</span>
     <h1>Track a Reference</h1>
-    <p>Enter the unique number - <strong>VECCTA-</strong> for booked tickets, <strong>JOB-</strong> for jobs. Works on GitHub via local storage.</p>
+    <p>Enter <strong>VECCTA-</strong> for tickets, <strong>JOB-</strong> for jobs. Both display visible - dark navy + gold, no white.</p>
   </section>
 
-  <section class="formcard">
+  <section class="formcard reveal in">
     <form id="trackForm">
-      <div class="field inline">
-        <label for="refInput">Reference number (VECCTA-...)</label>
-        <div class="trackrow" style="display:flex;gap:8px">
-          <input id="refInput" placeholder="VECCTA-20260912-1234" spellcheck="false" autocapitalize="characters" maxlength="24" required style="flex:1;padding:10px;border-radius:8px;border:1px solid #ccc">
-          <button type="submit" class="btn gold" id="trackBtn">Track</button>
+      <div class="field">
+        <label for="refInput">Reference number (VECCTA-... or JOB-...)</label>
+        <div class="trackrow">
+          <input id="refInput" placeholder="VECCTA- or JOB-" spellcheck="false" maxlength="24" required>
+          <button type="submit" class="btn gold">Track</button>
         </div>
       </div>
-      <p class="formerr" id="formErr" hidden style="color:red"></p>
+      <p class="formerr" id="formErr" hidden></p>
     </form>
   </section>
 
-  <section class="confcard" id="result" hidden style="background:#fff;padding:16px;border-radius:12px;margin-top:12px;border-left:6px solid #f5b400"></section>
+  <section class="confcard" id="result" hidden></section>
   <section id="allTickets" style="margin-top:20px"></section>
   </main>
 
@@ -64,11 +64,11 @@
     <a href="sms:+254788099685">SMS</a>
     <a href="mailto:vecctapivotenterprises@gmail.com">Email</a>
   </nav>
-  <footer class="sitefoot" id="siteFoot">
+  <footer class="sitefoot">
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:16px;background:#0b1a33;color:#fff;border-top:5px solid #f5b400">
-      <div><h4 style="color:#f5b400">VECCTAPIVOT GATEWAY</h4><p style="font-size:12px">BN-AYSO8LRE<br>Every Customer Feels At Home</p></div>
-      <div><h4 style="color:#f5b400">Contact</h4><p style="font-size:12px">+254788099685<br>vecctapivotenterprises@gmail.com</p></div>
-      <div><h4 style="color:#f5b400">Follow</h4><p style="font-size:12px">Licensed • Locally Owned</p></div>
+      <div><h4 style="color:#f5b400">VECCTAPIVOT GATEWAY</h4><p style="font-size:12px">BN-AYSO8LRE</p></div>
+      <div><h4 style="color:#f5b400">Contact</h4><p style="font-size:12px">+254788099685</p></div>
+      <div><h4 style="color:#f5b400">Follow</h4><p style="font-size:12px">Licensed</p></div>
     </div>
   </footer>
 
@@ -81,57 +81,30 @@
       var errBox = document.getElementById("formErr");
       var out = document.getElementById("result");
       var allDiv = document.getElementById("allTickets");
-
-      function getTickets(){ return JSON.parse(localStorage.getItem('veccta_tickets')||'[]'); }
-
-      // Show all tickets booked on this device
+      function getTickets(){ try{ return JSON.parse(localStorage.getItem('veccta_tickets')||'[]'); }catch(e){ return []; } }
       function showAll(){
         var tickets = getTickets();
-        if(tickets.length===0){ allDiv.innerHTML="<p style='font-size:12px;color:#666'>No tickets yet on this device. Book one at <a href='ticket.html'>ticket.html</a></p>"; return; }
-        var h="<h3 style='font-size:14px'>Your Tickets on this device ("+tickets.length+")</h3><div style='display:grid;gap:8px'>";
+        if(tickets.length===0){ allDiv.innerHTML="<p style='color:var(--muted);font-size:13px;text-align:center;padding:20px;border:1px dashed var(--line);border-radius:12px'>No tickets yet. Book at <a href='ticket.html' style='color:var(--gold)'>ticket.html</a> or <a href='job.html' style='color:var(--gold)'>job.html</a></p>"; return; }
+        var h="<h3 style='color:var(--gold);font-size:13px;letter-spacing:1px;text-transform:uppercase'>Your Tickets ("+tickets.length+") - VECCTA & JOB visible</h3><div style='display:grid;gap:10px;margin-top:8px'>";
         tickets.slice().reverse().forEach(function(t){
-          h+="<div style='background:#fff;padding:10px;border-radius:8px;border:1px solid #eee'><strong>"+t.ref+"</strong> - "+(t.service||'')+" - "+t.clientName+"<br><small>"+new Date(t.date).toLocaleString()+"</small> <a href='#' onclick=\"document.getElementById('refInput').value='"+t.ref+"';document.getElementById('trackForm').dispatchEvent(new Event('submit'));return false;\">Track this</a></div>";
+          var badge = t.ref.startsWith('JOB')? 'JOB':'VECCTA';
+          h+="<div style='background:linear-gradient(165deg, rgba(24,37,68,0.85), rgba(18,28,48,0.95));border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;padding:14px'><div style='display:flex;justify-content:space-between'><strong style='color:var(--gold)'>"+t.ref+"</strong><span style='background:var(--gold);color:#0b1220;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px'>"+badge+"</span></div><div style='color:var(--ink);font-size:13px'>"+(t.service||t.engagement||'')+" - "+t.clientName+"</div><div style='color:var(--muted);font-size:11px'>"+new Date(t.date).toLocaleString()+"</div><a href='#' onclick=\"document.getElementById('refInput').value='"+t.ref+"';document.getElementById('trackForm').dispatchEvent(new Event('submit'));return false;\" style='color:var(--gold-soft);font-size:12px'>→ Track</a></div>";
         });
         h+="</div>"; allDiv.innerHTML=h;
       }
       showAll();
-
-      var P = new URLSearchParams(location.search);
-      if (P.get("ref")) { input.value = P.get("ref"); }
-
+      var P = new URLSearchParams(location.search); if(P.get("ref")) input.value=P.get("ref");
       function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-
       form.addEventListener("submit", function (ev) {
         ev.preventDefault(); errBox.hidden=true;
         var ref = input.value.trim().toUpperCase();
-        if(!ref){ errBox.textContent="Enter your reference number."; errBox.hidden=false; return; }
-
+        if(!ref){ errBox.textContent="Enter reference"; errBox.hidden=false; return; }
         var tickets = getTickets();
         var found = tickets.find(function(t){ return t.ref.toUpperCase()===ref; });
-
-        if(!found){
-          errBox.textContent="Not found on this device. Ticket "+ref+" was not booked on this browser. If you booked on another phone, check your email vecctapivotenterprises@gmail.com - all tickets are emailed there. Or WhatsApp us +254788099685 with the number.";
-          errBox.hidden=false; out.hidden=true; return;
-        }
-
-        // Found
-        var M = window.VP_MATRIX||{};
-        var pillarName = M[found.desk]? M[found.desk].name : found.desk;
-        out.innerHTML='<span class="kicker" style="background:#0b1a33;color:#f5b400;padding:4px 8px;border-radius:20px;font-size:11px">Booked ticket · on the desk</span>'
-          +'<h2 style="margin:8px 0">'+esc(found.ref)+'</h2>'
-          +'<p>Logged '+esc(new Date(found.date).toLocaleString())+'</p>'
-          +'<dl style="font-size:13px;line-height:1.8">'
-          +'<div><dt><strong>Client</strong></dt><dd>'+esc(found.clientName)+' - '+esc(found.phone)+'</dd></div>'
-          +'<div><dt><strong>Service area</strong></dt><dd>'+esc(pillarName)+'</dd></div>'
-          +'<div><dt><strong>Service</strong></dt><dd>'+esc(found.service)+'</dd></div>'
-          +'<div><dt><strong>Engagement</strong></dt><dd>'+esc(found.engagement)+'</dd></div>'
-          +'<div><dt><strong>Details</strong></dt><dd>'+esc(found.details||'None')+'</dd></div>'
-          +'<div><dt><strong>Email Status</strong></dt><dd>Sent to vecctapivotenterprises@gmail.com & '+esc(found.email||'no customer email')+'</dd></div>'
-          +'</dl>'
-          +'<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn gold" style="background:#f5b400;padding:8px 12px;border-radius:8px;text-decoration:none;color:#000;font-weight:700" target="_blank" href="https://wa.me/254788099685?text='+encodeURIComponent("Hello VECCTAPIVOT, following up on reference "+found.ref)+ '">Follow up on WhatsApp</a>'
-          +'<a class="btn line" style="border:1px solid #f5b400;padding:8px 12px;border-radius:8px;text-decoration:none;color:#0b1a33" href="tel:+254788099685">Call hotline</a></div>';
-        out.hidden=false;
-        out.scrollIntoView({behavior:"smooth"});
+        if(!found){ errBox.textContent="Not found on this device. Check email vecctapivotenterprises@gmail.com or WhatsApp +254788099685"; errBox.hidden=false; out.hidden=true; return; }
+        var M = window.VP_MATRIX||{}; var pillarName = M[found.desk]? M[found.desk].name : found.desk;
+        out.innerHTML='<span class="kicker">'+(found.ref.startsWith('JOB')?'JOB TRACKING':'TICKET TRACKING')+'</span><h2>'+esc(found.ref)+'</h2><p class="confsub">Logged '+esc(new Date(found.date).toLocaleString())+'</p><dl class="confdl"><div><dt>Client</dt><dd>'+esc(found.clientName)+' - '+esc(found.phone)+'</dd></div><div><dt>Service area</dt><dd>'+esc(pillarName||found.desk)+'</dd></div><div><dt>Service</dt><dd>'+esc(found.service||'N/A')+'</dd></div><div><dt>Engagement</dt><dd>'+esc(found.engagement||'N/A')+'</dd></div><div><dt>Email</dt><dd>Sent to vecctapivotenterprises@gmail.com</dd></div></dl><div class="confbtns"><a class="btn gold" target="_blank" href="https://wa.me/254788099685?text='+encodeURIComponent("Hello, following up on "+found.ref)+'">WhatsApp</a><a class="btn line" href="tel:+254788099685">Call</a></div>';
+        out.hidden=false; out.scrollIntoView({behavior:"smooth"});
       });
     })();
   </script>
