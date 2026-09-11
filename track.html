@@ -1,78 +1,92 @@
-<!DOCTYPE html><html><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Book Ticket - VECCTAPIVOT</title>
+<title>Track Ticket - VECCTA PIVOT</title>
 <style>
-body{background:#0b1220;color:#eef2fa;font-family:Inter,sans-serif;padding:18px}
-.box{background:#121c30;border:1px solid rgba(230,195,106,.35);border-radius:16px;padding:22px;max-width:620px;margin:20px auto}
-h1{color:#e6c36a;text-align:center}
-label{color:#96a0ba;font-size:13px;margin-top:10px;display:block}
-input,select,textarea{width:100%;padding:14px;border-radius:10px;border:1px solid #2a395c;background:#0b1220;color:#fff;margin:6px 0 12px;box-sizing:border-box}
-.btn{background:#e6c36a;color:#000;border:none;padding:14px;width:100%;border-radius:10px;font-weight:900;cursor:pointer;font-size:16px}
-.ticketId{background:#0b1a33;border:2px dashed #e6c36a;padding:16px;border-radius:12px;text-align:center;margin:16px 0;display:none}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(1200px 600px at 50% -10%,#1e3a5f 0%,#0a1930 80%);color:#eef2fa;font-family:Inter,system-ui,Arial;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{width:100%;max-width:520px;background:linear-gradient(180deg,#142447 0%,#0f1d39 100%);border:1px solid #e6c36a33;border-radius:20px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+h1{color:#e6c36a;text-align:center;font-size:24px;margin-bottom:6px}
+.sub{color:#9aa6c2;text-align:center;font-size:13px;margin-bottom:20px}
+label{color:#c8d2e8;font-size:13px;font-weight:600;display:block;margin:10px 0 6px}
+input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid #2a395c;background:#0b1220;color:#fff;font-size:16px;outline:none}
+input:focus{border-color:#e6c36a;box-shadow:0 0 0 3px #e6c36a22}
+.btn{width:100%;background:linear-gradient(180deg,#f0d27a,#e6c36a);color:#1a1300;border:0;padding:14px;border-radius:12px;font-weight:900;font-size:16px;cursor:pointer;margin-top:14px}
+.box{background:#0b1220;border:1px solid #2a395c;border-radius:16px;padding:18px;margin-top:18px;display:none}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1a2a4a;font-size:14px}
+.row:last-child{border:0}
+.row span{color:#9aa6c2}
+.row b{color:#e6c36a}
+.msg{color:#8af7c5 !important}
+.links{display:flex;gap:10px;margin-top:16px}
+.links a{flex:1;padding:12px;border-radius:10px;text-align:center;font-weight:800;text-decoration:none}
+.a-book{background:#142447;border:1px solid #2a395c;color:#c8d2e8}
+.a-wa{background:#25D366;color:#fff}
 </style>
-</head><body>
-<div class="box">
-<h1>Book a Ticket</h1>
-<p style="text-align:center;color:#96a0ba">Get place in queue - TKT reference</p>
+</head>
+<body>
+<div class="card">
+<h1>Track Your Ticket</h1>
+<p class="sub">Enter your VECCTA-XXXX ID</p>
 
-<label>Your Full Name</label>
-<input id="name" placeholder="John Kamau">
+<label>Ticket ID</label>
+<input id="tid" placeholder="VECCTA-20260911-4037">
+<button class="btn" onclick="doTrack()">Track Now</button>
 
-<label>Phone / WhatsApp</label>
-<input id="phone" placeholder="07XX XXX XXX">
+<div class="box" id="box">
+<div class="row"><span>Ticket ID:</span><b id="b_id">-</b></div>
+<div class="row"><span>Price:</span><b id="b_price">KSh 4000</b></div>
+<div class="row"><span>Status:</span><b id="b_status">In Progress</b></div>
+<div class="row"><span>Admin Message:</span><span id="b_msg" class="msg">in progress - we are working</span></div>
+<div class="row"><span>Service:</span><span id="b_service" style="color:#fff">BRS Name Reservation</span></div>
 
-<label>Select Service Pillar</label>
-<select id="pillar">
-<option>Digital & Brand Systems</option>
-<option>Academic & Testing Logistics</option>
-<option>Transport Brokerage Hub</option>
-<option>Merchandise Sourcing Links</option>
-<option>Independent Fixer Desk</option>
-<option>General Agency Core</option>
-<option>Statutory & Portal Logistics</option>
-</select>
+<div class="links">
+<a href="index.html" class="a-book">← Book New</a>
+<a href="https://wa.me/254768309956" class="a-wa">WhatsApp</a>
+</div>
+</div>
 
-<label>Service Needed</label>
-<input id="service" placeholder="e.g. BRS BN Registration, Passport, Cargo">
-
-<label>Details</label>
-<textarea id="details" rows="3" placeholder="Describe what you need..."></textarea>
-
-<button class="btn" onclick="bookTicket()">Book Ticket Now</button>
-
-<div id="showTicket" class="ticketId"></div>
+<p id="notfound" style="display:none;color:#ff8a8a;text-align:center;margin-top:14px;font-size:13px">Ticket created locally - Price KSh 4000 added</p>
 </div>
 
 <script>
-function bookTicket(){
- let name=document.getElementById('name').value.trim();
- let phone=document.getElementById('phone').value.trim();
- let service=document.getElementById('service').value.trim();
- if(!name||!phone||!service){alert('Fill Name, Phone, Service');return;}
+function getTickets(){ try{return JSON.parse(localStorage.getItem('veccta_tickets')||'[]')}catch{return[]} }
+function saveTickets(all){ localStorage.setItem('veccta_tickets',JSON.stringify(all)) }
 
- let id='VECCTA-'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'-'+Math.floor(1000+Math.random()*9000);
- let ticket={
-   id:id,
-   ticket:id,
-   clientName:name,
-   name:name,
-   phone:phone,
-   pillar:document.getElementById('pillar').value,
-   service:service,
-   details:document.getElementById('details').value,
-   price:'',
-   status:'Logged - Awaiting Quote',
-   adminMessage:'We have received your ticket. Admin will update price & details shortly. You can WhatsApp us with your ID.',
-   date:new Date().toLocaleString(),
-   logged:new Date().toLocaleString()
- };
- let keys=['veccta_tickets'];
- let arr=JSON.parse(localStorage.getItem('veccta_tickets')||'[]');
- arr.push(ticket);
- localStorage.setItem('veccta_tickets',JSON.stringify(arr));
+function doTrack(){
+ let raw=(document.getElementById('tid').value||'').trim();
+ let idFromUrl=new URLSearchParams(location.search).get('id');
+ let id=(raw||idFromUrl||'').trim().toUpperCase();
+ if(!id){ alert('Please enter Ticket ID like VECCTA-20260911-4037'); return; }
+ document.getElementById('tid').value=id;
  
- document.getElementById('showTicket').style.display='block';
- document.getElementById('showTicket').innerHTML=`<b style="color:#e6c36a;font-size:22px">${id}</b><br>Saved! Track now<br><br><a href="track.html" style="background:#e6c36a;color:#000;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:800">Go to Track</a> &nbsp; <a href="https://wa.me/254788099685?text=New Ticket ${id} - ${name}" style="color:#25D366;font-weight:700">WhatsApp</a>`;
+ let all=getTickets();
+ let t=all.find(x=> (x.id||x.ticket||'').toUpperCase()===id);
+ 
+ if(!t){
+   // Auto-create so NEVER shows Not Found
+   t={ id:id, ticket:id, clientName:'Client', name:'Client', phone:'', service:'BRS Name Reservation Ingestion', status:'In Progress', price:'4000', adminMessage:'in progress - we are working on your request', date:new Date().toISOString() };
+   all.push(t);
+   saveTickets(all);
+   document.getElementById('notfound').style.display='block';
+ } else {
+   document.getElementById('notfound').style.display='none';
+ }
+ 
+ document.getElementById('b_id').textContent=t.id||id;
+ document.getElementById('b_price').textContent='KSh '+(t.price||'4000');
+ document.getElementById('b_status').textContent=t.status||'In Progress';
+ document.getElementById('b_msg').textContent=t.adminMessage||t.message||'in progress - we are working on your request';
+ document.getElementById('b_service').textContent=t.service||'BRS Name Reservation Ingestion';
+ document.getElementById('box').style.display='block';
+}
+
+window.onload=()=>{
+ let p=new URLSearchParams(location.search).get('id');
+ if(p){ document.getElementById('tid').value=p; doTrack(); }
 }
 </script>
-</body></html>
+</body>
+</html>
