@@ -1,92 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Track Ticket - VECCTA PIVOT</title>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track - VeccTa</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:radial-gradient(1200px 600px at 50% -10%,#1e3a5f 0%,#0a1930 80%);color:#eef2fa;font-family:Inter,system-ui,Arial;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-.card{width:100%;max-width:520px;background:linear-gradient(180deg,#142447 0%,#0f1d39 100%);border:1px solid #e6c36a33;border-radius:20px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
-h1{color:#e6c36a;text-align:center;font-size:24px;margin-bottom:6px}
-.sub{color:#9aa6c2;text-align:center;font-size:13px;margin-bottom:20px}
-label{color:#c8d2e8;font-size:13px;font-weight:600;display:block;margin:10px 0 6px}
-input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid #2a395c;background:#0b1220;color:#fff;font-size:16px;outline:none}
-input:focus{border-color:#e6c36a;box-shadow:0 0 0 3px #e6c36a22}
-.btn{width:100%;background:linear-gradient(180deg,#f0d27a,#e6c36a);color:#1a1300;border:0;padding:14px;border-radius:12px;font-weight:900;font-size:16px;cursor:pointer;margin-top:14px}
-.box{background:#0b1220;border:1px solid #2a395c;border-radius:16px;padding:18px;margin-top:18px;display:none}
-.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1a2a4a;font-size:14px}
-.row:last-child{border:0}
-.row span{color:#9aa6c2}
-.row b{color:#e6c36a}
-.msg{color:#8af7c5 !important}
-.links{display:flex;gap:10px;margin-top:16px}
-.links a{flex:1;padding:12px;border-radius:10px;text-align:center;font-weight:800;text-decoration:none}
-.a-book{background:#142447;border:1px solid #2a395c;color:#c8d2e8}
-.a-wa{background:#25D366;color:#fff}
+body{font-family:system-ui;background:#0f172a;color:white;padding:16px;max-width:600px;margin:auto}
+.card{background:#1e293b;padding:16px;border-radius:12px;margin:10px 0;border:1px solid #334155}
+input,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:white;border:1px solid #334155}
+button{padding:12px 16px;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin:4px}
+.btn-yellow{background:#facc15;color:#0f172a} .btn-blue{background:#3b82f6;color:white}
+.tabs{display:flex;gap:8px;margin:10px 0} .tab{flex:1;padding:12px;background:#1e293b;border-radius:8px;text-align:center;cursor:pointer}
+.tab.active{background:#facc15;color:#0f172a}
 </style>
 </head>
 <body>
-<div class="card">
-<h1>Track Your Ticket</h1>
-<p class="sub">Enter your VECCTA-XXXX ID</p>
-
-<label>Ticket ID</label>
-<input id="tid" placeholder="VECCTA-20260911-4037">
-<button class="btn" onclick="doTrack()">Track Now</button>
-
-<div class="box" id="box">
-<div class="row"><span>Ticket ID:</span><b id="b_id">-</b></div>
-<div class="row"><span>Price:</span><b id="b_price">KSh 4000</b></div>
-<div class="row"><span>Status:</span><b id="b_status">In Progress</b></div>
-<div class="row"><span>Admin Message:</span><span id="b_msg" class="msg">in progress - we are working</span></div>
-<div class="row"><span>Service:</span><span id="b_service" style="color:#fff">BRS Name Reservation</span></div>
-
-<div class="links">
-<a href="index.html" class="a-book">← Book New</a>
-<a href="https://wa.me/254768309956" class="a-wa">WhatsApp</a>
-</div>
+<h3>Track Center</h3>
+<div class="tabs">
+  <div class="tab active" onclick="showTab('job')">TRACK JOB</div>
+  <div class="tab" onclick="showTab('ticket')">TRACK TICKET</div>
 </div>
 
-<p id="notfound" style="display:none;color:#ff8a8a;text-align:center;margin-top:14px;font-size:13px">Ticket created locally - Price KSh 4000 added</p>
+<!-- JOB TRACK -->
+<div id="jobTab">
+  <div class="card">
+    <input id="jobIdInput" placeholder="Enter JOB-...">
+    <button class="btn-yellow" onclick="trackJob()">Track Job</button>
+  </div>
+  <div id="jobResult"></div>
+  <div id="raiseTicketBox" style="display:none" class="card">
+    <h4>Raise Ticket for this Job</h4>
+    <textarea id="ticketMsg" placeholder="Your question about this job..."></textarea>
+    <button class="btn-blue" onclick="createTicketForJob()">RAISE TICKET</button>
+    <div id="jobTickets"></div>
+  </div>
+</div>
+
+<!-- TICKET TRACK -->
+<div id="ticketTab" style="display:none">
+  <div class="card">
+    <input id="ticketIdInput" placeholder="Enter TICKET-...">
+    <button class="btn-blue" onclick="trackTicket()">Track Ticket</button>
+  </div>
+  <div id="ticketResult"></div>
 </div>
 
 <script>
-function getTickets(){ try{return JSON.parse(localStorage.getItem('veccta_tickets')||'[]')}catch{return[]} }
-function saveTickets(all){ localStorage.setItem('veccta_tickets',JSON.stringify(all)) }
+let currentJobId = null;
 
-function doTrack(){
- let raw=(document.getElementById('tid').value||'').trim();
- let idFromUrl=new URLSearchParams(location.search).get('id');
- let id=(raw||idFromUrl||'').trim().toUpperCase();
- if(!id){ alert('Please enter Ticket ID like VECCTA-20260911-4037'); return; }
- document.getElementById('tid').value=id;
- 
- let all=getTickets();
- let t=all.find(x=> (x.id||x.ticket||'').toUpperCase()===id);
- 
- if(!t){
-   // Auto-create so NEVER shows Not Found
-   t={ id:id, ticket:id, clientName:'Client', name:'Client', phone:'', service:'BRS Name Reservation Ingestion', status:'In Progress', price:'4000', adminMessage:'in progress - we are working on your request', date:new Date().toISOString() };
-   all.push(t);
-   saveTickets(all);
-   document.getElementById('notfound').style.display='block';
- } else {
-   document.getElementById('notfound').style.display='none';
- }
- 
- document.getElementById('b_id').textContent=t.id||id;
- document.getElementById('b_price').textContent='KSh '+(t.price||'4000');
- document.getElementById('b_status').textContent=t.status||'In Progress';
- document.getElementById('b_msg').textContent=t.adminMessage||t.message||'in progress - we are working on your request';
- document.getElementById('b_service').textContent=t.service||'BRS Name Reservation Ingestion';
- document.getElementById('box').style.display='block';
+function showTab(t){ 
+  document.getElementById('jobTab').style.display=t=='job'?'block':'none';
+  document.getElementById('ticketTab').style.display=t=='ticket'?'block':'none';
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',(t=='job'&&i==0)||(t=='ticket'&&i==1)));
 }
 
-window.onload=()=>{
- let p=new URLSearchParams(location.search).get('id');
- if(p){ document.getElementById('tid').value=p; doTrack(); }
+// TRACK JOB - ONLY FROM karanu_jobs
+function trackJob(){
+  const id = document.getElementById('jobIdInput').value.trim();
+  let jobs = JSON.parse(localStorage.getItem('karanu_jobs')||'[]');
+  let job = jobs.find(j=>j.id===id);
+  if(!job){ document.getElementById('jobResult').innerHTML='<div class=card>Job not found</div>'; return; }
+  currentJobId = job.id;
+  document.getElementById('jobResult').innerHTML = `
+    <div class=card>
+      <b>${job.id}</b><br>${job.clientName} | ${job.clientPhone}<br>
+      Service: ${job.service}<br>Logged: ${job.logged}<br>
+      <b>PRICE: KSH ${job.price}</b><br>
+      ADMIN MESSAGE: ${job.adminMessage}<br>
+      STATUS: <b>${job.status}</b>
+    </div>`;
+  document.getElementById('raiseTicketBox').style.display='block';
+  loadTicketsForJob(job.id);
 }
+
+// CREATE TICKET - LINKED TO JOB, NO PRICE
+function createTicketForJob(){
+  if(!currentJobId){ alert('Track a job first'); return; }
+  const msg = document.getElementById('ticketMsg').value;
+  if(!msg){ alert('Enter message'); return; }
+  let tickets = JSON.parse(localStorage.getItem('karanu_tickets')||'[]');
+  const ticket = {
+    id: `TICKET-${Date.now()}`,
+    jobId: currentJobId, // LINK - different from job
+    message: msg,
+    from: 'Client',
+    adminReply: '',
+    status: 'Open',
+    logged: new Date().toLocaleString()
+  };
+  tickets.push(ticket);
+  localStorage.setItem('karanu_tickets', JSON.stringify(tickets));
+  document.getElementById('ticketMsg').value='';
+  alert(`Ticket Created: ${ticket.id} for ${currentJobId}`);
+  loadTicketsForJob(currentJobId);
+}
+
+function loadTicketsForJob(jobId){
+  let tickets = JSON.parse(localStorage.getItem('karanu_tickets')||'[]');
+  let related = tickets.filter(t=>t.jobId===jobId);
+  document.getElementById('jobTickets').innerHTML = '<h4>Tickets for this Job:</h4>' + related.map(t=>`
+    <div class=card style="border-left:4px solid #3b82f6">
+      <b>${t.id}</b> - ${t.status}<br>${t.message}<br>
+      ${t.adminReply?'<b>Admin:</b> '+t.adminReply:''}
+    </div>`).join('') || '<p>No tickets yet</p>';
+}
+
+// TRACK TICKET - ONLY FROM karanu_tickets
+function trackTicket(){
+  const id = document.getElementById('ticketIdInput').value.trim();
+  let tickets = JSON.parse(localStorage.getItem('karanu_tickets')||'[]');
+  let t = tickets.find(x=>x.id===id);
+  if(!t){ document.getElementById('ticketResult').innerHTML='<div class=card>Ticket not found</div>'; return; }
+  document.getElementById('ticketResult').innerHTML = `
+    <div class=card>
+      <b>${t.id}</b><br>For JOB: ${t.jobId}<br>
+      Your Message: ${t.message}<br>
+      Status: ${t.status}<br>
+      ${t.adminReply?'<b>Admin Reply:</b> '+t.adminReply:''}<br>
+      Logged: ${t.logged}
+    </div>`;
+}
+
+// Auto track from URL ?job=JOB-xxx
+const urlParams = new URLSearchParams(window.location.search);
+if(urlParams.get('job')){ document.getElementById('jobIdInput').value=urlParams.get('job'); trackJob(); }
 </script>
 </body>
 </html>
