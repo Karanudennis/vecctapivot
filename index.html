@@ -1,222 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VECCTAPIVOT Enterprises — One Pivot, Endless Possibilities</title>
-  <meta name="description" content="A service brand worth any business, any client, any place. Registry filings, academic logistics, transport brokerage, sourcing, ground errands and statutory portals — scoped, quoted and tracked through one pivot. WhatsApp, call, text or email.">
-  <link rel="icon" href="logo.png">
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VECCTA PIVOT - Book Service</title>
+<style>
+*{box-sizing:border-box}
+body{background:#0b1220;color:#fff;font-family:system-ui,Segoe UI,Arial;padding:15px;margin:0}
+.card{max-width:560px;margin:40px auto;background:#121c30;border:1px solid #e6c36a33;border-radius:16px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+h2{color:#e6c36a;text-align:center;margin:0 0 16px}
+label{font-size:12px;color:#96a0ba;margin-top:6px;display:block}
+input,select,textarea{width:100%;padding:13px;border-radius:10px;border:1px solid #2a395c;background:#0b1220;color:#fff;margin:6px 0 12px;font-size:15px}
+textarea{min-height:80px}
+.btn{background:#e6c36a;color:#000;border:0;padding:14px;width:100%;border-radius:10px;font-weight:800;font-size:16px;cursor:pointer}
+.btn:active{transform:scale(.98)}
+.ok{background:#0b3d2a;border:1px solid #0ec27b;color:#8af7c5;padding:14px;border-radius:10px;margin-top:14px;display:none;line-height:1.6}
+a{color:#25D366;text-decoration:none;font-weight:700}
+.small{font-size:11px;color:#5f6b86;text-align:center;margin-top:12px}
+</style>
 </head>
 <body>
-  <div class="utility">
-    <div class="uwrap">
-      <span class="uitem"><span class="ubadge">BRS BN-AYSO8LRE</span></span>
-      <span class="uitem">Unified Cross-Border Service Architecture &middot; 49 services</span>
-      <a class="uitem" href="https://wa.me/254788099685">WhatsApp +254 788 099 685</a>
-    </div>
-  </div>
-  <header class="top">
-    <div class="navrow">
-      <a class="brand" href="index.html">
-        <img src="logo.png" alt="Vecctapivot Enterprises logo">
-        <span class="brandname">Vecctapivot<em>Enterprises &middot; Service Desk</em></span>
-      </a>
-      <nav class="mainnav" aria-label="Primary">
-        <a href="index.html#services">Services</a>
-        <a href="index.html#process">How We Work</a>
-        <a href="track.html">Track</a>
-        <a href="index.html#faq">FAQ</a>
-      </nav>
-      <div class="navcta">
-        <a class="btn line sm2" href="job.html">Request a Job</a>
-        <a class="btn gold sm2" href="ticket.html">Book a Ticket</a>
-      </div>
-    </div>
-  </header>
+<div class="card">
+<h2>Book Service - VECCTA PIVOT</h2>
 
-  <main>
-  <section class="hero reveal">
-    <div class="herotext">
-      <span class="kicker">One Pivot &middot; Endless Possibilities</span>
-      <h2>A service brand worth any business, any client, any place.</h2>
-      <p>From business registries to passport queues, cargo on the highway to produce at the farm gate &mdash; 49 services move through one pivot: your desk at Vecctapivot. Read the exact scope, requirements and turnaround before you commit, then lock it in with a tracked ticket or a full job request. A named officer scopes your case free on WhatsApp, with a fixed quote before anything begins.</p>
-      <div class="contactstrip" aria-label="Reach us on any channel">
-        <a class="wa" href="https://wa.me/254788099685"><span aria-hidden="true">&#9993;</span> WhatsApp</a>
-        <a href="tel:+254788099685"><span aria-hidden="true">&#9742;</span> Call</a>
-        <a href="sms:+254788099685"><span aria-hidden="true">&#9993;</span> SMS</a>
-        <a href="mailto:vecctapivotenterprises@gmail.com"><span aria-hidden="true">&#9990;</span> Email</a>
-      </div>
-    </div>
-    <div class="globeviz" id="globe" aria-hidden="true">
-      <div class="globe">
-        <span class="pivotcore"></span>
-        <span class="orbit o1"><span class="node"></span><span class="node small opp"></span></span>
-        <span class="orbit o2"><span class="node small"></span><span class="node opp"></span><span class="node small" style="left:78%"></span></span>
-        <span class="orbit o3"><span class="node small"></span><span class="node small opp"></span></span>
-      </div>
-      <div class="globecap">
-        <strong>One Pivot</strong>
-        <span>Endless Possibilities</span>
-      </div>
-    </div>
-  </section>
+<label>Full Name</label>
+<input id="clientName" placeholder="Dennis Karanu Karanu">
 
-  <section class="searchwrap reveal" id="services">
-    <input id="deskSearch" type="search" placeholder="Search all 49 services &mdash; e.g. passport, escrow, cargo, iTax&hellip;" autocomplete="off" aria-label="Search services">
-    <p class="empty" id="empty" hidden>No service matches that keyword. Try &ldquo;BRS&rdquo;, &ldquo;cargo&rdquo;, &ldquo;portal&rdquo;&hellip;</p>
-  </section>
+<label>Phone</label>
+<input id="phone" placeholder="0768309956" type="tel">
 
-  <section class="cards" id="pillarCards">
-    <a class="card reveal" href="digital.html" data-keywords="brs name reservation ingestion partnership layout setup bn2 form business particulars official alterations cessation form deregistration filings historical legacy record linking vector identity branding packs secure digital document vaults">
-      <span class="num">SERVICE PILLAR</span><h2>Digital &amp; Brand Systems</h2>
-      <p>BRS registry filings, brand identity packs and secure document vaults.</p>
-      <span class="more">Explore this service &rarr;</span>
-    </a>
-    <a class="card reveal" href="academic.html" data-keywords="form 1-4 joint termly mock bundles printed bound topical revision booklets kasneb cpa national paper archive vault kasneb atd vocational revision kits primary junior secondary cbc distribution hardcopy revision notes digitization run candidate profile student portal setup">
-      <span class="num">SERVICE PILLAR</span><h2>Academic &amp; Testing Logistics</h2>
-      <p>Mock archives, revision booklets, KASNEB vaults and CBC distribution runs.</p>
-      <span class="more">Explore this service &rarr;</span>
-    </a>
-    <a class="card reveal" href="transport.html" data-keywords="point-to-point executive ride bookings last-mile motorcycle courier runs inter-county agricultural lorry sourcing cold-chain ventilated cargo freight multi-vans institutional fleet itineraries transit highway cargo telemetry tracks transit cargo third-party insurance cover">
-      <span class="num">SERVICE PILLAR</span><h2>Transport Brokerage Hub</h2>
-      <p>Executive rides, courier runs, cargo freight and transit insurance cover.</p>
-      <span class="more">Explore this service &rarr;</span>
-    </a>
-    <a class="card reveal" href="sourcing.html" data-keywords="farm-gate agriculture produce sourcing industrial factory wholesale price audits b2b wholesale import corridor vendor maps supplier identification background audits customs entry freight duty calculations prototype quality inspection operations long-term contract farming frameworks">
-      <span class="num">SERVICE PILLAR</span><h2>Merchandise Sourcing Links</h2>
-      <p>Farm-gate produce, factory price audits, supplier vetting and customs duty math.</p>
-      <span class="more">Explore this service &rarr;</span>
-    </a>
-    <a class="card reveal" href="fixer.html" data-keywords="real estate plot site inspections pre-transit cargo inbound tally counts pending commercial permits proxy property security compliance safety audits single business permit zoning guide maps storefront operational spot check runs municipal enforcement dispute resolution">
-      <span class="num">SERVICE PILLAR</span><h2>Independent Fixer Desk</h2>
-      <p>Ground proxy units for site inspections, permit queues and enforcement disputes.</p>
-      <span class="more">Explore this service &rarr;</span>
-    </a>
-    <a class="card reveal" href="agency.html" data-keywords="multi-desk project analytics retainers micro-merchant intake menu redirections aggregated billing ledger automated reports priority multi-desk queue surcharge override cross-border trade corridor logistics maps service desk response telemetry kpi logs multi-sector escrow milestone holding proxy">
-      <span class="num">SERVICE PILLAR</span><h2>General Agency Core</h2>
-      <p>Cross-sector retainers, unified ledgers, priority queues and escrow holding.</p>
-      <span class="more">Explore this service &rarr;</span>
-    </a>
-    <a class="card reveal" href="statutory.html" data-keywords="ecitizen duplicate id maisha application national passport travel document renewals ntsa timms dl ingestion transfer management sha shif portal healthcare transitions certificate of good conduct application run ardhisasa official land boundary property searches kra itax mandatory nil active tax filings">
-      <span class="num">SERVICE PILLAR</span><h2>Statutory &amp; Portal Logistics</h2>
-      <p>eCitizen, passports, NTSA TIMMS, SHA/SHIF, DCI, ArdhiSasa and KRA iTax filings.</p>
-      <span class="more">Explore this service &rarr;</span>
-    </a>
-  </section>
+<label>Service</label>
+<select id="service">
+<option>BRS Name Reservation Ingestion</option>
+<option>Business Registration</option>
+<option>KRA Services</option>
+<option>eCitizen Services</option>
+<option>Transport & NTSA</option>
+<option>Other Services</option>
+</select>
 
-  <section class="howstrip reveal" id="process" aria-label="How we work">
-    <div class="how"><span class="hnum">1</span><h3>Read the Exact Scope</h3><p>Every service opens into guided engagements with the work, the requirements and the turnaround spelled out. No guessing what you are paying for.</p></div>
-    <div class="how"><span class="hnum">2</span><h3>Lock It with a Reference</h3><p>Book a ticket for a place in the queue or file a job request with documents, data and deadline. Either way you receive a unique tracking number.</p></div>
-    <div class="how"><span class="hnum">3</span><h3>We Execute, You Track</h3><p>A named desk officer runs queues, filings and field work end to end. Track progress by reference; collect your deliverable with an aftercare window behind it.</p></div>
-  </section>
+<label>Details</label>
+<textarea id="details" placeholder="Describe what you need..."></textarea>
 
-  <section class="faqsec reveal" id="faq">
-    <span class="kicker">Frequently Asked</span>
-    <h2>Answers before you even ask.</h2>
-    <div class="faq" id="faqList"></div>
-  </section>
-</main>
+<button class="btn" onclick="submitTicket()">Submit Ticket</button>
 
-<div id="guaranteeBar" class="guarantees"></div>
+<div id="ok" class="ok"></div>
+<div class="small">After submit, your ticket WILL appear in Admin and WILL be found in Tracking</div>
+</div>
 
-<nav class="contactbar" aria-label="Contact channels">
-  <a class="wa" href="https://wa.me/254788099685" aria-label="Chat on WhatsApp">&#9993; WhatsApp</a>
-  <a href="tel:+254788099685" aria-label="Call hotline">&#9742; Call</a>
-  <a href="sms:+254788099685" aria-label="Send SMS text">&#9993; SMS</a>
-  <a href="mailto:vecctapivotenterprises@gmail.com" aria-label="Email secure tunnel">&#9990; Email</a>
-</nav>
-
-<footer class="sitefoot" id="siteFoot"></footer>
-
-<script src="js/matrix.js"></script>
-<script src="js/common.js"></script>
 <script>
-  (function () {
-    /* Search: match pillar cards on keywords + all 49 service titles from the matrix. */
-    var input = document.getElementById("deskSearch");
-    var cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
-    var empty = document.getElementById("empty");
-    var services = [];
-    Object.keys(window.VP_MATRIX).forEach(function (k) {
-      window.VP_MATRIX[k].services.forEach(function (s) {
-        services.push({ desk: k, title: s.title, ref: s.ref });
-      });
-    });
+function submitTicket(){
+ let nameEl=document.getElementById('clientName');
+ let phoneEl=document.getElementById('phone');
+ let serviceEl=document.getElementById('service');
+ let detailsEl=document.getElementById('details');
+ 
+ let name=nameEl.value.trim();
+ let phone=phoneEl.value.trim();
+ if(!name){alert('Enter Full Name');nameEl.focus();return;}
+ if(!phone){alert('Enter Phone');phoneEl.focus();return;}
 
-    var res = document.createElement("div");
-    res.className = "searchhits";
-    input.after(res);
+ // READ SAME STORAGE THAT ADMIN & TRACK USE
+ let all=JSON.parse(localStorage.getItem('veccta_tickets')||'[]');
+ 
+ // Generate ID like your admin series VECCTA-0,1,2...6
+ let newId='VECCTA-'+all.length;
+ 
+ let ticket={
+  id:newId,
+  ticket:newId,
+  clientName:name,
+  name:name,
+  phone:phone.startsWith('+')?phone:'+254'+phone.replace(/^0/,'').replace(/\s/g,''),
+  service:serviceEl.value,
+  details:detailsEl.value,
+  status:'Logged',
+  price:'',
+  adminMessage:'',
+  date:new Date().toISOString(),
+  logged:new Date().toISOString()
+ };
 
-    function renderHits(q) {
-      var hits = services.filter(function (s) { return s.title.toLowerCase().indexOf(q) !== -1; }).slice(0, 6);
-      if (!hits.length) { res.innerHTML = ""; return; }
-      res.innerHTML = hits.map(function (h) {
-        return '<a class="hit" href="' + window.VP_MATRIX[h.desk].slug + '.html">'
-          + '<span class="href">' + h.ref + '</span>' + h.title
-          + '<em>Desk ' + h.desk + '</em></a>';
-      }).join("");
-    }
+ all.push(ticket);
+ localStorage.setItem('veccta_tickets',JSON.stringify(all));
 
-    input.addEventListener("input", function () {
-      var q = input.value.trim().toLowerCase();
-      res.innerHTML = "";
-      var shown = 0;
-      cards.forEach(function (c) {
-        var hay = (c.getAttribute("data-keywords") + " " + c.textContent).toLowerCase();
-        var ok = !q || hay.indexOf(q) !== -1;
-        c.style.display = ok ? "" : "none";
-        if (ok) shown++;
-      });
-      if (q) renderHits(q);
-      empty.hidden = shown ? true : false;
-    });
-
-    /* FAQ */
-    var FAQ = [
-      ["What exactly does VECCTAPIVOT do?",
-       "We execute errands, filings and logistics that our clients cannot sit through in person. Business name reservations and BRS paperwork, academic mock and revision logistics, transport and cargo brokerage, produce and merchandise sourcing, ground inspection and permit runs, multi-service agency retainers, and portal-heavy statutory work &mdash; eCitizen, passports, NTSA, SHA/SHIF, DCI, ArdhiSasa and KRA iTax. You choose the service and engagement, and a named desk officer carries it end to end."],
-      ["How do I start &mdash; ticket or job request?",
-       "A ticket books your place in the queue for one engagement: it carries a unique ticket number, your name, the exact service and engagement, and your contact. A job request is the fuller instrument: it carries a unique job tracking number plus the data-entry fields and the document checklist that specific engagement requires, your deadline and a priority tier. Start simple with a ticket; use a job request when documents, data entry and dates matter."],
-      ["How do I know what my case needs before paying?",
-       "Open any service on this site: each engagement publishes its description, requirements and realistic turnaround up front. The job request form turns those requirements into a checklist you can tick. Scoping is free &mdash; message the desk on WhatsApp and an officer confirms eligibility, exact scope and a fixed quote before you commit anything."],
-      ["How does tracking work?",
-       "Every submission mints a unique reference server-side &mdash; tickets under TKT-, job requests under JOB-. Enter it on the tracking desk to see what the desk sees: your pillar, service, engagement, priority and the moment it was logged. If anything looks off, quote the reference on WhatsApp and a desk officer picks it up personally."],
-      ["Which channel should I use &mdash; WhatsApp, call, SMS or email?",
-       "WhatsApp for guided intake, quotes and photo/document sharing; calls for urgent decisions; SMS for quick confirmations; email for formal attachments and paper trails. All four land with the same desk at +254 788 099 685 and vecctapivotenterprises@gmail.com &mdash; pick whichever suits the moment, and quote your reference if you have one."],
-      ["What are the timeframes &mdash; really?",
-       "Every engagement states an honest window rather than a best case: same-day errands say same-day, and registry runs state the 1&ndash;10 working-day band typical of the authority involved. Clocks start when your documents verify complete. Express and priority tiers compress our internal queues wherever the underlying authority allows &mdash; we never promise what a government portal cannot deliver."],
-      ["I need a passport, ID replacement or good conduct certificate. Do you handle personal documents?",
-       "Yes. Personal statutory runs are a core pillar: eCitizen duplicate ID and Maisha numbers, passport renewals with booked appointment slots, NTSA TIMMS logbook transfers, SHA/SHIF household registration, DCI certificates of good conduct, ArdhiSasa land searches and KRA iTax filings. We work through official portals under your own credentials, and every acknowledgement receipt issued in your name is handed to you."],
-      ["Can traders, schools and companies use this &mdash; not just individuals?",
-       "That is who most of the desk is built for. Farmers and traders run produce sourcing, lorry matching, cold-chain freight and customs duty math. Schools order mock bundles, revision booklets and CBC distribution. Companies file BRS paperwork, brand packs and secure vaults. Clients juggling several matters consolidate them under one agency retainer with unified billing and escrow-style milestone holding."],
-      ["What do you need from me before work starts?",
-       "Each engagement lists its requirements in plain sight, and the job request form converts them into a data-entry plus upload checklist. We verify completeness before processing begins &mdash; gaps are flagged up front, never mid-run. Clear scans or sharp photos of originals are accepted at intake; some registries demand sight of originals at appointment stages, which we schedule around you."],
-      ["Is my information safe?",
-       "Submissions land in the VECCTAPIVOT intake repository and only the desk assigned to your reference handles them. We collect the minimum needed to execute your engagement, never resell data, and archive deliverables only in your own secure vault if you opt into the retainer watch. Prefer minimal digital footprint? Book by phone or SMS and deliver documents physically at the desk."],
-      ["What does it cost?",
-       "Scoping is free. After the desk confirms your eligibility and scope, you receive a fixed quote: authority charges plus desk effort, with any express surcharge shown separately. Nothing starts before you approve the quote &mdash; and every timeframe we state at quote time is the one tracked against your reference."],
-      ["Which regions do you serve?",
-       "Our architecture is built to serve every place and every client. The operational home ground covers physical proxy desks across all 47 Kenyan counties and cross-border trade corridors across Central East Africa &mdash; and the same unified system scales to wherever your errand, consignment or counterparty sits. If your need falls outside the published service index, the General Agency Core is the catch-all desk: describe it on WhatsApp and we scope it within a working day, wherever you are."],
-      ["What if a registry rejects or delays my file?",
-       "Within the 14-day aftercare window we file corrections and pursue the queue at no fresh engagement fee. For longer regulatory backlogs, the priority queue override exists precisely to reallocate assets and unstick stalled deadlines. Either way your reference stays open until the matter closes, and you are never left chasing it alone."],
-    ];
-    var list = document.getElementById("faqList");
-    list.innerHTML = FAQ.map(function (f, i) {
-      return '<details class="faqitem"' + (i === 0 ? " open" : "") + '><summary>' + (i + 1) + ". " + f[0] + '<span class="plus" aria-hidden="true"></span></summary><div class="faqbody"><p>' + f[1] + "</p></div></details>";
-    }).join("");
-
-    /* Globe motif: subtle parallax tilt */
-    var viz = document.getElementById("globe");
-    if (viz && window.matchMedia("(pointer:fine)").matches) {
-      window.addEventListener("mousemove", function (ev) {
-        var r = viz.getBoundingClientRect();
-        var dx = (ev.clientX - (r.left + r.width / 2)) / r.width;
-        var dy = (ev.clientY - (r.top + r.height / 2)) / r.height;
-        viz.style.transform = "rotateY(" + (dx * 10) + "deg) rotateX(" + (-dy * 8) + "deg)";
-      });
-    }
-  })();
+ let ok=document.getElementById('ok');
+ ok.style.display='block';
+ ok.innerHTML=`
+  ✅ <b>Ticket SAVED to storage!</b><br>
+  ID: <b style="color:#e6c36a;font-size:18px">${newId}</b><br>
+  Total tickets now: ${all.length}<br><br>
+  <a href="track.html?id=${newId}">→ Track ${newId} Now</a><br>
+  <a href="admin.html">→ Go to Admin (you will see ${newId})</a><br>
+  <a href="https://wa.me/254768309956?text=New ticket ${newId} from ${name} - ${serviceEl.value}">→ WhatsApp Admin</a><br><br>
+  <span style="font-size:12px">Copy ID for client: ${newId}</span>
+ `;
+ 
+ // Clear form
+ nameEl.value='';phoneEl.value='';detailsEl.value='';
+ console.log('SAVED',ticket);
+}
 </script>
 </body>
 </html>
