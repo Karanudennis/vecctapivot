@@ -3,139 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Transport Brokerage Hub | Vecctapivot</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Vecctapivot Operational Workspace Desk Terminal</title>
+    <style>
+        :root {
+            --bg-main: #020C1B;
+            --panel-slate: #0b1329;
+            --border-muted: rgba(255, 255, 255, 0.06);
+            --gold-accent: #d4af37;
+            --text-white: #f3f4f6;
+            --text-muted: #9ca3af;
+            --bg-deep: #060b18;
+            --success: #10b981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-main); color: var(--text-white);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh; display: flex; flex-direction: column; padding-bottom: 40px; -webkit-font-smoothing: antialiased;
+        }
+        .header { padding: 35px 24px; border-bottom: 1px solid var(--border-muted); display: flex; align-items: center; justify-content: space-between; }
+        .back-btn { text-decoration: none; color: var(--gold-accent); font-weight: 700; font-size: 13px; letter-spacing: 0.5px; text-transform: uppercase; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; max-width: 1400px; width: 100%; margin: 30px auto; padding: 0 24px; }
+        .sub-pillar-block { background: var(--panel-slate); border: 1px solid var(--border-muted); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; }
+        .sub-pillar-block h3 { font-size: 15.5px; color: #ffffff; margin-bottom: 8px; font-weight: 800; border-bottom: 1px solid var(--border-muted); padding-bottom: 10px; }
+        .sub-pillar-block p.desc-text { font-size: 13px; color: var(--text-muted); line-height: 1.45; margin-bottom: 18px; }
+        
+        .sub-sub-actions-list-container { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+        .sub-sub-item-link { background: var(--bg-deep); border: 1px solid var(--border-muted); color: var(--text-muted); padding: 10px 14px; border-radius: 5px; text-align: left; font-size: 12.5px; width: 100%; cursor: pointer; font-family: inherit; }
+        .sub-sub-item-link:hover { background: var(--gold-accent); color: #000000; font-weight: 700; border-color: var(--gold-accent); }
+
+        .form-section { max-width: 650px; width: calc(100% - 48px); margin: 30px auto 40px auto; background: var(--panel-slate); border: 1px solid var(--border-muted); padding: 30px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 12.5px; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; color: var(--gold-accent); letter-spacing: 0.5px; }
+        .form-group input[type="text"] { width: 100%; padding: 14px; background: var(--bg-deep); border: 1px solid var(--border-muted); border-radius: 6px; color: #ffffff; font-size: 14px; font-family: inherit; }
+        .upload-picker-container { border: 1px dashed var(--border-muted); padding: 22px; text-align: center; border-radius: 6px; background: rgba(255,255,255,0.01); }
+        .upload-picker-container input { display: block; margin: 10px auto 0 auto; color: var(--text-muted); font-size: 13px; }
+        
+        .submit-btn { width: 100%; padding: 16px; background: var(--gold-accent); color: #000000; border: none; font-weight: 800; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; }
+        .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 15px rgba(212,175,55,0.2); }
+        .receipt { background: rgba(16,185,129,0.04); border: 1px solid var(--success); padding: 20px; border-radius: 6px; margin-top: 22px; }
+        .receipt h4 { color: var(--success); font-size: 14.5px; font-weight: 800; margin-bottom: 4px; }
+        .receipt p { font-size: 13.5px; line-height: 1.4; }
+        .receipt strong { font-family: monospace; color: #ffffff; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; }
+        .ticket-box { border-top: 1px solid var(--border-muted); margin-top: 30px; padding-top: 25px; text-align: center; }
+        .ticket-btn { background: transparent; border: 1px solid rgba(255,255,255,0.15); color: #ffffff; padding: 14px; font-weight: 700; width: 100%; border-radius: 6px; cursor: pointer; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .ticket-btn:hover { background: rgba(255,255,255,0.03); border-color: #ffffff; }
+        .hidden-element { display: none !important; }
+    </style>
 </head>
 <body>
+    <header class="header">
+        <div>
+            <h2 id="deskTitle" style="font-size: 20px; color:#ffffff; font-weight:800;">Operational Ingestion Desk</h2>
+            <p style="font-size:12.5px; color:var(--text-muted); margin-top:3px;">Select an execution step node to launch operational data intake loops.</p>
+        </div>
+        <a href="index.html" class="back-btn">← Return to Ingress Hub</a>
+    </header>
 
-    <!-- Back Navigation Anchor Bar -->
-    <div class="back-nav" style="padding: 20px; max-width: 800px; margin: 0 auto; width: 100%;">
-        <a href="index.html" style="color: var(--neon-cyan); text-decoration: none; font-weight: 800; font-size: 14.5px;">⬅️ Return to Main Portal Hub</a>
-    </div>
+    <!-- Structural Grid Columns -->
+    <main class="grid" id="nodeGrid"></main>
 
-    <!-- Main Workspace Container -->
-    <main class="calculator-master-card" style="max-width: 800px; margin: 10px auto 40px auto; padding: 25px;">
-        <h2 style="color: #FFF; font-size: 24px; font-weight: 900; margin: 0 0 5px 0;">🚖 Pillar 3: Transport Brokerage Hub</h2>
-        <p style="color: var(--text-muted); font-size: 14px; margin: 0 0 30px 0;">Tap any sub-pillar category bar to instantly expand its sub-sub operational parameters description.</p>
-
-        <!-- SUB PILLAR 3.1 -->
-        <div class="faq-item-card" onclick="toggleSubSubView('sub-3-1')">
-            <div class="faq-question-row">
-                <h4>📂 3.1 Local Town Point-to-Point Executive Ride Bookings</h4>
-                <span class="faq-arrow" id="arrow-sub-3-1">▼ Expand Sub-Subs</span>
-            </div>
-            <div id="sub-3-1" class="faq-answer-content hidden-faq">
-                <div class="meta-row">
-                    <p>📋 <strong>Service Scope:</strong> Allocating verified executive salon vehicles or compact cabs for rapid point-to-point transfers across regional town limits.</p>
-                    <p>🛠️ <strong>Filing Requirements:</strong> Passenger identification name, active mobile phone number, exact pickup coordinates, and targeted drop-off destination landmark.</p>
-                    <p>💵 <strong>Execution Charge:</strong> Base KES 300 Min [KES 50 / Km]</p>
-                    <p>⏱️ <strong>Timeframe SLA:</strong> 30 Minutes Vehicle Match</p>
-                </div>
+    <!-- Interactive Data Intake Console Panel -->
+    <section class="form-section hidden-element" id="formAnchor">
+        <h2 id="formHeading" style="font-size: 18px; margin-bottom: 6px; font-weight:800; color:#fff;">Configure Pipeline Request</h2>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 22px;">Input trace information payload profiles parameters to secure operational tracking status locks.</p>
+        
+        <div class="form-group">
+            <label for="paramText" id="inputLabelText">Alphanumeric System Details Parameter</label>
+            <input type="text" id="paramText" placeholder="Provide context entry references logs here...">
+        </div>
+        
+        <div class="form-group hidden-element" id="uploadGroup">
+            <label id="uploadLabelText">Supporting Verification Asset Required (.PDF / .IMG)</label>
+            <div class="upload-picker-container">
+                <span style="font-size:13px; color:var(--text-muted);">Verification document payload assignment required</span>
+                <input type="file" id="fileAsset">
             </div>
         </div>
 
-        <!-- SUB PILLAR 3.2 -->
-        <div class="faq-item-card" onclick="toggleSubSubView('sub-3-2')">
-            <div class="faq-question-row">
-                <h4>📂 3.2 Last-Mile Motorcycle Express Document & Logbook Courier</h4>
-                <span class="faq-arrow" id="arrow-sub-3-2">▼ Expand Sub-Subs</span>
-            </div>
-            <div id="sub-3-2" class="faq-answer-content hidden-faq">
-                <div class="meta-row">
-                    <p>📋 <strong>Service Scope:</strong> Deploying high-speed motorcycle courier top-box operators for urgent secure delivery of legal papers, BRS certificates, or logbooks.</p>
-                    <p>🛠️ <strong>Filing Requirements:</strong> Sender office base locality, target recipient full name, active recipient mobile link, and brief description of parcel dimensions.</p>
-                    <p>💵 <strong>Execution Charge:</strong> KES 200 Town Limits Flat</p>
-                    <p>⏱️ <strong>Timeframe SLA:</strong> 1 - 2 Hours Last-Mile Dispatch</p>
-                </div>
-            </div>
+        <button type="button" class="submit-btn" id="submitBtn">Deploy Pipeline Run</button>
+
+        <div class="receipt hidden-element" id="receiptBlock">
+            <h4>Operation Ingested Successfully</h4>
+            <p>Telemetry data staged and locked in central dashboard queue status. Tracking code: <strong id="trackCode">VP-X-000000000</strong></p>
         </div>
 
-        <!-- SUB PILLAR 3.3 -->
-        <div class="faq-item-card" onclick="toggleSubSubView('sub-3-3')">
-            <div class="faq-question-row">
-                <h4>📂 3.3 Inter-County Commercial Agriculture Heavy Lorry Sourcing</h4>
-                <span class="faq-arrow" id="arrow-sub-3-3">▼ Expand Sub-Subs</span>
-            </div>
-            <div id="sub-3-3" class="faq-answer-content hidden-faq">
-                <div class="meta-row">
-                    <p>📋 <strong>Service Scope:</strong> Matching agricultural produce traders directly to verified heavy cargo truck owners (Canters/FHs/FSRs) for bulk potato or crop yields transport corridors.</p>
-                    <p>🛠️ <strong>Filing Requirements:</strong> Trader name, expected produce bag count or tonnage scale weights, farm loading yard landmarks, and target market offloading center.</p>
-                    <p>💵 <strong>Execution Charge:</strong> KES 3,000 Broker Surcharge</p>
-                    <p>⏱️ <strong>Timeframe SLA:</strong> 12 Hours Truck Allocation Settle</p>
-                </div>
+        <div class="ticket-box">
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">Encountering anomalous interface latency metrics constraints variables?</p>
+            <button type="button" class="ticket-btn" id="ticketBtn">Raise Support Override Ticket</button>
+            <div class="receipt hidden-element" id="ticketReceipt" style="border-color: var(--gold-accent); background: rgba(212,175,55,0.03); margin-top:18px; text-align:left;">
+                <h4 style="color:var(--gold-accent)">System Incident Ticket Deployed</h4>
+                <p style="font-size:13.5px;">Incident telemetry logged to mail gateway gateway registry server. Reference ID: <strong id="ticketCode">VP-TICKET-000000</strong></p>
             </div>
         </div>
+    </section>
 
-        <!-- SUB PILLAR 3.4 -->
-        <div class="faq-item-card" onclick="toggleSubSubView('sub-3-4')">
-            <div class="faq-question-row">
-                <h4>📂 3.4 Cold-Chain Ventilated Climate Cargo Freight Brokerage</h4>
-                <span class="faq-arrow" id="arrow-sub-3-4">▼ Expand Sub-Subs</span>
-            </div>
-            <div id="sub-3-4" class="faq-answer-content hidden-faq">
-                <div class="meta-row">
-                    <p>📋 <strong>Service Scope:</strong> Sourcing specialized insulated refrigerator trucks and ventilated vehicles to protect fresh horticultural yields distributions across long transit lines.</p>
-                    <p>🛠️ <strong>Filing Requirements:</strong> Aggregator corporate title name, strict climate temperature constraints notes, total lot net tonnage payload, and cargo value manifest records.</p>
-                    <p>💵 <strong>Execution Charge:</strong> KES 4,500 Broker Surcharge</p>
-                    <p>⏱️ <strong>Timeframe SLA:</strong> 24 Hours Climate Fleet Match</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SUB PILLAR 3.5 -->
-        <div class="faq-item-card" onclick="toggleSubSubView('sub-3-5')">
-            <div class="faq-question-row">
-                <h4>📂 3.5 Multi-Vans Institutional Fleet Scheduling & Route Itineraries</h4>
-                <span class="faq-arrow" id="arrow-sub-3-5">▼ Expand Sub-Subs</span>
-            </div>
-            <div id="sub-3-5" class="faq-answer-content hidden-faq">
-                <div class="meta-row">
-                    <p>📋 <strong>Service Scope:</strong> Coordinating multi-passenger tour shuttle passenger vans blocks scheduling and layout route planning configurations for cooperative farm or corporate groups.</p>
-                    <p>🛠️ <strong>Filing Requirements:</strong> Group coordinator name, full planned route itinerary travel blocks, total commuter headcounts, and vehicle configuration requests logs.</p>
-                    <p>💵 <strong>Execution Charge:</strong> KES 2,000 Fleet Setup Fee</p>
-                    <p>⏱️ <strong>Timeframe SLA:</strong> 48 Hours Complete Schedule Routing</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SUB PILLAR 3.6 -->
-        <div class="faq-item-card" onclick="toggleSubSubView('sub-3-6')">
-            <div class="faq-question-row">
-                <h4>📂 3.6 Transit Highway Route Cargo Telemetry Monitoring Runs</h4>
-                <span class="faq-arrow" id="arrow-sub-3-6">▼ Expand Sub-Subs</span>
-            </div>
-            <div id="sub-3-6" class="faq-answer-content hidden-faq">
-                <div class="meta-row">
-                    <p>📋 <strong>Service Scope:</strong> Activating active electronic back-end location supervisions arrays to continually audit highway cargo security and checkpoint transit updates.</p>
-                    <p>🛠️ <strong>Filing Requirements:</strong> Merchant title name, assigned truck driver phone connection link, vehicle license plate identification logs, and highway route selections.</p>
-                    <p>💵 <strong>Execution Charge:</strong> KES 1,000 Per Active Track</p>
-                    <p>⏱️ <strong>Timeframe SLA:</strong> Real-Time Telemetry Supervision</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SUB PILLAR 3.7 -->
-        <div class="faq-item-card" onclick="toggleSubSubView('sub-3-7')">
-            <div class="faq-question-row" style="border-bottom: 2px solid var(--neon-cyan); padding-bottom: 8px;">
-                <h4 style="color: var(--neon-cyan);">📂 3.7 Transit Cargo Third-Party Insurance Brokerage Cover Setup</h4>
-                <span class="faq-arrow" style="color: var(--neon-cyan);" id="arrow-sub-3-7">▼ Expand Details</span>
-            </div>
-            <div id="sub-3-7" class="faq-answer-content hidden-faq">
-                <div class="meta-row">
-                    <p>📋 <strong>Service Scope:</strong> Issuing instant commercial third-party insurance covers placements charts parameters matching declared payload values for cargo transit protection.</p>
-                    <p>🛠️ <strong>Filing Requirements:</strong> Policy holder full name, commercial truck engine chassis log details, cargo net declared KES valuation summaries, and vehicle logbook scans.</p>
-                    <p>💵 <strong>Execution Charge:</strong> KES 500 Broker Surcharge</p>
-                    <p>⏱️ <strong>Timeframe SLA:</strong> 1 Hour Instant Policy Issue</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECURE SERVICE REQUEST TERMINAL -->
-        <div class="unified-terminal-intake-form-box" style="margin-top: 40px; background: var(--bg-light-panel); padding: 30px; border-radius: 8px; border: 1px solid rgba(100,255,218,0.15);">
-            <h3 style="color: var(--neon-cyan); font-size: 18px; margin: 0 0 10px 0; font-weight: 800;">📋 LOGISTICS REQUEST TERMINAL</h3>
-            <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 20px;">Review the transport and sourcing specifications detailed above. Select your freight or transit line option from the menu list below to lock in parameters.</p>
-            
-            <form action="https://formspree.io" method="POST" onsubmit="executeLockedPortalSubmission(event)" enctype="multipart/form-data" class="embedded-intake-desk">
-                <input type="hidden" name="_subject" id="subject-field-tag" value="New Logistics Order: Pillar 3 Sourcing Track">
-                <input type="hidden" name="Unique Tracking ID" id="ticket-field-tag">
-
+    <script>
+        // High-Fidelity Multi-Layer Solution Matrix Database Core Map
+        const databaseMatrix = {
+            "digital.html": [
+                { id: "1.1", name: "BRS Name Reservation Ingestion", desc: "Managing eCitizen database verification protocols to clear corporate business name paths.", doc: true },
+                { id: "1.2", name: "Partnership Layout Setup (BN2 Form)", desc: "Compiling multi-proprietor business firm configuration layout parameters sheets.", doc: true },
+                { id: "1.3", name: "Business Particulars Official Alterations", desc: "Modifying active registry details parameters or updating county layout boundaries.", doc: false },
+                { id: "1.4", name: "Cessation & Form Deregistration Filings", desc: "Processing corporate closure documentation runs to terminate administrative tax loops.", doc: true },
+                { id: "1.5", name: "Historical Legacy Record Linking", desc: "Migrating manual pre-2017 hardcopy registration credentials into the live BRS portal profile layer.", doc: true },
+                { id: "1.6", name: "Vector Identity Branding Packs", desc: "Custom crafting high-fidelity corporate brand logos, stamps layouts, and merchandise vectors.", doc: false },
+                { id: "1.7", name: "Secure Digital Document Vaults", desc: "Provisioning encrypted offline data vaults storage networks to mitigate local record losses.", doc: false }
+            ],
+            "academic.html": [
+                { id: "2.1", name: "Form 1-4 Joint Termly Mock Bundles", desc: "Assembling inter-county mock assessment archives logs complete with marking schemas keys.", doc: true },
+                { id: "2.2", name: "Printed Bound Topical Revision Booklets", desc: "Processing physical spiral-bound evaluation notes booklets print distributions pipelines.", doc: false },
+                { id: "2.3", name: "KASNEB CPA National Paper Archive Vault", desc: "Unlocking direct cloud vault access portals to multiple multi-year CPA examination resources.", doc: false },
+                { id: "2.4", name: "KASNEB ATD Vocational Revision Kits", desc: "Exporting complete kit portfolios tailored for Accounting Technicians Diploma levels.", doc: false },
