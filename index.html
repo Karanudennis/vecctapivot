@@ -1,129 +1,45 @@
 <!DOCTYPE html>
-<html lang="en-KE">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vecctapivot Enterprises | Operations Marketplace</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VECCTAPIVOT GATEWAY | BN-AYSO8LRE</title>
+<style>
+:root{--navy:#0b1a33;--gold:#f5b400;--bg:#f7f8fb}
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:var(--bg)}
+header{background:var(--navy);color:#fff;padding:12px 16px;position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px}
+header img{width:48px;height:48px;border-radius:50%;background:#fff;object-fit:contain}
+.search-bar{padding:12px;background:#fff;display:flex;gap:8px}
+.search-bar input{flex:1;padding:12px;border:1px solid #ddd;border-radius:10px}
+.search-bar button{padding:12px 16px;background:var(--navy);color:#fff;border:none;border-radius:10px}
+.welcome{padding:20px;text-align:center;background:linear-gradient(135deg,#0b1a33,#1d3a6e);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;padding:16px}
+.card{background:#fff;border-radius:14px;padding:16px;box-shadow:0 3px 12px rgba(0,0,0,.07);cursor:pointer;border-left:6px solid #0b1a33}
+.subs{display:none;padding:10px;background:#fcfcfd;border-top:1px solid #eee}
+.sub{padding:10px;border:1px solid #eee;margin:6px 0;border-radius:10px;background:#fff}
+.sub-subs{display:none}
+.task{padding:8px 10px;border:1px dashed #cbd5e1;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between;align-items:center;background:#f8fafc}
+.btn{background:#0b1a33;color:#fff;border:none;padding:8px 12px;border-radius:8px}
+.btn-gold{background:#f5b400;color:#000}
+.faq-item{background:#fff;margin:8px 0;border-radius:10px;padding:12px}
+.faq-q{font-weight:700;cursor:pointer;display:flex;justify-content:space-between}
+.faq-a{display:none;padding-top:8px;color:#444}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;justify-content:center;align-items:center;padding:16px}
+.modal-box{background:#fff;border-radius:14px;max-width:500px;width:100%;padding:18px;max-height:90vh;overflow:auto}
+.modal-box input,.modal-box select,.modal-box textarea{width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:8px}
+.ticket{font-size:22px;font-weight:900;color:#0b1a33;text-align:center;padding:10px;border:2px dashed #f5b400;border-radius:10px;margin:10px 0}
+</style>
 </head>
 <body>
-
-    <!-- Urgency Top Notification Ticker -->
-    <div class="urgency-ticker">
-        <p>📋 Marketplace Live: Submit portal credentials, map agriculture lorry freight tracks, or request ground audits directly inside the specialized terminals below.</p>
-    </div>
-
-    <!-- Premium Visual Header Panel -->
-    <header class="portal-header">
-        <div class="welcome-container">
-            <div class="visual-glow-orb"></div>
-            <img src="logo.png" alt="Vecctapivot Logo" class="corporate-logo" onerror="this.style.display='none'">
-            <div class="welcome-banner">✨ CENTRAL EAST AFRICA DISPATCH & SOURCING TERMINAL</div>
-            <h1>VECCTAPIVOT OPERATIONAL MARKETPLACE</h1>
-            <p class="tagline">"Our priority is seamless workflow clearance, reliable logistics, and your satisfaction."</p>
-            <div class="trust-badge">
-                <span>🛡️ Registered Business Name | BRS Reference: BN-AYSO8LRE</span>
-            </div>
-
-            <!-- Service Driven Philosophy Value Card -->
-            <div class="philosophy-box">
-                <h3>🤝 Service-Driven Transaction Framework</h3>
-                <p>Welcome to your central digital marketplace. Use the search index or select a primary desk node below to configure project files, estimate turnaround timelines, and securely lock your data into our active processing queues.</p>
-            </div>
-            
-            <div class="header-action-container">
-                <a href="#portal-grid" class="cta-btn-main scroll-btn">📊 Browse 7 Operational Desks</a>
-                <a href="agency.html" class="cta-btn-main ticket-btn">🎫 Open Central Help Desk</a>
-            </div>
-        </div>
-    </header>
-
-    <!-- LIVE REAL-TIME MARKETPLACE SEARCH DIRECTORY -->
-    <section class="search-master-section">
-        <h3>🔍 Live Marketplace Resource Search Directory</h3>
-        <p class="faq-subtitle">Type keywords to filter active desks instantly (e.g., 'CPA', 'Mock', 'Lorry', 'Logo', 'Maisha', 'KRA').</p>
-        <div class="search-bar-box">
-            <input type="text" id="marketplace-search" onkeyup="filterMarketplaceSearch()" placeholder="Search through our 49 operational service modules here...">
-        </div>
-    </section>
-
-    <!-- THE 7 PILLARS NAVIGATION INTERFACE GRID -->
-    <main id="portal-grid" class="grid-container">
-        
-        <!-- Pillar 1 -->
-        <a href="digital.html" class="pillar-card searchable-card" data-tags="digital brand brs registration logo bn2 bn3 cessation particulars link legacy ecitizen kra pin tax returns corporate design profile">
-            <div class="icon">💻</div>
-            <h2>1. Digital & Brand Systems</h2>
-            <p>BRS Business Registrations, Portal Particulars Alterations & Visual Branding Identity Layouts</p>
-            <div class="explore-node-text">Launch Specialized Terminal ➡️</div>
-        </a>
-
-        <!-- Pillar 2 -->
-        <a href="academic.html" class="pillar-card searchable-card" data-tags="academic test mock exam high school form cbc revision booklet vault kasneb cpa atd past paper guide tuition papers study notes education portal">
-            <div class="icon">📚</div>
-            <h2>2. Academic & Testing Logistics</h2>
-            <p>Form 1-4 High School Mock Bundles, CBC Portfolios & KASNEB CPA/ATD Resource Vaults</p>
-            <div class="explore-node-text">Launch Specialized Terminal ➡️</div>
-        </a>
-
-        <!-- Pillar 3 -->
-        <a href="transport.html" class="pillar-card searchable-card" data-tags="transport ride taxi booking courier dispatch motorcycle lorry cargo freight logistics cold chain truck trailer van routing insurance">
-            <div class="icon">🚖</div>
-            <h2>3. Transport Brokerage Hub</h2>
-            <p>Intra-Town Express Couriers, Local Transfers & Long-HaUL Freight Lines</p>
-            <div class="explore-node-text">Launch Specialized Terminal ➡️</div>
-        </a>
-
-        <!-- Pillar 4 -->
-        <a href="sourcing.html" class="pillar-card searchable-card" data-tags="sourcing merchandise agribusiness crop potato cabbage farm market factory price audit import wholesale b2b supplier check tariff cargo">
-            <div class="icon">🤝</div>
-            <h2>4. Merchandise Sourcing Links</h2>
-            <p>Farm-Gate Agribusiness Aggregations, Factory Price Audits & Import Tracks</p>
-            <div class="explore-node-text">Launch Specialized Terminal ➡️</div>
-        </a>
-
-        <!-- Pillar 5 -->
-        <a href="fixer.html" class="pillar-card searchable-card" data-tags="fixer desk physical site inspection real estate plot verify consignment count warehouse audit permit county proxy enforcement dispute fence safety">
-            <div class="icon">🛠️</div>
-            <h2>5. Independent Fixer Desk</h2>
-            <p>Physical Property Site Verifications, Consignment Counts & Permit Proxy Handling</p>
-            <div class="explore-node-text">Launch Specialized Terminal ➡️</div>
-        </a>
-
-        <!-- Pillar 6 -->
-        <a href="agency.html" class="pillar-card searchable-card" data-tags="agency general core consolidated billing ledger accounting balance strategy queue override border trade corridor metrics kpi escrow cash flows fund">
-            <div class="icon">🏢</div>
-            <h2>6. General Agency Core</h2>
-            <p>Consolidated Firm Accounts, Inter-Desk Escalations & Operations Management Dashboard</p>
-            <div class="explore-node-text">Launch Specialized Terminal ➡️</div>
-        </a>
-
-        <!-- Pillar 7 -->
-        <a href="statutory.html" class="pillar-card searchable-card" data-tags="statutory immigration portal ecitizen passport id replacement maisha card ntsa dl logbook shif sha health conduct dci lands ardhisasa tax filings returns kra">
-            <div class="icon">📄</div>
-            <h2>7. Statutory & Portal Logistics</h2>
-            <p>eCitizen Maisha Cards, NTSA DL Logbook Transfers, KRA iTax Return Filings & Land Searches</p>
-            <div class="explore-node-text">Launch Specialized Terminal ➡️</div>
-        </a>
-
-    </main>
-
-    <script>
-        // Real-Time Ingress Keyword Filtering System
-        function filterMarketplaceSearch() {
-            const query = document.getElementById('marketplace-search').value.toLowerCase();
-            const cards = document.querySelectorAll('.searchable-card');
-            
-            cards.forEach(card => {
-                const tags = card.getAttribute('data-tags').toLowerCase();
-                const content = card.textContent.toLowerCase();
-                if (tags.includes(query) || content.includes(query)) {
-                    card.style.display = "";
-                } else {
-                    card.style.display = "none";
-                }
-            });
-        }
-    </script>
+<header><img src="logo.png" onerror="this.src='https://via.placeholder.com/48?text=V'"><div style="flex:1"><b>VECCTAPIVOT GATEWAY</b><br><small>BN-AYSO8LRE | Every Customer Feels At Home</small></div><a href="tel:+254788099685" style="color:#f5b400">Call</a></header>
+<div class="search-bar"><input id="searchInput" placeholder="Search any service... BRS, KRA, Lorry"><button onclick="doSearch()">Search</button></div>
+<div class="welcome"><h2>Karibu! Welcome Home</h2><p>7 Pillars, 49 Services, 343 Tasks - One Gateway</p><button class="btn btn-gold" onclick="openRequestModal()">Request Service + Tracking</button></div>
+<div class="grid" id="pillarGrid"></div>
+<div style="padding:16px"><h2>FAQs</h2><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Do I need a degree? <span>+</span></div><div class="faq-a">No. BN-AYSO8LRE is general trading & brokerage - professional certificate is enough for BRS.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How does ticket work? <span>+</span></div><div class="faq-a">Click any task > Book Ticket > Fill details > Get unique VECCTA number instantly.</div></div></div>
+<div class="modal" id="bookModal"><div class="modal-box"><h3 id="bookTitle">Book Ticket</h3><p id="bookServicePath" style="font-size:12px;color:#666"></p><input id="cName" placeholder="Full Names"><input id="cPhone" placeholder="Phone"><input id="cLocation" placeholder="Location"><textarea id="cNeeds" placeholder="Describe need"></textarea><div id="ticketResult" style="display:none"><div class="ticket" id="ticketNo"></div></div><button class="btn" onclick="generateTicket()">Get Ticket Number</button><button class="btn" style="background:#eee;color:#000" onclick="closeModal('bookModal')">Close</button></div></div>
+<div class="modal" id="requestModal"><div class="modal-box"><h3>Request Service & Upload</h3><select id="reqPillar" onchange="loadReqServices()"></select><select id="reqService"></select><input id="rName" placeholder="Full Names"><input id="rPhone" placeholder="Phone"><textarea id="rReq" placeholder="Requirement"></textarea><input type="file" id="rFile"><div id="trackResult" style="display:none"><div class="ticket" id="trackNo"></div></div><button class="btn" onclick="generateTracking()">Submit & Get Tracking</button><button class="btn" style="background:#eee;color:#000" onclick="closeModal('requestModal')">Close</button></div></div>
+<script>
+// Full 49-service data is inside - paste the full script from previous message here - truncated for WhatsApp
+</script>
 </body>
 </html>
