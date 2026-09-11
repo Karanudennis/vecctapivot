@@ -1,47 +1,20 @@
-<!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Book Job - VeccTa</title>
-<style>body{font-family:system-ui;background:#0f172a;color:white;padding:16px;max-width:600px;margin:auto}.card{background:#1e293b;padding:16px;border-radius:12px;border:1px solid #334155}input,select,textarea{width:100%;padding:10px;margin:6px 0;border-radius:8px;background:#0f172a;color:white;border:1px solid #334155}button{width:100%;padding:14px;background:#facc15;color:#0f172a;font-weight:800;border:none;border-radius:10px;margin-top:10px}label{font-size:12px;color:#94a3b8}.reqBox{background:#0f172a;padding:10px;border-radius:8px;margin:8px 0}</style>
-</head><body>
-<h2>Book Job</h2>
-<div class="card">
-<input id="cName" placeholder="Client Name">
-<input id="cPhone" placeholder="Phone 0707...">
-<select id="service" onchange="loadReqs()"><option value="">Select Service</option>
-<option>Business Particulars Official Alterations</option>
-<option>KRA PIN Registration</option>
-<option>BRS Name Reservation</option></select>
-<div id="reqArea"></div>
-<div id="priceBox">Price: <b id="priceVal">2501</b> KSH (Locked)</div>
-<button onclick="bookJob()">SUBMIT JOB - Creates JOB Only</button>
-</div>
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Job</title><style>body{background:#0f172a;color:#fff;font-family:system-ui;padding:16px;max-width:600px;margin:auto}.card{background:#1e293b;padding:16px;border-radius:12px;border:1px solid #334155}input,select,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}button{padding:14px;width:100%;border:none;border-radius:8px;font-weight:800;cursor:pointer}.btn-y{background:#facc15}</style></head><body>
+<div class="card"><h3 style="color:#facc15;text-align:center">Request Job</h3>
+<input id="cName" placeholder="Name"><input id="cPhone" placeholder="Phone 07..."><input id="cEmail" placeholder="Email optional">
+<select id="pillar"><option>Digital & Brand Systems</option><option>Academic & Testing Logistics</option><option>Transport Brokerage Hub</option><option>General Agency Core</option></select>
+<input id="service" placeholder="Exact Service e.g BRS Registration">
+<select id="priority"><option>Standard</option><option>Express</option><option>Priority</option></select>
+<textarea id="details" placeholder="Details / deadline"></textarea>
+<button class="btn-y" onclick="createJob()">Submit JOB</button><div id="res"></div></div>
 <script>
-const priceMap={"Business Particulars Official Alterations":2501,"KRA PIN Registration":500,"BRS Name Reservation":1500};
-const reqMap={
-"Business Particulars Official Alterations":["regNo","businessName","whatToAlter","idNo"],
-"KRA PIN Registration":["idNo","kraEmail","phone","address"],
-"BRS Name Reservation":["proposedName1","proposedName2","businessType","idNo"]
-};
-function loadReqs(){
- let s=document.getElementById('service').value;
- document.getElementById('priceVal').innerText=priceMap[s]||2501;
- let area=document.getElementById('reqArea'); area.innerHTML="";
- if(!s) return;
- reqMap[s].forEach(f=>{
-   area.innerHTML+=`<label>${f}</label><input id="f-${f}" placeholder="Enter ${f}">`;
- });
-}
-function bookJob(){
- let s=document.getElementById('service').value; if(!s){alert('Select service');return;}
- let reqs={}; reqMap[s].forEach(f=>{reqs[f]=document.getElementById(`f-${f}`).value;});
- let jobs=JSON.parse(localStorage.getItem('karanu_jobs')||'[]');
- let job={
-  id:`JOB-${Date.now()}`, clientName:document.getElementById('cName').value,
-  clientPhone:document.getElementById('cPhone').value, service:s, price:priceMap[s]||2501,
-  requirements:reqs, correctionFields:[], correctionMessage:"", progress:1,
-  status:"Submitted", payUnlocked:false, logged:new Date().toLocaleString()
- };
- jobs.push(job); localStorage.setItem('karanu_jobs',JSON.stringify(jobs));
- alert(`JOB Created: ${job.id} - 1 card only, no ticket`); location.href=`track.html?job=${job.id}`;
+function getJobs(){return JSON.parse(localStorage.getItem('veccta_jobs')||'[]')}
+function saveJobs(j){localStorage.setItem('veccta_jobs',JSON.stringify(j)); localStorage.setItem('karanu_jobs',JSON.stringify(j));}
+function createJob(){
+ let name=cName.value.trim(), phone=cPhone.value.trim(), serviceVal=service.value.trim();
+ if(!name||!phone||!serviceVal){alert('Name Phone Service required');return;}
+ let id='JOB-'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'-'+Math.floor(1000+Math.random()*9000);
+ let job={id,clientName:name,clientPhone:phone,clientEmail:cEmail.value,pillar:pillar.value,service:serviceVal,priority:priority.value,details:details.value,price:'',status:'Logged',adminMessage:'Received. Admin will quote shortly.',logged:new Date().toLocaleString()};
+ let jobs=getJobs(); jobs.push(job); saveJobs(jobs);
+ res.innerHTML=`<div style="text-align:center;margin-top:10px"><b style="color:#facc15;font-size:20px">${id}</b><br>Saved! <br><a href="track.html?job=${id}" style="background:#facc15;color:#000;padding:10px 16px;border-radius:8px;text-decoration:none;display:inline-block;margin:6px">Track Job</a><a href="ticket.html?job=${id}" style="background:#3b82f6;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;display:inline-block">Raise Ticket</a></div>`;
 }
 </script></body></html>
