@@ -1,48 +1,181 @@
-<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Job Request</title><style>body{background:#0f172a;color:#fff;font-family:system-ui;padding:16px;max-width:650px;margin:auto}.card{background:#1e293b;padding:16px;border-radius:12px;border:1px solid #334155}input,select,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}button{padding:14px;width:100%;border:none;border-radius:8px;font-weight:800}.btn-y{background:#facc15;color:#000}label{font-size:11px;color:#facc15;margin-top:10px;display:block}.dynamic{background:#0f172a;border:1px dashed #facc15;padding:10px;border-radius:8px;margin:8px 0}</style></head><body>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Job Request - VECCTAPIVOT</title><style>
+body{background:#0f172a;color:#fff;font-family:system-ui,Segoe UI,Roboto;padding:12px;max-width:700px;margin:auto}
+.card{background:#1e293b;padding:16px;border-radius:14px;border:1px solid #334155}
+input,select,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
+button{width:100%;padding:14px;border:none;border-radius:10px;font-weight:900;cursor:pointer;margin-top:8px}
+.btn-y{background:#facc15;color:#000}.btn-o{background:#1e293b;color:#94a3b8}
+label{font-size:11px;color:#facc15;font-weight:700;margin-top:8px;display:block;letter-spacing:0.5px}
+.dynamic{background:#0f172a;border:1px dashed #facc15;padding:12px;border-radius:10px;margin:8px 0}
+.filebox{border:1px solid #22c55e;padding:8px;border-radius:8px;background:#052e16;margin:6px 0}
+small{color:#94a3b8}
+</style></head><body>
+
 <div class="card">
-<h3 style="color:#facc15;text-align:center">Job Request - VECCTAPIVOT</h3>
-<input id="cName" placeholder="Full Name"><input id="cPhone" placeholder="Phone / WhatsApp">
-<label>PILLAR</label><select id="pillar" onchange="updateForm()"></select>
-<label>CATEGORY</label><select id="cat" onchange="updateService()"></select>
-<label>SERVICE</label><select id="service" onchange="updateSub()"></select>
-<label>SUB-SERVICE</label><select id="sub"></select>
+<h2 style="color:#facc15;text-align:center;margin:0">VECCTAPIVOT</h2><p style="text-align:center;color:#94a3b8;margin:4px 0 12px;font-size:13px">Job Request - Pillar > Category > Service > Sub-Service</p>
 
-<div id="dynamicFields" class="dynamic"></div>
+<input id="cName" placeholder="Full Name *">
+<input id="cPhone" placeholder="Phone / WhatsApp 07... *">
+<input id="cEmail" placeholder="Email (optional)">
 
-<textarea id="details" placeholder="Additional details"></textarea>
-<select id="priority"><option>Standard</option><option>Express</option><option>Priority</option></select>
-<button class="btn-y" onclick="createJob()">Submit JOB</button><div id="res"></div>
+<label>PILLAR *</label><select id="pillar" onchange="onPillar()"></select>
+<label>CATEGORY *</label><select id="cat" onchange="onCat()"></select>
+<label>SERVICE *</label><select id="service" onchange="onService()"></select>
+<label>SUB-SERVICE / SPECIFIC *</label><select id="sub" onchange="onSub()"></select>
+
+<div id="dynamicFields" class="dynamic">Select service to see requirements...</div>
+
+<label>Additional Details / Link</label><textarea id="details" rows="3" placeholder="Add deadline, reference, etc"></textarea>
+
+<label>Priority</label><select id="priority"><option>Standard (Normal Time)</option><option>Express (+25% Faster)</option><option>Priority (+50% Urgent)</option></select>
+
+<button class="btn-y" onclick="createJob()">🚀 SUBMIT JOB</button>
+<div id="res" style="margin-top:12px"></div>
+
+<div style="margin-top:12px;text-align:center">
+<a href="track.html" style="color:#3b82f6;text-decoration:none;font-size:13px">Already have JOB ID? Track Here</a>
 </div>
+</div>
+
 <script>
+// ==================== 1. YOUR SERVICE TREE - EDIT HERE ====================
 const DATA={
-"Digital & Brand Systems":{"Web & Systems":["Website Design","E-commerce","System Dev"],"Brand & Design":["Logo","Poster","Brand Identity"],"Marketing":["SEO","Social Media"]},
-"Academic & Testing Logistics":{"Academic":["Assignment","Research Project","Thesis"],"Testing":["Driver Test","PTE/IELTS","Certification"]},
-"Transport Brokerage Hub":{"Vehicle":["Sourcing","Import","Logbook"],"Transport":["Truck Hire","Movers","Car Hire"]},
-"General Agency Core":{"Govt":["KRA","BRS","eCitizen","NTSA"],"Consultation":["Business","Career","Legal"]}
-};
-const SUBS={"Website Design":["Business","E-commerce","Portfolio"],"Assignment":["Essay","Report","Presentation"],"Sourcing":["Toyota","Mazda","Budget Search"],"KRA":["PIN","Returns","Compliance"]};
-
-// PILLAR SPECIFIC FIELDS
-const PILLAR_FIELDS={
-"Digital & Brand Systems":`<label>Business Name</label><input id="f_business"><label>Reference Website (if any)</label><input id="f_ref"><label>Number of Pages</label><select id="f_pages"><option>1 Page</option><option>3-5 Pages</option><option>5-10 Pages</option><option>10+</option></select><label>Logo Available?</label><select id="f_logo"><option>Yes</option><option>No - Design for me</option></select>`,
-"Academic & Testing Logistics":`<label>Subject / Course</label><input id="f_subject"><label>Level</label><select id="f_level"><option>High School</option><option>College</option><option>University</option><option>Masters</option></select><label>Deadline</label><input id="f_deadline" type="date"><label>Pages / Words</label><input id="f_words" placeholder="e.g 5 pages / 1500 words"><label>School / Institution</label><input id="f_school">`,
-"Transport Brokerage Hub":`<label>Pickup Location</label><input id="f_pickup"><label>Destination</label><input id="f_dest"><label>Vehicle Type Needed</label><select id="f_vehicle"><option>Pickup</option><option>Lorry 3T</option><option>Lorry 5T</option><option>Canter</option><option>Small Car</option><option>Boda</option></select><label>Date Needed</label><input id="f_date" type="date"><label>Budget (KSH)</label><input id="f_budget">`,
-"General Agency Core":`<label>ID Number</label><input id="f_idnum"><label>Service Urgency</label><select id="f_urgency"><option>Normal (2-3 days)</option><option>Urgent (24hrs)</option><option>Same Day</option></select><label>Have eCitizen Account?</label><select id="f_ecit"><option>Yes</option><option>No</option></select>`
-};
-
-function getJobs(){return JSON.parse(localStorage.getItem('veccta_jobs')||'[]')}
-function saveJobs(j){localStorage.setItem('veccta_jobs',JSON.stringify(j)); localStorage.setItem('karanu_jobs',JSON.stringify(j));}
-const pillarEl=pillar, catEl=cat, servEl=service, subEl=sub;
-function init(){pillarEl.innerHTML=Object.keys(DATA).map(k=>`<option>${k}</option>`).join(''); updateForm();}
-function updateForm(){let p=pillarEl.value; catEl.innerHTML=Object.keys(DATA[p]||{}).map(k=>`<option>${k}</option>`).join(''); document.getElementById('dynamicFields').innerHTML=PILLAR_FIELDS[p]||''; updateService();}
-function updateService(){let p=pillarEl.value,c=catEl.value; servEl.innerHTML=(DATA[p]?.[c]||[]).map(k=>`<option>${k}</option>`).join(''); updateSub();}
-function updateSub(){let s=servEl.value; subEl.innerHTML=(SUBS[s]||["General"]).map(k=>`<option>${k}</option>`).join('');}
-function collectDynamic(){let d={}; document.querySelectorAll('#dynamicFields input, #dynamicFields select').forEach(el=>{d[el.id.replace('f_','')]=el.value}); return d;}
-function createJob(){
- let id='JOB-'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'-'+Math.floor(1000+Math.random()*9000);
- let job={id,clientName:cName.value,clientPhone:cPhone.value,pillar:pillarEl.value,category:catEl.value,service:servEl.value,subService:subEl.value,fullService:`${pillarEl.value} > ${catEl.value} > ${servEl.value} > ${subEl.value}`,dynamicFields:collectDynamic(),details:details.value,priority:priority.value,price:'',status:'Logged',adminMessage:'Received. We will quote shortly.',logged:new Date().toLocaleString()};
- let jobs=getJobs(); jobs.push(job); saveJobs(jobs);
- res.innerHTML=`<div style=text-align:center><b style=color:#facc15;font-size:20px>${id}</b><br>${job.fullService}<br><a href=track.html?job=${id} style="background:#facc15;color:#000;padding:10px 16px;border-radius:8px;text-decoration:none;display:inline-block;margin-top:8px">Track</a></div>`;
+"Digital & Brand Systems":{
+ "Web & Systems":["Website Design","E-commerce","System Development","Domain & Hosting"],
+ "Brand & Design":["Logo Design","Poster / Flyer","Brand Identity","Social Media Kit"],
+ "Marketing":["SEO","Social Media Management","Google Ads Setup"]
+},
+"Academic & Testing Logistics":{
+ "Academic Support":["Assignment Help","Research Project","Thesis Writing","Online Class Support"],
+ "Testing & Certification":["Driver Test Booking","PTE Booking","IELTS Booking","Professional Certs"]
+},
+"Transport Brokerage Hub":{
+ "Vehicle Services":["Vehicle Sourcing","Import on Behalf","Logbook Transfer","Vehicle Inspection"],
+ "Transport Services":["Truck Hire","House Movers","Car Hire","Boda / Courier"]
+},
+"General Agency Core":{
+ "Government Services":["KRA Services","BRS Registration","eCitizen Services","NTSA Services"],
+ "Consultation":["Business Consultation","Career Guidance","Legal Guidance"]
 }
-init();
+};
+
+const SUBS={
+"Website Design":["Business Website","Portfolio Website","E-commerce Site","Landing Page","Redesign"],
+"E-commerce":["WooCommerce Setup","Shopify Setup","Payment Integration","Product Upload"],
+"Logo Design":["Minimal Logo","3D Logo","Mascot Logo","Redesign Existing"],
+"Assignment Help":["Essay","Report","Presentation","Exam / Quiz","Other Document"],
+"Driver Test Booking":["Provisional","Driving Test - Class B","Driving Test - Class C","Endorsement"],
+"Vehicle Sourcing":["Toyota","Mazda","Honda","Nissan","Budget Search"],
+"Truck Hire":["Pickup","Canter 3T","Lorry 5T","Lorry 10T"],
+"KRA Services":["KRA PIN Registration","Tax Returns Filing","Tax Compliance Certificate"],
+"BRS Registration":["Business Name","Private Limited Company","LLP","NGO / Foundation"]
+};
+
+// ==================== 2. REQUIREMENT TYPE PER SERVICE ====================
+const SERVICE_CONFIG={
+"Website Design":{type:"data", fields:["Business Name","What Business Does","Number of Pages","Reference Website Link"], note:"We need business info to design"},
+"Logo Design":{type:"both", fields:["Brand Name to Design","Slogan (if any)","Colors You Prefer","Style"], accept:".png,.jpg,.jpeg,.pdf,.ai", note:"Upload sketch/reference if you have"},
+"Assignment Help":{type:"both", fields:["Subject / Unit","Level (HighSchool/College/Uni/Masters)","Deadline Date","Number of Pages / Words","School / University"], accept:".pdf,.docx,.pptx", note:"Upload assignment file"},
+"Driver Test Booking":{type:"data", fields:["ID Number","Full Names as per ID","Test Category","Preferred Test Center","Preferred Date"], note:"ID must match"},
+"Vehicle Sourcing":{type:"data", fields:["Budget KSH","Preferred Model","Year Range","Fuel Type","Transmission"], note:"Be specific for quick search"},
+"Truck Hire":{type:"data", fields:["Pickup Location","Destination","Type of Goods","Date Needed","Budget KSH"], note:"We will call to confirm"},
+"KRA Services":{type:"file", fields:["KRA PIN (if any)","ID Number"], accept:".pdf,.jpg,.png", note:"Upload ID & PIN if you have"},
+"default":{type:"data", fields:["Specific Requirement"], note:"Describe what you need"}
+};
+
+let uploadedFileName="", uploadedFileBase="";
+
+function getConfig(){ return SERVICE_CONFIG[document.getElementById('service').value] || SERVICE_CONFIG["default"]; }
+
+function onPillar(){
+ let p=pillar.value; let cats=Object.keys(DATA[p]||{});
+ cat.innerHTML=cats.map(c=>`<option>${c}</option>`).join('');
+ onCat();
+}
+function onCat(){
+ let p=pillar.value, c=cat.value; let servs=DATA[p]?.[c]||[];
+ service.innerHTML=servs.map(s=>`<option>${s}</option>`).join('');
+ onService();
+}
+function onService(){
+ let s=service.value; let subList=SUBS[s]||["General - Specify in Details"];
+ sub.innerHTML=subList.map(x=>`<option>${x}</option>`).join('');
+ renderDynamic();
+}
+function onSub(){ renderDynamic(); }
+
+function renderDynamic(){
+ let cfg=getConfig(); let s=service.value, ss=sub.value;
+ let html=`<div style="color:#facc15;font-size:12px;font-weight:800">REQUIREMENT FOR: ${s} > ${ss} <span style="background:#facc15;color:#000;padding:2px 6px;border-radius:10px;font-size:10px;margin-left:6px">${cfg.type.toUpperCase()}</span></div>
+ <div style="font-size:11px;color:#94a3b8;margin:4px 0">${cfg.note||''}</div>`;
+ cfg.fields.forEach(f=>{
+  let id='req_'+f.replace(/[^a-zA-Z0-9]/g,'_');
+  if(f.toLowerCase().includes('date')) html+=`<label>${f} *</label><input type="date" id="${id}">`;
+  else html+=`<label>${f}</label><input id="${id}" placeholder="${f}">`;
+ });
+ if(cfg.type=='file' || cfg.type=='both'){
+  html+=`<label style="color:#22c55e">📁 UPLOAD FILE - ${cfg.accept||'Any file'}</label><div class=filebox><input type="file" id="fileUpload" accept="${cfg.accept||''}" onchange="handleFile(this)"><small id="fileNameDisplay">No file selected - optional if you described above</small></div>`;
+ }
+ dynamicFields.innerHTML=html;
+}
+
+function handleFile(inp){
+ if(inp.files && inp.files[0]){
+  let f=inp.files[0];
+  uploadedFileName=f.name;
+  document.getElementById('fileNameDisplay').textContent='Selected: '+f.name+' ('+(f.size/1024).toFixed(1)+' KB)';
+  document.getElementById('fileNameDisplay').style.color='#22c55e';
+  let reader=new FileReader();
+  reader.onload=e=>{ uploadedFileBase=e.target.result.slice(0,80000); } // limit for localStorage
+  reader.readAsDataURL(f);
+ }
+}
+
+function getJobs(){ try{return JSON.parse(localStorage.getItem('veccta_jobs')||localStorage.getItem('karanu_jobs')||'[]')}catch(e){return []} }
+function saveJobs(j){ localStorage.setItem('veccta_jobs',JSON.stringify(j)); localStorage.setItem('karanu_jobs',JSON.stringify(j)); }
+
+function collectReq(){
+ let obj={}; document.querySelectorAll('#dynamicFields input[type=text], #dynamicFields input[type=date], #dynamicFields input:not([type=file])').forEach(el=>{
+  if(el.id.startsWith('req_')) obj[el.id.replace('req_','')]=el.value;
+ });
+ return obj;
+}
+
+function createJob(){
+ if(!cName.value.trim()||!cPhone.value.trim()){ alert('Name & Phone required'); return; }
+ if(!pillar.value||!service.value){ alert('Select pillar & service'); return; }
+ let req=collectReq();
+ let id='JOB-'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'-'+Math.floor(1000+Math.random()*9000);
+ let job={
+  id,
+  clientName:cName.value.trim(), clientPhone:cPhone.value.trim(), clientEmail:cEmail.value.trim(),
+  pillar:pillar.value, category:cat.value, service:service.value, subService:sub.value,
+  fullService:`${pillar.value} > ${cat.value} > ${service.value} > ${sub.value}`,
+  requirementType:getConfig().type,
+  requirements:req,
+  fileName:uploadedFileName, fileData:uploadedFileBase,
+  details:details.value.trim(),
+  priority:priority.value,
+  price:'', status:'Logged', adminMessage:'Job received. We will review and quote.', revisionNote:'', revisionReply:'', locked:false,
+  logged:new Date().toLocaleString()
+ };
+ let jobs=getJobs(); jobs.push(job); saveJobs(jobs);
+ document.getElementById('res').innerHTML=`
+  <div style="background:#0f172a;border:2px solid #facc15;padding:14px;border-radius:12px;text-align:center">
+   <div style="color:#22c55e;font-weight:800">✅ JOB SUBMITTED</div>
+   <div style="font-size:24px;color:#facc15;font-weight:900;margin:6px 0">${id}</div>
+   <div style="font-size:12px;color:#fff">${job.fullService}</div>
+   <div style="font-size:11px;color:#94a3b8;margin-top:6px">Type: ${job.requirementType} | File: ${job.fileName||'No file'} | Priority: ${job.priority}</div>
+   <div style="display:flex;gap:8px;margin-top:10px">
+    <a href="track.html?job=${id}" style="flex:1;background:#facc15;color:#000;padding:12px;border-radius:8px;text-decoration:none;font-weight:800;text-align:center">TRACK JOB</a>
+    <a href="https://wa.me/254700000000?text=Hi,%20I%20submitted%20${id}%20-%20${encodeURIComponent(job.fullService)}" style="flex:1;background:#22c55e;color:#000;padding:12px;border-radius:8px;text-decoration:none;font-weight:800;text-align:center">WhatsApp</a>
+   </div>
+  </div>`;
+ window.scrollTo(0,document.body.scrollHeight);
+}
+
+// INIT
+(function init(){
+ pillar.innerHTML=Object.keys(DATA).map(k=>`<option>${k}</option>`).join('');
+ onPillar();
+})();
 </script></body></html>
