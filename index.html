@@ -3,121 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vecctapivot Enterprises | Operations Marketplace</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <title>Vecctapivot Enterprises | Operations Marketplace Hub</title>
+    <style>
+        :root {
+            --bg-obsidian: #030712;
+            --panel-slate: #0b1329;
+            --border-muted: rgba(255, 255, 255, 0.06);
+            --gold-accent: #d4af37;
+            --text-pure: #f3f4f6;
+            --text-muted: #9ca3af;
+            --action-blue: #1d4ed8;
+            --wa-green: #25D366;
+        }
 
-    <!-- Urgency Top Notification Ticker -->
-    <div class="urgency-ticker">
-        <p>📋 Marketplace Live: Submit portal credentials, map agriculture lorry freight tracks, or request ground audits directly below.</p>
-    </div>
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
 
-    <!-- Premium Visual Header Panel -->
-    <header class="portal-header">
-        <div class="welcome-container">
-            <div class="visual-glow-orb"></div>
-            <img src="logo.png" alt="Vecctapivot Logo" class="corporate-logo" onerror="this.style.display='none'">
-            <div class="welcome-banner">✨ CENTRAL EAST AFRICA DISPATCH & SOURCING TERMINAL</div>
-            <h1>VECCTAPIVOT OPERATIONAL MARKETPLACE</h1>
-            <p class="tagline">"Our priority is seamless workflow clearance, reliable logistics, and your satisfaction."</p>
-            <div class="trust-badge">
-                <span>🛡️ Registered Business Name | BRS Reference: BN-AYSO8LRE</span>
-            </div>
+        body {
+            background-color: var(--bg-obsidian);
+            color: var(--text-pure);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
 
-            <!-- Service Driven Philosophy Value Card -->
-            <div class="philosophy-box">
-                <h3>🤝 Service-Driven Transaction Framework</h3>
-                <p>Welcome to your central digital marketplace. Use the search index or select a primary desk node below to configure project files, estimate turnaround timelines, and securely lock your data into our active processing queues.</p>
-            </div>
-            
-            <div class="header-action-container">
-                <a href="#portal-grid" class="cta-btn-main scroll-btn">📊 Estimate Rate & File Data</a>
-                <a href="#master-intake-section" class="cta-btn-main ticket-btn" onclick="activateCentralHelpDesk()">🎫 Open Central Help Desk</a>
-            </div>
-        </div>
-    </header>
+        .urgency-ticker {
+            background-color: #060b18;
+            border-bottom: 1px solid var(--border-muted);
+            padding: 12px 20px;
+            text-align: center;
+        }
 
-    <!-- AUTOMATED TRANSACTION WORK ORDER MODAL POPUP -->
-    <div id="success-ticket-modal" class="ticket-modal-overlay hidden-popup">
-        <div class="ticket-modal-card">
-            <div class="ticket-badge-icon">🛡️</div>
-            <h3>OPERATION INITIALIZED SUCCESSFULLY</h3>
-            <p class="modal-ticket-id">Your Unique Tracking File: <strong id="generated-ticket-id">VP-REG-0000</strong></p>
-            <div class="modal-notice-box">
-                <p><strong>🔒 Status: Staged & Locked in Queue.</strong> Your credentials, text parameters, and uploaded files have been safely encrypted and transmitted to our desk handler inbox.</p>
-                <p>A copy of this task run layout has been dispatched to our support mail gateway. Please wait—a desk proxy is verifying your files and will contact you via **email or phone text within 15 minutes** to confirm workflow completion schedules.</p>
-            </div>
-            <button type="button" class="modal-close-btn" onclick="closeTicketModal()">Acknowledge & Monitor Status</button>
-        </div>
-    </div>
+        .urgency-ticker p {
+            font-size: 13px;
+            color: var(--gold-accent);
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
 
-    <!-- LIVE REAL-TIME MARKETPLACE SEARCH DIRECTORY -->
-    <section class="search-master-section">
-        <h3>🔍 Live Marketplace Resource Search Directory</h3>
-        <p class="faq-subtitle">Type keywords to filter active desks instantly (e.g., 'CPA', 'Mock', 'Lorry', 'Logo', 'Maisha', 'KRA').</p>
-        <div class="search-bar-box">
-            <input type="text" id="marketplace-search" onkeyup="filterMarketplaceSearch()" placeholder="Search through our 49 operational service modules here...">
-        </div>
-    </section>
+        .portal-header {
+            background: linear-gradient(135deg, #060b18 0%, var(--bg-obsidian) 100%);
+            text-align: center;
+            padding: 60px 24px;
+            width: 100%;
+            border-bottom: 1px solid var(--border-muted);
+        }
 
-    <!-- THE 7 PILLARS NAVIGATION INTERFACE GRID -->
-    <main id="portal-grid" class="grid-container">
+        .welcome-container { max-width: 850px; margin: 0 auto; }
+
+        .brand-identity-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
         
-        <div class="pillar-card searchable-card" data-tags="digital brand brs registration logo bn2 bn3 cessation particulars link legacy ecitizen kra pin tax returns corporate design profile" onclick="activatePillarDesk('p1-desk', '💻 Digital & Brand Systems', 'REG')">
-            <div class="icon">💻</div>
-            <h2>1. Digital & Brand Systems</h2>
-            <p>BRS Business Registrations, Portal Particulars Alterations & Visual Branding Identity Layouts</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
+        .corporate-logo {
+            max-height: 80px;
+            width: auto;
+            margin-bottom: 10px;
+            object-fit: contain;
+        }
 
-        <div class="pillar-card searchable-card" data-tags="academic test mock exam high school form cbc revision booklet vault kasneb cpa atd past paper guide tuition papers study notes education portal" onclick="activatePillarDesk('p2-desk', '📚 Academic & Testing Logistics', 'ACA')">
-            <div class="icon">📚</div>
-            <h2>2. Academic & Testing Logistics</h2>
-            <p>Form 1-4 High School Mock Bundles, CBC Portfolios & KASNEB CPA/ATD Resource Vaults</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
+        .brand-text-fallback {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
 
-        <div class="pillar-card searchable-card" data-tags="transport ride taxi booking courier dispatch motorcycle lorry cargo freight logistics cold chain truck trailer van routing insurance" onclick="activatePillarDesk('p3-desk', '🚖 Transport Brokerage Hub', 'TRK')">
-            <div class="icon">🚖</div>
-            <h2>3. Transport Brokerage Hub</h2>
-            <p>Intra-Town Express Couriers, Local Transfers & Long-HaUL Freight Lines</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
+        .brand-text-fallback span { color: var(--gold-accent); }
 
-        <div class="pillar-card searchable-card" data-tags="sourcing merchandise agribusiness crop potato cabbage farm market factory price audit import wholesale b2b supplier check tariff cargo" onclick="activatePillarDesk('p4-desk', '🤝 Merchandise Sourcing Links', 'SRC')">
-            <div class="icon">🤝</div>
-            <h2>4. Merchandise Sourcing Links</h2>
-            <p>Farm-Gate Agribusiness Aggregations, Factory Price Audits & Import Tracks</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
+        .welcome-banner {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gold-accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 6px;
+            margin-bottom: 12px;
+        }
 
-        <div class="pillar-card searchable-card" data-tags="fixer desk physical site inspection real estate plot verify consignment count warehouse audit permit county proxy enforcement dispute fence safety" onclick="activatePillarDesk('p5-desk', '🛠️ Independent Fixer Desk', 'FIX')">
-            <div class="icon">🛠️</div>
-            <h2>5. Independent Fixer Desk</h2>
-            <p>Physical Property Site Verifications, Consignment Counts & Permit Proxy Handling</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
+        .portal-header h1 {
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+            line-height: 1.2;
+            margin-bottom: 14px;
+        }
 
-        <div class="pillar-card searchable-card" data-tags="agency general core consolidated billing ledger accounting balance strategy queue override border trade corridor metrics kpi escrow cash flows fund" onclick="activatePillarDesk('p6-desk', '🏢 General Agency Core', 'CRE')">
-            <div class="icon">🏢</div>
-            <h2>6. General Agency Core</h2>
-            <p>Consolidated Firm Accounts, Inter-Desk Escalations & Operations Management Dashboard</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
+        .tagline {
+            font-size: 15px;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
 
-        <div class="pillar-card searchable-card" data-tags="statutory immigration portal ecitizen passport id replacement maisha card ntsa dl logbook shif sha health conduct dci lands ardhisasa tax filings returns kra" onclick="activatePillarDesk('p7-desk', '📄 Statutory & Portal Logistics', 'STAT')">
-            <div class="icon">📄</div>
-            <h2>7. Statutory & Portal Logistics</h2>
-            <p>eCitizen Maisha Cards, NTSA DL Logbook Transfers, KRA iTax Return Filings & Land Searches</p>
-            <div class="explore-node-text">Open Desk Terminal ➡️</div>
-        </div>
+        .trust-badge {
+            display: inline-block;
+            background-color: rgba(212, 175, 55, 0.04);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--gold-accent);
+        }
 
-    </main>
+        .philosophy-box {
+            background-color: var(--panel-slate);
+            border-left: 3px solid var(--gold-accent);
+            border-radius: 4px;
+            padding: 24px;
+            margin-top: 30px;
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
 
-    <!-- THE UNIFIED DYNAMIC DATA INGESTION WORKSPACE CARD -->
-    <section id="master-intake-section" class="calculator-master-card hidden-popup" style="max-width: 750px; margin: 40px auto;">
-        <h3 id="active-desk-title">🛒 Service Desk Panel</h3>
-        <p style="font-size: 14px; color: #555; margin-bottom: 25px;">Select your precise job module below. The system will dynamically calculate pricing, check delivery SLAs, and generate your custom form parameters.</p>
+        .philosophy-box h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
 
-        <!
+        .philosophy-box p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .search-master-section {
+            max-width: 850px;
+            width: 100%;
+            margin: 40px auto 10px auto;
+            padding: 0 24px;
+            text-align: center;
+        }
+
+        .search-master-section h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .faq-subtitle {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .search-bar-box input {
+            width: 100%;
+            padding: 16px 24px;
+            background-color: var(--panel-slate);
+            border: 1px solid var(--border-muted);
+            border-radius: 30px;
+            color: #ffffff;
+            font-size: 14.5px;
+            font-family: inherit;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar-box input:focus { outline: none; border-color: var(--gold-accent); }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            padding: 40px 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .pillar-card {
+            background-color: var(--panel-slate);
+            border: 1px solid var(--border-muted);
+            padding: 35px 24px;
+            border-radius: 8px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .pillar-card:hover { border-color: var(--gold-accent); transform: translateY(-2px); }
+        .pillar-card .icon { font-size: 40px; margin-bottom: 14px; }
+        .pillar-card h2 { font-size: 17px; font-weight: 700; color: #ffffff; margin-bottom: 10px; }
+        .pillar-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px; flex: 1; }
+        .explore-node-text { font-size: 11.5px; font-weight: 700; color: var(--gold-accent); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .workspace-view-panel { max-width: 900px; width: 100%; margin: 20px auto; padding: 0 24px; display: none; }
+        .back-nav-bar { margin-bottom: 30px; }
+        .back-link { color: var(--gold-accent); text-decoration: none; font-size: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+        
+        .solution-row-card { background-color: var(--panel-slate); border: 1px solid var(--border-muted); border-radius: 6px; padding: 24px; margin-bottom: 20px; }
+        .solution-row-card h3 { font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px; }
+        .parameter-line { margin-bottom: 10px; font-size: 14px; line-height: 1.5; text-align: left; }
+        .parameter-line span.label-tag { font-size: 11px; font-weight: 700; color: var(--gold-accent); text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-right: 6px; }
+        .parameter-line a.direct-link { color: var(--text-pure); font-weight: 600; text-decoration: underline; }
+
+        .secure-form-card { background-color: var(--panel-slate); border: 1px solid var(--border-muted); border-radius: 8px; padding: 40px; margin-top: 50px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .form-title-area h3 { font-size: 18px; font-weight: 700; color: #ffffff; margin-bottom: 6px; text-align: left; }
+        .form-title-area p { font-size: 13.5px; color: var(--text-muted); margin-bottom: 30px; text-align: left; }
+        .input-group-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; text-align: left; }
+        .input-group-row label { font-size: 12.5px; font-weight: 600; color: #ffffff; }
+        .input-group-row input, .input-group-row select, .input-group-row textarea { width: 100%; padding: 14px; background-color: var(--bg-obsidian); border: 1px solid var(--border-muted); border-radius: 4px; color: #ffffff; font-size: 14px; font-family: inherit; }
+        .input-group-row input:focus, .input-group-row select:focus, .input-group-row textarea:focus { outline: none; border-color: var(--gold-accent); }
+        .file-picker-container { background-color: rgba(255, 255, 255, 0.02); border: 1px dashed var(--border-muted); padding: 16px; border-radius: 4px; font-size: 13px; color: var(--text-muted); }
+        .privacy-protocol-banner { border-left: 2px solid #10b981; background-color: rgba(16, 185, 129, 0.02); padding: 16px; margin: 24px 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.5; text-align: left; }
+        .submit-action-btn { background-color: var(--action-blue); color: #ffffff; border: none; padding: 16px; border-radius: 4px; font-weight: 700; font-size: 14.5px; text-transform: uppercase; width: 100%; cursor: pointer; letter-spacing: 0.5px; }
+
+        .portal-footer { background-color: #090e1a; border-top: 1px solid var(--border-muted); padding: 60px 24px 40px 24px; font-size: 14px; width: 100%; margin-top: auto; }
+        .footer-grid-row { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; text-align: left; }
+        @media(min-width: 769px) { .footer-grid-row { flex-direction: row; justify-content: space-between; } }
+        .footer-column { flex: 1; }
+        .footer-column h4 { color: #ffffff; font-size: 12.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; border-bottom: 2px solid var(--gold-accent); padding-bottom: 4px; display: inline-block; }
+        .footer-column p { font-size: 13.5px; color: var(--text-muted); margin: 6px 0; line-height: 1.5; }
+        .footer-column strong { color: #ffffff; }
