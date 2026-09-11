@@ -1,17 +1,105 @@
-<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin</title><style>body{background:#0f172a;color:#fff;font-family:system-ui;padding:12px;max-width:1000px;margin:auto}.card{background:#1e293b;padding:12px;border-radius:12px;border:1px solid #334155;margin:8px 0}input,textarea,select{width:100%;padding:10px;margin:4px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}button{padding:8px 12px;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin:2px}.btn-y{background:#facc15}.btn-b{background:#3b82f6;color:#fff}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:700px){.grid{grid-template-columns:1fr}}</style></head><body>
-<h3 style="color:#facc15">Admin - Seamless</h3><div class="card"><input type="password" id="pass" placeholder="veccta2024"><button class="btn-y" onclick="login()">Login</button></div><div id="area" style="display:none"><button class="btn-y" onclick="load()">Refresh</button><span id="counts"></span><div class="grid"><div><h4>Jobs</h4><div id="jobs"></div></div><div><h4>Tickets + Consultations</h4><div id="tickets"></div></div></div></div>
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin</title><style>
+body{background:#0f172a;color:#fff;font-family:system-ui;padding:12px;max-width:1100px;margin:auto}
+.card{background:#1e293b;padding:12px;border-radius:12px;border:1px solid #334155;margin:8px 0}
+input,textarea,select{width:100%;padding:10px;margin:4px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
+button{padding:8px 12px;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin:2px}
+.btn-y{background:#facc15;color:#000}.btn-b{background:#3b82f6;color:#fff}.btn-g{background:#22c55e;color:#000}.btn-r{background:#ef4444;color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.pass-wrap{display:flex;gap:6px;align-items:center}
+.pass-wrap input{flex:1}
+.saved{color:#22c55e;font-weight:800;font-size:13px;display:none}
+.saved.show{display:inline}
+</style></head><body>
+
+<h3 style="color:#facc15">Admin Seamless</h3>
+
+<div class="card">
+<div class="pass-wrap">
+<input type="password" id="pass" placeholder="Password veccta2024">
+<button class="btn-y" onclick="togglePass()" id="eyeBtn">👁️ View</button>
+<button class="btn-g" onclick="login()">Login</button>
+</div>
+<div id="loginMsg"></div>
+</div>
+
+<div id="area" style="display:none">
+<button class="btn-g" onclick="load()">Refresh</button><span id="counts"></span>
+<div class="grid"><div><h4 style="color:#facc15">JOBS</h4><div id="jobs"></div></div><div><h4 style="color:#3b82f6">TICKETS</h4><div id="tickets"></div></div></div>
+</div>
+
 <script>
 const PASS='veccta2024';
 function getJobs(){return JSON.parse(localStorage.getItem('veccta_jobs')||localStorage.getItem('karanu_jobs')||'[]')}
 function getTickets(){return JSON.parse(localStorage.getItem('veccta_tickets')||localStorage.getItem('karanu_tickets')||'[]')}
 function saveJobs(j){localStorage.setItem('veccta_jobs',JSON.stringify(j)); localStorage.setItem('karanu_jobs',JSON.stringify(j));}
 function saveTickets(t){localStorage.setItem('veccta_tickets',JSON.stringify(t)); localStorage.setItem('karanu_tickets',JSON.stringify(t));}
-function login(){if(pass.value!==PASS){alert('wrong');return;} area.style.display='block'; load();}
-function load(){
- let jobs=getJobs(), tickets=getTickets(); counts.textContent=`Jobs ${jobs.length} | Tickets ${tickets.length}`;
- jobsDiv=document.getElementById('jobs'); jobsDiv.innerHTML=jobs.map((j,i)=>`<div class=card style="border-left:4px solid #facc15"><b>${j.id}</b><br>${j.clientName} ${j.clientPhone}<br>${j.service}<br><label>Price</label><input id="p_${i}" value="${j.price||''}"><label>Status</label><select id="s_${i}"><option ${j.status=='Logged'?'selected':''}>Logged</option><option ${j.status=='Quoted'?'selected':''}>Quoted</option><option ${j.status=='In Progress'?'selected':''}>In Progress</option><option ${j.status=='Completed'?'selected':''}>Completed</option></select><label>Admin Msg</label><textarea id="m_${i}">${j.adminMessage||''}</textarea><button class=btn-y onclick="saveJ(${i})">Save Job</button></div>`).join('')||'No jobs on this device';
- document.getElementById('tickets').innerHTML=tickets.map((t,i)=>`<div class=card style="border-left:4px solid ${t.jobId=='CONSULTATION'?'#22c55e':'#3b82f6'}"><b>${t.id}</b> for ${t.jobId} [${t.type}]<br>Q: ${t.message}<br><label>Reply</label><textarea id="r_${i}">${t.adminReply||''}</textarea><select id="ts_${i}"><option ${t.status=='Open'?'selected':''}>Open</option><option ${t.status=='Answered'?'selected':''}>Answered</option><option ${t.status=='Closed'?'selected':''}>Closed</option></select><button class=btn-b onclick="saveT(${i})">Save Ticket</button></div>`).join('')||'No tickets';
+
+function togglePass(){
+ let p=document.getElementById('pass');
+ if(p.type=='password'){p.type='text'; eyeBtn.textContent='🙈 Hide';}
+ else {p.type='password'; eyeBtn.textContent='👁️ View';}
 }
-function saveJ(i){let jobs=getJobs(); jobs[i].price=document.getElementById('p_'+i).value; jobs[i].status=document.getElementById('s_'+i).value; jobs[i].adminMessage=document.getElementById('m_'+i).value; saveJobs(jobs); alert('Job '+jobs[i].id+' saved - client sees PRICE on TRACK');}
-function saveT(i){let tickets=getTickets(); tickets[i].adminReply=document.getElementById('r_'+i).value; tickets[i].status=document.getElementById('ts_'+i).value; saveTickets(tickets); alert('Ticket reply saved');}
+function login(){ if(pass.value!==PASS){loginMsg.textContent='Wrong password'; loginMsg.style.color='#ef4444'; return;} loginMsg.textContent='✅ Logged in'; loginMsg.style.color='#22c55e'; area.style.display='block'; load();}
+
+function load(){
+ let jobs=getJobs().slice().reverse(), tickets=getTickets().slice().reverse();
+ counts.textContent=` Jobs: ${jobs.length} | Tickets: ${tickets.length}`;
+
+ document.getElementById('jobs').innerHTML=jobs.map((j,idx)=>{
+  let realIdx=getJobs().length-1-idx;
+  let dyn=j.dynamicFields? Object.entries(j.dynamicFields).map(([k,v])=>`<div style=font-size:11px><b>${k}:</b> ${v}</div>`).join('') : '';
+  return `<div class=card style="border-left:5px solid #facc15">
+  <b style="color:#facc15">${j.id}</b> - ${j.status} <span id="jsaved_${realIdx}" class="saved">✅ SAVED</span>
+  <div style="font-size:11px;color:#94a3b8">${j.logged}</div>
+  <div style="font-size:13px"><b>${j.fullService||j.service}</b></div>
+  <div>Client: ${j.clientName} ${j.clientPhone}</div>
+  <div style="background:#0f172a;padding:6px;border-radius:6px;margin:4px 0;font-size:11px">${dyn} ${j.details||''}</div>
+  <label style="color:#facc15;font-size:11px">PRICE KSH (client sees on TRACK)</label>
+  <input id="price_${realIdx}" value="${j.price||''}" placeholder="3500" style="border:1px solid #facc15">
+  <label style="font-size:11px">STATUS</label>
+  <select id="status_${realIdx}"><option ${j.status=='Logged'?'selected':''}>Logged</option><option ${j.status=='Quoted'?'selected':''}>Quoted</option><option ${j.status=='In Progress'?'selected':''}>In Progress</option><option ${j.status=='Completed'?'selected':''}>Completed</option><option ${j.status=='Cancelled'?'selected':''}>Cancelled</option></select>
+  <label style="color:#22c55e;font-size:11px">ADMIN MESSAGE (well displayed on TRACK)</label>
+  <textarea id="msg_${realIdx}" rows="2">${j.adminMessage||''}</textarea>
+  <button class=btn-y onclick="saveJob(${realIdx})">Save Job</button>
+  <button class=btn-b onclick="editToggleJob(${realIdx})">Edit Again</button>
+  </div>`;
+ }).join('')||'No jobs';
+
+ document.getElementById('tickets').innerHTML=tickets.map((t,idx)=>{
+  let realIdx=getTickets().length-1-idx;
+  return `<div class=card style="border-left:5px solid #3b82f6">
+  <b style="color:#3b82f6">${t.id}</b> for ${t.jobId} - ${t.status} <span id="tsaved_${realIdx}" class="saved">✅ SAVED</span>
+  <div style="font-size:11px">${t.tType||''} | ${t.category||''} | ${t.logged}</div>
+  <div style="background:#0f172a;padding:6px;border-radius:6px;margin:4px 0">Q: ${t.message}</div>
+  <label style="color:#22c55e;font-size:11px">ADMIN REPLY (well displayed)</label>
+  <textarea id="reply_${realIdx}" rows="2">${t.adminReply||''}</textarea>
+  <select id="tstatus_${realIdx}"><option ${t.status=='Open'?'selected':''}>Open</option><option ${t.status=='Answered'?'selected':''}>Answered</option><option ${t.status=='Closed'?'selected':''}>Closed</option></select>
+  <button class=btn-b onclick="saveTicket(${realIdx})">Save Ticket</button>
+  <button class=btn-y onclick="editToggleTicket(${realIdx})">Edit Again</button>
+  </div>`;
+ }).join('')||'No tickets';
+}
+
+function saveJob(i){
+ let jobs=getJobs();
+ jobs[i].price=document.getElementById('price_'+i).value;
+ jobs[i].status=document.getElementById('status_'+i).value;
+ jobs[i].adminMessage=document.getElementById('msg_'+i).value;
+ saveJobs(jobs);
+ let el=document.getElementById('jsaved_'+i); el.classList.add('show'); el.textContent='✅ SAVED - Will show on TRACK';
+ document.getElementById('price_'+i).style.background='#052e16';
+ document.getElementById('msg_'+i).style.background='#052e16';
+ setTimeout(()=>{document.getElementById('price_'+i).style.background='#0f172a'; document.getElementById('msg_'+i).style.background='#0f172a';},1500);
+}
+function saveTicket(i){
+ let tickets=getTickets();
+ tickets[i].adminReply=document.getElementById('reply_'+i).value;
+ tickets[i].status=document.getElementById('tstatus_'+i).value;
+ saveTickets(tickets);
+ let el=document.getElementById('tsaved_'+i); el.classList.add('show'); el.textContent='✅ SAVED - Reply shows on TRACK';
+ document.getElementById('reply_'+i).style.background='#052e16';
+ setTimeout(()=>{document.getElementById('reply_'+i).style.background='#0f172a';},1500);
+}
+function editToggleJob(i){ document.getElementById('jsaved_'+i).classList.remove('show'); document.getElementById('price_'+i).focus(); }
+function editToggleTicket(i){ document.getElementById('tsaved_'+i).classList.remove('show'); document.getElementById('reply_'+i).focus(); }
 </script></body></html>
