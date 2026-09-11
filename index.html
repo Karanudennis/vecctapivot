@@ -32,6 +32,21 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* Urgency Top Notification Ticker */
+        .urgency-ticker {
+            background-color: #060b18;
+            border-bottom: 1px solid var(--border-muted);
+            padding: 12px 20px;
+            text-align: center;
+        }
+
+        .urgency-ticker p {
+            font-size: 13px;
+            color: var(--gold-accent);
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
         /* Institutional Corporate Header Panel Layout */
         .portal-header {
             background: linear-gradient(135deg, #060b18 0%, var(--bg-obsidian) 100%);
@@ -41,9 +56,12 @@
             border-bottom: 1px solid var(--border-muted);
         }
 
-        .welcome-container { max-width: 850px; margin: 0 auto; }
+        .welcome-container { 
+            max-width: 850px; 
+            margin: 0 auto; 
+        }
 
-        /* Premium Brand Identity Header Area Architecture */
+        /* Premium Brand Identity Area Architecture */
         .brand-identity-block {
             display: flex;
             flex-direction: column;
@@ -56,6 +74,7 @@
             max-height: 80px;
             width: auto;
             margin-bottom: 10px;
+            object-fit: contain;
         }
 
         .brand-text-fallback {
@@ -171,7 +190,7 @@
             border-color: var(--gold-accent);
         }
 
-        /* Navigational Grid Menu Layout Container */
+        /* Navigational Grid Container - MANDATORY OPENING TAG PLACED NATIVELY HERE */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -342,20 +361,3 @@
             padding-top: 25px;
             max-width: 900px;
             margin: 30px auto 0 auto;
-            text-align: center;
-            font-size: 12.5px;
-            color: var(--text-muted);
-        }
-
-        .legal-footer {
-            font-size: 11.5px;
-            opacity: 0.6;
-            line-height: 1.6;
-            margin-top: 12px;
-            text-align: justify;
-        }
-
-        @media(max-width: 768px) {
-            .portal-header { padding: 50px 16px; }
-            .portal-header h1 { font-size: 24px; }
-            .grid-container { padding: 24px 16px; gap: 16px; }
