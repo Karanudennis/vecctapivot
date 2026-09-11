@@ -1,14 +1,17 @@
-<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Track - VECCTAPIVOT</title><style>
-body{background:#0f172a;color:#fff;font-family:system-ui;padding:12px;max-width:700px;margin:auto}
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Track - VECCTAPIVOT</title><style>
+body{background:#0f172a;color:#fff;font-family:system-ui;padding:12px;max-width:750px;margin:auto}
 .card{background:#1e293b;padding:14px;border-radius:12px;border:1px solid #334155;margin:10px 0}
-input{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
+input,textarea,select{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
 button{padding:12px;width:100%;border:none;border-radius:8px;font-weight:800;cursor:pointer}
-.btn-y{background:#facc15;color:#000}.btn-b{background:#3b82f6;color:#fff}
-.tabs{display:flex;gap:6px}.tabs button{flex:1;background:#1e293b;color:#94a3b8;padding:10px;border:none;border-radius:8px}
+.btn-y{background:#facc15;color:#000}.btn-b{background:#3b82f6;color:#fff}.btn-r{background:#ef4444;color:#fff}.btn-g{background:#22c55e;color:#000}
+.tabs{display:flex;gap:6px;margin-bottom:10px}.tabs button{flex:1;background:#1e293b;color:#94a3b8;padding:10px;border:none;border-radius:8px}
 .tabs button.active{background:#facc15;color:#000}
 .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:800}
-.price-box{background:#0f172a;border:2px solid #facc15;padding:12px;border-radius:10px;text-align:center;margin:10px 0}
+.price-box{background:#0f172a;border:2px solid #facc15;padding:14px;border-radius:12px;text-align:center;margin:10px 0}
 .admin-box{background:#052e16;border:1px solid #22c55e;padding:12px;border-radius:10px;margin:10px 0}
+.lock-box{background:#450a0a;border:2px solid #ef4444;padding:14px;border-radius:12px;margin:10px 0}
+.req-box{background:#0f172a;padding:10px;border-radius:8px;margin:6px 0;font-size:13px}
+.locked{opacity:0.4;pointer-events:none;filter:grayscale(1)}
 </style></head><body>
 
 <div class="tabs">
@@ -18,7 +21,7 @@ button{padding:12px;width:100%;border:none;border-radius:8px;font-weight:800;cur
 
 <div id="jobSec">
 <div class="card">
-<input id="jobInput" placeholder="Enter JOB- ID e.g JOB-20260911-1234">
+<input id="jobInput" placeholder="Enter JOB- ID e.g JOB-20260912-1234">
 <button class="btn-y" onclick="trackJob()">TRACK JOB</button>
 <div id="jobRes"></div>
 </div>
@@ -26,67 +29,122 @@ button{padding:12px;width:100%;border:none;border-radius:8px;font-weight:800;cur
 
 <div id="ticketSec" style="display:none">
 <div class="card">
-<input id="ticketInput" placeholder="Enter TICKET- ID e.g TICKET-1234">
+<input id="ticketInput" placeholder="Enter TICKET- ID">
 <button class="btn-b" onclick="trackTicket()">TRACK TICKET</button>
 <div id="ticketRes"></div>
 </div>
 </div>
 
 <script>
-function getJobs(){return JSON.parse(localStorage.getItem('veccta_jobs')||localStorage.getItem('karanu_jobs')||'[]')}
-function getTickets(){return JSON.parse(localStorage.getItem('veccta_tickets')||localStorage.getItem('karanu_tickets')||'[]')}
-function tab(t){document.getElementById('jobSec').style.display=t=='job'?'block':'none';document.getElementById('ticketSec').style.display=t=='ticket'?'block':'none';bJ.classList.toggle('active',t=='job');bT.classList.toggle('active',t=='ticket');}
+function getJobs(){try{return JSON.parse(localStorage.getItem('veccta_jobs')||localStorage.getItem('karanu_jobs')||'[]')}catch(e){return []}}
+function getTickets(){try{return JSON.parse(localStorage.getItem('veccta_tickets')||localStorage.getItem('karanu_tickets')||'[]')}catch(e){return []}}
+function saveJobs(j){localStorage.setItem('veccta_jobs',JSON.stringify(j)); localStorage.setItem('karanu_jobs',JSON.stringify(j));}
+function tab(t){jobSec.style.display=t=='job'?'block':'none';ticketSec.style.display=t=='ticket'?'block':'none';bJ.classList.toggle('active',t=='job');bT.classList.toggle('active',t=='ticket');}
 
 function trackJob(){
- let id=jobInput.value.trim().toUpperCase(); let j=getJobs().find(x=>x.id.toUpperCase()===id);
- if(!j){jobRes.innerHTML=`<p style=color:#f87171>JOB ${id} NOT FOUND on this device.<br>Note: GitHub Pages saves only on same browser. Use same phone where you submitted JOB.</p>`;return;}
+ let id=jobInput.value.trim().toUpperCase(); if(!id){alert('Enter JOB ID');return;}
+ let j=getJobs().find(x=>x.id.toUpperCase()===id);
+ if(!j){jobRes.innerHTML=`<div class=card style="border-left:5px solid #ef4444"><b style="color:#ef4444">JOB ${id} NOT FOUND on this device</b><br><small>GitHub Pages saves only on same browser. Use same phone where you submitted.</small></div>`;return;}
  let tickets=getTickets().filter(t=>t.jobId===j.id);
- let dyn=j.dynamicFields? Object.entries(j.dynamicFields).map(([k,v])=>`<div><b>${k}:</b> ${v}</div>`).join('') : '';
- jobRes.innerHTML=`
- <div class=card style="border-left:5px solid #facc15">
-  <div style="display:flex;justify-content:space-between"><b style="color:#facc15;font-size:20px">${j.id}</b><span class=badge style="background:${j.status=='Completed'?'#22c55e':j.status=='In Progress'?'#3b82f6':'#facc15'};color:#000">${j.status}</span></div>
-  <div style="color:#94a3b8;font-size:12px">${j.logged} | Priority: ${j.priority}</div>
-  <div style="margin:8px 0"><b>${j.fullService||j.service}</b><br><small>${j.pillar} > ${j.category}</small></div>
-  <div style="background:#0f172a;padding:8px;border-radius:6px;font-size:13px">${dyn}<br>Details: ${j.details||'None'}</div>
+ let isLocked=j.status==='Needs Revision' || j.locked===true;
 
-  <div class=price-box>
-   <div style="font-size:12px;color:#94a3b8">TOTAL PRICE</div>
-   <div style="font-size:28px;color:#facc15;font-weight:900">${j.price? 'KSH '+j.price : 'QUOTE PENDING'}</div>
-   ${j.price?'':'<small>Admin will update price</small>'}
+ let reqHtml='';
+ if(j.requirements){ reqHtml=Object.entries(j.requirements).map(([k,v])=>`<div><b>${k.replace(/_/g,' ')}:</b> ${v||'-'}</div>`).join(''); }
+ if(j.fileName) reqHtml+=`<div><b>File:</b> ${j.fileName} ${j.fileData?'<span style=color:#22c55e>✓ Uploaded</span>':''}</div>`;
+
+ let normalDetails=`
+  <div class="req-box ${isLocked?'locked':''}">
+   <b style="color:#facc15;font-size:11px">REQUIREMENTS (${j.requirementType||'data'})</b><br>${reqHtml||'No extra'}
+   <div style="margin-top:6px"><b>Details:</b> ${j.details||'-'}</div>
+   <div style="margin-top:6px"><b>Priority:</b> ${j.priority} | <b>Email:</b> ${j.clientEmail||'-'}</div>
   </div>
-
-  <div class=admin-box>
+  <div class="price-box ${isLocked?'locked':''}">
+   <div style="font-size:11px;color:#94a3b8">TOTAL PRICE</div>
+   <div style="font-size:32px;color:#facc15;font-weight:900">${j.price? 'KSH '+j.price : 'QUOTE PENDING'}</div>
+  </div>
+  <div class="admin-box ${isLocked?'locked':''}">
    <div style="font-size:11px;color:#22c55e;font-weight:800">ADMIN MESSAGE</div>
-   <div style="font-size:15px;margin-top:4px"><i>"${j.adminMessage||'No message yet - Admin will comment'}"</i></div>
+   <div style="font-size:14px"><i>"${j.adminMessage||'No message yet'}"</i></div>
   </div>
+ `;
 
-  <div style="display:flex;gap:6px;margin-top:10px">
-   <a href="ticket.html?job=${j.id}" style="flex:1;background:#3b82f6;color:#fff;padding:10px;border-radius:8px;text-decoration:none;text-align:center">Raise Ticket</a>
-   <a href="https://wa.me/254700000000?text=Hi,%20about%20${j.id}" style="flex:1;background:#22c55e;color:#000;padding:10px;border-radius:8px;text-decoration:none;text-align:center">WhatsApp</a>
+ let revisionHtml='';
+ if(isLocked){
+  revisionHtml=`
+  <div class="lock-box">
+   <div style="font-weight:900;color:#ef4444;font-size:16px">🔒 JOB LOCKED - CORRECTION NEEDED</div>
+   <div style="font-size:12px;color:#fca5a5">Other fields are locked. Only revision allowed.</div>
+   <div style="background:#1e293b;padding:10px;border-radius:8px;margin:8px 0;border-left:3px solid #ef4444">
+    <b style="color:#ef4444">ADMIN CORRECTION NOTE:</b><br>
+    <div style="font-size:15px;line-height:1.4;margin-top:4px"><i>"${j.revisionNote||j.adminMessage||'Please correct and resubmit'}"</i></div>
+   </div>
+   <div style="background:#0f172a;padding:10px;border-radius:8px">
+    <label style="color:#facc15">YOUR CORRECTION *</label>
+    <textarea id="revText" rows="4" placeholder="Write what you corrected..."></textarea>
+    ${j.requirementType=='file'||j.requirementType=='both'? `<label style="color:#22c55e">RE-UPLOAD FILE (if required)</label><input type="file" id="revFile"><small>Previous: ${j.fileName||'none'}</small>` : ''}
+    <button class="btn-r" onclick="resubmitJob('${j.id}')" style="margin-top:10px;background:#ef4444;color:#fff">🔄 RESUBMIT AFTER CORRECTION</button>
+    <small>After resubmit, status becomes Resubmitted and admin will review</small>
+   </div>
+  </div>`;
+ }
+
+ jobRes.innerHTML=`
+  <div class=card style="border-left:5px solid ${isLocked?'#ef4444':'#facc15'}">
+   <div style="display:flex;justify-content:space-between;align-items:center"><b style="color:#facc15;font-size:20px">${j.id}</b><span class=badge style="background:${j.status=='Completed'?'#22c55e':j.status=='Needs Revision'?'#ef4444':j.status=='In Progress'?'#3b82f6':'#facc15'};color:${j.status=='Logged'?'#000':'#fff'}">${j.status}</span></div>
+   <div style="color:#94a3b8;font-size:12px">${j.logged} | Client: ${j.clientName} ${j.clientPhone}</div>
+   <div style="margin:8px 0"><b>${j.fullService||j.service}</b><br><small style="color:#94a3b8">${j.pillar} > ${j.category} > ${j.service} > ${j.subService}</small></div>
+   ${normalDetails}
+   ${revisionHtml}
+   ${!isLocked? `<div style="display:flex;gap:6px;margin-top:10px"><a href="ticket.html?job=${j.id}" style="flex:1;background:#3b82f6;color:#fff;padding:10px;border-radius:8px;text-decoration:none;text-align:center">Raise Ticket</a><a href="https://wa.me/254700000000?text=Hi%20about%20${j.id}" style="flex:1;background:#22c55e;color:#000;padding:10px;border-radius:8px;text-decoration:none;text-align:center">WhatsApp</a></div>`:''}
   </div>
- </div>
+  <div class=card>
+   <h4 style="color:#3b82f6;margin:0 0 8px">Tickets for ${j.id} (${tickets.length})</h4>
+   ${tickets.length? tickets.map(t=>`<div style="background:#0f172a;padding:10px;border-radius:8px;margin:6px 0;border-left:3px solid ${t.status=='Answered'?'#22c55e':'#3b82f6'}"><b>${t.id}</b> [${t.category||t.tType}] <span class=badge style="background:#1e293b">${t.status}</span><br>Q: ${t.message}<br><div style="background:#1e293b;padding:8px;border-radius:6px;margin-top:4px"><b style="color:#22c55e">ADMIN REPLY:</b> <i>${t.adminReply||'Waiting...'}</i></div><small>${t.logged}</small></div>`).join('') : '<small>No tickets. If needs correction, admin will set status to Needs Revision.</small>'}
+  </div>`;
+}
 
- <div class=card>
-  <h4 style="color:#3b82f6">Tickets for this JOB (${tickets.length})</h4>
-  ${tickets.length? tickets.map(t=>`<div style="background:#0f172a;padding:10px;border-radius:8px;margin:6px 0;border-left:3px solid ${t.status=='Answered'?'#22c55e':'#3b82f6'}"><b>${t.id}</b> [${t.category||t.tType}] - <span class=badge style="background:#1e293b">${t.status}</span><br><div style="margin:6px 0">Q: ${t.message}</div><div style="background:#1e293b;padding:8px;border-radius:6px"><b style="color:#22c55e">ADMIN REPLY:</b><br><i>${t.adminReply||'Waiting admin reply...'}</i></div><small>${t.logged}</small></div>`).join('') : '<small>No tickets yet. Raise one above.</small>'}
- </div>`;
+function resubmitJob(id){
+ let revText=document.getElementById('revText')?.value.trim();
+ if(!revText){ alert('Write correction note'); return; }
+ let jobs=getJobs(); let idx=jobs.findIndex(x=>x.id===id); if(idx<0) return;
+ let revFileInput=document.getElementById('revFile');
+ if(revFileInput && revFileInput.files[0]){
+  jobs[idx].fileName=revFileInput.files[0].name;
+  let reader=new FileReader();
+  reader.onload=e=>{
+   jobs[idx].fileData=e.target.result.slice(0,80000);
+   finishResubmit(jobs,idx,revText);
+  };
+  reader.readAsDataURL(revFileInput.files[0]);
+ } else {
+  finishResubmit(jobs,idx,revText);
+ }
+}
+function finishResubmit(jobs,idx,revText){
+ jobs[idx].revisionReply=revText;
+ jobs[idx].status='Resubmitted';
+ jobs[idx].locked=false;
+ jobs[idx].adminMessage='Resubmitted: '+revText+' - Admin will review';
+ saveJobs(jobs);
+ alert('✅ RESUBMITTED! Status now Resubmitted');
+ trackJob();
 }
 
 function trackTicket(){
- let id=ticketInput.value.trim().toUpperCase(); let t=getTickets().find(x=>x.id.toUpperCase()===id);
+ let id=ticketInput.value.trim().toUpperCase(); if(!id){alert('Enter Ticket ID');return;}
+ let t=getTickets().find(x=>x.id.toUpperCase()===id);
  if(!t){ticketRes.innerHTML='<p style=color:#f87171>TICKET not found on this device</p>';return;}
  ticketRes.innerHTML=`
  <div class=card style="border-left:5px solid #3b82f6">
   <div style="display:flex;justify-content:space-between"><b style="color:#3b82f6;font-size:18px">${t.id}</b><span class=badge style="background:${t.status=='Answered'?'#22c55e':'#3b82f6'};color:#fff">${t.status}</span></div>
-  <div style="font-size:12px;color:#94a3b8">Linked to: ${t.jobId} | Type: ${t.tType||''} | Cat: ${t.category||''} | Priority: ${t.priority||''}</div>
+  <div style="font-size:11px;color:#94a3b8">Linked to: ${t.jobId} | Type: ${t.tType||''} | Cat: ${t.category||''} | ${t.logged}</div>
   <div style="background:#0f172a;padding:10px;border-radius:8px;margin:10px 0">YOUR MESSAGE:<br>${t.message}</div>
-  <div class=admin-box><div style="font-size:11px;color:#22c55e;font-weight:800">ADMIN REPLY - WELL DISPLAYED</div><div style="font-size:16px;margin-top:6px;line-height:1.5"><i>"${t.adminReply||'Admin has not replied yet. Please check later.'}"</i></div></div>
-  <div style="font-size:12px;color:#94a3b8">${t.logged}</div>
-  ${t.jobId!='CONSULTATION'? `<a href="#" onclick="jobInput.value='${t.jobId}';tab('job');trackJob();return false;" style="background:#facc15;color:#000;padding:8px 12px;border-radius:6px;text-decoration:none;display:inline-block;margin-top:8px">View JOB ${t.jobId}</a>`:''}
+  <div class=admin-box><div style="font-size:11px;color:#22c55e;font-weight:800">ADMIN REPLY - WELL DISPLAYED</div><div style="font-size:15px;margin-top:6px"><i>"${t.adminReply||'Admin not replied yet'}"</i></div></div>
+  ${t.jobId!='CONSULTATION'? `<button class=btn-y onclick="jobInput.value='${t.jobId}';tab('job');trackJob()">View JOB ${t.jobId}</button>`:''}
  </div>`;
 }
 
 let q=new URLSearchParams(location.search);
-if(q.get('job')){jobInput.value=q.get('job'); setTimeout(trackJob,300);}
-if(q.get('ticket')){tab('ticket'); ticketInput.value=q.get('ticket'); setTimeout(trackTicket,300);}
+if(q.get('job')){jobInput.value=q.get('job'); setTimeout(trackJob,200);}
+if(q.get('ticket')){tab('ticket'); ticketInput.value=q.get('ticket'); setTimeout(trackTicket,200);}
 </script></body></html>
