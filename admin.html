@@ -1,17 +1,20 @@
-<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin</title><style>
-body{background:#0f172a;color:#fff;font-family:system-ui;padding:12px;max-width:1100px;margin:auto}
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin - VECCTAPIVOT</title><style>
+body{background:#0f172a;color:#fff;font-family:system-ui;padding:12px;max-width:1200px;margin:auto}
 .card{background:#1e293b;padding:12px;border-radius:12px;border:1px solid #334155;margin:8px 0}
 input,textarea,select{width:100%;padding:10px;margin:4px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
 button{padding:8px 12px;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin:2px}
 .btn-y{background:#facc15;color:#000}.btn-b{background:#3b82f6;color:#fff}.btn-g{background:#22c55e;color:#000}.btn-r{background:#ef4444;color:#fff}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:800px){.grid{grid-template-columns:1fr}}
-.pass-wrap{display:flex;gap:6px;align-items:center}
-.pass-wrap input{flex:1}
-.saved{color:#22c55e;font-weight:800;font-size:13px;display:none}
-.saved.show{display:inline}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.badge{padding:3px 8px;border-radius:12px;font-size:11px;font-weight:800}
+.pass-wrap{display:flex;gap:6px;align-items:center}.pass-wrap input{flex:1}
+.saved{color:#22c55e;font-weight:800;font-size:12px;display:none}.saved.show{display:inline-block;background:#052e16;padding:2px 8px;border-radius:10px;border:1px solid #22c55e}
+.price-input{border:2px solid #facc15!important;color:#facc15!important;font-weight:800;font-size:16px}
+.admin-msg{border:2px solid #22c55e!important}
+.rev-note{border:2px solid #ef4444!important}
+.req-box{background:#0f172a;padding:8px;border-radius:8px;font-size:12px;margin:4px 0}
 </style></head><body>
 
-<h3 style="color:#facc15">Admin Seamless</h3>
+<h3 style="color:#facc15;margin:0">VECCTAPIVOT ADMIN - Final Seamless</h3><small style="color:#94a3b8">Password view + Saved status + Revision lock + Ticket reply well displayed</small>
 
 <div class="card">
 <div class="pass-wrap">
@@ -19,87 +22,117 @@ button{padding:8px 12px;border:none;border-radius:8px;font-weight:700;cursor:poi
 <button class="btn-y" onclick="togglePass()" id="eyeBtn">👁️ View</button>
 <button class="btn-g" onclick="login()">Login</button>
 </div>
-<div id="loginMsg"></div>
+<div id="loginMsg" style="font-size:12px;margin-top:4px"></div>
 </div>
 
 <div id="area" style="display:none">
-<button class="btn-g" onclick="load()">Refresh</button><span id="counts"></span>
-<div class="grid"><div><h4 style="color:#facc15">JOBS</h4><div id="jobs"></div></div><div><h4 style="color:#3b82f6">TICKETS</h4><div id="tickets"></div></div></div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+<button class="btn-g" onclick="load()">🔄 Refresh</button>
+<button class="btn-b" onclick="exportData()">Export JSON</button>
+<input type="file" id="importFile" onchange="importData()" style="width:180px">
+<span id="counts" style="color:#facc15;font-weight:800;font-size:13px"></span>
+</div>
+
+<div class="grid">
+<div><h4 style="color:#facc15">JOBS - File/Data + Price + Revision Lock</h4><div id="jobs">Loading...</div></div>
+<div><h4 style="color:#3b82f6">TICKETS - Options + File + Reply Well Displayed</h4><div id="tickets">Loading...</div></div>
+</div>
 </div>
 
 <script>
 const PASS='veccta2024';
-function getJobs(){return JSON.parse(localStorage.getItem('veccta_jobs')||localStorage.getItem('karanu_jobs')||'[]')}
-function getTickets(){return JSON.parse(localStorage.getItem('veccta_tickets')||localStorage.getItem('karanu_tickets')||'[]')}
+function getJobs(){try{return JSON.parse(localStorage.getItem('veccta_jobs')||localStorage.getItem('karanu_jobs')||'[]')}catch(e){return []}}
+function getTickets(){try{return JSON.parse(localStorage.getItem('veccta_tickets')||localStorage.getItem('karanu_tickets')||'[]')}catch(e){return []}}
 function saveJobs(j){localStorage.setItem('veccta_jobs',JSON.stringify(j)); localStorage.setItem('karanu_jobs',JSON.stringify(j));}
 function saveTickets(t){localStorage.setItem('veccta_tickets',JSON.stringify(t)); localStorage.setItem('karanu_tickets',JSON.stringify(t));}
 
-function togglePass(){
- let p=document.getElementById('pass');
- if(p.type=='password'){p.type='text'; eyeBtn.textContent='🙈 Hide';}
- else {p.type='password'; eyeBtn.textContent='👁️ View';}
-}
-function login(){ if(pass.value!==PASS){loginMsg.textContent='Wrong password'; loginMsg.style.color='#ef4444'; return;} loginMsg.textContent='✅ Logged in'; loginMsg.style.color='#22c55e'; area.style.display='block'; load();}
+function togglePass(){ let p=document.getElementById('pass'); if(p.type=='password'){p.type='text'; eyeBtn.textContent='🙈 Hide';} else {p.type='password'; eyeBtn.textContent='👁️ View';} }
+function login(){ if(pass.value!==PASS){loginMsg.textContent='❌ Wrong password'; loginMsg.style.color='#ef4444'; return;} loginMsg.textContent='✅ Logged in - Data only on this device (GitHub limit)'; loginMsg.style.color='#22c55e'; area.style.display='block'; load();}
 
 function load(){
  let jobs=getJobs().slice().reverse(), tickets=getTickets().slice().reverse();
- counts.textContent=` Jobs: ${jobs.length} | Tickets: ${tickets.length}`;
+ counts.textContent=` Jobs: ${getJobs().length} | Tickets: ${getTickets().length} | Same device only`;
 
  document.getElementById('jobs').innerHTML=jobs.map((j,idx)=>{
   let realIdx=getJobs().length-1-idx;
-  let dyn=j.dynamicFields? Object.entries(j.dynamicFields).map(([k,v])=>`<div style=font-size:11px><b>${k}:</b> ${v}</div>`).join('') : '';
-  return `<div class=card style="border-left:5px solid #facc15">
-  <b style="color:#facc15">${j.id}</b> - ${j.status} <span id="jsaved_${realIdx}" class="saved">✅ SAVED</span>
-  <div style="font-size:11px;color:#94a3b8">${j.logged}</div>
-  <div style="font-size:13px"><b>${j.fullService||j.service}</b></div>
-  <div>Client: ${j.clientName} ${j.clientPhone}</div>
-  <div style="background:#0f172a;padding:6px;border-radius:6px;margin:4px 0;font-size:11px">${dyn} ${j.details||''}</div>
-  <label style="color:#facc15;font-size:11px">PRICE KSH (client sees on TRACK)</label>
-  <input id="price_${realIdx}" value="${j.price||''}" placeholder="3500" style="border:1px solid #facc15">
-  <label style="font-size:11px">STATUS</label>
-  <select id="status_${realIdx}"><option ${j.status=='Logged'?'selected':''}>Logged</option><option ${j.status=='Quoted'?'selected':''}>Quoted</option><option ${j.status=='In Progress'?'selected':''}>In Progress</option><option ${j.status=='Completed'?'selected':''}>Completed</option><option ${j.status=='Cancelled'?'selected':''}>Cancelled</option></select>
-  <label style="color:#22c55e;font-size:11px">ADMIN MESSAGE (well displayed on TRACK)</label>
-  <textarea id="msg_${realIdx}" rows="2">${j.adminMessage||''}</textarea>
-  <button class=btn-y onclick="saveJob(${realIdx})">Save Job</button>
-  <button class=btn-b onclick="editToggleJob(${realIdx})">Edit Again</button>
+  let reqHtml=j.requirements? Object.entries(j.requirements).map(([k,v])=>`<div><b>${k.replace(/_/g,' ')}:</b> ${v||'-'}</div>`).join('') : '<small>No req</small>';
+  let isRev=j.status==='Needs Revision';
+  return `<div class=card style="border-left:5px solid ${isRev?'#ef4444':'#facc15'}">
+   <div style="display:flex;justify-content:space-between"><b style="color:#facc15">${j.id}</b><span class=badge style="background:${j.status=='Completed'?'#22c55e':j.status=='Needs Revision'?'#ef4444':j.status=='Resubmitted'?'#facc15':j.status=='In Progress'?'#3b82f6':'#334155'};color:${j.status=='Resubmitted'?'#000':'#fff'}">${j.status}</span></div>
+   <span id="jsaved_${realIdx}" class="saved">✅ SAVED</span>
+   <div style="font-size:11px;color:#94a3b8">${j.logged} | ${j.priority} | ${j.clientName} ${j.clientPhone}</div>
+   <div style="font-size:12px;margin:4px 0"><b>${j.fullService||j.service}</b><br><small>${j.pillar} > ${j.category}</small></div>
+   <div class=req-box><b style="color:#facc15;font-size:11px">REQUIREMENTS [${j.requirementType||'data'}]</b><br>${reqHtml}<br><b>File:</b> ${j.fileName||'No file'} ${j.fileData?'<span style=color:#22c55e>✓ Has file</span>':''}<br><b>Details:</b> ${j.details||'-'}<br>${j.revisionReply? `<div style="background:#052e16;padding:4px;border-radius:4px;margin-top:4px;border:1px solid #22c55e"><b style="color:#22c55e">Client Resubmission:</b> ${j.revisionReply}</div>`:''}</div>
+
+   <label style="color:#facc15;font-size:11px">PRICE KSH - Shows on TRACK big yellow box</label>
+   <input id="price_${realIdx}" class="price-input" value="${j.price||''}" placeholder="e.g 3500">
+
+   <label style="font-size:11px">STATUS - If Needs Revision, TRACK locks other elements and opens only revision part</label>
+   <select id="status_${realIdx}">
+    <option ${j.status=='Logged'?'selected':''}>Logged</option><option ${j.status=='Quoted'?'selected':''}>Quoted</option><option ${j.status=='In Progress'?'selected':''}>In Progress</option>
+    <option ${j.status=='Needs Revision'?'selected':''}>Needs Revision</option><option ${j.status=='Resubmitted'?'selected':''}>Resubmitted</option><option ${j.status=='Completed'?'selected':''}>Completed</option><option ${j.status=='Cancelled'?'selected':''}>Cancelled</option>
+   </select>
+
+   <label style="color:#ef4444;font-size:11px">REVISION / CORRECTION NOTE - Well displayed on TRACK red lock box (only when Needs Revision)</label>
+   <textarea id="rev_${realIdx}" class="rev-note" rows="2" placeholder="What to correct? e.g Fix logo spelling, Re-upload clear ID">${j.revisionNote||''}</textarea>
+
+   <label style="color:#22c55e;font-size:11px">ADMIN MESSAGE / COMMENT - Well displayed on TRACK green box</label>
+   <textarea id="msg_${realIdx}" class="admin-msg" rows="2" placeholder="Message client sees on TRACK">${j.adminMessage||''}</textarea>
+
+   <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">
+    <button class=btn-y onclick="saveJob(${realIdx})">💾 Save Job - Says SAVED</button>
+    <button class=btn-b onclick="editJob(${realIdx})">✏️ Edit Again</button>
+    <button class=btn-g onclick="wa('${j.clientPhone}','Hi ${j.clientName}, ${j.id} - ${j.fullService} - Price KSH ${document.getElementById('price_${realIdx}').value} - Status: ${document.getElementById('status_${realIdx}').value} - ${document.getElementById('msg_${realIdx}').value} - Correction: ${document.getElementById('rev_${realIdx}').value} - Track: ')">WhatsApp</button>
+    <button class=btn-r onclick="delJob(${realIdx})">Delete</button>
+   </div>
   </div>`;
- }).join('')||'No jobs';
+ }).join('')||'<p>No jobs on this device</p>';
 
  document.getElementById('tickets').innerHTML=tickets.map((t,idx)=>{
   let realIdx=getTickets().length-1-idx;
-  return `<div class=card style="border-left:5px solid #3b82f6">
-  <b style="color:#3b82f6">${t.id}</b> for ${t.jobId} - ${t.status} <span id="tsaved_${realIdx}" class="saved">✅ SAVED</span>
-  <div style="font-size:11px">${t.tType||''} | ${t.category||''} | ${t.logged}</div>
-  <div style="background:#0f172a;padding:6px;border-radius:6px;margin:4px 0">Q: ${t.message}</div>
-  <label style="color:#22c55e;font-size:11px">ADMIN REPLY (well displayed)</label>
-  <textarea id="reply_${realIdx}" rows="2">${t.adminReply||''}</textarea>
-  <select id="tstatus_${realIdx}"><option ${t.status=='Open'?'selected':''}>Open</option><option ${t.status=='Answered'?'selected':''}>Answered</option><option ${t.status=='Closed'?'selected':''}>Closed</option></select>
-  <button class=btn-b onclick="saveTicket(${realIdx})">Save Ticket</button>
-  <button class=btn-y onclick="editToggleTicket(${realIdx})">Edit Again</button>
+  return `<div class=card style="border-left:5px solid ${t.jobId=='CONSULTATION'?'#22c55e':'#3b82f6'}">
+   <div style="display:flex;justify-content:space-between"><b style="color:#3b82f6">${t.id}</b><span class=badge style="background:${t.status=='Answered'?'#22c55e':'#3b82f6'};color:#fff">${t.status}</span></div>
+   <span id="tsaved_${realIdx}" class="saved">✅ SAVED</span>
+   <div style="font-size:11px;color:#94a3b8">For: ${t.jobId} | ${t.tTypeLabel||t.tType} | ${t.category} | ${t.priority} | ${t.logged}</div>
+   <div class=req-box><b>CLIENT MESSAGE:</b><br>${t.message}<br><b>File:</b> ${t.fileName||'No file'} ${t.fileData?'<span style=color:#22c55e>✓ Has file</span>':''}</div>
+
+   <label style="color:#22c55e;font-size:11px">ADMIN REPLY - Well displayed on TRACK green box</label>
+   <textarea id="reply_${realIdx}" class="admin-msg" rows="3" placeholder="Reply client sees well displayed on TRACK">${t.adminReply||''}</textarea>
+   <select id="tstatus_${realIdx}"><option ${t.status=='Open'?'selected':''}>Open</option><option ${t.status=='Answered'?'selected':''}>Answered</option><option ${t.status=='Closed'?'selected':''}>Closed</option></select>
+
+   <div style="display:flex;gap:4px;margin-top:6px">
+    <button class=btn-b onclick="saveTicket(${realIdx})">💾 Save Reply - Says SAVED</button>
+    <button class=btn-y onclick="editTicket(${realIdx})">✏️ Edit Again</button>
+    <button class=btn-r onclick="delTicket(${realIdx})">Delete</button>
+   </div>
   </div>`;
- }).join('')||'No tickets';
+ }).join('')||'<p>No tickets</p>';
 }
 
 function saveJob(i){
  let jobs=getJobs();
  jobs[i].price=document.getElementById('price_'+i).value;
  jobs[i].status=document.getElementById('status_'+i).value;
+ jobs[i].revisionNote=document.getElementById('rev_'+i).value;
  jobs[i].adminMessage=document.getElementById('msg_'+i).value;
+ jobs[i].locked=(jobs[i].status==='Needs Revision');
  saveJobs(jobs);
- let el=document.getElementById('jsaved_'+i); el.classList.add('show'); el.textContent='✅ SAVED - Will show on TRACK';
- document.getElementById('price_'+i).style.background='#052e16';
- document.getElementById('msg_'+i).style.background='#052e16';
- setTimeout(()=>{document.getElementById('price_'+i).style.background='#0f172a'; document.getElementById('msg_'+i).style.background='#0f172a';},1500);
+ let el=document.getElementById('jsaved_'+i); el.textContent='✅ SAVED - Client sees on TRACK'; el.classList.add('show');
+ document.getElementById('price_'+i).style.background='#052e16'; setTimeout(()=>document.getElementById('price_'+i).style.background='#0f172a',1200);
 }
 function saveTicket(i){
  let tickets=getTickets();
  tickets[i].adminReply=document.getElementById('reply_'+i).value;
  tickets[i].status=document.getElementById('tstatus_'+i).value;
  saveTickets(tickets);
- let el=document.getElementById('tsaved_'+i); el.classList.add('show'); el.textContent='✅ SAVED - Reply shows on TRACK';
- document.getElementById('reply_'+i).style.background='#052e16';
- setTimeout(()=>{document.getElementById('reply_'+i).style.background='#0f172a';},1500);
+ let el=document.getElementById('tsaved_'+i); el.textContent='✅ SAVED - Reply shows well on TRACK'; el.classList.add('show');
+ document.getElementById('reply_'+i).style.background='#052e16'; setTimeout(()=>document.getElementById('reply_'+i).style.background='#0f172a',1200);
 }
-function editToggleJob(i){ document.getElementById('jsaved_'+i).classList.remove('show'); document.getElementById('price_'+i).focus(); }
-function editToggleTicket(i){ document.getElementById('tsaved_'+i).classList.remove('show'); document.getElementById('reply_'+i).focus(); }
+function editJob(i){ document.getElementById('jsaved_'+i).classList.remove('show'); document.getElementById('price_'+i).focus(); }
+function editTicket(i){ document.getElementById('tsaved_'+i).classList.remove('show'); document.getElementById('reply_'+i).focus(); }
+function delJob(i){ if(confirm('Delete job?')){ let j=getJobs(); j.splice(i,1); saveJobs(j); load(); } }
+function delTicket(i){ if(confirm('Delete ticket?')){ let t=getTickets(); t.splice(i,1); saveTickets(t); load(); } }
+function wa(phone,msg){ window.open('https://wa.me/'+phone.replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(msg)); }
+function exportData(){ let blob=new Blob([JSON.stringify({jobs:getJobs(),tickets:getTickets()},null,2)],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='veccta_backup_'+Date.now()+'.json'; a.click(); }
+function importData(){ let f=document.getElementById('importFile').files[0]; if(!f) return; let r=new FileReader(); r.onload=e=>{ try{let d=JSON.parse(e.target.result); if(d.jobs) saveJobs(d.jobs); if(d.tickets) saveTickets(d.tickets); load(); alert('Imported');}catch(err){alert('Invalid file')} }; r.readAsText(f); }
 </script></body></html>
