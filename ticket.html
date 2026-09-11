@@ -1,21 +1,22 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Raise Ticket</title>
-<style>body{font-family:system-ui;background:#0f172a;color:white;padding:16px;max-width:600px;margin:auto}.card{background:#1e293b;padding:16px;border-radius:12px;border:1px solid #334155}input,textarea,select{width:100%;padding:10px;margin:6px 0;border-radius:8px;background:#0f172a;color:white;border:1px solid #334155}button{width:100%;padding:12px;background:#3b82f6;color:white;font-weight:800;border:none;border-radius:10px}</style>
-</head><body>
-<h2>Raise Ticket - Consultation / Follow-up</h2>
-<div class="card">
-<input id="tPhone" placeholder="Your Phone">
-<select id="tType"><option>Consultation - Uncertain about job</option><option>Follow-up - About existing JOB</option><option>General Inquiry</option></select>
-<input id="tJobId" placeholder="If follow-up, enter JOB ID (optional)">
-<textarea id="tMsg" placeholder="Your question... e.g., What docs needed for KRA PIN?"></textarea>
-<button onclick="raiseTicket()">SUBMIT TICKET</button>
-</div>
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ticket</title><style>body{background:#0f172a;color:#fff;font-family:system-ui;padding:16px;max-width:600px;margin:auto}.card{background:#1e293b;padding:16px;border-radius:12px;border:1px solid #334155}input,select,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}button{width:100%;padding:14px;border:none;border-radius:8px;font-weight:800;cursor:pointer}.btn-b{background:#3b82f6;color:#fff}</style></head><body>
+<div class="card"><h3 style="color:#3b82f6;text-align:center">Raise Ticket</h3>
+<select id="tType" onchange="toggle()"><option value="job">For Existing JOB</option><option value="consult">Consultation / Guidance (No JOB)</option></select>
+<input id="jobId" placeholder="JOB- ID e.g JOB-20260911-1234">
+<textarea id="msg" rows="4" placeholder="Your question..."></textarea>
+<button class="btn-b" onclick="raise()">Submit TICKET</button><div id="res"></div></div>
 <script>
-function raiseTicket(){
- let tickets=JSON.parse(localStorage.getItem('karanu_tickets')||'[]');
- let t={id:`TICKET-${Date.now()}`, phone:document.getElementById('tPhone').value,
-  type:document.getElementById('tType').value, jobId:document.getElementById('tJobId').value||"General",
-  message:document.getElementById('tMsg').value, adminReply:"", status:"Open", logged:new Date().toLocaleString()};
- tickets.push(t); localStorage.setItem('karanu_tickets',JSON.stringify(tickets));
- alert(`TICKET Created: ${t.id}`); location.href=`track.html?ticket=${t.id}`;
+let p=new URLSearchParams(location.search); if(p.get('job')) jobId.value=p.get('job');
+function toggle(){ jobId.style.display=tType.value=='consult'?'none':'block'; if(tType.value=='consult') jobId.value='CONSULTATION'; }
+function getTickets(){return JSON.parse(localStorage.getItem('veccta_tickets')||'[]')}
+function saveTickets(t){localStorage.setItem('veccta_tickets',JSON.stringify(t)); localStorage.setItem('karanu_tickets',JSON.stringify(t));}
+function raise(){
+ let message=msg.value.trim(); let jId=jobId.value.trim();
+ if(!message){alert('Enter message');return;} if(tType.value=='job'&&!jId){alert('Enter JOB ID');return;}
+ if(tType.value=='consult') jId='CONSULTATION';
+ let id='TICKET-'+Date.now();
+ let ticket={id,jobId:jId,message,from:'Client',adminReply:'',status:'Open',type:tType.value,logged:new Date().toLocaleString()};
+ let tickets=getTickets(); tickets.push(ticket); saveTickets(tickets);
+ res.innerHTML=`<div style="text-align:center"><b style="color:#3b82f6">${id}</b> for ${jId} raised<br><a href="track.html?ticket=${id}" style="background:#3b82f6;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;display:inline-block;margin-top:8px">Track Ticket</a></div>`;
 }
+toggle();
 </script></body></html>
