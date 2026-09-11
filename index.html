@@ -6,21 +6,19 @@
 <title>VECCTA PIVOT - Book Service</title>
 <style>
 *{box-sizing:border-box}
-body{background:#0b1220;color:#fff;font-family:system-ui,Segoe UI,Arial;padding:15px;margin:0}
-.card{max-width:560px;margin:40px auto;background:#121c30;border:1px solid #e6c36a33;border-radius:16px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
-h2{color:#e6c36a;text-align:center;margin:0 0 16px}
-label{font-size:12px;color:#96a0ba;margin-top:6px;display:block}
-input,select,textarea{width:100%;padding:13px;border-radius:10px;border:1px solid #2a395c;background:#0b1220;color:#fff;margin:6px 0 12px;font-size:15px}
-textarea{min-height:80px}
+body{background:#0a1930;color:#eef2fa;font-family:Inter,system-ui,Segoe UI,Arial;padding:18px;margin:0}
+.box{max-width:600px;margin:30px auto;background:#121c30;border:1px solid #e6c36a33;border-radius:16px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+h2{color:#e6c36a;text-align:center;margin:0 0 18px}
+label{font-size:12px;color:#9aa6c2;margin:8px 0 4px;display:block}
+input,select,textarea{width:100%;padding:14px;border-radius:10px;border:1px solid #2a395c;background:#0b1220;color:#fff;margin-bottom:12px;font-size:15px}
+textarea{min-height:90px}
 .btn{background:#e6c36a;color:#000;border:0;padding:14px;width:100%;border-radius:10px;font-weight:800;font-size:16px;cursor:pointer}
-.btn:active{transform:scale(.98)}
-.ok{background:#0b3d2a;border:1px solid #0ec27b;color:#8af7c5;padding:14px;border-radius:10px;margin-top:14px;display:none;line-height:1.6}
-a{color:#25D366;text-decoration:none;font-weight:700}
-.small{font-size:11px;color:#5f6b86;text-align:center;margin-top:12px}
+.ok{display:none;margin-top:16px;background:#0b3d2a;border:1px solid #0ec27b;color:#8af7c5;padding:14px;border-radius:12px;line-height:1.7}
+a{color:#25D366;font-weight:700;text-decoration:none}
 </style>
 </head>
 <body>
-<div class="card">
+<div class="box">
 <h2>Book Service - VECCTA PIVOT</h2>
 
 <label>Full Name</label>
@@ -43,37 +41,31 @@ a{color:#25D366;text-decoration:none;font-weight:700}
 <textarea id="details" placeholder="Describe what you need..."></textarea>
 
 <button class="btn" onclick="submitTicket()">Submit Ticket</button>
-
 <div id="ok" class="ok"></div>
-<div class="small">After submit, your ticket WILL appear in Admin and WILL be found in Tracking</div>
 </div>
 
 <script>
 function submitTicket(){
- let nameEl=document.getElementById('clientName');
- let phoneEl=document.getElementById('phone');
- let serviceEl=document.getElementById('service');
- let detailsEl=document.getElementById('details');
- 
- let name=nameEl.value.trim();
- let phone=phoneEl.value.trim();
- if(!name){alert('Enter Full Name');nameEl.focus();return;}
- if(!phone){alert('Enter Phone');phoneEl.focus();return;}
+ const name=document.getElementById('clientName').value.trim();
+ const phoneRaw=document.getElementById('phone').value.trim();
+ const service=document.getElementById('service').value;
+ const details=document.getElementById('details').value.trim();
+ if(!name){alert('Enter Full Name');return;}
+ if(!phoneRaw){alert('Enter Phone');return;}
 
- // READ SAME STORAGE THAT ADMIN & TRACK USE
  let all=JSON.parse(localStorage.getItem('veccta_tickets')||'[]');
- 
- // Generate ID like your admin series VECCTA-0,1,2...6
- let newId='VECCTA-'+all.length;
- 
+ let newId='VECCTA-'+all.length; // continues 6,7,8...
+
+ let phone=phoneRaw.startsWith('+')?phoneRaw:'+254'+phoneRaw.replace(/^0/,'').replace(/\s/g,'');
+
  let ticket={
   id:newId,
   ticket:newId,
   clientName:name,
   name:name,
-  phone:phone.startsWith('+')?phone:'+254'+phone.replace(/^0/,'').replace(/\s/g,''),
-  service:serviceEl.value,
-  details:detailsEl.value,
+  phone:phone,
+  service:service,
+  details:details,
   status:'Logged',
   price:'',
   adminMessage:'',
@@ -87,18 +79,17 @@ function submitTicket(){
  let ok=document.getElementById('ok');
  ok.style.display='block';
  ok.innerHTML=`
-  ✅ <b>Ticket SAVED to storage!</b><br>
-  ID: <b style="color:#e6c36a;font-size:18px">${newId}</b><br>
-  Total tickets now: ${all.length}<br><br>
-  <a href="track.html?id=${newId}">→ Track ${newId} Now</a><br>
-  <a href="admin.html">→ Go to Admin (you will see ${newId})</a><br>
-  <a href="https://wa.me/254768309956?text=New ticket ${newId} from ${name} - ${serviceEl.value}">→ WhatsApp Admin</a><br><br>
-  <span style="font-size:12px">Copy ID for client: ${newId}</span>
+  ✅ <b>Ticket Saved!</b><br>
+  ID: <b style="color:#e6c36a;font-size:20px">${newId}</b><br>
+  Total tickets: ${all.length}<br><br>
+  <a href="track.html?id=${newId}">→ Track ${newId}</a><br>
+  <a href="admin.html">→ View in Admin</a><br>
+  <a href="https://wa.me/254768309956?text=New ticket ${newId} from ${name} - ${service}" target="_blank">→ WhatsApp Admin</a>
  `;
- 
- // Clear form
- nameEl.value='';phoneEl.value='';detailsEl.value='';
- console.log('SAVED',ticket);
+ document.getElementById('clientName').value='';
+ document.getElementById('phone').value='';
+ document.getElementById('details').value='';
+ console.log('SAVED OK',ticket);
 }
 </script>
 </body>
