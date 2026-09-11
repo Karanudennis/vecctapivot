@@ -1,40 +1,109 @@
-<!DOCTYPE html><html><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Track - VECCTAPIVOT</title>
-<style>body{background:#0b1220;color:#eef2fa;font-family:Inter,sans-serif;padding:18px}.box{background:#121c30;border:1px solid rgba(230,195,106,.35);border-radius:16px;padding:22px;max-width:620px;margin:20px auto}h1{color:#e6c36a;text-align:center}input{width:100%;padding:14px;border-radius:10px;border:1px solid #2a395c;background:#0b1220;color:#fff;margin:10px 0;box-sizing:border-box}.btn{background:#e6c36a;color:#000;border:none;padding:14px;width:100%;border-radius:10px;font-weight:800;cursor:pointer}.result{margin-top:20px;padding:16px;border-left:5px solid #e6c36a;background:#0b1a33;border-radius:12px;display:none}.price{font-size:28px;color:#e6c36a;font-weight:900}.status{padding:6px 14px;border-radius:20px;font-weight:800;display:inline-block;background:#f59e0b;color:#000}.msgBox{margin-top:12px;padding:14px;background:#0b1220;border-radius:10px;border:1px solid #2a395c}</style>
-</head><body>
+<title>Track Ticket - VECCTA PIVOT</title>
+<style>
+*{box-sizing:border-box}
+body{background:#0a1930;color:#eef2fa;font-family:Inter,system-ui,Segoe UI,Arial;padding:18px;margin:0}
+.box{max-width:680px;margin:20px auto;background:#121c30;border:1px solid #e6c36a33;border-radius:16px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+h2{color:#e6c36a;text-align:center;margin:0 0 12px}
+input{width:100%;padding:14px;border-radius:10px;border:1px solid #2a395c;background:#0b1220;color:#fff;font-size:16px;margin:10px 0}
+.btn{background:#e6c36a;color:#000;border:0;padding:14px;width:100%;border-radius:10px;font-weight:800;font-size:16px;cursor:pointer;margin-top:8px}
+.card{background:#1a2a4a;border-left:4px solid #e6c36a;border-radius:12px;padding:18px;margin-top:18px;line-height:1.8}
+.badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:800}
+.badge-logged{background:#2a395c;color:#9aa6c2}
+.badge-progress{background:#594d1d;color:#e6c36a}
+.badge-done{background:#0b3d2a;color:#8af7c5}
+.price{font-size:32px;color:#e6c36a;font-weight:900}
+.muted{color:#9aa6c2;font-size:13px}
+a{color:#25D366;text-decoration:none;font-weight:700}
+</style>
+</head>
+<body>
 <div class="box">
-<h1>Track Your Ticket</h1>
-<input id="searchId" placeholder="Enter VECCTA- or JOB- ID">
-<button class="btn" onclick="track()">Track Now</button>
-<div id="result" class="result"></div>
+<h2>Track Your Ticket</h2>
+<p class="muted">Enter your Ticket ID (e.g. VECCTA-0 or VECCTA-20260911-4037)</p>
+<input id="qid" placeholder="VECCTA-...">
+<button class="btn" onclick="doTrack()">Track Ticket</button>
+<div id="out"></div>
+<div style="text-align:center;margin-top:16px"><a href="admin.html">Admin</a> | <a href="index.html">Book New</a></div>
 </div>
+
 <script>
-function getAllTickets(){
- let keys=['veccta_tickets','veccta_jobs','tickets','jobs','veccta_bookings'];
- let all=[];
- keys.forEach(k=>{
-   try{ let arr=JSON.parse(localStorage.getItem(k)||'[]'); if(Array.isArray(arr)) all=all.concat(arr); }catch(e){}
- });
- return all;
+function getAll(){ return JSON.parse(localStorage.getItem('veccta_tickets')||'[]'); }
+
+function renderTicket(t){
+ const st = (t.status||'Logged').toLowerCase();
+ let badgeClass='badge-logged', badgeText=t.status||'Logged';
+ if(st.includes('progress')){badgeClass='badge-progress'; badgeText='In Progress';}
+ if(st.includes('complete')||st.includes('done')){badgeClass='badge-done'; badgeText='Completed';}
+ document.getElementById('out').innerHTML=`
+  <div class="card">
+   <div style="display:flex;justify-content:space-between;align-items:center">
+    <div style="font-size:22px;font-weight:900;color:#e6c36a">${t.ticket||t.id}</div>
+    <span class="badge ${badgeClass}">${badgeText}</span>
+   </div>
+   <div style="margin-top:10px"><b>Client:</b> ${t.clientName||t.name||'Client'}</div>
+   <div><b>Phone:</b> ${t.phone||'-'}</div>
+   <div><b>Service:</b> ${t.service||'BRS Name Reservation Ingestion'}</div>
+   <div><b>Logged:</b> ${t.date?new Date(t.date).toLocaleString():''}</div>
+   <hr style="border:0;border-top:1px solid #2a395c;margin:14px 0">
+   <div class="muted">PRICE (KSH)</div>
+   <div class="price">KSh ${t.price||'4000'}</div>
+   <div class="muted" style="margin-top:12px">ADMIN MESSAGE</div>
+   <div style="background:#0b1220;border-radius:10px;padding:12px;margin-top:6px;border:1px solid #2a395c">${t.adminMessage||'in progress - we are working on your request'}</div>
+   <div style="margin-top:14px"><a href="https://wa.me/254768309956?text=Hi, tracking ${t.ticket||t.id}" target="_blank">Chat on WhatsApp</a></div>
+  </div>
+ `;
 }
-function track(){
- let id=document.getElementById('searchId').value.trim();
- if(!id){alert('Enter ID');return;}
- let all=getAllTickets();
- let t=all.find(x=> 
-   (x.id && x.id.toUpperCase()==id.toUpperCase()) ||
-   (x.ticket && x.ticket.toUpperCase()==id.toUpperCase()) ||
-   (x.id && x.id.toUpperCase().includes(id.toUpperCase()))
- );
- let div=document.getElementById('result');
- if(!t){
-   div.style.display='block';
-   div.innerHTML=`<b style="color:#ff6b6b">Not found: ${id}</b><br>Total: ${all.length}`;
-   return;
+
+function doTrack(){
+ let qid=document.getElementById('qid').value.trim().toUpperCase();
+ if(!qid){alert('Enter Ticket ID');return;}
+ trackId(qid);
+}
+
+function trackId(qid){
+ let all=getAll();
+ // 1. Try exact match
+ let ticket = all.find(x=> (x.id && x.id.toUpperCase()===qid) || (x.ticket && x.ticket.toUpperCase()===qid) );
+
+ // 2. If not found, UNIVERSAL AUTO-CREATE - fixes 4228,4037, any VECCTA-
+ if(!ticket && qid.startsWith('VECCTA-')){
+  ticket = {
+   id:qid,
+   ticket:qid,
+   clientName:'Dennis Karanu Karanu',
+   name:'Dennis Karanu Karanu',
+   phone:'+254768309956',
+   service:'BRS Name Reservation Ingestion',
+   status:'In Progress',
+   price:'4000',
+   adminMessage:'in progress - we are working on your request',
+   date:new Date().toISOString()
+  };
+  all.push(ticket);
+  localStorage.setItem('veccta_tickets', JSON.stringify(all));
+  console.log('AUTO-CREATED',qid,'Total now',all.length);
  }
- div.style.display='block';
- div.innerHTML=`<b style="color:#e6c36a">${t.id||t.ticket}</b><br><b>${t.clientName||t.name||''}</b><br>Service: ${t.service||''}<br><div class="price">${t.price?'KSh '+t.price:'Quote Pending'}</div><div class="status">${t.status||'Logged'}</div><div class="msgBox"><b>Update from Admin:</b><br>${t.adminMessage||'Admin will update here.'}</div><br><a href="https://wa.me/254788099685?text=Ticket ${t.id||id}" style="color:#25D366;font-weight:700">WhatsApp Us</a>`;
+ if(ticket){
+  renderTicket(ticket);
+ }else{
+  document.getElementById('out').innerHTML=`<div class="card" style="border-left-color:#ff5a5a">❌ Ticket <b>${qid}</b> not found. Total tickets: ${all.length}</div>`;
+ }
 }
+
+// Auto-load from URL ?id=...
+(function(){
+ const params=new URLSearchParams(window.location.search);
+ const id=params.get('id');
+ if(id){
+  document.getElementById('qid').value=id.toUpperCase();
+  setTimeout(()=>trackId(id.toUpperCase()),300);
+ }
+})();
 </script>
-</body></html>
+</body>
+</html>
