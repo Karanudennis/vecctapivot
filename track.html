@@ -1,114 +1,21 @@
-<!DOCTYPE html><html><head>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Track - VECCTAPIVOT</title>
-<style>
-body{background:#0f172a;color:#fff;font-family:system-ui;padding:12px;max-width:600px;margin:auto}
-.card{background:#1e293b;padding:14px;border-radius:12px;border:1px solid #334155;margin:8px 0}
-input,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
-button{padding:12px;border:none;border-radius:8px;font-weight:800;cursor:pointer}
-.btn-y{background:#facc15;color:#000;width:100%} .btn-b{background:#3b82f6;color:#fff;width:100%}
-.tab{display:flex;gap:6px} .tab button{flex:1;background:#1e293b;color:#94a3b8}
-.tab button.active{background:#facc15;color:#000}
-</style>
-</head><body>
-
-<div class="tab">
-<button id="tabJob" class="active" onclick="switchTab('job')">Track JOB</button>
-<button id="tabTicket" onclick="switchTab('ticket')">Track TICKET</button>
-</div>
-
-<div id="jobTab">
-<div class="card">
-<input id="jobIdInput" placeholder="Enter JOB- ID or CONSULT- ID">
-<button class="btn-y" onclick="trackJob()">TRACK JOB</button>
-<div id="jobResult"></div>
-<div id="raiseBox" style="display:none" class="card">
-<textarea id="ticketMsg" placeholder="Ask question about this job"></textarea>
-<button class="btn-b" onclick="raiseTicketForJob()">Raise Ticket for this JOB</button>
-</div>
-</div>
-</div>
-
-<div id="ticketTab" style="display:none">
-<div class="card">
-<input id="ticketIdInput" placeholder="Enter TICKET- ID">
-<button class="btn-b" onclick="trackTicket()">TRACK TICKET</button>
-<div id="ticketResult"></div>
-</div>
-</div>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getFirestore, doc, getDoc, collection, query, where, getDocs, setDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "PUT_YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-};
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-let currentJobId = "";
-
-window.switchTab=(t)=>{
- document.getElementById('jobTab').style.display=t=='job'?'block':'none';
- document.getElementById('ticketTab').style.display=t=='ticket'?'block':'none';
- document.getElementById('tabJob').classList.toggle('active',t=='job');
- document.getElementById('tabTicket').classList.toggle('active',t=='ticket');
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Track</title><style>body{background:#0f172a;color:#fff;font-family:system-ui;padding:12px;max-width:600px;margin:auto}.card{background:#1e293b;padding:14px;border-radius:12px;border:1px solid #334155;margin:8px 0}input{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}button{padding:12px;width:100%;border:none;border-radius:8px;font-weight:800;cursor:pointer}.btn-y{background:#facc15}.btn-b{background:#3b82f6;color:#fff}.tabs{display:flex;gap:6px}.tabs button{flex:1;background:#1e293b;color:#94a3b8}.tabs button.active{background:#facc15;color:#000}</style></head><body>
+<div class="tabs"><button id="bJ" class="active" onclick="tab('job')">Track JOB</button><button id="bT" onclick="tab('ticket')">Track TICKET</button></div>
+<div id="jobSec"><div class="card"><input id="jobInput" placeholder="JOB-XXXX"><button class="btn-y" onclick="trackJob()">Track JOB</button><div id="jobRes"></div></div></div>
+<div id="ticketSec" style="display:none"><div class="card"><input id="ticketInput" placeholder="TICKET-XXXX"><button class="btn-b" onclick="trackTicket()">Track TICKET</button><div id="ticketRes"></div></div></div>
+<script>
+function getJobs(){return JSON.parse(localStorage.getItem('veccta_jobs')||localStorage.getItem('karanu_jobs')||'[]')}
+function getTickets(){return JSON.parse(localStorage.getItem('veccta_tickets')||localStorage.getItem('karanu_tickets')||'[]')}
+function tab(t){document.getElementById('jobSec').style.display=t=='job'?'block':'none';document.getElementById('ticketSec').style.display=t=='ticket'?'block':'none';bJ.classList.toggle('active',t=='job');bT.classList.toggle('active',t=='ticket');}
+function trackJob(){
+ let id=jobInput.value.trim(); let jobs=getJobs(); let j=jobs.find(x=>x.id===id);
+ if(!j){jobRes.innerHTML=`<p style=color:#f87171>JOB ${id} NOT FOUND on this device. Submit JOB on same device or add backend.</p>`;return;}
+ let tickets=getTickets().filter(t=>t.jobId===j.id);
+ jobRes.innerHTML=`<div style="border-left:4px solid #facc15;padding:8px"><b style="color:#facc15;font-size:18px">${j.id}</b><br>Service: ${j.service}<br><b>PRICE: ${j.price? 'KSH '+j.price : 'Quote Pending'}</b><br>STATUS: <b>${j.status}</b><br>ADMIN: ${j.adminMessage}<br><small>${j.logged}</small><br><br><a href="ticket.html?job=${j.id}" style="background:#3b82f6;color:#fff;padding:8px 12px;border-radius:6px;text-decoration:none">Raise Ticket for this JOB</a></div><h4>Tickets: ${tickets.length}</h4>`+tickets.map(t=>`<div class=card> ${t.id} - ${t.status}<br>Q: ${t.message}<br>A: ${t.adminReply||'Waiting'}</div>`).join('');
 }
-
-window.trackJob=async()=>{
- let id=document.getElementById('jobIdInput').value.trim();
- if(!id){alert('Enter ID');return;}
- let snap=await getDoc(doc(db,"veccta_jobs",id));
- if(!snap.exists()){
-  document.getElementById('jobResult').innerHTML=`<p style=color:#f87171>JOB ${id} NOT FOUND in cloud. Check ID or submit again.</p>`;
-  return;
- }
- let j=snap.data();
- currentJobId=j.id;
- document.getElementById('jobResult').innerHTML=`
-  <div style=border-left:4px solid #facc15;padding:8px>
-  <b style=color:#facc15;font-size:18px>${j.id}</b><br>
-  ${j.clientName} - ${j.service}<br>
-  <b>PRICE: KSH ${j.price||'Quote Pending'}</b><br>
-  STATUS: <b>${j.status}</b><br>
-  ADMIN: ${j.adminMessage||'No message yet'}<br>
-  Logged: ${j.logged}
-  </div>`;
- document.getElementById('raiseBox').style.display='block';
- 
- let q=query(collection(db,"veccta_tickets"), where("jobId","==",j.id));
- let ts=await getDocs(q);
- let html="<h4>Tickets for this job:</h4>";
- ts.forEach(d=>{ let t=d.data(); html+=`<div class=card> ${t.id} - ${t.status}<br>Q: ${t.message}<br>A: ${t.adminReply||'Waiting admin'}</div>`; });
- document.getElementById('jobResult').innerHTML+=html;
+function trackTicket(){
+ let id=ticketInput.value.trim(); let t=getTickets().find(x=>x.id===id);
+ if(!t){ticketRes.innerHTML='TICKET Not Found on this device';return;}
+ ticketRes.innerHTML=`<div style="border-left:4px solid #3b82f6;padding:8px"><b style="color:#3b82f6">${t.id}</b><br>For: ${t.jobId} (${t.type})<br>STATUS: ${t.status}<br>Q: ${t.message}<br>A: ${t.adminReply||'Waiting admin'}<br><small>${t.logged}</small></div>`;
 }
-
-window.raiseTicketForJob=async()=>{
- let msg=document.getElementById('ticketMsg').value.trim();
- if(!msg){alert('Type message');return;}
- let tid='TICKET-'+Date.now();
- await setDoc(doc(db,"veccta_tickets",tid),{id:tid,jobId:currentJobId,message:msg,status:'Open',adminReply:'',logged:new Date().toLocaleString()});
- alert(tid+' Raised! Track in TICKET tab');
-}
-
-window.trackTicket=async()=>{
- let id=document.getElementById('ticketIdInput').value.trim();
- let snap=await getDoc(doc(db,"veccta_tickets",id));
- if(!snap.exists()){document.getElementById('ticketResult').innerHTML='TICKET Not Found';return;}
- let t=snap.data();
- document.getElementById('ticketResult').innerHTML=`
-  <div style=border-left:4px solid #3b82f6;padding:8px>
-  <b style=color:#3b82f6>${t.id}</b> for ${t.jobId}<br>
-  STATUS: ${t.status}<br>Q: ${t.message}<br>A: ${t.adminReply||'Waiting admin'}<br>
-  </div>`;
-}
-
-// auto from ?job=JOB-xxx
-let p=new URLSearchParams(location.search);
-if(p.get('job')){document.getElementById('jobIdInput').value=p.get('job'); setTimeout(()=>trackJob(),800);}
-if(p.get('ticket')){switchTab('ticket'); document.getElementById('ticketIdInput').value=p.get('ticket'); setTimeout(()=>trackTicket(),800);}
-</script>
-</body></html>
+let q=new URLSearchParams(location.search); if(q.get('job')){jobInput.value=q.get('job'); trackJob();} if(q.get('ticket')){tab('ticket'); ticketInput.value=q.get('ticket'); trackTicket();}
+</script></body></html>
