@@ -1,22 +1,25 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Job Request - VECCTA PIVOT</title><style>
-*{box-sizing:border-box;margin:0;padding:0}body{background:#080e22;color:#e6e8ef;font-family:Inter,Arial}
-.nav{background:#070d1e;border-bottom:1px solid #1c2744;padding:12px 18px;display:flex;justify-content:space-between;align-items:center}.nav b{color:#ffb84d;font-size:13px}.nav a{color:#8a94b0;text-decoration:none;margin-left:12px;font-size:12px}.btn-o{background:#ff9a2b;color:#000;padding:7px 14px;border-radius:20px;font-weight:900;border:0;font-size:11px}
-.wrap{max-width:780px;margin:18px auto 80px;padding:14px}.card{background:linear-gradient(180deg,#111a34,#0c1330);border:1px solid #22335c;border-radius:18px;padding:22px}
-.h{color:#ffb84d;font-size:11px;letter-spacing:2.5px;font-weight:900;margin-bottom:8px;text-transform:uppercase}
-label{color:#8ea0c8;font-size:11px;font-weight:700;margin-top:16px;display:block}
-select,input,textarea{width:100%;padding:13px;border-radius:12px;border:1px solid #2a3a62;background:#0a1128;color:#fff;margin-top:6px;font-size:14px}
-select{border-color:#ffb84d55}select:focus{border-color:#ffb84d;outline:none;box-shadow:0 0 0 2px #ffb84d33}
-.btn{width:100%;background:linear-gradient(180deg,#ffae42,#ff8c1a);color:#000;padding:15px;border-radius:14px;font-weight:900;border:0;margin-top:20px;cursor:pointer;font-size:15px}
-.ok{background:#0b2e1f;border:1px solid #1f8a5e;color:#7ff0b5;padding:16px;border-radius:12px;margin-top:16px;display:none;text-align:center}.jid{font-size:22px;font-weight:900;color:#ffb84d;margin:8px 0}
-.foot{position:fixed;bottom:0;left:0;right:0;background:#070d1e;border-top:1px solid #1c2744;display:flex;justify-content:space-around;padding:10px 0;font-size:11px;color:#5a6a8a}.foot b{color:#25d366}
-</style></head><body>
-<div class="nav"><b>VecctaPivot · Service Desk</b><div><a href="track.html">Track</a><a href="admin.html">Admin</a><button class="btn-o">Book a Ticket</button></div></div>
-<div class="wrap"><div class="card">
-<div class="h">YOUR SERVICE - 7 PILLARS ON INTERFACE</div>
-
-<label>Service area (Pillar 1-7)</label>
-<select id="pillar" onchange="loadServices()">
-<option value="">Select a pillar...</option>
+<!DOCTYPE html><html><head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Request Job - VECCTAPIVOT</title>
+<style>
+body{background:#0f172a;color:#fff;font-family:system-ui;padding:16px;max-width:600px;margin:auto}
+.card{background:#1e293b;padding:18px;border-radius:12px;border:1px solid #334155;margin:10px 0}
+input,select,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
+button{padding:14px;border:none;border-radius:8px;font-weight:800;cursor:pointer;width:100%}
+.btn-y{background:#facc15;color:#0f172a} 
+label{font-size:13px;color:#94a3b8;margin-top:8px;display:block}
+</style>
+</head><body>
+<h3 style="color:#facc15;text-align:center">Request a Job</h3>
+<div class="card">
+<label>Full Name</label>
+<input id="cName" placeholder="Your Name">
+<label>Phone / WhatsApp</label>
+<input id="cPhone" placeholder="07XX...">
+<label>Email (optional)</label>
+<input id="cEmail" placeholder="email">
+<label>Service Pillar</label>
+<select id="pillar">
 <option>Digital & Brand Systems</option>
 <option>Academic & Testing Logistics</option>
 <option>Transport Brokerage Hub</option>
@@ -25,67 +28,45 @@ select{border-color:#ffb84d55}select:focus{border-color:#ffb84d;outline:none;box
 <option>General Agency Core</option>
 <option>Statutory & Portal Logistics</option>
 </select>
-
-<label>Service (7 per pillar)</label>
-<select id="service"><option value="">-- Select pillar first --</option></select>
-
-<label>Engagement (7 tasks - 343 total)</label>
-<select id="eng">
-<option value="">Select an engagement...</option>
-<option>Discovery Brief & Scope Lock</option>
-<option>Document & Data Ingestion</option>
-<option>Processing & Filing Run</option>
-<option>Verification & Quality Control</option>
-<option>Handover & Delivery</option>
-<option>Aftercare & Corrections Window</option>
-<option>Retainer Watch & Records Safeguarding</option>
-</select>
-
-<div class="h" style="margin-top:22px">CLIENT DETAILS</div>
-<label>Full name *</label><input id="name" placeholder="e.g. Wanjiru A. Mwangi">
-<label>Phone * (WhatsApp)</label><input id="phone" placeholder="07xx xxx xxx">
-<label>Email</label><input id="email" placeholder="client@email.com">
-<label>Details / Business Name</label><textarea id="details" placeholder="Describe what you need..."></textarea>
-<label>Price KSh</label><input id="price" type="number" value="2500">
-
-<button class="btn" onclick="book()">Request Job → JOB = TICKET</button>
-
-<div class="ok" id="ok">
-✓ Job Request Received!<br>
-<div class="jid" id="jid">JOB-20260912-1234 = TICKET-20260912-1234</div>
-<div id="jmeta" style="font-size:12px;line-height:1.6"></div>
-<div style="margin-top:10px"><a id="tlink" href="track.html" style="color:#ffb84d;font-weight:800">Track Now →</a> | <a href="admin.html" style="color:#8a94b0">Admin Panel</a></div>
+<label>Exact Service</label>
+<input id="service" placeholder="e.g. BRS BN Registration, Passport">
+<label>Priority</label>
+<select id="priority"><option>Standard</option><option>Express</option><option>Priority</option></select>
+<label>Details / Deadline</label>
+<textarea id="details" rows="3" placeholder="Describe job, documents you have, deadline..."></textarea>
+<button class="btn-y" onclick="createJob()">Submit Job Request</button>
+<div id="result"></div>
 </div>
-</div></div>
-<div class="foot"><span><b>WhatsApp</b></span><span>Call</span><span>SMS</span><span>Email</span></div>
+
 <script>
-const PILLARS={
-"Digital & Brand Systems":["BRS Name Reservation Ingestion","Partnership Layout Setup (BN2 Form)","Business Particulars Official Alterations","Cessation & Form Deregistration Filings","Historical Legacy Record Linking","Vector Identity Branding Packs","Secure Digital Document Vaults"],
-"Academic & Testing Logistics":["KUCCPS Placement & Revision","HELB Loan Application & Compliance","KRA PIN & Returns for Students","Academic Transcripts & Certificates","Institution Admission Letters","Exam Registration & Results","Research & Proposal Packs"],
-"Transport Brokerage Hub":["NTSA TIMS Account & Logbook Link","Smart DL - New / Renewal / Replacement","Motor Vehicle Transfer & Inspection","PSV Badge & Road Service License","Driving School Linkage & PDL","Vehicle Search & Plate Management","Transport Compliance & Insurance"],
-"Merchandise Sourcing Links":["Local Market Sourcing & Pricing","Import Sourcing - China / Turkey / Dubai","Supplier Verification & Samples","Bulk & Custom Merch Branding","Product Aggregation & Delivery","Quality Check & Packaging","Tender Supply & Quotation"],
-"Independent Fixer Desk":["Document Chase & Office Fixing","Queue & Submission Services","Lost Document Affidavit & Replacement","Certification & Notarization","Follow-ups & Status Checks","Government Office Linkage","Emergency Fixer Services"],
-"General Agency Core":["Business Advisory & Registration Advisory","Company Profile & Business Plan","CRB Clearance & Credit Advisory","CV & Professional Branding","Tender Documents & Proposals","Business Permit & County Licenses","General Agency Core Services"],
-"Statutory & Portal Logistics":["KRA PIN / TCC / VAT / Returns Filing","eCitizen - Good Conduct / Birth / Marriage","Immigration - Passport / Work Permit / ETA","BRS Registration - BN / Company / CR12","SHA / NHIF / NSSF Registration","HELB & Higher Education Compliance","Land Search & Compliance Portals"]
-};
-function loadServices(){
- let p=document.getElementById('pillar').value, s=document.getElementById('service'); s.innerHTML='';
- if(!PILLARS[p]){s.innerHTML='<option>-- Select pillar first --</option>';return}
- PILLARS[p].forEach(v=>{let o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o)})
+function createJob(){
+ let name=document.getElementById('cName').value.trim();
+ let phone=document.getElementById('cPhone').value.trim();
+ let service=document.getElementById('service').value.trim();
+ if(!name||!phone||!service){alert('Name, Phone, Service required');return;}
+
+ let id='JOB-'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'-'+Math.floor(1000+Math.random()*9000);
+ 
+ let job={
+  id:id,
+  clientName:name,
+  clientPhone:phone,
+  clientEmail:document.getElementById('cEmail').value,
+  pillar:document.getElementById('pillar').value,
+  service:service,
+  priority:document.getElementById('priority').value,
+  details:document.getElementById('details').value,
+  price:'', // ADMIN WILL FILL - shown as Quote Pending
+  adminMessage:'Received. Admin will review and update price/status shortly.',
+  status:'Logged',
+  logged:new Date().toLocaleString()
+ };
+
+ let jobs=JSON.parse(localStorage.getItem('veccta_jobs')||'[]');
+ jobs.push(job);
+ localStorage.setItem('veccta_jobs',JSON.stringify(jobs));
+
+ document.getElementById('result').innerHTML=`<div class=card style="border-left:4px solid #facc15;text-align:center"><b style="color:#facc15;font-size:20px">${id}</b><br>Job Logged!<br><br><a href="track.html?job=${id}" style="background:#facc15;color:#000;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:800">Track Now</a> <a href="https://wa.me/254788099685?text=${id} - ${name}" style="color:#25D366;font-weight:700;margin-left:10px">WhatsApp</a></div>`;
 }
-function getAll(){try{return JSON.parse(localStorage.getItem('veccta_tickets')||'[]')}catch{return[]}}
-function saveAll(a){localStorage.setItem('veccta_tickets',JSON.stringify(a))}
-function book(){
- let name=document.getElementById('name').value.trim(),phone=document.getElementById('phone').value.trim(),pillar=document.getElementById('pillar').value,service=document.getElementById('service').value,eng=document.getElementById('eng').value,price=document.getElementById('price').value||'2500',details=document.getElementById('details').value,email=document.getElementById('email').value.trim();
- if(!name||!phone||!pillar||!service||!eng) return alert('Fill Full name, Phone, Pillar, Service, Engagement');
- let now=new Date(),ds=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0'),num=Math.floor(1000+Math.random()*9000);
- let JOB=`JOB-${ds}-${num}`, TICK=`TICKET-${ds}-${num}`;
- let base={clientName:name,name:name,phone:phone,email:email,pillar:pillar,serviceArea:pillar,service:service,engagement:eng,price:price,status:'Booked',details:details|| (pillar+' > '+service+' > '+eng),fullPath:pillar+' > '+service+' > '+eng,adminMessage:'Job request received - '+eng,date:now.toLocaleString(),logged:now.toLocaleString(),is343:true};
- let all=getAll(); all.push({...base,id:JOB,ticket:JOB}); all.push({...base,id:TICK,ticket:TICK}); saveAll(all);
- document.getElementById('jid').textContent=JOB+' = '+TICK;
- document.getElementById('jmeta').innerHTML=`KSh ${price} • ${pillar}<br>${service}<br><b style="color:#ffb84d">${eng}</b>`;
- document.getElementById('tlink').href='track.html?id='+JOB;
- document.getElementById('ok').style.display='block';
- window.scrollTo(0,document.body.scrollHeight);
-}
-</script></body></html>
+</script>
+</body></html>
