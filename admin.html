@@ -1,90 +1,224 @@
-<!DOCTYPE html><html><head>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Admin - VECCTAPIVOT</title>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - VeccTa Secure</title>
 <style>
-body{background:#0f172a;color:#fff;font-family:system-ui;padding:16px;max-width:900px;margin:auto}
-.card{background:#1e293b;padding:14px;border-radius:12px;border:1px solid #334155;margin:8px 0}
-input,textarea,select{width:100%;padding:10px;margin:5px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
-button{padding:10px 14px;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin:3px}
-.btn-y{background:#facc15;color:#000} .btn-b{background:#3b82f6;color:#fff} .btn-g{background:#22c55e;color:#000}
-.flex{display:flex;gap:10px;flex-wrap:wrap} .flex>*{flex:1}
+body{font-family:system-ui;background:#0f172a;color:white;padding:16px;max-width:800px;margin:auto}
+.card{background:#1e293b;padding:16px;border-radius:12px;margin:12px 0;border:1px solid #334155}
+input{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:white;border:1px solid #334155}
+button{padding:12px 16px;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin:4px}
+.btn-y{background:#facc15;color:#0f172a} .btn-b{background:#3b82f6;color:white} .btn-r{background:#ef4444;color:white}
+#loginScreen{position:fixed;inset:0;background:#0f172a;display:flex;align-items:center;justify-content:center;z-index:99;padding:16px}
+.login-card{background:#1e293b;padding:24px;border-radius:16px;width:100%;max-width:380px;border:1px solid #334155}
+.pw-box{position:relative} .eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:18px}
+.strength{height:6px;border-radius:3px;margin:6px 0;transition:all 0.3s}
+.weak{background:#ef4444;width:33%} .medium{background:#f59e0b;width:66%} .strong{background:#22c55e;width:100%}
 </style>
-</head><body>
-<h3 style="color:#facc15">VECCTAPIVOT Admin</h3>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+<div class="login-card">
+<h2>VeccTa Admin</h2>
+<p style="color:#94a3b8;font-size:12px">Jobs & Tickets separated. Secure login.</p>
+
+<div class="pw-box">
+<input type="password" id="passInput" placeholder="Enter password">
+<span class="eye" onclick="toggleEye('passInput','eye1')" id="eye1">👁️</span>
+</div>
+
+<button class="btn-y" style="width:100%" onclick="checkPass()">UNLOCK</button>
+<p id="loginErr" style="color:#f87171;display:none;font-size:13px"></p>
+
+<hr style="border:1px solid #334155;margin:16px 0">
+<p style="font-size:12px;color:#94a3b8">Forgot password?</p>
+<input id="recoveryEmail" placeholder="Your email (dennis@...)" value="">
+<button class="btn-b" style="width:100%;font-size:12px" onclick="resetViaEmail()">SEND RESET CODE TO EMAIL</button>
+<p id="resetInfo" style="font-size:11px;color:#22c55e;display:none"></p>
+
+<div id="resetBox" style="display:none;margin-top:12px">
+<input id="resetCodeInput" placeholder="Enter code from email">
+<div class="pw-box">
+<input type="password" id="newPassReset" placeholder="New strong password">
+<span class="eye" onclick="toggleEye('newPassReset','eyeR')" id="eyeR">👁️</span>
+</div>
+<div class="strength" id="strengthReset"></div>
+<p id="strengthTextReset" style="font-size:11px"></p>
+<button class="btn-y" style="width:100%" onclick="applyReset()">RESET PASSWORD</button>
+</div>
+
+</div>
+</div>
+
+<!-- ADMIN CONTENT -->
+<div style="display:flex;justify-content:space-between;align-items:center">
+<h2>Admin Panel</h2>
+<button class="btn-r" style="padding:6px 12px;font-size:12px" onclick="logout()">Logout</button>
+</div>
 
 <div class="card">
-<input type="password" id="pass" placeholder="Enter admin pass">
-<button class="btn-y" onclick="login()">Login</button>
-<p id="loginMsg"></p>
+<h4>Change Password (Strong Required)</h4>
+<div class="pw-box"><input type="password" id="oldPass" placeholder="Old password"><span class="eye" onclick="toggleEye('oldPass','eyeOld')" id="eyeOld">👁️</span></div>
+<div class="pw-box"><input type="password" id="newPass" placeholder="New password - Min 8, Upper, lower, number, symbol"><span class="eye" onclick="toggleEye('newPass','eyeNew')" id="eyeNew">👁️</span></div>
+<div class="strength" id="strengthBar"></div>
+<p id="strengthText" style="font-size:11px;color:#94a3b8">Password strength: Enter new password</p>
+<div class="pw-box"><input type="password" id="confirmPass" placeholder="Confirm new password"><span class="eye" onclick="toggleEye('confirmPass','eyeConf')" id="eyeConf">👁️</span></div>
+<button class="btn-y" onclick="changePassword()">CHANGE PASSWORD</button>
+<p id="changeMsg" style="font-size:12px"></p>
+<p style="font-size:11px;color:#94a3b8">Strong = 8+ chars, 1 Uppercase, 1 lowercase, 1 number, 1 symbol (!@#$)</p>
 </div>
 
-<div id="adminArea" style="display:none">
-<div class="flex">
-<div class="card"><h4>Jobs: <span id="jobCount">0</span></h4><div id="jobs"></div></div>
-<div class="card"><h4>Tickets: <span id="ticketCount">0</span></h4><div id="tickets"></div></div>
-</div>
-</div>
+<div id="adminList"></div>
 
 <script>
-const ADMIN_PASS='veccta2024'; // change this
+// CONFIG
+const DEFAULT_PASS = "Karanu2026!";
+const RECOVERY_CODE_KEY = "karanu_reset_code";
+let generatedCode = "";
 
-function login(){
- if(document.getElementById('pass').value!==ADMIN_PASS){document.getElementById('loginMsg').innerHTML='Wrong pass';return;}
- document.getElementById('adminArea').style.display='block';
- loadAll();
+// Get stored password or default
+function getStoredPass(){
+  return localStorage.getItem('karanu_admin_pass') || DEFAULT_PASS;
 }
 
-function loadAll(){
- let jobs=JSON.parse(localStorage.getItem('veccta_jobs')||'[]');
- let tickets=JSON.parse(localStorage.getItem('veccta_tickets')||'[]');
- document.getElementById('jobCount').textContent=jobs.length;
- document.getElementById('ticketCount').textContent=tickets.length;
-
- document.getElementById('jobs').innerHTML=jobs.map((j,i)=>`
-  <div class=card style="border-left:4px solid #facc15">
-   <b>${j.id}</b> - ${j.clientName} (${j.clientPhone})<br>
-   Service: ${j.service} | Priority: ${j.priority}<br>
-   Logged: ${j.logged}
-   <label>Price (KSH)</label><input id="price_${i}" value="${j.price||''}" placeholder="e.g. 5000">
-   <label>Status</label><select id="status_${i}"><option ${j.status=='Logged'?'selected':''}>Logged</option><option ${j.status=='Quoted'?'selected':''}>Quoted</option><option ${j.status=='In Progress'?'selected':''}>In Progress</option><option ${j.status=='Completed'?'selected':''}>Completed</option><option ${j.status=='Cancelled'?'selected':''}>Cancelled</option></select>
-   <label>Admin Message (client sees this)</label><textarea id="msg_${i}">${j.adminMessage||''}</textarea>
-   <button class="btn-y" onclick="saveJob(${i})">Save Job</button>
-   <button class="btn-b" onclick="waJob(${i})">WhatsApp Client</button>
-   <div style="margin-top:8px;font-size:12px;color:#94a3b8">Tickets: ${tickets.filter(t=>t.jobId===j.id).length}</div>
-  </div>`).join('')||'No jobs';
-
- document.getElementById('tickets').innerHTML=tickets.map((t,i)=>`
-  <div class=card style="border-left:4px solid #3b82f6">
-   <b>${t.id}</b><br>For: <b>${t.jobId}</b> - ${t.status}<br>
-   Client: ${t.message}<br>
-   Logged: ${t.logged}
-   <label>Admin Reply (client sees this)</label><textarea id="reply_${i}">${t.adminReply||''}</textarea>
-   <label>Status</label><select id="tstatus_${i}"><option ${t.status=='Open'?'selected':''}>Open</option><option ${t.status=='Answered'?'selected':''}>Answered</option><option ${t.status=='Closed'?'selected':''}>Closed</option></select>
-   <button class="btn-b" onclick="saveTicket(${i})">Save Ticket</button>
-  </div>`).join('')||'No tickets';
+function toggleEye(inputId, eyeId){
+  let inp = document.getElementById(inputId);
+  let eye = document.getElementById(eyeId);
+  if(inp.type==='password'){ inp.type='text'; eye.innerText='🙈'; }
+  else { inp.type='password'; eye.innerText='👁️'; }
 }
 
-function saveJob(i){
- let jobs=JSON.parse(localStorage.getItem('veccta_jobs')||'[]');
- jobs[i].price=document.getElementById('price_'+i).value;
- jobs[i].status=document.getElementById('status_'+i).value;
- jobs[i].adminMessage=document.getElementById('msg_'+i).value;
- localStorage.setItem('veccta_jobs',JSON.stringify(jobs));
- alert('Job saved - Client will see new PRICE/STATUS when they track '+jobs[i].id);
+// Strong password checker
+function checkStrong(p){
+  if(p.length < 8) return {ok:false, msg:"Too short - need 8+ characters", level:"weak"};
+  if(!/[A-Z]/.test(p)) return {ok:false, msg:"Need 1 UPPERCASE (A-Z)", level:"weak"};
+  if(!/[a-z]/.test(p)) return {ok:false, msg:"Need 1 lowercase (a-z)", level:"weak"};
+  if(!/[0-9]/.test(p)) return {ok:false, msg:"Need 1 number (0-9)", level:"weak"};
+  if(!/[!@#$%^&*()_+\-=\[\]{};':\"\\|,.<>\/?]/.test(p)) return {ok:false, msg:"Need 1 symbol (!@#$...)", level:"weak"};
+  
+  let score = 0;
+  if(p.length >= 10) score++;
+  if(p.length >= 12) score++;
+  if(/[A-Z]/.test(p) && /[a-z]/.test(p) && /[0-9]/.test(p) && /[^A-Za-z0-9]/.test(p)) score++;
+  
+  if(score <=1) return {ok:true, msg:"Medium - Add more length for Strong", level:"medium"};
+  return {ok:true, msg:"Strong password ✓", level:"strong"};
 }
 
-function saveTicket(i){
- let tickets=JSON.parse(localStorage.getItem('veccta_tickets')||'[]');
- tickets[i].adminReply=document.getElementById('reply_'+i).value;
- tickets[i].status=document.getElementById('tstatus_'+i).value;
- localStorage.setItem('veccta_tickets',JSON.stringify(tickets));
- alert('Ticket reply saved - Client sees it when tracking '+tickets[i].id);
+// Live strength meter
+document.getElementById('newPass')?.addEventListener('input', function(){
+  let res = checkStrong(this.value);
+  let bar = document.getElementById('strengthBar');
+  let txt = document.getElementById('strengthText');
+  bar.className = 'strength ' + res.level;
+  txt.innerText = res.msg;
+  txt.style.color = res.level==='strong'?'#22c55e':res.level==='medium'?'#f59e0b':'#ef4444';
+});
+
+document.getElementById('newPassReset')?.addEventListener('input', function(){
+  let res = checkStrong(this.value);
+  let bar = document.getElementById('strengthReset');
+  let txt = document.getElementById('strengthTextReset');
+  bar.className = 'strength ' + res.level;
+  txt.innerText = res.msg;
+});
+
+function checkPass(){
+  let input = document.getElementById('passInput').value.trim();
+  let stored = getStoredPass();
+  if(input === stored || input.toLowerCase() === stored.toLowerCase()){
+    document.getElementById('loginScreen').style.display='none';
+    localStorage.setItem('karanu_admin_ok','yes');
+    loadAdmin();
+  } else {
+    let err = document.getElementById('loginErr');
+    err.style.display='block';
+    err.innerText = `Wrong password! Default is ${DEFAULT_PASS} (if not changed). Accepts small/cap.`;
+  }
 }
 
-function waJob(i){
- let jobs=JSON.parse(localStorage.getItem('veccta_jobs')||'[]');
- let j=jobs[i];
- window.open(`https://wa.me/${j.clientPhone.replace(/[^0-9]/g,'')}?text=Hi ${j.clientName}, your ${j.id} - Price: KSH ${j.price}, Status: ${j.status}. ${j.adminMessage}`);
+if(localStorage.getItem('karanu_admin_ok')==='yes'){
+  document.getElementById('loginScreen').style.display='none';
 }
+
+function logout(){
+  localStorage.removeItem('karanu_admin_ok');
+  location.reload();
+}
+
+// CHANGE PASSWORD
+function changePassword(){
+  let oldP = document.getElementById('oldPass').value;
+  let newP = document.getElementById('newPass').value;
+  let conf = document.getElementById('confirmPass').value;
+  let msg = document.getElementById('changeMsg');
+  
+  if(oldP !== getStoredPass() && oldP.toLowerCase() !== getStoredPass().toLowerCase()){
+    msg.style.color='#ef4444'; msg.innerText='Old password wrong!'; return;
+  }
+  let strong = checkStrong(newP);
+  if(!strong.ok){ msg.style.color='#ef4444'; msg.innerText=strong.msg; return; }
+  if(newP !== conf){ msg.style.color='#ef4444'; msg.innerText='New passwords do not match!'; return; }
+  
+  localStorage.setItem('karanu_admin_pass', newP);
+  msg.style.color='#22c55e'; msg.innerText=`Password changed to strong password! New: ${newP} - Save it!`;
+  document.getElementById('oldPass').value=''; document.getElementById('newPass').value=''; document.getElementById('confirmPass').value='';
+}
+
+// RESET VIA EMAIL
+function resetViaEmail(){
+  let email = document.getElementById('recoveryEmail').value.trim();
+  if(!email || !email.includes('@')){ alert('Enter valid email like dennis@gmail.com'); return; }
+  
+  // Generate 6 digit code
+  generatedCode = Math.floor(100000 + Math.random()*900000).toString();
+  localStorage.setItem(RECOVERY_CODE_KEY, generatedCode);
+  localStorage.setItem('karanu_recovery_email', email);
+  
+  // Create email link
+  let subject = encodeURIComponent('VeccTa Admin Reset Code');
+  let body = encodeURIComponent(`Your VeccTa Admin reset code is: ${generatedCode}\n\nUse this code to reset password.\nCurrent password (if you remember): ${getStoredPass()}\n\nIf you didn't request, ignore.`);
+  let mailto = `mailto:${email}?subject=${subject}&body=${body}`;
+  
+  document.getElementById('resetInfo').style.display='block';
+  document.getElementById('resetInfo').innerText=`Code generated: ${generatedCode} - Email app will open. If email fails, your code is: ${generatedCode}`;
+  document.getElementById('resetBox').style.display='block';
+  
+  // Try to open email
+  window.open(mailto, '_blank');
+}
+
+function applyReset(){
+  let codeInput = document.getElementById('resetCodeInput').value.trim();
+  let newP = document.getElementById('newPassReset').value;
+  let savedCode = localStorage.getItem(RECOVERY_CODE_KEY);
+  
+  if(codeInput !== savedCode){ alert(`Wrong code! Your code is ${savedCode}`); return; }
+  let strong = checkStrong(newP);
+  if(!strong.ok){ alert(strong.msg); return; }
+  
+  localStorage.setItem('karanu_admin_pass', newP);
+  localStorage.removeItem(RECOVERY_CODE_KEY);
+  alert(`Password reset! New password: ${newP} - Now login with it`);
+  document.getElementById('resetBox').style.display='none';
+  document.getElementById('loginScreen').style.display='none';
+  localStorage.setItem('karanu_admin_ok','yes');
+  loadAdmin();
+}
+
+function loadAdmin(){
+  let jobs = JSON.parse(localStorage.getItem('karanu_jobs')||'[]');
+  let tickets = JSON.parse(localStorage.getItem('karanu_tickets')||'[]');
+  let container = document.getElementById('adminList');
+  if(jobs.length===0){ container.innerHTML='<div class=card>No jobs yet</div>'; return; }
+  container.innerHTML = jobs.map(job=>{
+    let rel = tickets.filter(t=>t.jobId===job.id);
+    return `<div class=card><b>${job.id}</b> - ${job.service} - KSH ${job.price}<br>Status: ${job.status}<br>Tickets: ${rel.length}</div>`;
+  }).join('');
+}
+loadAdmin();
 </script>
-</body></html>
+</body>
+</html>
