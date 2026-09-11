@@ -1,22 +1,31 @@
-<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ticket</title><style>body{background:#0f172a;color:#fff;font-family:system-ui;padding:16px;max-width:600px;margin:auto}.card{background:#1e293b;padding:16px;border-radius:12px;border:1px solid #334155}input,select,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}button{width:100%;padding:14px;border:none;border-radius:8px;font-weight:800;cursor:pointer}.btn-b{background:#3b82f6;color:#fff}</style></head><body>
-<div class="card"><h3 style="color:#3b82f6;text-align:center">Raise Ticket</h3>
-<select id="tType" onchange="toggle()"><option value="job">For Existing JOB</option><option value="consult">Consultation / Guidance (No JOB)</option></select>
-<input id="jobId" placeholder="JOB- ID e.g JOB-20260911-1234">
-<textarea id="msg" rows="4" placeholder="Your question..."></textarea>
-<button class="btn-b" onclick="raise()">Submit TICKET</button><div id="res"></div></div>
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ticket</title><style>body{background:#0f172a;color:#fff;font-family:system-ui;padding:16px;max-width:600px;margin:auto}.card{background:#1e293b;padding:16px;border-radius:12px;border:1px solid #334155}input,select,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}button{width:100%;padding:14px;border:none;border-radius:8px;font-weight:800}.btn-b{background:#3b82f6;color:#fff}label{font-size:11px;color:#3b82f6}</style></head><body>
+<div class="card">
+<h3 style="color:#3b82f6;text-align:center">Raise Ticket / Support</h3>
+<label>TICKET TYPE</label><select id="tType" onchange="toggle()"><option value="job">For My Existing JOB</option><option value="consult">Consultation / Guidance</option><option value="payment">Payment / Quotation Issue</option><option value="update">Request Update / Change</option><option value="complaint">Complaint</option><option value="other">Other</option></select>
+
+<label id="lJob">JOB ID</label><input id="jobId" placeholder="JOB- ID">
+
+<label>ISSUE CATEGORY</label><select id="category">
+<option>Need Clarification</option><option>Change Requirements</option><option>Delay Concern</option><option>Price / Quotation</option><option>Quality Issue</option><option>General Guidance</option><option>Payment Confirmation</option>
+</select>
+
+<label>PRIORITY</label><select id="priority"><option>Normal</option><option>Urgent</option><option>Very Urgent</option></select>
+
+<label>YOUR MESSAGE</label><textarea id="msg" rows="4" placeholder="Explain..."></textarea>
+<button class="btn-b" onclick="raise()">Submit Ticket</button><div id="res"></div>
+<div id="prev" style="margin-top:12px"></div>
+</div>
 <script>
-let p=new URLSearchParams(location.search); if(p.get('job')) jobId.value=p.get('job');
-function toggle(){ jobId.style.display=tType.value=='consult'?'none':'block'; if(tType.value=='consult') jobId.value='CONSULTATION'; }
+let q=new URLSearchParams(location.search); if(q.get('job')) jobId.value=q.get('job');
 function getTickets(){return JSON.parse(localStorage.getItem('veccta_tickets')||'[]')}
 function saveTickets(t){localStorage.setItem('veccta_tickets',JSON.stringify(t)); localStorage.setItem('karanu_tickets',JSON.stringify(t));}
+function toggle(){ if(tType.value=='consult'||tType.value=='other'){jobId.value='CONSULTATION'; document.getElementById('lJob').textContent='Linked To (Auto)';} else {document.getElementById('lJob').textContent='JOB ID'; if(q.get('job')) jobId.value=q.get('job'); else jobId.value='';} showPrev();}
+function showPrev(){ let j=jobId.value.trim(); if(!j||j=='CONSULTATION') return; let tickets=getTickets().filter(t=>t.jobId==j); if(tickets.length) prev.innerHTML='<h4>Previous tickets for '+j+'</h4>'+tickets.map(t=>`<div style=background:#0f172a;padding:8px;margin:4px 0;border-radius:8px;border-left:3px solid #3b82f6><b>${t.id}</b> ${t.status}<br>Q: ${t.message}<br><div style=background:#1e293b;padding:6px;border-radius:6px;margin-top:4px>ADMIN: <i>${t.adminReply||'Waiting'}</i></div></div>`).join('');}
 function raise(){
- let message=msg.value.trim(); let jId=jobId.value.trim();
- if(!message){alert('Enter message');return;} if(tType.value=='job'&&!jId){alert('Enter JOB ID');return;}
- if(tType.value=='consult') jId='CONSULTATION';
- let id='TICKET-'+Date.now();
- let ticket={id,jobId:jId,message,from:'Client',adminReply:'',status:'Open',type:tType.value,logged:new Date().toLocaleString()};
+ let id='TICKET-'+Date.now(); let ticket={id,jobId:jobId.value.trim()||'CONSULTATION',tType:tType.value,category:category.value,priority:priority.value,message:msg.value.trim(),adminReply:'',status:'Open',logged:new Date().toLocaleString()};
+ if(!ticket.message){alert('Enter message');return;}
  let tickets=getTickets(); tickets.push(ticket); saveTickets(tickets);
- res.innerHTML=`<div style="text-align:center"><b style="color:#3b82f6">${id}</b> for ${jId} raised<br><a href="track.html?ticket=${id}" style="background:#3b82f6;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;display:inline-block;margin-top:8px">Track Ticket</a></div>`;
+ res.innerHTML=`<div style=text-align:center;background:#0f172a;padding:12px;border-radius:8px;border:1px solid #3b82f6><b style=color:#3b82f6;font-size:18px>${id}</b><br>Type: ${ticket.tType} - ${ticket.category}<br>Linked to: ${ticket.jobId}<br><br><div style=background:#1e293b;padding:10px;border-radius:8px;text-align:left>YOUR MESSAGE:<br>${ticket.message}<br><br>ADMIN REPLY:<br><i>${ticket.adminReply||'Admin will reply - track this ticket'}</i><br><br>STATUS: <b>${ticket.status}</b></div><br><a href=track.html?ticket=${id} style="background:#3b82f6;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;display:inline-block">Track Ticket</a></div>`;
 }
-toggle();
+toggle(); showPrev();
 </script></body></html>
