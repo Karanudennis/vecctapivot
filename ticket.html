@@ -1,31 +1,130 @@
-<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ticket</title><style>body{background:#0f172a;color:#fff;font-family:system-ui;padding:16px;max-width:600px;margin:auto}.card{background:#1e293b;padding:16px;border-radius:12px;border:1px solid #334155}input,select,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}button{width:100%;padding:14px;border:none;border-radius:8px;font-weight:800}.btn-b{background:#3b82f6;color:#fff}label{font-size:11px;color:#3b82f6}</style></head><body>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ticket - VECCTAPIVOT</title><style>
+body{background:#0f172a;color:#fff;font-family:system-ui;padding:12px;max-width:650px;margin:auto}
+.card{background:#1e293b;padding:16px;border-radius:14px;border:1px solid #334155;margin:10px 0}
+input,select,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
+button{width:100%;padding:14px;border:none;border-radius:10px;font-weight:900;cursor:pointer}
+.btn-b{background:#3b82f6;color:#fff}.btn-y{background:#facc15;color:#000}
+label{font-size:11px;color:#3b82f6;font-weight:700;margin-top:8px;display:block}
+.opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0}
+.opt-grid button{background:#0f172a;border:1px solid #334155;color:#94a3b8;padding:10px;border-radius:8px;font-size:12px}
+.opt-grid button.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
+</style></head><body>
+
 <div class="card">
-<h3 style="color:#3b82f6;text-align:center">Raise Ticket / Support</h3>
-<label>TICKET TYPE</label><select id="tType" onchange="toggle()"><option value="job">For My Existing JOB</option><option value="consult">Consultation / Guidance</option><option value="payment">Payment / Quotation Issue</option><option value="update">Request Update / Change</option><option value="complaint">Complaint</option><option value="other">Other</option></select>
+<h2 style="color:#3b82f6;text-align:center;margin:0">Support Ticket</h2><p style="text-align:center;color:#94a3b8;font-size:12px">Raise ticket for JOB or General Consultation</p>
 
-<label id="lJob">JOB ID</label><input id="jobId" placeholder="JOB- ID">
-
-<label>ISSUE CATEGORY</label><select id="category">
-<option>Need Clarification</option><option>Change Requirements</option><option>Delay Concern</option><option>Price / Quotation</option><option>Quality Issue</option><option>General Guidance</option><option>Payment Confirmation</option>
+<label>TICKET TYPE - What can we help you with?</label>
+<select id="tType" onchange="onTypeChange()">
+<option value="job">📁 For My Existing JOB (Correction / Update)</option>
+<option value="consult">💡 Consultation / Guidance</option>
+<option value="payment">💰 Payment / Quotation / Price Issue</option>
+<option value="update">🔄 Request Update / Change Requirements</option>
+<option value="delay">⏰ Delay Concern / Urgent</option>
+<option value="quality">⭐ Quality Issue / Not Satisfied</option>
+<option value="complaint">⚠️ Complaint</option>
+<option value="other">📝 Other</option>
 </select>
 
-<label>PRIORITY</label><select id="priority"><option>Normal</option><option>Urgent</option><option>Very Urgent</option></select>
+<label id="lJob">JOB ID * (if for existing job)</label>
+<input id="jobId" placeholder="JOB-2026... or type CONSULTATION for general">
 
-<label>YOUR MESSAGE</label><textarea id="msg" rows="4" placeholder="Explain..."></textarea>
-<button class="btn-b" onclick="raise()">Submit Ticket</button><div id="res"></div>
-<div id="prev" style="margin-top:12px"></div>
+<label>ISSUE CATEGORY - Quick select</label>
+<div class="opt-grid" id="quickCats">
+<button onclick="setCat(this,'Need Clarification')">Need Clarification</button>
+<button onclick="setCat(this,'Change Requirements')">Change Requirements</button>
+<button onclick="setCat(this,'File Upload Issue')">File Upload Issue</button>
+<button onclick="setCat(this,'Price / Quotation')">Price / Quotation</button>
+<button onclick="setCat(this,'Payment Confirmation')">Payment Confirmation</button>
+<button onclick="setCat(this,'Urgent / ASAP')">Urgent / ASAP</button>
+<button onclick="setCat(this,'General Guidance')">General Guidance</button>
+<button onclick="setCat(this,'Other')">Other</button>
 </div>
+<select id="category" style="display:none">
+<option>Need Clarification</option><option>Change Requirements</option><option>File Upload Issue</option><option>Price / Quotation</option><option>Payment Confirmation</option><option>Urgent / ASAP</option><option>General Guidance</option><option>Quality Issue</option><option>Complaint</option><option>Other</option>
+</select>
+
+<label>PRIORITY</label><select id="priority"><option>Normal - Reply in 24hrs</option><option>Urgent - Reply in 12hrs</option><option>Very Urgent - Reply in 2hrs</option></select>
+
+<label>YOUR MESSAGE * - Explain in detail</label><textarea id="msg" rows="5" placeholder="Describe your issue... e.g I want to change logo color to blue, or My file failed to upload, or How much for 10 pages?"></textarea>
+
+<label>Attach Screenshot / File (optional)</label><input type="file" id="tFile" onchange="handleTicketFile(this)"><small id="tFileName" style="color:#22c55e"></small>
+
+<button class="btn-b" onclick="raise()">🎫 SUBMIT TICKET</button>
+<div id="res"></div>
+<div id="prev"></div>
+</div>
+
 <script>
-let q=new URLSearchParams(location.search); if(q.get('job')) jobId.value=q.get('job');
-function getTickets(){return JSON.parse(localStorage.getItem('veccta_tickets')||'[]')}
+let ticketFileName="", ticketFileData="";
+function handleTicketFile(inp){ if(inp.files[0]){ ticketFileName=inp.files[0].name; document.getElementById('tFileName').textContent='Selected: '+ticketFileName; let r=new FileReader(); r.onload=e=>{ticketFileData=e.target.result.slice(0,50000)}; r.readAsDataURL(inp.files[0]); } }
+
+function getTickets(){try{return JSON.parse(localStorage.getItem('veccta_tickets')||localStorage.getItem('karanu_tickets')||'[]')}catch(e){return []}}
 function saveTickets(t){localStorage.setItem('veccta_tickets',JSON.stringify(t)); localStorage.setItem('karanu_tickets',JSON.stringify(t));}
-function toggle(){ if(tType.value=='consult'||tType.value=='other'){jobId.value='CONSULTATION'; document.getElementById('lJob').textContent='Linked To (Auto)';} else {document.getElementById('lJob').textContent='JOB ID'; if(q.get('job')) jobId.value=q.get('job'); else jobId.value='';} showPrev();}
-function showPrev(){ let j=jobId.value.trim(); if(!j||j=='CONSULTATION') return; let tickets=getTickets().filter(t=>t.jobId==j); if(tickets.length) prev.innerHTML='<h4>Previous tickets for '+j+'</h4>'+tickets.map(t=>`<div style=background:#0f172a;padding:8px;margin:4px 0;border-radius:8px;border-left:3px solid #3b82f6><b>${t.id}</b> ${t.status}<br>Q: ${t.message}<br><div style=background:#1e293b;padding:6px;border-radius:6px;margin-top:4px>ADMIN: <i>${t.adminReply||'Waiting'}</i></div></div>`).join('');}
-function raise(){
- let id='TICKET-'+Date.now(); let ticket={id,jobId:jobId.value.trim()||'CONSULTATION',tType:tType.value,category:category.value,priority:priority.value,message:msg.value.trim(),adminReply:'',status:'Open',logged:new Date().toLocaleString()};
- if(!ticket.message){alert('Enter message');return;}
- let tickets=getTickets(); tickets.push(ticket); saveTickets(tickets);
- res.innerHTML=`<div style=text-align:center;background:#0f172a;padding:12px;border-radius:8px;border:1px solid #3b82f6><b style=color:#3b82f6;font-size:18px>${id}</b><br>Type: ${ticket.tType} - ${ticket.category}<br>Linked to: ${ticket.jobId}<br><br><div style=background:#1e293b;padding:10px;border-radius:8px;text-align:left>YOUR MESSAGE:<br>${ticket.message}<br><br>ADMIN REPLY:<br><i>${ticket.adminReply||'Admin will reply - track this ticket'}</i><br><br>STATUS: <b>${ticket.status}</b></div><br><a href=track.html?ticket=${id} style="background:#3b82f6;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;display:inline-block">Track Ticket</a></div>`;
+function getJobs(){try{return JSON.parse(localStorage.getItem('veccta_jobs')||'[]')}catch(e){return []}}
+
+function setCat(btn,val){
+ document.querySelectorAll('#quickCats button').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+ document.getElementById('category').value=val;
 }
-toggle(); showPrev();
+
+function onTypeChange(){
+ let v=tType.value;
+ if(v=='consult'||v=='other'){
+  jobId.value='CONSULTATION';
+  lJob.textContent='Linked To (Auto - General Consultation)';
+  document.getElementById('jobId').style.background='#052e16';
+ } else {
+  if(jobId.value=='CONSULTATION') jobId.value='';
+  lJob.textContent='JOB ID * (for existing job)';
+  document.getElementById('jobId').style.background='#0f172a';
+ }
+ showPrev();
+}
+
+function showPrev(){
+ let j=jobId.value.trim().toUpperCase();
+ if(!j||j=='CONSULTATION'){ prev.innerHTML=''; return; }
+ let tickets=getTickets().filter(t=>t.jobId.toUpperCase()===j);
+ let job=getJobs().find(x=>x.id.toUpperCase()===j);
+ if(job){ prev.innerHTML=`<div class=card style="border-left:4px solid #facc15"><small style="color:#facc15">Linked JOB Found:</small><br><b>${job.id}</b> - ${job.fullService}<br>Status: ${job.status} | Price: ${job.price||'Pending'}<br><a href="track.html?job=${job.id}" style="color:#3b82f6">Track JOB</a></div>` + (tickets.length? `<h4 style="color:#3b82f6">Previous Tickets for ${j} (${tickets.length})</h4>`+tickets.map(t=>`<div style="background:#0f172a;padding:8px;margin:4px 0;border-radius:8px;border-left:3px solid #3b82f6"><b>${t.id}</b> ${t.status}<br>Q: ${t.message.substring(0,80)}<br><div style="background:#1e293b;padding:6px;border-radius:6px;margin-top:4px"><b style="color:#22c55e">ADMIN REPLY:</b> <i>${t.adminReply||'Waiting'}</i></div></div>`).join('') : '');
+ } else {
+  if(j.length>5) prev.innerHTML=`<div style="color:#f87171;font-size:12px">JOB ${j} not found on this device. Still you can submit ticket, but use same device where you created JOB for tracking.</div>`;
+ }
+}
+
+function raise(){
+ if(!msg.value.trim()){ alert('Enter message'); return; }
+ let id='TICKET-'+Date.now().toString().slice(-6);
+ let ticket={
+  id, jobId:jobId.value.trim()||'CONSULTATION',
+  tType:tType.value, tTypeLabel:tType.options[tType.selectedIndex].text,
+  category:category.value, priority:priority.value,
+  message:msg.value.trim(),
+  fileName:ticketFileName, fileData:ticketFileData,
+  adminReply:'', status:'Open',
+  logged:new Date().toLocaleString()
+ };
+ let tickets=getTickets(); tickets.push(ticket); saveTickets(tickets);
+ res.innerHTML=`
+ <div style="background:#0f172a;border:2px solid #3b82f6;padding:14px;border-radius:12px;text-align:center;margin-top:12px">
+  <div style="color:#22c55e;font-weight:800">✅ TICKET RAISED</div>
+  <div style="font-size:20px;color:#3b82f6;font-weight:900;margin:6px 0">${id}</div>
+  <div style="font-size:12px">Type: ${ticket.tTypeLabel}<br>Category: ${ticket.category}<br>Linked to: ${ticket.jobId}<br>File: ${ticket.fileName||'None'}</div>
+  <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:left;margin:10px 0">
+   <div>YOUR MESSAGE:<br>${ticket.message}</div>
+   <div style="margin-top:8px;background:#052e16;padding:8px;border-radius:6px;border:1px solid #22c55e"><b style="color:#22c55e">ADMIN REPLY - Will be displayed well here:</b><br><i>${ticket.adminReply||'Waiting admin response - Track ticket to see reply'}</i></div>
+   <div style="margin-top:6px">STATUS: <b>${ticket.status}</b> | ${ticket.logged}</div>
+  </div>
+  <a href="track.html?ticket=${id}" style="background:#3b82f6;color:#fff;padding:12px 16px;border-radius:8px;text-decoration:none;display:inline-block;font-weight:800">TRACK TICKET</a>
+  ${ticket.jobId!='CONSULTATION'? `<a href="track.html?job=${ticket.jobId}" style="background:#facc15;color:#000;padding:12px 16px;border-radius:8px;text-decoration:none;display:inline-block;margin-left:6px;font-weight:800">View JOB</a>`:''}
+ </div>`;
+ msg.value=''; ticketFileName=''; document.getElementById('tFileName').textContent='';
+ showPrev();
+ window.scrollTo(0,document.body.scrollHeight);
+}
+
+let q=new URLSearchParams(location.search);
+if(q.get('job')) jobId.value=q.get('job');
+onTypeChange(); showPrev(); setCat(document.querySelector('#quickCats button'),'Need Clarification');
 </script></body></html>
