@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VECCTA ADMIN - Fixed</title>
+<title>VECCTA ADMIN - Fixed Save</title>
 <style>
 body{background:#0b1220;color:#eef2fa;font-family:Inter,sans-serif;padding:18px}
 h1{color:#e6c36a}
@@ -9,72 +9,57 @@ h1{color:#e6c36a}
 input,select,textarea{width:100%;background:#0b1220;color:#fff;border:1px solid #2a395c;border-radius:10px;padding:10px;margin:6px 0}
 .btn{background:#e6c36a;color:#000;border:none;padding:10px 14px;border-radius:10px;font-weight:800;cursor:pointer;margin:4px}
 label{color:#96a0ba;font-size:11px;text-transform:uppercase}
-pre{font-size:10px;color:#666}
 </style>
 </head><body>
 <h1>VECCTA ADMIN - All Tickets</h1>
 <button class="btn" onclick="load()">Refresh</button> <span id="count"></span>
 <div id="list"></div>
-<pre id="debug"></pre>
 <script>
-function getAllTickets(){
-  let all=[];
-  // scan all localStorage keys
-  for(let i=0;i<localStorage.length;i++){
-    let key=localStorage.key(i);
-    try{
-      let val=JSON.parse(localStorage.getItem(key));
-      if(Array.isArray(val)){
-        val.forEach(v=>{ if(v.id||v.ticket||v.clientName||v.service){ all.push({...v,_key:key}) } });
-      }else if(val && (val.id||val.ticket||val.clientName)){
-        all.push({...val,_key:key});
-      }
-    }catch(e){}
-  }
-  return all;
-}
 function load(){
- let all=getAllTickets();
- document.getElementById('count').innerText=`Total: ${all.length} | Keys: ${localStorage.length}`;
- document.getElementById('debug').innerText='Keys: '+Object.keys(localStorage).join(', ');
+ let key='veccta_tickets';
+ let all=JSON.parse(localStorage.getItem(key)||'[]');
+ document.getElementById('count').innerText=`Total: ${all.length}`;
  let h='';
- if(!all.length){ h='<p>No tickets found in ANY key. Try booking page again and make sure you are on https://vecctapivotenterprises.github.io/</p>'; }
- all.reverse().forEach((t,i)=>{
-  let idx=i;
+ all.forEach((t,i)=>{
   h+=`<div class="card">
-  <b style="color:#e6c36a;font-size:18px">${t.id||t.ticket||t.ticketId||'VECCTA-'+idx}</b> <small>[${t._key}]</small><br>
-  <b>${t.clientName||t.name||t.client||''}</b> | ${t.phone||t.phoneNumber||''}<br>
-  <b>Service:</b> ${t.service||t.serviceName||''} - ${t.area||t.serviceArea||''}<br>
-  <b>Logged:</b> ${t.date||t.logged||t.timestamp||''}<br>
-  <label>Price (KSh)</label><input value="${t.price||''}" id="price-${idx}" placeholder="25000">
-  <label>Admin Message to Client</label><textarea id="msg-${idx}" placeholder="Driver assigned, quote ready">${t.adminMessage||t.message||''}</textarea>
-  <label>Status</label><select id="status-${idx}">
-    <option>Logged</option><option>In Progress</option><option>Quoted</option><option>Booked</option><option>Paid</option><option>Done</option>
+  <b style="color:#e6c36a;font-size:18px">${t.id||t.ticket||'VECCTA-'+i}</b><br>
+  <b>${t.clientName||t.name||''}</b> | ${t.phone||''}<br>
+  <b>Service:</b> ${t.service||''}<br>
+  <b>Logged:</b> ${t.date||t.logged||''}<br>
+  <label>Price (KSh)</label><input value="${t.price||''}" id="price-${i}" placeholder="25000">
+  <label>Admin Message to Client</label><textarea id="msg-${i}">${t.adminMessage||''}</textarea>
+  <label>Status</label><select id="status-${i}">
+    <option ${t.status=='Logged'?'selected':''}>Logged</option>
+    <option ${t.status=='In Progress'?'selected':''}>In Progress</option>
+    <option ${t.status=='Quoted'?'selected':''}>Quoted</option>
+    <option ${t.status=='Booked'?'selected':''}>Booked</option>
+    <option ${t.status=='Paid'?'selected':''}>Paid</option>
+    <option ${t.status=='Done'?'selected':''}>Done</option>
   </select>
   <div style="margin-top:8px">
-   <button class="btn" onclick="saveEdit(${idx},'${t._key}','${t.id||t.ticket}')">Save Price/Message</button>
-   <button class="btn" style="background:#ff6b6b" onclick="delKey('${t._key}','${t.id||t.ticket}')">Delete</button>
+   <button class="btn" onclick="saveEdit(${i})">Save Price/Message</button>
+   <button class="btn" style="background:#ff6b6b" onclick="delTicket(${i})">Delete</button>
   </div>
   </div>`;
  });
  document.getElementById('list').innerHTML=h;
 }
-function saveEdit(idx,key,ticketId){
- let all=JSON.parse(localStorage.getItem(key));
- let item = Array.isArray(all) ? all.find(x=> (x.id||x.ticket)==ticketId) : all;
- if(item){
-   item.price=document.getElementById(`price-${idx}`).value;
-   item.adminMessage=document.getElementById(`msg-${idx}`).value;
-   item.status=document.getElementById(`status-${idx}`).value;
-   localStorage.setItem(key,JSON.stringify(all));
-   alert('Saved! Price: '+item.price);
- }
+function saveEdit(idx){
+ let key='veccta_tickets';
+ let all=JSON.parse(localStorage.getItem(key)||'[]');
+ all[idx].price=document.getElementById(`price-${idx}`).value;
+ all[idx].adminMessage=document.getElementById(`msg-${idx}`).value;
+ all[idx].status=document.getElementById(`status-${idx}`).value;
+ localStorage.setItem(key,JSON.stringify(all));
+ alert('SAVED! Price: KSh '+all[idx].price+' | Status: '+all[idx].status);
+ load();
 }
-function delKey(key,ticketId){
- if(!confirm('Delete '+ticketId+'?')) return;
- let all=JSON.parse(localStorage.getItem(key));
- if(Array.isArray(all)){ all=all.filter(x=> (x.id||x.ticket)!=ticketId); localStorage.setItem(key,JSON.stringify(all)); }
- else{ localStorage.removeItem(key); }
+function delTicket(idx){
+ if(!confirm('Delete?')) return;
+ let key='veccta_tickets';
+ let all=JSON.parse(localStorage.getItem(key)||'[]');
+ all.splice(idx,1);
+ localStorage.setItem(key,JSON.stringify(all));
  load();
 }
 load();
