@@ -1,49 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Track - VECCTA - Admin Messages + Correction</title>
+<title>Track - 7x7x7 Sequence - Messages + Correction + Time</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body{font-family:sans-serif;background:#f5f5f5;margin:0;padding:8px}
-.top{background:black;color:#ffcc00;padding:10px;border-radius:8px;text-align:center;position:sticky;top:0;z-index:5}
-.card{background:white;padding:12px;border-radius:8px;margin:8px 0;border-left:4px solid #ffcc00}
-.step{display:flex;align-items:center;padding:8px;border-bottom:1px solid #eee}
+body{font-family:sans-serif;background:#f5f5f5;margin:0;padding:6px}
+.top{background:black;color:#ffcc00;padding:10px;border-radius:8px;text-align:center;position:sticky;top:0;z-index:10}
+.card{background:white;padding:10px;border-radius:8px;margin:6px 0;border-left:4px solid #ffcc00}
+.step{display:flex;align-items:center;padding:7px;border-bottom:1px solid #eee}
 .step.done{color:#4caf50;font-weight:bold}
 .step.active{color:#ff9800;font-weight:bold;background:#fff3e0}
 .step.pending{color:#999}
-.badge{padding:3px 8px;border-radius:10px;font-size:11px;margin-left:6px}
-.badge.open{background:#2196F3;color:white}
-.badge.closed{background:#4caf50;color:white}
-.badge.correction{background:#ff5722;color:white}
+.badge{padding:2px 8px;border-radius:10px;font-size:10px;color:white}
+.open{background:#2196F3}.closed{background:#4caf50}.correction{background:#ff5722}.in_progress{background:#ff9800}
 input,textarea{width:100%;padding:9px;margin:4px 0;border:1px solid #ddd;border-radius:5px;box-sizing:border-box}
-button{padding:10px 16px;border:none;border-radius:6px;font-weight:bold;cursor:pointer}
+button{padding:10px 14px;border:none;border-radius:6px;font-weight:bold;cursor:pointer}
 #loginGate{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:9999;text-align:center;padding-top:60px;color:white;display:none}
 .adminMsg{background:#e3f2fd;border-left:4px solid #2196F3;padding:10px;margin:8px 0;border-radius:6px}
 .correctionBox{background:#ffebee;border:2px solid #ff5722;padding:12px;border-radius:8px;margin:10px 0}
+.seq{font-size:11px;background:#fffde7;padding:5px;border-radius:4px;border:1px solid #ffcc00}
 </style>
 </head>
 <body>
 
 <div id="loginGate">
-  <h2>🔒 Login to Track</h2>
-  <p>Interface free to browse</p>
-  <p>Tracking needs login</p>
-  <button onclick="location.href='./test-login.html'" style="background:#ffcc00;color:black;width:auto;padding:12px 24px;font-size:16px">LOGIN TO TRACK</button>
+<h2>🔒 Login to Track - 7x7x7</h2>
+<p>Interface free to browse</p>
+<p>Tracking needs login - As you said</p>
+<button onclick="location.href='./test-login.html'" style="background:#ffcc00;color:black;width:auto;padding:12px 24px">LOGIN TO TRACK</button>
 </div>
 
 <div class="top">
-<b>🔍 TRACK VEC-JOB / VEC-TKT</b><br>
-<small>See Admin Messages + Steps + Time Response + Correction</small><br>
+<b>🔍 TRACK - 7 Pillar → 7 Sub Pillar → 7 Sub Sub</b><br>
+<small>See Admin Messages + Steps + Correction Unlock + Time Response</small><br>
 <small id="userInfo">Checking login...</small>
 </div>
 
 <div class="card">
-<b>Enter ID to Track <span style="color:red">*</span></b>
+<b>Enter ID to Track <span style="color:red">*</span> - VEC-JOB / VEC-TKT</b>
 <div style="display:flex;gap:5px">
 <input id="trackId" placeholder="VEC-JOB-XXXXX or VEC-TKT-XXXXX *">
 <button onclick="trackNow()" style="background:black;color:#ffcc00;width:auto">TRACK</button>
 </div>
-<small>Login required if you need tracking - As you said</small>
 <p id="trackResult"></p>
 </div>
 
@@ -60,11 +58,10 @@ onAuthStateChanged(auth, user=>{
   currentUser=user;
   if(!user){
     document.getElementById("loginGate").style.display="block";
-    document.getElementById("userInfo").innerHTML="❌ Not logged - Login to track";
+    document.getElementById("userInfo").innerHTML="❌ Not logged - Login to track 7x7x7";
   } else {
     document.getElementById("loginGate").style.display="none";
-    document.getElementById("userInfo").innerHTML=`✅ ${user.email} - Enter ID to track`;
-    // Auto track if id in URL
+    document.getElementById("userInfo").innerHTML=`✅ ${user.email} - Enter ID`;
     const urlParams=new URLSearchParams(window.location.search);
     const id=urlParams.get("id");
     if(id){ document.getElementById("trackId").value=id; trackNow(); }
@@ -75,77 +72,60 @@ window.trackNow=async()=>{
   if(!currentUser){ location.href='./test-login.html'; return; }
   const id=document.getElementById("trackId").value.trim().toUpperCase();
   if(!id){ alert("Enter VEC-JOB or VEC-TKT ID *"); return; }
-  document.getElementById("trackResult").innerHTML="⏳ Searching...";
-
+  document.getElementById("trackResult").innerHTML="⏳ Searching 7x7x7 jobs...";
   try{
-    let found=null; let type=""; let col="";
-    // Try jobs
+    let found=null; let col=""; let docId="";
     let q=query(collection(db,"jobs"), where("jobId","==",id));
     let snap=await getDocs(q);
-    if(!snap.empty){ found=snap.docs[0].data(); type="JOB"; col="jobs"; }
+    if(!snap.empty){ found=snap.docs[0].data(); col="jobs"; docId=snap.docs[0].id; }
     else {
       q=query(collection(db,"tickets"), where("ticketId","==",id));
       snap=await getDocs(q);
-      if(!snap.empty){ found=snap.docs[0].data(); type="TICKET"; col="tickets"; }
+      if(!snap.empty){ found=snap.docs[0].data(); col="tickets"; docId=snap.docs[0].id; }
     }
-
     if(!found){
-      document.getElementById("trackResult").innerHTML=`<div style="background:#ffebee;padding:10px;border-radius:6px;color:#c62828">❌ Not Found: ${id}<br>Check ID - Must be VEC-JOB or VEC-TKT you created after login</div>`;
+      document.getElementById("trackResult").innerHTML=`<div style="background:#ffebee;padding:10px;border-radius:6px;color:#c62828">❌ Not Found: ${id}<br>Must be VEC-JOB or VEC-TKT you created after login - 7x7x7 sequence</div>`;
       document.getElementById("detailsCard").style.display="none";
       return;
     }
-
-    // Ownership check - only owner or admin can see
     if(found.userId!==currentUser.uid && currentUser.email!=="karanud96@gmail.com"){
-      document.getElementById("trackResult").innerHTML=`⚠️ This ${id} belongs to ${found.userEmail} - You logged as ${currentUser.email} - Login with owner account`;
+      document.getElementById("trackResult").innerHTML=`⚠️ This ${id} belongs to ${found.userEmail} - You logged as ${currentUser.email}`;
       return;
     }
-
-    document.getElementById("trackResult").innerHTML=`✅ Found ${type}: ${id}`;
-    showDetails(found,type,snap.docs[0].id,col);
-
-  }catch(e){
-    document.getElementById("trackResult").innerHTML=`❌ Error: ${e.message}`;
-  }
+    document.getElementById("trackResult").innerHTML=`✅ Found: ${id} - 7→7→7`;
+    showDetails(found,col,docId);
+  }catch(e){ document.getElementById("trackResult").innerHTML=`❌ Error: ${e.message}`; }
 };
 
-function showDetails(data,type,docId,colName){
+function showDetails(data,colName,docId){
   const card=document.getElementById("detailsCard"); card.style.display="block";
   let status=data.status||"open";
-  let statusClass=status.includes("correction")?"correction":status=="closed"?"closed":"open";
-  let adminMsg=data.adminMessage||data.adminReply||"";
+  let statusClass=status.includes("correction")?"correction":status;
+  let adminMsg=data.adminMessage||"";
   let correctionMsg=data.correctionMessage||"";
-  let responseTime=data.adminResponseAt?new Date(data.adminResponseAt.seconds*1000).toLocaleString():"Not responded yet";
+  let responseTime=data.adminResponseAt?new Date(data.adminResponseAt.seconds*1000).toLocaleString():"Not responded yet - Time of response pending";
   let createdTime=data.createdAt?new Date(data.createdAt.seconds*1000).toLocaleString():"";
+  let resubmitTime=data.userResubmittedAt?new Date(data.userResubmittedAt.seconds*1000).toLocaleString():"";
+  let formData=data.formData||{};
 
-  // Steps logic
-  let steps=[];
-  if(type=="JOB"){
-    steps=[
-      {name:"Request Received",done:true},
-      {name:"Admin Review",done:status!="open"||adminMsg!=""},
-      {name: status.includes("correction")?"Correction Required - Unlock for User": "In Progress",done:status=="in_progress"||status.includes("correction")||status=="closed",active:status=="in_progress"||status.includes("correction")},
-      {name: status=="closed"?"Closed - Service Delivered":"Pending Delivery",done:status=="closed",active:status=="closed"}
-    ];
-  } else {
-    steps=[
-      {name:"Ticket Booked",done:true},
-      {name:"Admin Response",done:adminMsg!=""},
-      {name: status.includes("correction")?"Correction Needed - User Action":"Resolving",done:status.includes("correction")||status=="closed",active:true},
-      {name: status=="closed"?"Closed":"Open",done:status=="closed"}
-    ];
-  }
+  // Steps for 7x7x7
+  let steps=[
+    {name:`Request Received: ${data.pillar||""} → ${data.sub||""} → ${data.service||""}`,done:true},
+    {name:`Admin Review - Pillar: ${data.pillar||""}`,done:status!="open"||adminMsg!=""},
+    {name: status.includes("correction")?`⚠️ Correction Required - Unlock for User - ${data.correctionFields||""}`: status=="in_progress"?`In Progress - Working on ${data.service||""}`: status=="closed"?"Ready for Delivery":"Pending",done:status=="in_progress"||status.includes("correction")||status=="closed",active:status=="in_progress"||status.includes("correction")},
+    {name: status=="closed"?"✅ Closed - Service Delivered":"⏳ Awaiting Closure",done:status=="closed",active:status=="closed"}
+  ];
 
   let html=`
   <div class="card">
-    <h3>${type}: ${data.jobId||data.ticketId} <span class="badge ${statusClass}">${status.toUpperCase()}</span></h3>
-    <p><b>Service:</b> ${data.pillar||""} ${data.sub||""} ${data.service||data.ticketType||data.route||""}</p>
-    <p><b>Name:</b> ${data.name} | <b>Phone:</b> ${data.phone} | <b>Location:</b> ${data.location}</p>
-    <p><b>Created:</b> ${createdTime} | <b>Admin Response Time:</b> ${responseTime}</p>
+    <h3>${data.jobId||data.ticketId} <span class="badge ${statusClass}">${status.toUpperCase()}</span></h3>
+    <div class="seq"><b>7→7→7 Sequence:</b> <b>Pillar:</b> ${data.pillar||""} → <b>Sub Pillar:</b> ${data.sub||""} → <b>Sub Sub:</b> ${data.service||data.ticketType||""}</div>
+    <small><b>Name:</b> ${data.name} | <b>Phone:</b> ${data.phone} | <b>Location:</b> ${data.location}</small><br>
+    <small><b>Created:</b> ${createdTime} | <b>Admin Response Time:</b> ${responseTime} ${resubmitTime?`| <b>You Resubmitted:</b> ${resubmitTime}`:""}</small>
   </div>
 
   <div class="card">
-    <b>📍 Steps - If open / closed / correction:</b>
+    <b>📍 Steps - If open / closed / correction - 7x7x7:</b>
   `;
 
   steps.forEach(s=>{
@@ -156,38 +136,38 @@ function showDetails(data,type,docId,colName){
   html+=`</div>`;
 
   if(adminMsg){
-    html+=`<div class="card"><b>💬 Message from Admin:</b><div class="adminMsg">${adminMsg}<br><small>Response at: ${responseTime}</small></div></div>`;
+    html+=`<div class="card"><b>💬 Message from Admin - Time: ${responseTime}:</b><div class="adminMsg">${adminMsg}</div></div>`;
   }
 
-  // If correction required - UNLOCK TO END USER with correction message + resubmission button
-  if(status.includes("correction") || status=="correction_needed" || correctionMsg){
+  if(status.includes("correction")||correctionMsg){
     html+=`
     <div class="correctionBox">
-      <h3 style="color:#ff5722">⚠️ Correction Required - Admin unlocked for you</h3>
-      <p><b>Correction Message from Admin:</b></p>
-      <div style="background:white;padding:10px;border-radius:6px;border:1px solid #ff5722">${correctionMsg||adminMsg||"Please correct your submission"}</div>
-      <p><b>What to correct:</b> ${data.correctionFields||"Check details above"}</p>
+      <h3 style="color:#ff5722">⚠️ Correction Required - Admin Unlocked You - 7x7x7</h3>
+      <p><b>Correction Message from Admin (displayed):</b></p>
+      <div style="background:white;padding:10px;border-radius:6px;border:1px solid #ff5722">${correctionMsg||adminMsg||"Please correct"}</div>
+      <p><b>Fields to correct:</b> ${data.correctionFields||"Check details"}</p>
       <br>
-      <b>Resubmit Correction:</b><br>
-      <textarea id="correctionDetails" placeholder="Enter corrected details *"></textarea>
-      <input id="correctionPhone" placeholder="Correct phone if needed" value="${data.phone}">
-      <input id="correctionLocation" placeholder="Correct location if needed" value="${data.location}">
-      <button onclick="resubmitCorrection('${docId}','${colName}')" style="background:#ff5722;color:white;width:100%;margin-top:8px">🔄 RESUBMIT WITH CORRECTION</button>
-      <small>After resubmission, status goes back to open, admin will re-review</small>
+      <b>Resubmit Correction - Unlock + Resubmission Button Available:</b><br>
+      <textarea id="correctionDetails" placeholder="Enter corrected details * - Data Entry"></textarea>
+      <input id="correctionPhone" placeholder="Correct phone if needed" value="${data.phone||""}">
+      <input id="correctionLocation" placeholder="Correct location if needed" value="${data.location||""}">
+      <div style="background:#fff3e0;padding:6px;border-radius:4px;margin:4px 0"><small>📁 If file correction needed, describe file - Admin will ask again if needed</small></div>
+      <button onclick="resubmitCorrection('${docId}','${colName}')" style="background:#ff5722;color:white;width:100%;margin-top:8px">🔄 RESUBMIT WITH CORRECTION - Back to Open</button>
+      <small>After resubmit, status goes open, admin time reset, tracking shows new step</small>
     </div>
     `;
   }
 
   html+=`
   <div class="card">
-    <b>Details:</b><br>${data.details||""}<br><br>
-    <b>Quantity:</b> ${data.qty||"-"} | <b>Budget:</b> ${data.budget||"-"} | <b>ID Number:</b> ${data.idNumber||"-"}<br>
-    <b>User:</b> ${data.userEmail}
+    <b>Requirements Filled - Data Entry / File Upload Specific:</b><br>
+    ${Object.entries(formData).map(([k,v])=>`<small>${k.includes("Photo")||k.includes("Document")?"📁 FILE UPLOAD SPECIFIC":"📝 DATA ENTRY"} - ${k}: ${v}</small><br>`).join("")||`<small>${data.details||""}</small>`}
+    <br><br><b>Full Path:</b> ${data.pillar||""} > ${data.sub||""} > ${data.service||""}
   </div>
   `;
 
   if(status=="closed"){
-    html+=`<div class="card" style="background:#e8f5e9;border-left-color:#4caf50"><b>✅ Closed</b> - Service delivered / Ticket resolved at ${responseTime}</div>`;
+    html+=`<div class="card" style="background:#e8f5e9;border-left-color:#4caf50"><b>✅ Closed - ${data.service||""} Delivered</b><br>Time: ${responseTime}<br>7x7x7 Path completed</div>`;
   }
 
   card.innerHTML=html;
@@ -201,24 +181,12 @@ window.resubmitCorrection=async(docId,colName)=>{
   try{
     const ref=doc(db,colName,docId);
     await updateDoc(ref,{
-      details:details,
-      phone:phone,
-      location:locationVal,
-      status:"open",
-      correctionMessage:"",
-      adminMessage:`User resubmitted correction at ${new Date().toLocaleString()} - Previous correction: ${details}`,
-      userResubmittedAt:serverTimestamp()
+      details:details,phone:phone,location:locationVal,status:"open",correctionMessage:"",adminMessage:`User resubmitted correction at ${new Date().toLocaleString()} - ${details}`,userResubmittedAt:serverTimestamp()
     });
-    alert("✅ Correction resubmitted - Status back to open - Admin will respond");
+    alert("✅ Correction resubmitted - Status open - Admin will respond with new time");
     trackNow();
   }catch(e){ alert("Error: "+e.message); }
 };
-
-// Auto load from URL
-window.addEventListener("DOMContentLoaded", ()=>{
-  const params=new URLSearchParams(window.location.search);
-  if(params.get("id")){ document.getElementById("trackId").value=params.get("id"); }
-});
 </script>
 </body>
 </html>
