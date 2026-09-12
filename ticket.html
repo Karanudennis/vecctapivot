@@ -1,130 +1,168 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ticket - VECCTAPIVOT</title><style>
-body{background:#0f172a;color:#fff;font-family:system-ui;padding:12px;max-width:650px;margin:auto}
-.card{background:#1e293b;padding:16px;border-radius:14px;border:1px solid #334155;margin:10px 0}
-input,select,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
-button{width:100%;padding:14px;border:none;border-radius:10px;font-weight:900;cursor:pointer}
-.btn-b{background:#3b82f6;color:#fff}.btn-y{background:#facc15;color:#000}
-label{font-size:11px;color:#3b82f6;font-weight:700;margin-top:8px;display:block}
-.opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0}
-.opt-grid button{background:#0f172a;border:1px solid #334155;color:#94a3b8;padding:10px;border-radius:8px;font-size:12px}
-.opt-grid button.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
-</style></head><body>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tickets - VECCTA - Login Required - No Duplicate</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:sans-serif;background:#f5f5f5;margin:0;padding:8px}
+.top{background:black;color:#ffcc00;padding:10px;border-radius:8px;text-align:center;position:sticky;top:0;z-index:5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:8px 0}
+.pill{padding:10px;background:white;border-radius:6px;text-align:center;cursor:pointer;border:2px solid #eee;font-weight:bold;font-size:12px}
+.pill.active{border-color:#ffcc00;background:black;color:#ffcc00}
+.card{background:white;padding:10px;border-radius:8px;margin:6px 0;border-left:3px solid #2196F3}
+input,select,textarea{width:100%;padding:9px;margin:4px 0;border:1px solid #ddd;border-radius:5px;box-sizing:border-box}
+button{width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer}
+#loginGate{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:9999;text-align:center;padding-top:60px;color:white;display:none}
+.req{color:red}
+</style>
+</head>
+<body>
+
+<div id="loginGate">
+  <h2>🔒 Login to Book Ticket</h2>
+  <p>Browse FREE</p>
+  <p>Ticket needs login</p>
+  <button onclick="location.href='./test-login.html'" style="background:#ffcc00;color:black;width:auto;padding:12px 24px;font-size:16px">LOGIN WITH GOOGLE</button>
+</div>
+
+<div class="top">
+<b>🎫 TICKET REQUEST - 5 Types</b><br>
+<small>Consultation / Complaint / Follow-up / Inquiry / Correction</small><br>
+<small id="userInfo">Checking login...</small>
+</div>
 
 <div class="card">
-<h2 style="color:#3b82f6;text-align:center;margin:0">Support Ticket</h2><p style="text-align:center;color:#94a3b8;font-size:12px">Raise ticket for JOB or General Consultation</p>
-
-<label>TICKET TYPE - What can we help you with?</label>
-<select id="tType" onchange="onTypeChange()">
-<option value="job">📁 For My Existing JOB (Correction / Update)</option>
-<option value="consult">💡 Consultation / Guidance</option>
-<option value="payment">💰 Payment / Quotation / Price Issue</option>
-<option value="update">🔄 Request Update / Change Requirements</option>
-<option value="delay">⏰ Delay Concern / Urgent</option>
-<option value="quality">⭐ Quality Issue / Not Satisfied</option>
-<option value="complaint">⚠️ Complaint</option>
-<option value="other">📝 Other</option>
-</select>
-
-<label id="lJob">JOB ID * (if for existing job)</label>
-<input id="jobId" placeholder="JOB-2026... or type CONSULTATION for general">
-
-<label>ISSUE CATEGORY - Quick select</label>
-<div class="opt-grid" id="quickCats">
-<button onclick="setCat(this,'Need Clarification')">Need Clarification</button>
-<button onclick="setCat(this,'Change Requirements')">Change Requirements</button>
-<button onclick="setCat(this,'File Upload Issue')">File Upload Issue</button>
-<button onclick="setCat(this,'Price / Quotation')">Price / Quotation</button>
-<button onclick="setCat(this,'Payment Confirmation')">Payment Confirmation</button>
-<button onclick="setCat(this,'Urgent / ASAP')">Urgent / ASAP</button>
-<button onclick="setCat(this,'General Guidance')">General Guidance</button>
-<button onclick="setCat(this,'Other')">Other</button>
+<b>Step 1: Choose Ticket Type <span class="req">*</span></b>
+<div class="grid" id="ticketTypes">
+  <div class="pill" data-type="Consultation">💬 Consultation<br><small>Ask before job</small></div>
+  <div class="pill" data-type="Complaint">😡 Complaint<br><small>Problem with service</small></div>
+  <div class="pill" data-type="Follow-up">🔄 Follow-up<br><small>Where is my job?</small></div>
+  <div class="pill" data-type="Service Inquiry">❓ Inquiry<br><small>About service</small></div>
+  <div class="pill" data-type="Correction Needed">✏️ Correction<br><small>Fix my details</small></div>
 </div>
-<select id="category" style="display:none">
-<option>Need Clarification</option><option>Change Requirements</option><option>File Upload Issue</option><option>Price / Quotation</option><option>Payment Confirmation</option><option>Urgent / ASAP</option><option>General Guidance</option><option>Quality Issue</option><option>Complaint</option><option>Other</option>
-</select>
-
-<label>PRIORITY</label><select id="priority"><option>Normal - Reply in 24hrs</option><option>Urgent - Reply in 12hrs</option><option>Very Urgent - Reply in 2hrs</option></select>
-
-<label>YOUR MESSAGE * - Explain in detail</label><textarea id="msg" rows="5" placeholder="Describe your issue... e.g I want to change logo color to blue, or My file failed to upload, or How much for 10 pages?"></textarea>
-
-<label>Attach Screenshot / File (optional)</label><input type="file" id="tFile" onchange="handleTicketFile(this)"><small id="tFileName" style="color:#22c55e"></small>
-
-<button class="btn-b" onclick="raise()">🎫 SUBMIT TICKET</button>
-<div id="res"></div>
-<div id="prev"></div>
 </div>
 
-<script>
-let ticketFileName="", ticketFileData="";
-function handleTicketFile(inp){ if(inp.files[0]){ ticketFileName=inp.files[0].name; document.getElementById('tFileName').textContent='Selected: '+ticketFileName; let r=new FileReader(); r.onload=e=>{ticketFileData=e.target.result.slice(0,50000)}; r.readAsDataURL(inp.files[0]); } }
+<div class="card" id="relatedCard" style="display:none">
+<b>Step 2: Related Job ID (If Follow-up / Correction) <span class="req">*</span> for Follow-up</b>
+<input id="relatedJob" placeholder="Enter VEC-JOB-XXXXX if you have (optional for Consultation, required for Follow-up/Correction)">
+<small id="jobCheck"></small>
+</div>
 
-function getTickets(){try{return JSON.parse(localStorage.getItem('veccta_tickets')||localStorage.getItem('karanu_tickets')||'[]')}catch(e){return []}}
-function saveTickets(t){localStorage.setItem('veccta_tickets',JSON.stringify(t)); localStorage.setItem('karanu_tickets',JSON.stringify(t));}
-function getJobs(){try{return JSON.parse(localStorage.getItem('veccta_jobs')||'[]')}catch(e){return []}}
+<div class="card" id="reqCard" style="display:none;border:2px solid black">
+<h3>Step 3: Requirements for <span id="selectedType"></span> <span class="req">*</span></h3>
+<div id="requirements"></div>
+</div>
 
-function setCat(btn,val){
- document.querySelectorAll('#quickCats button').forEach(b=>b.classList.remove('active'));
- btn.classList.add('active');
- document.getElementById('category').value=val;
-}
+<div class="card" id="formCard" style="display:none;border:2px solid #2196F3">
+<h3>Step 4: Fill Info + Submit Ticket - No Duplicate Twice</h3>
+<p><b>Type:</b> <span id="fullType"></span></p>
+<input id="name" placeholder="Full Name *">
+<input id="phone" placeholder="Phone 07XXXXXXXX *">
+<input id="location" placeholder="Location *">
+<textarea id="details" placeholder="Full Details * - Explain your ticket - Requirements must be filled"></textarea>
+<input id="idNumber" placeholder="ID Number * - No duplicate twice check">
+<button id="ticketBtn" onclick="requestTicket()" style="background:#2196F3;color:white">🎫 BOOK TICKET - Check Duplicate</button>
+<p id="result"></p>
+</div>
 
-function onTypeChange(){
- let v=tType.value;
- if(v=='consult'||v=='other'){
-  jobId.value='CONSULTATION';
-  lJob.textContent='Linked To (Auto - General Consultation)';
-  document.getElementById('jobId').style.background='#052e16';
- } else {
-  if(jobId.value=='CONSULTATION') jobId.value='';
-  lJob.textContent='JOB ID * (for existing job)';
-  document.getElementById('jobId').style.background='#0f172a';
- }
- showPrev();
-}
+<script type="module">
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { collection, addDoc, serverTimestamp, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-function showPrev(){
- let j=jobId.value.trim().toUpperCase();
- if(!j||j=='CONSULTATION'){ prev.innerHTML=''; return; }
- let tickets=getTickets().filter(t=>t.jobId.toUpperCase()===j);
- let job=getJobs().find(x=>x.id.toUpperCase()===j);
- if(job){ prev.innerHTML=`<div class=card style="border-left:4px solid #facc15"><small style="color:#facc15">Linked JOB Found:</small><br><b>${job.id}</b> - ${job.fullService}<br>Status: ${job.status} | Price: ${job.price||'Pending'}<br><a href="track.html?job=${job.id}" style="color:#3b82f6">Track JOB</a></div>` + (tickets.length? `<h4 style="color:#3b82f6">Previous Tickets for ${j} (${tickets.length})</h4>`+tickets.map(t=>`<div style="background:#0f172a;padding:8px;margin:4px 0;border-radius:8px;border-left:3px solid #3b82f6"><b>${t.id}</b> ${t.status}<br>Q: ${t.message.substring(0,80)}<br><div style="background:#1e293b;padding:6px;border-radius:6px;margin-top:4px"><b style="color:#22c55e">ADMIN REPLY:</b> <i>${t.adminReply||'Waiting'}</i></div></div>`).join('') : '');
- } else {
-  if(j.length>5) prev.innerHTML=`<div style="color:#f87171;font-size:12px">JOB ${j} not found on this device. Still you can submit ticket, but use same device where you created JOB for tracking.</div>`;
- }
-}
+const REQ={
+"Consultation":["What service you need consultation for","Your budget","Your location","Preferred time to call"],
+"Complaint":["VEC-JOB ID (if related)","What went wrong","Photos if any","What solution you want"],
+"Follow-up":["VEC-JOB ID * Required","When you requested","What status shows in track","Phone used for job"],
+"Service Inquiry":["Which service (7x7x7)","Question details","Location","Budget"],
+"Correction Needed":["VEC-JOB ID * Required","What needs correction","Correct details","ID proof for correction"]
+};
 
-function raise(){
- if(!msg.value.trim()){ alert('Enter message'); return; }
- let id='TICKET-'+Date.now().toString().slice(-6);
- let ticket={
-  id, jobId:jobId.value.trim()||'CONSULTATION',
-  tType:tType.value, tTypeLabel:tType.options[tType.selectedIndex].text,
-  category:category.value, priority:priority.value,
-  message:msg.value.trim(),
-  fileName:ticketFileName, fileData:ticketFileData,
-  adminReply:'', status:'Open',
-  logged:new Date().toLocaleString()
- };
- let tickets=getTickets(); tickets.push(ticket); saveTickets(tickets);
- res.innerHTML=`
- <div style="background:#0f172a;border:2px solid #3b82f6;padding:14px;border-radius:12px;text-align:center;margin-top:12px">
-  <div style="color:#22c55e;font-weight:800">✅ TICKET RAISED</div>
-  <div style="font-size:20px;color:#3b82f6;font-weight:900;margin:6px 0">${id}</div>
-  <div style="font-size:12px">Type: ${ticket.tTypeLabel}<br>Category: ${ticket.category}<br>Linked to: ${ticket.jobId}<br>File: ${ticket.fileName||'None'}</div>
-  <div style="background:#1e293b;padding:10px;border-radius:8px;text-align:left;margin:10px 0">
-   <div>YOUR MESSAGE:<br>${ticket.message}</div>
-   <div style="margin-top:8px;background:#052e16;padding:8px;border-radius:6px;border:1px solid #22c55e"><b style="color:#22c55e">ADMIN REPLY - Will be displayed well here:</b><br><i>${ticket.adminReply||'Waiting admin response - Track ticket to see reply'}</i></div>
-   <div style="margin-top:6px">STATUS: <b>${ticket.status}</b> | ${ticket.logged}</div>
-  </div>
-  <a href="track.html?ticket=${id}" style="background:#3b82f6;color:#fff;padding:12px 16px;border-radius:8px;text-decoration:none;display:inline-block;font-weight:800">TRACK TICKET</a>
-  ${ticket.jobId!='CONSULTATION'? `<a href="track.html?job=${ticket.jobId}" style="background:#facc15;color:#000;padding:12px 16px;border-radius:8px;text-decoration:none;display:inline-block;margin-left:6px;font-weight:800">View JOB</a>`:''}
- </div>`;
- msg.value=''; ticketFileName=''; document.getElementById('tFileName').textContent='';
- showPrev();
- window.scrollTo(0,document.body.scrollHeight);
-}
+let selType="", currentUser=null;
 
-let q=new URLSearchParams(location.search);
-if(q.get('job')) jobId.value=q.get('job');
-onTypeChange(); showPrev(); setCat(document.querySelector('#quickCats button'),'Need Clarification');
-</script></body></html>
+onAuthStateChanged(auth, user=>{
+  currentUser=user;
+  if(!user){
+    document.getElementById("loginGate").style.display="block";
+    document.getElementById("userInfo").innerHTML="❌ Not logged - Login to book ticket";
+  } else {
+    document.getElementById("loginGate").style.display="none";
+    document.getElementById("userInfo").innerHTML=`✅ ${user.email} - Ready to book ticket`;
+  }
+});
+
+document.querySelectorAll("#ticketTypes .pill").forEach(p=>{
+  p.onclick=()=>{
+    document.querySelectorAll("#ticketTypes .pill").forEach(e=>e.classList.remove("active"));
+    p.classList.add("active");
+    selType=p.dataset.type;
+    document.getElementById("selectedType").innerText=selType;
+    document.getElementById("fullType").innerText=selType;
+    document.getElementById("relatedCard").style.display="block";
+    document.getElementById("reqCard").style.display="block";
+    document.getElementById("formCard").style.display="block";
+    let reqs=REQ[selType]||["Details"];
+    let html="";
+    reqs.forEach(r=>{ html+=`• ${r} <span class="req">*</span><br>`; });
+    html+=`<br><small>Must fill all above - System checks duplicate twice</small>`;
+    document.getElementById("requirements").innerHTML=html;
+    // If follow-up or correction, make related job required
+    if(selType=="Follow-up" || selType=="Correction Needed"){
+      document.getElementById("relatedJob").placeholder="VEC-JOB-XXXXX * REQUIRED for "+selType;
+    }
+  };
+});
+
+window.requestTicket=async()=>{
+  if(!currentUser){ location.href='./test-login.html'; return; }
+  const name=document.getElementById("name").value.trim();
+  const phone=document.getElementById("phone").value.trim();
+  const locationVal=document.getElementById("location").value.trim();
+  const details=document.getElementById("details").value.trim();
+  const idNumber=document.getElementById("idNumber").value.trim();
+  const relatedJob=document.getElementById("relatedJob").value.trim();
+
+  if(!selType){ alert("❌ Select Ticket Type *"); return; }
+  if((selType=="Follow-up" || selType=="Correction Needed") && !relatedJob){ alert("❌ For Follow-up / Correction, VEC-JOB ID * required"); return; }
+  if(!name||!phone||!locationVal||!details||!idNumber){ alert("❌ Fill ALL * fields - Requirements + Info required"); return; }
+
+  const btn=document.getElementById("ticketBtn"); btn.disabled=true; btn.innerText="⏳ Checking duplicate...";
+
+  // NO SIMILAR TICKET TWICE - Same user + same type + same related job + open
+  try{
+    let q;
+    if(relatedJob){
+      q=query(collection(db,"tickets"), where("userId","==",currentUser.uid), where("ticketType","==",selType), where("relatedJob","==",relatedJob));
+    } else {
+      q=query(collection(db,"tickets"), where("userId","==",currentUser.uid), where("ticketType","==",selType), where("phone","==",phone));
+    }
+    const snap=await getDocs(q);
+    if(!snap.empty){
+      let duplicate=false;
+      snap.forEach(doc=>{
+        let data=doc.data();
+        if(data.status!="closed" && data.details==details){
+          duplicate=true;
+        } else if(data.status!="closed" && relatedJob && data.relatedJob==relatedJob){
+          duplicate=true;
+        }
+      });
+      if(duplicate){
+        document.getElementById("result").innerHTML=`<div style="background:#ff9800;color:white;padding:10px;border-radius:6px">⚠️ DUPLICATE TICKET BLOCKED!<br>You already booked <b>${selType}</b> ${relatedJob?`for ${relatedJob}`:''} which is still open/in progress<br>Track it with your previous VEC-TKT ID<br>Wait until closed to book similar again</div>`;
+        btn.disabled=false; btn.innerText="❌ Duplicate - Blocked"; return;
+      }
+    }
+
+    btn.innerText="Creating VEC-TKT...";
+    const ticketId=`VEC-TKT-${Date.now().toString().slice(-5)}-${Math.floor(Math.random()*9000+1000)}`;
+    await addDoc(collection(db,"tickets"),{ticketId,ticketType:selType,route:selType,relatedJob:relatedJob||"None",name,phone,location:locationVal,details,idNumber,status:"open",userEmail:currentUser.email,userId:currentUser.uid,createdAt:serverTimestamp(),requirements:document.getElementById("requirements").innerText});
+
+    document.getElementById("result").innerHTML=`<div style="background:#4caf50;color:white;padding:12px;border-radius:8px;text-align:center"><b>✅ Ticket Booked!</b><br>Type: <b>${selType}</b><br>ID: <b>${ticketId}</b><br>Related Job: ${relatedJob||'None'}<br><br><button onclick="location.href='./track.html?id=${ticketId}'" style="background:black;color:#ffcc00;width:auto;padding:8px 16px">TRACK ${ticketId}</button><br><small>No similar ticket twice until closed</small></div>`;
+    btn.innerText="✅ Ticket Booked";
+  }catch(e){
+    document.getElementById("result").innerHTML=`❌ Error: ${e.message}`; btn.disabled=false; btn.innerText="Try Again";
+  }
+};
+</script>
+</body>
+</html>
