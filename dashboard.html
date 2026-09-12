@@ -1,79 +1,205 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>VECCTA Admin - Jobs & Tickets</title>
+<title>Admin Dashboard - VECCTA - Only Karanud96@gmail.com</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body{font-family:sans-serif;background:#f5f5f5;margin:0}
-.top{background:black;color:#ffcc00;padding:12px}
-.card{background:white;padding:12px;margin:10px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.2);border-left:4px solid #00c853}
-.btn{padding:10px;flex:1;border:none;border-radius:6px;font-weight:bold;cursor:pointer}
+body{font-family:sans-serif;background:#f5f5f5;margin:0;padding:6px}
+.top{background:black;color:#ffcc00;padding:10px;border-radius:8px;text-align:center;position:sticky;top:0;z-index:10}
+.tabs{display:flex;gap:4px;margin:8px 0;overflow:auto}
+.tab{padding:8px 12px;background:white;border-radius:6px;cursor:pointer;font-weight:bold;font-size:12px;white-space:nowrap}
+.tab.active{background:black;color:#ffcc00}
+.card{background:white;padding:10px;border-radius:8px;margin:6px 0;border-left:4px solid #ffcc00;font-size:13px}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px}
+input,select,textarea{width:100%;padding:8px;margin:3px 0;border:1px solid #ddd;border-radius:5px;box-sizing:border-box}
+button{padding:8px 12px;border:none;border-radius:5px;font-weight:bold;cursor:pointer;font-size:12px}
+.badge{padding:2px 6px;border-radius:8px;font-size:10px;color:white}
+.badge.open{background:#2196F3}.badge.closed{background:#4caf50}.badge.correction{background:#ff5722}.badge.in_progress{background:#ff9800}
+#loginGate{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:9999;text-align:center;padding-top:80px;color:white;display:none}
+.adminOnly{border:2px solid #ffcc00}
 </style>
 </head>
 <body>
+
+<div id="loginGate">
+  <h2>🔒 Admin Only</h2>
+  <p>Only karanud96@gmail.com can see dashboard</p>
+  <p id="gateEmail"></p>
+  <button onclick="location.href='./test-login.html'" style="background:#ffcc00;color:black;width:auto;padding:10px 20px">LOGIN AS ADMIN</button>
+</div>
+
 <div class="top">
-  <b>VECCTA ADMIN</b><br>
-  <small id="adminEmail" style="color:white">Loading...</small>
+<b>📊 VECCTA ADMIN DASHBOARD - 7x7x7 + Tickets + Tracking</b><br>
+<small id="adminInfo">Checking admin...</small><br>
+<small>Interface free but dashboard alone - Only you see</small>
 </div>
 
-<div style="display:flex;gap:10px;padding:10px">
-  <button class="btn" onclick="showTab('jobs')" id="bJobs" style="background:#ffcc00">JOBS</button>
-  <button class="btn" onclick="showTab('tickets')" id="bTickets" style="background:white">TICKETS</button>
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('jobs')">📦 Jobs (7x7x7) <span id="jobCount">0</span></div>
+  <div class="tab" onclick="switchTab('tickets')">🎫 Tickets <span id="ticketCount">0</span></div>
+  <div class="tab" onclick="switchTab('closed')">✅ Closed</div>
+  <div class="tab" onclick="switchTab('correction')">⚠️ Corrections</div>
 </div>
 
-<div id="jobsDiv" style="padding:10px">
-  <h3>📦 All Job Requests (from any phone)</h3>
-  <div id="jobsList">Loading...</div>
+<div class="card" style="display:flex;gap:4px">
+<input id="searchBox" placeholder="Search by VEC-JOB / VEC-TKT / Phone / Name" oninput="filterData()">
+<select id="statusFilter" onchange="filterData()">
+  <option value="all">All Status</option>
+  <option value="open">Open</option>
+  <option value="in_progress">In Progress</option>
+  <option value="correction_needed">Correction Needed</option>
+  <option value="closed">Closed</option>
+</select>
+<select id="pillarFilter" onchange="filterData()">
+  <option value="all">All Pillars 7x7x7</option>
+  <option value="GOVERNMENT">Government</option>
+  <option value="CERTIFICATES">Certificates</option>
+  <option value="FINANCIAL">Financial</option>
+  <option value="LPG">LPG & Energy</option>
+  <option value="PRINTING">Printing</option>
+  <option value="EDUCATION">Education</option>
+  <option value="OTHER">Other</option>
+</select>
 </div>
 
-<div id="ticketsDiv" style="display:none;padding:10px">
-  <h3>🎫 All Ticket Requests</h3>
-  <div id="ticketsList">Loading...</div>
-</div>
+<div id="dataList">Loading...</div>
 
 <script type="module">
 import { auth, db } from "./firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { collection, query, orderBy, onSnapshot, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-window.showTab = (t)=>{
-  document.getElementById('jobsDiv').style.display = t==='jobs' ? 'block':'none';
-  document.getElementById('ticketsDiv').style.display = t==='tickets' ? 'block':'none';
-  document.getElementById('bJobs').style.background = t==='jobs' ? '#ffcc00':'white';
-  document.getElementById('bTickets').style.background = t==='tickets' ? '#ffcc00':'white';
+const ADMINS=["karanud96@gmail.com"];
+let allJobs=[], allTickets=[], currentTab="jobs", currentUser=null;
+
+onAuthStateChanged(auth, user=>{
+  currentUser=user;
+  document.getElementById("gateEmail").innerText=user?user.email:"Not logged";
+  if(!user ||!ADMINS.includes(user.email)){
+    document.getElementById("loginGate").style.display="block";
+    document.getElementById("adminInfo").innerHTML=user?`❌ ${user.email} is not admin - Only ${ADMINS.join(", ")}`:"Not logged - Admin only";
+  } else {
+    document.getElementById("loginGate").style.display="none";
+    document.getElementById("adminInfo").innerHTML=`✅ Admin: ${user.email} - You see alone - 7x7x7 Dashboard`;
+    loadData();
+  }
+});
+
+function loadData(){
+  // Jobs listener
+  onSnapshot(query(collection(db,"jobs"), orderBy("createdAt","desc")), snap=>{
+    allJobs=[]; snap.forEach(d=>allJobs.push({id:d.id,...d.data()}));
+    document.getElementById("jobCount").innerText=allJobs.length;
+    render();
+  });
+  // Tickets listener
+  onSnapshot(query(collection(db,"tickets"), orderBy("createdAt","desc")), snap=>{
+    allTickets=[]; snap.forEach(d=>allTickets.push({id:d.id,...d.data()}));
+    document.getElementById("ticketCount").innerText=allTickets.length;
+    render();
+  });
+}
+
+window.switchTab=(tab)=>{
+  currentTab=tab;
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  event.target.classList.add("active");
+  render();
 };
 
-onAuthStateChanged(auth, async (user)=>{
-  if(!user){ window.location.href="./test-login.html"; return; }
-  document.getElementById("adminEmail").innerText = "Admin: " + user.email;
-  // Load jobs
-  try{
-    const q = query(collection(db,"jobs"), orderBy("createdAt","desc"));
-    const snap = await getDocs(q);
-    let h = snap.empty ? "<p>No jobs yet. When any phone requests, it will show here.</p>" : "";
-    snap.forEach(d=>{
-      const j=d.data();
-      const waPhone = j.phone ? j.phone.replace(/[^0-9]/g,'').slice(-9) : '';
-      h+=`<div class="card"><b>${j.service}</b> - ${j.phone} 
-      <a href="https://wa.me/254${waPhone}" target="_blank" style="background:#25D366;color:white;padding:4px 8px;border-radius:4px;text-decoration:none;font-size:12px">WhatsApp</a><br>
-      ${j.details}<br><small>${j.email} | ${j.createdAt?.toDate().toLocaleString()||''}</small></div>`;
-    });
-    document.getElementById("jobsList").innerHTML=h;
-  }catch(e){ document.getElementById("jobsList").innerHTML="⚠️ Enable Firestore: Firebase Console → Firestore Database → Create Database → Test Mode"; }
+window.filterData=()=>render();
 
-  // Load tickets
-  try{
-    const q2 = query(collection(db,"tickets"), orderBy("createdAt","desc"));
-    const snap2 = await getDocs(q2);
-    let h2 = snap2.empty ? "<p>No tickets yet</p>" : "";
-    snap2.forEach(d=>{
-      const t=d.data();
-      h2+=`<div class="card" style="border-left-color:#2196F3"><b>${t.route||t.service||'Ticket'}</b> - ${t.phone}<br>${t.details||''}<br><small>${t.email||''}</small></div>`;
+function render(){
+  let listDiv=document.getElementById("dataList");
+  let search=document.getElementById("searchBox").value.toLowerCase();
+  let statusF=document.getElementById("statusFilter").value;
+  let pillarF=document.getElementById("pillarFilter").value;
+
+  let data=currentTab=="jobs"?allJobs:currentTab=="tickets"?allTickets:currentTab=="closed"?[...allJobs,...allTickets].filter(d=>d.status=="closed"): [...allJobs,...allTickets].filter(d=>d.status&&d.status.includes("correction"));
+
+  if(currentTab=="jobs"||currentTab=="tickets"){
+    // Apply filters
+    data=data.filter(d=>{
+      let matchSearch=!search || (d.jobId||d.ticketId||"").toLowerCase().includes(search) || (d.phone||"").includes(search) || (d.name||"").toLowerCase().includes(search);
+      let matchStatus=statusF=="all"||d.status==statusF;
+      let matchPillar=pillarF=="all"||(d.pillar||"").toUpperCase().includes(pillarF);
+      return matchSearch&&matchStatus&&matchPillar;
     });
-    document.getElementById("ticketsList").innerHTML=h2;
-  }catch(e){ document.getElementById("ticketsList").innerHTML="No tickets yet"; }
-});
+  }
+
+  if(data.length==0){ listDiv.innerHTML=`<div class="card">No ${currentTab} found</div>`; return; }
+
+  let html="";
+  data.slice(0,100).forEach(item=>{
+    let isJob=item.jobId;
+    let id=isJob?item.jobId:item.ticketId;
+    let status=item.status||"open";
+    let statusClass=status.includes("correction")?"correction":status;
+    let created=item.createdAt?new Date(item.createdAt.seconds*1000).toLocaleString():"";
+    let response=item.adminResponseAt?new Date(item.adminResponseAt.seconds*1000).toLocaleString():"No response yet";
+    let resubmit=item.userResubmittedAt?new Date(item.userResubmittedAt.seconds*1000).toLocaleString():"";
+
+    html+=`
+    <div class="card adminOnly">
+      <div style="display:flex;justify-content:space-between">
+        <b>${id}</b> <span class="badge ${statusClass}">${status.toUpperCase()}</span>
+      </div>
+      <small><b>7x7x7:</b> ${item.pillar||""} > ${item.sub||""} > ${item.service||item.ticketType||item.route||""}</small><br>
+      <small><b>User:</b> ${item.name} | ${item.phone} | ${item.location} | ${item.userEmail}</small><br>
+      <small><b>Qty:</b> ${item.qty||"-"} | <b>Budget:</b> ${item.budget||"-"} | <b>ID:</b> ${item.idNumber||"-"}</small><br>
+      <small><b>Created:</b> ${created} | <b>Response:</b> ${response} ${resubmit?`| <b>Resubmitted:</b> ${resubmit}`:""}</small><br>
+      <div style="background:#f5f5f5;padding:6px;border-radius:4px;margin:4px 0"><b>Details:</b> ${item.details||""}</div>
+      ${item.adminMessage?`<div style="background:#e3f2fd;padding:6px;border-radius:4px;border-left:3px solid #2196F3"><b>Your Last Message to User (shown in tracking):</b> ${item.adminMessage}</div>`:""}
+      ${item.correctionMessage?`<div style="background:#ffebee;padding:6px;border-radius:4px;border-left:3px solid #ff5722"><b>Correction Msg to User:</b> ${item.correctionMessage}</div>`:""}
+      ${item.requirements?`<small><b>Requirements filled:</b> ${item.requirements.substring(0,100)}...</small><br>`:""}
+
+      <div class="grid" style="margin-top:6px">
+        <select id="status-${item.id}" onchange="updateStatus('${item.id}','${isJob?'jobs':'tickets'}',this.value)">
+          <option value="open" ${status=="open"?"selected":""}>Open</option>
+          <option value="in_progress" ${status=="in_progress"?"selected":""}>In Progress</option>
+          <option value="correction_needed" ${status=="correction_needed"?"selected":""}>Correction Needed - Unlock User</option>
+          <option value="closed" ${status=="closed"?"selected":""}>Closed</option>
+        </select>
+        <button onclick="document.getElementById('msg-${item.id}').style.display='block'" style="background:#2196F3;color:white">💬 Message</button>
+        <button onclick="window.open('https://wa.me/254${item.phone.replace(/^0/,'')}?text=Hello ${item.name}, regarding ${id} - ')" style="background:#25d366;color:white">WhatsApp</button>
+      </div>
+
+      <div id="msg-${item.id}" style="display:none;margin-top:6px;border:2px solid #2196F3;padding:8px;border-radius:6px">
+        <b>Message from Admin (will show in tracking + time of response):</b>
+        <textarea id="adminMsg-${item.id}" placeholder="Write message to show in tracking">${item.adminMessage||""}</textarea>
+        <b>If Correction Needed - Write correction + fields to correct:</b>
+        <textarea id="correctionMsg-${item.id}" placeholder="Correction message displayed + resubmission unlock">${item.correctionMessage||""}</textarea>
+        <input id="correctionFields-${item.id}" placeholder="Fields to correct e.g. ID Photo, Location" value="${item.correctionFields||""}">
+        <button onclick="sendAdminMessage('${item.id}','${isJob?'jobs':'tickets'}')" style="background:black;color:#ffcc00;width:100%;margin-top:4px">📤 Send Message + Time Stamp to Tracking</button>
+      </div>
+
+      <small>7x7x7 Path: ${item.pillar} | User: ${item.userEmail} | No duplicate twice checked</small>
+    </div>
+    `;
+  });
+
+  listDiv.innerHTML=html;
+}
+
+window.updateStatus=async(docId,col,newStatus)=>{
+  try{
+    await updateDoc(doc(db,col,docId),{status:newStatus,adminResponseAt:serverTimestamp(),adminEmail:currentUser.email});
+    alert(`Status updated to ${newStatus} - User will see step ${newStatus} in tracking`);
+  }catch(e){ alert(e.message); }
+};
+
+window.sendAdminMessage=async(docId,col)=>{
+  const msg=document.getElementById(`adminMsg-${docId}`).value.trim();
+  const corrMsg=document.getElementById(`correctionMsg-${docId}`).value.trim();
+  const corrFields=document.getElementById(`correctionFields-${docId}`).value.trim();
+  if(!msg &&!corrMsg){ alert("Write admin message or correction message *"); return; }
+  try{
+    let updateData={adminMessage:msg,adminResponseAt:serverTimestamp(),adminEmail:currentUser.email};
+    if(corrMsg){ updateData.correctionMessage=corrMsg; updateData.correctionFields=corrFields; updateData.status="correction_needed"; }
+    await updateDoc(doc(db,col,docId),updateData);
+    alert(`✅ Message sent - User will see in tracking with time ${new Date().toLocaleString()} - If correction, user unlocked with resubmission button`);
+  }catch(e){ alert(e.message); }
+};
 </script>
-<p style="text-align:center"><a href="./index.html">← Back to Home</a></p>
 </body>
 </html>
