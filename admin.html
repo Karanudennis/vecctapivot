@@ -1,43 +1,25 @@
-<!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Official Admin Login</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
-body{background:#0f172a;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:14px}
-.card{background:#fff;color:#000;border-radius:18px;padding:22px;width:100%;max-width:420px}
-input{width:100%;padding:12px 44px 12px 12px;border:1.5px solid #e2e8f0;border-radius:12px;color:#000;margin-top:8px}
-.wrap{position:relative;margin-top:8px}
-.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:#000;color:#ffcc00;border:none;border-radius:8px;padding:6px 10px;cursor:pointer;font-weight:800;font-size:11px}
-.btn{width:100%;padding:12px;border:none;border-radius:12px;font-weight:800;cursor:pointer;margin-top:10px}
-.btn-y{background:#ffcc00;color:#000}.btn-b{background:#000;color:#ffcc00}.btn-o{background:#fff;border:1.5px solid #e2e8f0}
-.small{font-size:11px;color:#64748b;margin-top:6px}
-.otp{display:none;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:12px;margin-top:12px}
-</style></head><body>
-<div class="card">
-<h3>🔒 Official Admin Login</h3>
-<p class="small">Only <b>vecctapivotenterprises@gmail.com</b> - Old veccta2024 removed</p>
-<input id="email" value="vecctapivotenterprises@gmail.com" readonly style="background:#f1f5f9;font-weight:700">
-<div class="wrap"><input id="pass" type="password" placeholder="Official password"><button class="eye" onclick="toggle('pass')">👁️ VIEW</button></div>
-<button class="btn btn-b" onclick="login()">Login as Official</button>
-<button class="btn btn-o" onclick="document.getElementById('resetBox').style.display='block'">🔄 Reset + OTP Option</button>
-<div id="resetBox" class="otp">
-<b>Reset Password with OTP</b>
-<p class="small">Send link to official email - Copy oobCode from link as OTP</p>
-<button class="btn btn-y" onclick="sendReset()">Send OTP to Official Email</button>
-<input id="otp" placeholder="Enter OTP - oobCode from email link" style="margin-top:10px">
-<div class="wrap"><input id="newPass" type="password" placeholder="New password"><button class="eye" onclick="toggle('newPass')">👁️</button></div>
-<button class="btn btn-b" onclick="verifyOtp()">Verify OTP & Set New Password</button>
-<div id="resetMsg" class="small"></div>
-</div>
-<div id="msg" class="small" style="color:#dc2626;margin-top:8px"></div>
-</div>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VEC Admin</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}body{display:flex;height:100vh;background:#f5f7fb}.sidebar{width:230px;background:#111827;color:#fff;padding:18px}.menu{list-style:none;margin-top:16px}.menu li{padding:11px;border-radius:8px;cursor:pointer;margin-bottom:4px;display:flex;justify-content:space-between}.menu li.active,.menu li:hover{background:#1f2937}.content{flex:1;padding:18px;overflow:auto}.card{background:#fff;padding:14px;border-radius:12px;margin-bottom:10px}.badge{padding:3px 8px;border-radius:20px;font-size:11px;font-weight:700}.queue{background:#fef3c7}.closed{background:#dcfce7}.correction{background:#fee2e2}.btn{padding:8px 12px;border:none;border-radius:8px;cursor:pointer;font-weight:600}.btn-dark{background:#111827;color:#fff}.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center}.modal.show{display:flex}.modalBox{background:#fff;width:480px;max-width:95%;padding:18px;border-radius:14px}select,textarea,input{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;margin-top:6px}</style></head><body>
+<div class="sidebar"><h3>VEC Admin</h3><ul class="menu"><li class="active" onclick="setF('all',this)">All <span id="cAll">0</span></li><li onclick="setF('queue',this)">Queue <span id="cQ">0</span></li><li onclick="setF('correction',this)">Corr <span id="cC">0</span></li><li onclick="setF('ticket',this)">Tickets <span id="cT">0</span></li><li onclick="setF('closed',this)">Closed <span id="cCl">0</span></li></ul></div>
+<div class="content"><h3 id="title">All</h3><input id="search" style="margin-top:10px;padding:9px;width:300px;border-radius:8px;border:1px solid #ccc" placeholder="Search ID/phone" oninput="render()"><div id="list" style="margin-top:14px"></div></div>
+<div id="modal" class="modal"><div class="modalBox"><h3 id="mId"></h3><p id="mInfo" style="font-size:12px;color:#666"></p><select id="mStatus"><option value="queue">Queue</option><option value="in_progress">In Progress</option><option value="correction">Correction</option><option value="submitted">Ready</option><option value="closed">Closed</option></select><textarea id="mNote" rows="4" placeholder="Note client will see in tracker"></textarea><input id="mUnlock" placeholder="Unlock fields e.g. idPhoto" style="margin-top:8px"><div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px"><button class="btn" onclick="closeM()">Cancel</button><button class="btn btn-dark" onclick="save()">Save to Tracker</button></div></div></div>
 <script type="module">
-import {auth} from "./firebase.js";
-import {signInWithEmailAndPassword,sendPasswordResetEmail,confirmPasswordReset} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-const OFFICIAL="vecctapivotenterprises@gmail.com";
-window.toggle=(id)=>{let e=document.getElementById(id);e.type=e.type==="password"?"text":"password";};
-window.login=async()=>{try{await signInWithEmailAndPassword(auth,OFFICIAL,document.getElementById("pass").value);location.href="./dashboard.html";}catch(e){document.getElementById("msg").innerText=e.message}};
-window.sendReset=async()=>{try{await sendPasswordResetEmail(auth,OFFICIAL);document.getElementById("resetMsg").innerText="✅ Sent to "+OFFICIAL+" - Open email, copy oobCode=XXXX from link, paste as OTP";document.getElementById("resetMsg").style.color="#16a34a";}catch(e){document.getElementById("resetMsg").innerText=e.message}};
-window.verifyOtp=async()=>{try{await confirmPasswordReset(auth,document.getElementById("otp").value.trim(),document.getElementById("newPass").value.trim());document.getElementById("resetMsg").innerText="✅ New password set! Login above now";document.getElementById("resetMsg").style.color="#16a34a";}catch(e){document.getElementById("resetMsg").innerText="OTP failed: "+e.message+" - Copy oobCode from URL"}};
-</script>
-</body></html>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const firebaseConfig = {
+  apiKey: "PUT_YOURS",
+  authDomain: "PUT_YOURS",
+  projectId: "PUT_YOURS",
+  storageBucket: "PUT_YOURS",
+  messagingSenderId: "PUT_YOURS",
+  appId: "PUT_YOURS"
+};
+const app=initializeApp(firebaseConfig);const db=getFirestore(app);
+let all=[],filter='all',curId=null,curType='job';
+async function load(){const j=await getDocs(collection(db,"jobs"));const t=await getDocs(collection(db,"tickets"));all=[];j.forEach(d=>all.push({fb:d.id,id:d.data().trackingId||d.id,type:'job',...d.data()}));t.forEach(d=>all.push({fb:d.id,id:d.data().trackingId||d.id,type:'ticket',...d.data()}));document.getElementById('cAll').textContent=all.length;document.getElementById('cQ').textContent=all.filter(x=>['queue','open','in_progress'].includes(x.status)).length;document.getElementById('cC').textContent=all.filter(x=>x.status=='correction').length;document.getElementById('cT').textContent=all.filter(x=>x.type=='ticket').length;document.getElementById('cCl').textContent=all.filter(x=>x.status=='closed').length;render();}
+window.setF=(f,el)=>{filter=f;document.querySelectorAll('.menu li').forEach(l=>l.classList.remove('active'));el.classList.add('active');document.getElementById('title').textContent=el.textContent;render()}
+window.render=()=>{const q=document.getElementById('search').value.toLowerCase();let list=all.filter(x=>{if(q && !((x.id||'').toLowerCase().includes(q)||(x.phone||'').includes(q)))return false;if(filter=='queue')return ['queue','open','in_progress'].includes(x.status);if(filter=='correction')return x.status=='correction';if(filter=='ticket')return x.type=='ticket';if(filter=='closed')return x.status=='closed';return true;});document.getElementById('list').innerHTML=list.map(x=>`<div class="card"><div style="display:flex;justify-content:space-between"><b>${x.id}</b><span class="badge ${x.status}">${x.status}</span></div><div style="font-size:12px">${x.service||x.issue||''} • ${x.phone||''}</div><div style="font-size:12px;background:#f9fafb;padding:5px;border-radius:6px;margin-top:4px">${x.adminMessage||'No note'}</div><button class="btn btn-dark" style="margin-top:6px" onclick="openM('${x.fb}','${x.type}')">Respond</button></div>`).join('')||'No jobs';}
+window.openM=(fb,type)=>{const item=all.find(a=>a.fb==fb&&a.type==type);curId=fb;curType=type;document.getElementById('mId').textContent=item.id;document.getElementById('mInfo').textContent=item.service||item.issue||'';document.getElementById('mStatus').value=item.status||'queue';document.getElementById('mNote').value=item.adminMessage||'';document.getElementById('modal').classList.add('show');}
+window.closeM=()=>document.getElementById('modal').classList.remove('show');
+window.save=async()=>{const status=document.getElementById('mStatus').value;const note=document.getElementById('mNote').value;if(!note)return alert('Write note');const coll=curType=='ticket'?'tickets':'jobs';await updateDoc(doc(db,coll,curId),{status,adminMessage:note,adminResponseAt:serverTimestamp(),lastUpdated:serverTimestamp()});closeM();load();}
+load();
+</script></body></html>
