@@ -1,98 +1,105 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Track Both - Job & Ticket</title>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Track — VECCTAPIVOT GLOBAL</title><link rel="icon" href="logo.png"><link rel="stylesheet" href="style.css">
 <style>
-body{font-family:sans-serif;background:#f5f7fb;margin:0;padding:20px}
-.box{background:#fff;padding:20px;border-radius:16px;max-width:600px;margin:auto;box-shadow:0 4px 12px rgba(0,0,0,.1)}
-input{width:100%;padding:14px;border:2px solid #111827;border-radius:10px;font-size:16px;box-sizing:border-box}
-.btn{padding:12px 20px;background:#111827;color:#fff;border:none;border-radius:8px;cursor:pointer;margin-top:10px;font-weight:700}
-.result{margin-top:16px;padding:14px;border-radius:10px;background:#f9fafb}
+.wrap{max-width:820px;margin:18px auto;padding:0 14px}
+.top-card{background:linear-gradient(135deg,#1e293b,#0f172a);border:1px solid #334155;border-radius:22px;padding:22px;box-shadow:0 20px 60px #0005}
+.h{color:#facc15;text-align:center;margin:0;font-size:24px}
+.sub{color:#94a3b8;text-align:center;font-size:12px;margin:6px 0 14px}
+.search{display:flex;gap:8px}
+.input{flex:1;padding:14px;border-radius:12px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box;outline:none}
+.input:focus{border-color:#facc15;box-shadow:0 0 0 3px #facc1526}
+.btn-gold{padding:14px 18px;border:none;border-radius:12px;background:#facc15;color:#000;font-weight:900;cursor:pointer}
+.card{background:#1e293b;border:1px solid #334155;border-radius:18px;padding:16px;margin:12px 0}
+.well{padding:14px;border-radius:14px;margin:10px 0;border:2px solid;line-height:1.6;font-size:14px}
+.green{border-color:#22c55e;background:#052e16}.red{border-color:#ef4444;background:#450a0a}.yellow{border-color:#facc15;background:#422006}.blue{border-color:#60a5fa;background:#0c1a32}.gray{border-color:#334155;background:#0f172a}
+.badge{padding:4px 10px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.6px}
+.b-Logged{background:#334155;color:#fff}.b-Quoted{background:#422006;color:#facc15}.b-Paid{background:#052e16;color:#22c55e}.b-InProgress{background:#1e1b4b;color:#a5b4fc}.b-Done{background:#052e16;color:#22c55e}.b-Revision{background:#450a0a;color:#fca5a5}.b-Resubmitted{background:#422006;color:#fdba74}
+.timeline{display:flex;gap:8px;overflow-x:auto;padding:8px 0}
+.step{min-width:110px;text-align:center;padding:10px;border-radius:12px;border:1px solid #334155;background:#0f172a;opacity:.5}
+.step.active{opacity:1;border-color:#facc15;background:#422006;color:#facc15;font-weight:800}
+.kbd{font-family:ui-monospace;font-size:22px;color:#facc15;font-weight:900}
+.small{font-size:11px;color:#94a3b8}
+.textarea{width:100%;padding:12px;border-radius:10px;background:#0f172a;border:1px solid #334155;color:#fff;box-sizing:border-box;margin:6px 0}
+.btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:800;cursor:pointer}
 </style>
-</head>
-<body>
-<div class="box">
-<h2>TRACK BOTH - JOB & TICKET</h2>
-<p style="font-size:12px;color:#666">Enter any ID: VEC-JOB, VEC-TKT, TIC- , JOB- , etc</p>
-<input id="trackInput" placeholder="VEC-JOB-XXXXX or TIC-XXXXX - Tracks BOTH">
-<button class="btn" onclick="trackBoth()">Track Now</button>
-<div id="result" class="result">Enter ID above</div>
-<div id="debug" style="font-size:11px;color:#666;margin-top:10px"></div>
+</head><body>
+<div class="utility"><div class="uwrap"><span class="uitem"><span class="ubadge">TRACK GLOBAL LIVE</span></span><span class="uitem">JOB + TICKET + ADMIN RESPONSE</span><a class="uitem" href="https://wa.me/254788099685">Help</a></div></div>
+<header class="top"><div class="navrow"><a class="brand" href="index.html"><img src="logo.png"><span class="brandname">Vecctapivot<em>Track Desk</em></span></a><div class="navcta"><a class="btn line sm2" href="job.html">New Job</a><a class="btn gold sm2" href="ticket.html">Raise Ticket</a></div></div></header>
+
+<main class="wrap">
+<div class="top-card">
+<h2 class="h">Track Job & Ticket — GLOBAL</h2>
+<p class="sub">Enter JOB-xxxxxx or TIC-xxxxx — see status + admin message well-displayed from any phone</p>
+<div class="search"><input id="q" class="input" placeholder="JOB-123456 or TIC-12345"><button class="btn-gold" onclick="doTrack()">TRACK →</button></div>
+<div id="cloudSt" class="small" style="text-align:center;margin-top:8px;color:#22c55e">● Cloud: vecctapivot — live</div>
 </div>
 
-<script>
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_BUCKET",
-  messagingSenderId: "YOUR_SENDER",
-  appId: "YOUR_APP_ID"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+<div id="out"></div>
+</main>
 
-async function trackBoth(){
-  const urlParams = new URLSearchParams(window.location.search);
-  let id = urlParams.get('ticket') || urlParams.get('id') || urlParams.get('job') || document.getElementById('trackInput').value;
-  id = (id||'').trim().toUpperCase();
-  if(!id){ document.getElementById('result').innerHTML="❌ Enter ID"; return; }
-  
-  document.getElementById('trackInput').value = id;
-  document.getElementById('result').innerHTML = "🔍 Searching Firebase for: "+id+"...";
-  
-  try{
-    const jobsSnap = await db.collection("jobs").get();
-    const ticketsSnap = await db.collection("tickets").get();
-    
-    let found = null;
-    let allSeen = [];
-    
-    jobsSnap.forEach(doc=>{
-      const d = doc.data();
-      allSeen.push(d.trackingId || d.id || doc.id);
-      const check = [d.trackingId, d.id, d.ticket, doc.id, d.tracking].join(' ').toUpperCase();
-      if(check.includes(id)) found = { ...d, _col:'jobs', _docId:doc.id };
-    });
-    
-    ticketsSnap.forEach(doc=>{
-      const d = doc.data();
-      allSeen.push(d.trackingId || d.ticket || d.id || doc.id);
-      const check = [d.trackingId, d.ticket, d.id, doc.id, d.tracking].join(' ').toUpperCase();
-      if(check.includes(id)) found = { ...d, _col:'tickets', _docId:doc.id };
-    });
+<script type="module">
+import { db } from './firebase.js';
+import { collection, getDocs, query, where, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    if(found){
-      document.getElementById('result').innerHTML = `
-        <div style="color:green;font-weight:700">✅ FOUND: ${id} in ${found._col}</div>
-        <div style="margin-top:8px"><b>Status:</b> ${found.status||'queue'}</div>
-        <div><b>Service:</b> ${found.service||found.issue||found.pillar||''}</div>
-        <div><b>Phone:</b> ${found.phone||''}</div>
-        <div style="margin-top:8px;background:#fff;padding:8px;border-radius:6px;border-left:4px solid #111827">
-          <b>Admin Message:</b><br>${found.adminMessage||'⏳ Waiting for admin reply - denniskmuthoni@gmail.com will reply soon'}
-          ${found.adminResponseAt? '<br><small>At: '+new Date(found.adminResponseAt.seconds*1000).toLocaleString()+'</small>':''}
-        </div>
-      `;
-    }else{
-      document.getElementById('result').innerHTML = `❌ Not found BOTH: ${id}`;
-      document.getElementById('debug').innerHTML = `Debug: Firebase has ${allSeen.length} records. Last 5 IDs: ${allSeen.slice(-5).join(', ')}<br>
-      If empty, your SUBMIT code is not saving to Firebase. Check Firestore Rules = allow read,write:true and firebaseConfig same as submit page.`;
-    }
-  }catch(e){
-    document.getElementById('result').innerHTML = "🔥 Firebase Error: "+e.message+"<br>Fix Rules to: allow read, write: if true;";
-  }
+async function findById(col, id){ let snap=await getDocs(query(collection(db,col), where('id','==',id))); let r=null; snap.forEach(d=>{r={...d.data(),_docId:d.id}}); return r;}
+
+function timeline(status){
+ let steps=['Logged','Quoted','Paid','In Progress','Done']; let idx=steps.indexOf(status); if(status==='Revision Needed') idx=1; if(status==='Resubmitted') idx=1;
+ return `<div class=timeline>${steps.map((s,i)=>`<div class="step ${i<=idx?'active':''}">${i<=idx?'✅':'○'} ${s}</div>`).join('')}</div>`;
 }
 
-// Auto-track if ?ticket= in URL
-window.onload = ()=>{
-  const params = new URLSearchParams(window.location.search);
-  const t = params.get('ticket') || params.get('id');
-  if(t){ document.getElementById('trackInput').value = t; trackBoth(); }
+window.doTrack=async()=>{
+ let id=(q.value||new URLSearchParams(location.search).get('job')||new URLSearchParams(location.search).get('ticket')||'').toUpperCase().trim();
+ if(!id){alert('Enter JOB- or TIC- ID'); return}
+ q.value=id;
+ document.getElementById('out').innerHTML='<div class=card>⏳ Checking cloud vecctapivot...</div>';
+ if(id.startsWith('JOB')){
+  let j=await findById('jobs', id);
+  if(!j){document.getElementById('out').innerHTML=`<div class="card" style="border-left:5px solid #ef4444"><b style="color:#ef4444">JOB ${id} not found in cloud</b><br><span class=small>Submit from job.html first. Check Firestore Rules = allow read, write: if true;</span><br><a href="job.html" style="color:#facc15">Go to job.html →</a></div>`; return}
+  
+  let h=`<div class=card>
+  <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px"><div><span class=kbd>${j.id}</span><br><span class="badge b-${(j.status||'Logged').replace(' ','')}">${j.status}</span> <span class=small>${j.logged||''}</span></div>
+  <div style="text-align:right"><div class=small>Price</div><div style="font-size:22px;font-weight:900;color:#facc15">${j.price?'KSH '+j.price:'Awaiting quote'}</div><div class=small>${j.pillar||''}</div></div></div>
+  <div style="margin-top:10px"><b>${j.fullService||''}</b><br><span class=small>${j.clientName||''} • ${j.clientPhone||''}</span></div>
+  ${timeline(j.status)}
+  </div>`;
+
+  if(j.details||j.detail) h+=`<div class="well gray"><b>Your Details:</b><br>${j.details||''} ${j.detail? ' | '+j.detail:''} ${j.requirements?.detail||''}</div>`;
+  
+  // ADMIN RESPONSE — WELL DISPLAYED
+  if(j.adminMessage) h+=`<div class="well green"><b style="color:#22c55e">✅ ADMIN MESSAGE — WELL DISPLAYED:</b><br><div style="font-size:15px;margin-top:6px">${j.adminMessage}</div><div class=small style="margin-top:6px;color:#22c55e">Displayed from cloud — any phone</div></div>`;
+  else h+=`<div class="well gray"><span class=small>Admin hasn't replied yet — usually within 1hr. Keep checking.</span></div>`;
+
+  if(j.revisionNote) h+=`<div class="well red"><b style="color:#ef4444">🔴 REVISION NEEDED — RED LOCK BOX (Admin requests fix):</b><br><div style="margin-top:8px;font-size:15px">${j.revisionNote}</div><br><label class=small>Your Reply:</label><textarea id=rep class=textarea rows=3 placeholder="Write what you fixed..."></textarea><button class=btn style="background:#ef4444;color:#fff" onclick="resubmitJob('${j._docId}')">↩ Resubmit for Review</button></div>`;
+  
+  if(j.revisionReply) h+=`<div class="well yellow"><b style="color:#facc15">↩ Your Resubmit:</b><br>${j.revisionReply}<br><span class=small>Admin will review and update status</span></div>`;
+
+  h+=`<div class=card style="display:flex;gap:8px;flex-wrap:wrap"><a href="ticket.html?job=${j.id}" style="flex:1;background:#0f172a;border:1px solid #334155;color:#fff;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-weight:700">Raise Ticket for ${j.id}</a><a href="https://wa.me/254788099685?text=Hi%20about%20${j.id}%20${encodeURIComponent(j.fullService)}" style="flex:1;background:#22c55e;color:#000;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-weight:800">WhatsApp Help</a></div>`;
+
+  document.getElementById('out').innerHTML=h;
+ }
+ else if(id.startsWith('TIC')){
+  let t=await findById('tickets', id);
+  if(!t){document.getElementById('out').innerHTML=`<div class=card style="border-left:5px solid #ef4444">TICKET ${id} not found in cloud</div>`; return}
+  let h=`<div class=card><span class=kbd style="color:#60a5fa">${t.id}</span> for <b style="color:#facc15">${t.jobId}</b><br><span class=badge>${t.status}</span> ${t.priority} • ${t.tType} • ${t.category||''}<br><b>${t.subject}</b></div>`;
+  h+=`<div class="well yellow"><b>Your Ticket:</b><br>${t.message}</div>`;
+  if(t.adminReply) h+=`<div class="well green"><b style="color:#22c55e">✅ ADMIN REPLY — WELL DISPLAYED:</b><br><div style="font-size:15px;margin-top:6px">${t.adminReply}</div></div>`;
+  else h+=`<div class="well gray"><span class=small>Admin hasn't replied yet — we reply within 1hr on tickets</span></div>`;
+  document.getElementById('out').innerHTML=h;
+ }
+ else{
+  document.getElementById('out').innerHTML='<div class=card>Enter ID starting with JOB- or TIC-</div>';
+ }
+}
+
+window.resubmitJob=async(docId)=>{
+ let v=document.getElementById('rep')?.value?.trim(); if(!v){alert('Write your reply'); return}
+ await updateDoc(doc(db,'jobs',docId),{revisionReply:v,status:'Resubmitted'});
+ alert('✅ Resubmitted — admin sees instantly'); doTrack();
+}
+
+// auto-load from URL ?job= or ?ticket=
+window.onload=()=>{
+ let p=new URLSearchParams(location.search); let j=p.get('job'), t=p.get('ticket'); if(j||t){q.value=j||t; doTrack()}
 }
 </script>
-</body>
-</html>
+</body></html>
