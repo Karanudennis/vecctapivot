@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>VECCTA Admin - Jobs & Tickets</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:sans-serif;background:#f5f5f5;margin:0}
+.top{background:black;color:#ffcc00;padding:12px}
+.card{background:white;padding:12px;margin:10px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.2);border-left:4px solid #00c853}
+.btn{padding:10px;flex:1;border:none;border-radius:6px;font-weight:bold;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="top">
+  <b>VECCTA ADMIN</b><br>
+  <small id="adminEmail" style="color:white">Loading...</small>
+</div>
+
+<div style="display:flex;gap:10px;padding:10px">
+  <button class="btn" onclick="showTab('jobs')" id="bJobs" style="background:#ffcc00">JOBS</button>
+  <button class="btn" onclick="showTab('tickets')" id="bTickets" style="background:white">TICKETS</button>
+</div>
+
+<div id="jobsDiv" style="padding:10px">
+  <h3>📦 All Job Requests (from any phone)</h3>
+  <div id="jobsList">Loading...</div>
+</div>
+
+<div id="ticketsDiv" style="display:none;padding:10px">
+  <h3>🎫 All Ticket Requests</h3>
+  <div id="ticketsList">Loading...</div>
+</div>
+
+<script type="module">
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+window.showTab = (t)=>{
+  document.getElementById('jobsDiv').style.display = t==='jobs' ? 'block':'none';
+  document.getElementById('ticketsDiv').style.display = t==='tickets' ? 'block':'none';
+  document.getElementById('bJobs').style.background = t==='jobs' ? '#ffcc00':'white';
+  document.getElementById('bTickets').style.background = t==='tickets' ? '#ffcc00':'white';
+};
+
+onAuthStateChanged(auth, async (user)=>{
+  if(!user){ window.location.href="./test-login.html"; return; }
+  document.getElementById("adminEmail").innerText = "Admin: " + user.email;
+  // Load jobs
+  try{
+    const q = query(collection(db,"jobs"), orderBy("createdAt","desc"));
+    const snap = await getDocs(q);
+    let h = snap.empty ? "<p>No jobs yet. When any phone requests, it will show here.</p>" : "";
+    snap.forEach(d=>{
+      const j=d.data();
+      const waPhone = j.phone ? j.phone.replace(/[^0-9]/g,'').slice(-9) : '';
+      h+=`<div class="card"><b>${j.service}</b> - ${j.phone} 
+      <a href="https://wa.me/254${waPhone}" target="_blank" style="background:#25D366;color:white;padding:4px 8px;border-radius:4px;text-decoration:none;font-size:12px">WhatsApp</a><br>
+      ${j.details}<br><small>${j.email} | ${j.createdAt?.toDate().toLocaleString()||''}</small></div>`;
+    });
+    document.getElementById("jobsList").innerHTML=h;
+  }catch(e){ document.getElementById("jobsList").innerHTML="⚠️ Enable Firestore: Firebase Console → Firestore Database → Create Database → Test Mode"; }
+
+  // Load tickets
+  try{
+    const q2 = query(collection(db,"tickets"), orderBy("createdAt","desc"));
+    const snap2 = await getDocs(q2);
+    let h2 = snap2.empty ? "<p>No tickets yet</p>" : "";
+    snap2.forEach(d=>{
+      const t=d.data();
+      h2+=`<div class="card" style="border-left-color:#2196F3"><b>${t.route||t.service||'Ticket'}</b> - ${t.phone}<br>${t.details||''}<br><small>${t.email||''}</small></div>`;
+    });
+    document.getElementById("ticketsList").innerHTML=h2;
+  }catch(e){ document.getElementById("ticketsList").innerHTML="No tickets yet"; }
+});
+</script>
+<p style="text-align:center"><a href="./index.html">← Back to Home</a></p>
+</body>
+</html>
