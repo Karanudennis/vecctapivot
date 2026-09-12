@@ -1,30 +1,155 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Request Job — VECCTAPIVOT GLOBAL</title><link rel="icon" href="logo.png"><link rel="stylesheet" href="style.css"><style>.wrap{max-width:760px;margin:18px auto;padding:0 14px}.form{background:#1e293b;border:1px solid #334155;border-radius:20px;padding:22px;box-shadow:0 20px 60px #0005}.h{color:#facc15;text-align:center;margin:0}.sub{color:#94a3b8;text-align:center;font-size:13px;margin:6px 0 14px}.label{font-size:11px;font-weight:800;color:#facc15;text-transform:uppercase;margin:12px 0 6px;display:block}.input,.select,.textarea{width:100%;padding:13px;border-radius:12px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}.btn{width:100%;padding:14px;background:#facc15;color:#000;border:none;border-radius:12px;font-weight:900;margin-top:14px;cursor:pointer}.kbd{font-family:monospace;font-size:24px;color:#facc15;font-weight:900}</style></head><body>
-<div class="utility"><div class="uwrap"><span class="uitem"><span class="ubadge">GLOBAL LIVE</span></span><span class="uitem">49 services · Any Phone · Any Browser</span></div></div>
-<header class="top"><div class="navrow"><a class="brand" href="index.html"><img src="logo.png"><span class="brandname">Vecctapivot<em>Global</em></span></a><div class="navcta"><a class="btn line sm2" href="track.html">Track</a><a class="btn gold sm2" href="index.html">Home</a></div></div></header>
-<main class="wrap"><div class="form"><h2 class="h">Request Job — GLOBAL CLOUD</h2><p class="sub">7 Pillars × 7 Services × 7 Subs — visible from any phone</p>
-<input id="cName" class="input" placeholder="Full Name *"><input id="cPhone" class="input" placeholder="Phone 07... *">
-<label class="label">Pillar (7)</label><select id="pillar" class="select"></select>
-<label class="label">Service (7 per pillar)</label><select id="service" class="select"></select>
-<label class="label">Sub-Service (7 per service)</label><select id="sub" class="select"></select>
-<input id="req" class="input" placeholder="Specific details"><textarea id="details" class="textarea" rows=3 placeholder="More details"></textarea>
-<button id="btn" class="btn" onclick="submitGlobal()">🚀 SUBMIT TO CLOUD</button><div id="res"></div>
-<p style="font-size:11px;color:#64748b;text-align:center;margin-top:8px">Saves to Firebase vecctapivot — admin sees from any device instantly</p>
-</div></main>
-<script type="module">
-import { db } from './firebase.js';
-import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-const DATA={"Digital & Brand Systems":{"BRS Registry Filing":["BN Registration","Private Ltd","LLP","CR12","Business Search","Annual Returns","Change of Officials"],"Brand Identity Pack":["Logo Design","Brand Manual","Business Cards","Flyer Design","Social Media Kit","Mockups","Rebrand"],"Secure Document Vault":["Digitization","Vault Setup","Encrypted Share","Access Control","Backup","Retrieval","Audit Log"],"Web & Systems":["Website Dev","E-commerce","Custom System","Domain & Hosting","Payments Integration","SEO","Maintenance"],"Creative Production":["Poster","Brochure","Motion Graphics","Video Edit","Photography","Copywriting","Voice Over"],"Digital Marketing":["Social Management","Google Ads","Meta Ads","Email Marketing","WhatsApp Marketing","Influencer","Analytics"],"Escrow & Ledger":["Escrow Setup","Milestone Ledger","Tracking","Receipt Vault","Reconciliation","Dispute","Release"]},"Academic & Testing Logistics":{"Mock Archives":["Primary Mocks","JSS Mocks","Senior School Mocks","College Mocks","KASNEB Mocks","Guides","Schemes"],"Revision Booklets":["CBC Revision","CBE Revision","KCSE Revision","College Revision","Topical","Quick Notes","Question Bank"],"KASNEB Vault":["ATD","CS","CPA","CIFA","Past Papers","Study Texts","Revision Kits"],"CBC Distribution":["Grade 1-6 Materials","Grade 7-9 Materials","Assessment Tools","Teacher Resources","Workbooks","Bulk Supply","County Delivery"],"Academic Support":["Assignment Help","Research Project","Thesis","Online Classes","Tutoring","Proofreading","Plagiarism Check"],"Testing & Certification":["PTE Booking","IELTS Booking","TOEFL","KASNEB Booking","Driving Test","Computer Packages","Professional Certs"],"School Logistics":["Uniform Supply","Books Supply","Lab Equipment","Furniture","Transport Link","Feeding Program","Fee Ledger"]},"Transport Brokerage Hub":{"Executive Rides":["Airport Transfer","Corporate Ride","Wedding Ride","SGR Transfer","Town Service","Upcountry","Hourly Hire"],"Courier Runs":["Same Day","Overnight","Document","Parcel","E-commerce Delivery","Medical Courier","Bulk Delivery"],"Cargo Freight":["Pickup","Canter 3T","Lorry 5T","Lorry 10T","Trailer","Container","Cold Chain"],"Transit Insurance":["Cargo Insurance","Transit Cover","Vehicle Cover","Goods in Transit","Marine Insurance","Claim Processing","Risk Assessment"],"Vehicle Sourcing":["Toyota Sourcing","Mazda Sourcing","Honda Sourcing","Budget Search","Import Assist","Inspection","Logbook Transfer"],"Movers & Relocation":["1BR House Move","2BR House Move","3BR+ Move","Office Move","Inter-County Move","Storage","Packing"],"Fleet Management":["GPS Tracking","Fuel Ledger","Driver Vetting","Maintenance","Route Planning","Compliance","Escrow"]},"Merchandise Sourcing Links":{"Farm-Gate Produce":["Maize Sourcing","Potatoes","Onions/Tomatoes","Fruits","Vegetables","Dairy","Export Grade"],"Factory Price Audits":["Factory Verification","Price Audit","MOQ Negotiation","Sample Collection","Quality Check","Quotation Ledger","Supplier Comparison"],"Supplier Vetting":["KYC Check","Background Check","Site Visit","Capacity Check","Reference Check","Blacklist Check","Vetted List"],"Import Links":["China Import","Turkey Import","Dubai Import","Clearance","Shipping","Consolidation","Duty Estimate"],"Export Links":["Export Documents","KEBS Certification","KPHIS","Packaging","Buyer Link","Escrow","Logistics"],"Retail Bulk Supply":["Shop Stock","Supermarket Supply","Hotel Supply","School Supply","Hospital Supply","Hardware Supply","Bulk Negotiation"],"Market Linkage":["Market Research","Buyer-Seller Link","Commission Ledger","Escrow","Delivery Proof","Dispute","Repeat Order"]},"Independent Fixer Desk":{"Site Inspections":["Land Inspection","House Inspection","Construction Inspection","Factory Inspection","Shop Inspection","School Inspection","Photo/Video Proof"],"Permit Queues":["County Permit","NEMA Permit","Construction Permit","Business Permit","Health Permit","Fire Safety","Queue Proxy"],"Dispute Resolution":["Land Dispute","Tenant Dispute","Supplier Dispute","Boundary Dispute","Witness","Chiefs Office","Documentation"],"Ground Proxy":["Document Collection","Document Delivery","Office Visit","Bank Queue","School Visit","Hospital Proxy","Court Registry"],"Verification Services":["ID Verification","Address Verification","Employee Verification","Tenant Verification","Asset Verification","Business Verification","Next of Kin"],"Due Diligence":["Land Search","Company Search","Vehicle Search","Background Check","Title Verification","Compliance Check","Report"],"Emergency Fixer":["Urgent Document","Urgent Permit","Urgent Inspection","After Hours","Weekend Queue","Remote Area","Crisis Ledger"]},"General Agency Core":{"Cross-Sector Retainers":["Business Retainer","Personal Retainer","Corporate Retainer","Startup Retainer","Family Office","Monthly Package","Priority Queue"],"Unified Ledgers":["Income Ledger","Expense Ledger","Service Ledger","Client Ledger","Supplier Ledger","Tax Ledger","Reconciliation"],"Priority Queues":["VIP Queue","Same Day","Express","Weekend Service","After Hours","Multi-Service","Escalation"],"Escrow Services":["Service Escrow","Goods Escrow","Land Escrow","Vehicle Escrow","Milestone Release","Dispute Hold","Receipt"],"Consultation":["Business Consultation","Career Guidance","Legal Guidance","Tax Consultation","Investment Link","Import/Export Advice","Startup Advisory"],"Documentation":["Affidavit Drafting","Agreement Drafting","Business Plan","Company Profile","Proposal Writing","Letter Writing","Certification"],"Agency Subcontracting":["Subcontractor Sourcing","Quotation Collection","Supervision","Quality Check","Payment Coordination","Completion Proof","Ledger Closure"]},"Statutory & Portal Logistics":{"eCitizen Services":["Good Conduct - DCI","Business Name Search","DL Renewal","Marriage Services","Land Search Proxy","BRELA Services","eCitizen Help"],"Passports & Immigration":["New Passport","Renewal","Lost Passport","Immigration Status","Appointment Queue","Checklist Preparation","Collection Proxy"],"NTSA TIMS":["Logbook Search","Vehicle Transfer","DL Check","PSV Compliance","Inspection Booking","Number Plate","TIMS Account"],"SHA/SHIF & Health":["SHA Registration","SHIF Payment","Means Testing","Facility Link","Claim Follow-up","Card Collection","Dependent Addition"],"KRA iTax":["KRA PIN Registration","Nil Returns","Employment Returns","Business Returns","TCC Application","Compliance Check","Account Recovery"],"ArdhiSasa & Lands":["Land Search","Stamp Duty","Transfer Queue","ArdhiSasa Account","Green Card","Map Request","Consent"],"DCI & Statutory Docs":["Police Clearance","Lost Document Report","OB Processing","Certification","Commissioner of Oaths","Huduma Queue","Declaration"]}};
-const pillar=document.getElementById('pillar'), service=document.getElementById('service'), sub=document.getElementById('sub');
-function onP(){service.innerHTML=Object.keys(DATA[pillar.value]).map(k=>`<option>${k}</option>`).join(''); onS()}
-function onS(){sub.innerHTML=(DATA[pillar.value][service.value]||["General"]).map(x=>`<option>${x}</option>`).join('')}
-pillar.onchange=onP; service.onchange=onS;
-pillar.innerHTML=Object.keys(DATA).map(k=>`<option>${k}</option>`).join(''); onP();
-window.submitGlobal=async()=>{
- if(!cName.value.trim()||!cPhone.value.trim()){alert('Name & phone required');return}
- btn.textContent='⏳ Saving to cloud...'; btn.disabled=true;
- let id='JOB-'+Date.now().toString().slice(-6);
- let payload={id,clientName:cName.value.trim(),clientPhone:cPhone.value.trim(),pillar:pillar.value,service:service.value,subService:sub.value,fullService:`${pillar.value} > ${service.value} > ${sub.value}`,detail:req.value,details:details.value,price:'',status:'Logged',adminMessage:'Received - quoting within 1hr',revisionNote:'',revisionReply:'',logged:new Date().toLocaleString(),createdAt:serverTimestamp()};
- try{await addDoc(collection(db,'jobs'),payload); res.innerHTML=`<div style="background:#052e16;border:1px solid #22c55e;padding:14px;border-radius:12px;text-align:center;margin-top:12px"><b style="color:#22c55e">✅ SAVED TO CLOUD — VISIBLE ANYWHERE</b><br><span class=kbd>${id}</span><br>${payload.fullService}<br><a href="track.html?job=${id}" style="background:#facc15;color:#000;padding:10px 14px;border-radius:8px;text-decoration:none;display:inline-block;margin-top:8px;font-weight:800">TRACK NOW →</a><br><small style="color:#94a3b8">Open admin.html from ANY device — will show</small></div>`}catch(e){res.innerHTML=`<div style="background:#450a0a;padding:10px;border-radius:10px">❌ ${e.message}<br>Firebase Rules must be allow read, write: if true;</div>`}
- btn.textContent='🚀 SUBMIT TO CLOUD'; btn.disabled=false;
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VEC 7x7x7 - No Display Till Chosen</title>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial}
+body{background:#f1f5f9}
+.top{background:#0f172a;color:#fff;padding:16px;text-align:center}
+.box{background:#fff;max-width:680px;margin:16px auto;padding:20px;border-radius:16px}
+label{font-size:11px;font-weight:800;margin-top:12px;display:block}
+input,select,textarea{width:100%;padding:12px;border:1.5px solid #e2e8f0;border-radius:10px;margin-top:5px}
+.hidden{display:none!important}
+.step{border:1px solid #e2e8f0;padding:14px;border-radius:12px;margin-top:12px;background:#f8fafc}
+.btn{width:100%;padding:14px;background:#0f172a;color:#fff;border:none;border-radius:12px;font-weight:800;margin-top:14px;cursor:pointer}
+</style></head><body>
+<div class="top"><b>7x7x7 JOB - NO DISPLAY TILL CHOSEN</b><p style="font-size:10px;color:#94a3b8">Select one → Next appears</p></div>
+<div class="box">
+
+<!-- STEP 1: Always visible -->
+<div class="step" id="step1">
+<b>STEP 1: Client Info</b>
+<label>Name *</label><input id="name" oninput="checkStep1()">
+<label>Phone *</label><input id="phone" oninput="checkStep1()">
+<p id="msg1" style="font-size:10px;color:#64748b;margin-top:6px">Enter Name + Phone to unlock Pillar</p>
+</div>
+
+<!-- STEP 2: Hidden till Step1 done -->
+<div class="step hidden" id="stepPillar">
+<b>STEP 2: Choose Pillar (7 Options)</b>
+<select id="pillar" onchange="onPillar()"><option value="">-- Choose Pillar --</option></select>
+</div>
+
+<!-- STEP 3: Hidden till Pillar chosen -->
+<div class="step hidden" id="stepSub">
+<b>STEP 3: Choose Sub-Pillar (7 per Pillar)</b>
+<select id="sub" onchange="onSub()"><option value="">-- Choose Sub --</option></select>
+<div id="subInfo" style="font-size:10px;color:#64748b;margin-top:6px"></div>
+</div>
+
+<!-- STEP 4: Hidden till Sub chosen -->
+<div class="step hidden" id="stepService">
+<b>STEP 4: Choose Service (7 per Sub = 343 total)</b>
+<select id="service" onchange="onService()"><option value="">-- Choose Service --</option></select>
+<div id="price" style="margin-top:8px;background:#fef3c7;padding:10px;border-radius:8px;font-size:12px;display:none"></div>
+</div>
+
+<!-- STEP 5: Hidden till Service chosen -->
+<div class="step hidden" id="stepDetails">
+<b>STEP 5: Job Details - Only shows after Service chosen</b>
+<label>Job Title *</label><input id="title">
+<label>Description *</label><textarea id="desc" rows="4" placeholder="Now describe job..."></textarea>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<div><label>Qty</label><input id="qty" type="number" value="1"></div>
+<div><label>Urgency</label><select id="urg"><option>Normal</option><option>Fast (+200)</option><option>Express (+500)</option></select></div>
+</div>
+<button class="btn" id="btn" onclick="createJob()">🚀 CREATE JOB - SAVE TO CLOUD</button>
+<div id="suc" style="display:none;background:#065f46;color:#fff;padding:14px;border-radius:10px;margin-top:12px">
+<h3 id="jid"></h3><p id="jinfo" style="font-size:11px;margin-top:6px"></p>
+<button onclick="location.href='track.html?job='+lastId" style="padding:8px 12px;background:#fbbf24;border:none;border-radius:6px;font-weight:700;margin-top:8px">Track Now</button>
+</div>
+</div>
+
+<p id="err" style="color:red;font-size:11px;text-align:center;margin-top:8px"></p>
+</div>
+
+<script>
+const firebaseConfig={apiKey:"PUT YOURS",authDomain:"PUT YOURS",projectId:"PUT YOURS",storageBucket:"PUT YOURS",messagingSenderId:"PUT YOURS",appId:"PUT YOURS"};
+firebase.initializeApp(firebaseConfig); const db=firebase.firestore();
+
+const DATA={
+"1. Academic & Testing Logistics":{"Revision Materials":["College Booklets","Highschool Booklets","Primary Booklets","University Notes","Past Papers","Mock Exams","Study Guides"],"Exam Registration":["KNEC Registration","University Exam","College Exam","KCSE Private","KCPE Private","Professional Exams","International Exams"],"Transcripts":["College Transcript","University Transcript","Certificate Replacement","Result Slip","Attestation","Verification","Translation"],"Research":["Research Proposal","Full Research","Data Analysis","Plagiarism Check","Editing","Formatting","Publishing"],"Tutoring":["Online Tutoring","Physical Tutoring","Group Classes","One-on-One","Holiday Tuition","Exam Prep","Homework Help"],"Applications":["University Application","College Application","Highschool Placement","Scholarship Application","Transfer Letter","Admission Letter","Course Change"],"Library":["E-Books","Hardcopy Books","Library Card","Research Access","Journal Access","Printing","Binding"]},
+"2. KRA Services":{"KRA Pin":["New Pin","Pin Retrieval","Pin Update","Pin Correction","Company Pin","Group Pin","Foreign Pin"],"Returns":["Nil Returns","Employment Returns","Business Returns","Rental Returns","VAT Returns","PAYE Returns","Withholding Returns"],"Compliance":["Compliance Cert","Compliance Check","Penalty Waiver","Ledger Clean","Payment Plan","Objection","Appeal"],"Accounts":["iTax Account","Password Reset","Email Update","Phone Update","Ledger Access","Statement","Account Unlock"],"Business Tax":["Business Registration","Turnover Tax","VAT Registration","Excise License","Income Tax","Stamp Duty","Capital Gains"],"Customs":["Import Duty","Export Process","Customs Clearance","Exemption Letter","Valuation","Classification","Customs Appeal"],"Advisory":["Tax Consultation","Tax Planning","Audit Support","Bookkeeping","Financial Statements","Tax Training","Business Advisory"]},
+"3. Government Services":{"ID & Passport":["ID Application","ID Replacement","ID Correction","Passport New","Passport Renewal","Passport Lost","Maisha Card"],"Birth & Death":["Birth Certificate","Birth Correction","Death Certificate","Late Registration","Amendment","Replacement","Verification"],"Lands":["Title Search","Title Transfer","Land Rates","Consent","Valuation","Survey","Subdivision"],"Business Reg":["Business Name","Company Registration","Permit","License Renewal","CR12","Annual Returns","Deregistration"],"Legal":["Good Conduct","HELB Clearance","E-Citizen","Affidavit","Commissioner Oath","Police Abstract","Court Filing"],"NHIF & NSSF":["NHIF Registration","NHIF Payment","NHIF Card","NSSF Registration","NSSF Statement","NSSF Claim","Compliance"],"Huduma":["Huduma Booking","Verification","Certification","Notarization","Attestation","Apostille","Translation"]},
+"4. CV & Jobs":{"CV Writing":["Professional CV","Entry CV","Executive CV","Academic CV","Cover Letter","LinkedIn Profile","CV Review"],"Job Search":["Job Listing","Application Letter","Email Application","Portal Application","Follow-up","Interview Invite","Offer Negotiation"],"Interview Prep":["Mock Interview","Common Questions","Dress Code","Presentation","Salary Negotiation","Confidence Coaching","Feedback"],"Career Services":["Career Coaching","Career Change","Skills Assessment","Job Market Analysis","Networking","Mentorship","Portfolio"],"LinkedIn":["Profile Optimization","Connection Strategy","Content Creation","Job Alerts","Recruiter Outreach","Recommendations","Analytics"],"Training":["Computer Packages","Software Training","Soft Skills","Communication","Leadership","Customer Service","Entrepreneurship"],"Freelance":["Upwork Profile","Fiverr Gig","Freelance Proposal","Contract Writing","Invoicing","Payment Setup","Profile Review"]},
+"5. Design & Printing":{"Graphic Design":["Logo Design","Poster Design","Banner Design","Business Card","Flyer","Brochure","Branding"],"Printing":["Bulk Printing","Color Printing","B&W Printing","Large Format","T-Shirt Printing","Mug Printing","ID Card Printing"],"Digital Design":["Social Media Design","Web Banner","Email Template","Presentation Design","Infographic","3D Mockup","Animation"],"Branding":["Brand Identity","Brand Guidelines","Brand Strategy","Brand Audit","Rebranding","Naming","Tagline"],"Publishing":["Book Layout","Book Cover","Book Publishing","Magazine Design","Newspaper Ad","Catalog Design","Annual Report"],"Photo & Video":["Photo Editing","Video Editing","Photography","Videography","Drone Shots","Live Streaming","Documentary"],"Signage":["Signboard Design","Signboard Printing","Vehicle Branding","Office Branding","Exhibition Stand","Roll-up Banner","3D Signage"]},
+"6. Tech Services":{"Website":["Website Design","Website Redesign","E-commerce Site","Blog Setup","Portfolio Site","Landing Page","Maintenance"],"Systems":["Management System","POS System","School System","Hospital System","Inventory System","HR System","Custom Software"],"Mobile Apps":["Android App","iOS App","Hybrid App","App Update","App Bug Fix","Playstore Upload","App Marketing"],"Digital Marketing":["Social Media Marketing","SEO","Google Ads","Facebook Ads","Email Marketing","Content Marketing","Analytics"],"IT Support":["Computer Repair","Network Setup","Software Installation","Virus Removal","Data Recovery","Backup","IT Consultation"],"Hosting & Domain":["Domain Registration","Web Hosting","Email Hosting","SSL Certificate","Domain Transfer","Hosting Migration","Cpanel Setup"],"Training Tech":["Coding Classes","Web Dev Training","App Dev Training","Digital Marketing Training","Graphics Training","Video Editing Training","IT Certification"]},
+"7. Business Services":{"Business Plan":["Business Plan Writing","Financial Projection","Market Research","Feasibility Study","Pitch Deck","Investor Proposal","Grant Proposal"],"Accounting":["Bookkeeping","Financial Statements","Payroll","Invoicing","Expense Tracking","Bank Reconciliation","Audit"],"Marketing":["Marketing Plan","Brand Strategy","Social Media Plan","Promotion Strategy","Customer Survey","Competitor Analysis","Campaign"],"Legal":["Contract Drafting","MOU Drafting","Legal Advice","Company Policy","Terms & Conditions","Privacy Policy","Compliance"],"Consulting":["Business Consulting","Startup Consulting","Growth Strategy","Operations","HR Consulting","Sales Consulting","Management Consulting"],"Logistics":["Courier Services","Delivery","Supply Chain","Procurement","Inventory","Warehousing","Distribution"],"Training Biz":["Entrepreneurship Training","Sales Training","Customer Service Training","Leadership Training","Team Building","Financial Literacy","Business Workshop"]}
+};
+
+// Load Pillars
+let pSel=document.getElementById('pillar');
+Object.keys(DATA).forEach(k=>{let o=document.createElement('option'); o.value=k; o.textContent=k; pSel.appendChild(o);});
+
+function checkStep1(){
+ let n=document.getElementById('name').value.trim();
+ let ph=document.getElementById('phone').value.trim();
+ if(n.length>=3 && ph.length>=8){
+   document.getElementById('stepPillar').classList.remove('hidden');
+   document.getElementById('msg1').innerText='✅ Unlocked Pillar';
+ }else{
+   document.getElementById('stepPillar').classList.add('hidden');
+   document.getElementById('stepSub').classList.add('hidden');
+   document.getElementById('stepService').classList.add('hidden');
+   document.getElementById('stepDetails').classList.add('hidden');
+ }
+}
+
+function onPillar(){
+ let pillar=document.getElementById('pillar').value;
+ let subSel=document.getElementById('sub');
+ subSel.innerHTML='<option value="">-- Choose Sub --</option>';
+ document.getElementById('stepService').classList.add('hidden');
+ document.getElementById('stepDetails').classList.add('hidden');
+ if(!pillar) {document.getElementById('stepSub').classList.add('hidden'); return;}
+ Object.keys(DATA[pillar]).forEach(k=>{let o=document.createElement('option'); o.value=k; o.textContent=k; subSel.appendChild(o);});
+ document.getElementById('stepSub').classList.remove('hidden');
+ document.getElementById('subInfo').innerText='7 Sub-Pillars under '+pillar+' - Choose one to unlock Services';
+}
+
+function onSub(){
+ let pillar=document.getElementById('pillar').value;
+ let sub=document.getElementById('sub').value;
+ let serSel=document.getElementById('service');
+ serSel.innerHTML='<option value="">-- Choose Service --</option>';
+ document.getElementById('stepDetails').classList.add('hidden');
+ if(!sub){document.getElementById('stepService').classList.add('hidden'); return;}
+ DATA[pillar][sub].forEach(k=>{let o=document.createElement('option'); o.value=k; o.textContent=k; serSel.appendChild(o);});
+ document.getElementById('stepService').classList.remove('hidden');
+ document.getElementById('price').style.display='none';
+}
+
+function onService(){
+ let s=document.getElementById('service').value;
+ if(!s){document.getElementById('stepDetails').classList.add('hidden'); return;}
+ document.getElementById('price').style.display='block';
+ document.getElementById('price').innerHTML=`<b>${s}</b> - Price: KES ${500+Math.floor(Math.random()*1500)}<br><small>${document.getElementById('pillar').value} > ${document.getElementById('sub').value}</small>`;
+ document.getElementById('stepDetails').classList.remove('hidden');
+}
+
+let lastId=null;
+async function createJob(){
+ let name=document.getElementById('name').value.trim();
+ let phone=document.getElementById('phone').value.trim();
+ let pillar=document.getElementById('pillar').value;
+ let sub=document.getElementById('sub').value;
+ let service=document.getElementById('service').value;
+ let title=document.getElementById('title').value.trim();
+ let desc=document.getElementById('desc').value.trim();
+ if(!name||!phone||!pillar||!sub||!service||!title||!desc){document.getElementById('err').innerText='Fill all *'; return;}
+ let btn=document.getElementById('btn'); btn.innerText='⏳ SAVING...'; btn.disabled=true;
+ let jobId="VEC-JOB-"+Math.floor(10000+Math.random()*90000);
+ let data={trackingId:jobId,ticket:jobId,id:jobId,clientName:name,phone:phone,pillar:pillar,subPillar:sub,service:service,title:title,description:desc,qty:document.getElementById('qty').value,urgency:document.getElementById('urg').value,status:'queue',adminMessage:'',system:'7x7x7 no-display-till-chosen',createdAt:firebase.firestore.FieldValue.serverTimestamp()};
+ try{
+  await db.collection("jobs").doc(jobId).set(data);
+  await db.collection("tickets").doc(jobId).set(data);
+  lastId=jobId;
+  document.getElementById('suc').style.display='block';
+  document.getElementById('jid').innerText=jobId+' SAVED';
+  document.getElementById('jinfo').innerText=pillar+' > '+sub+' > '+service+' | '+title;
+  btn.innerText='✅ SAVED';
+  btn.disabled=false;
+ }catch(e){btn.innerText='🚀 CREATE JOB'; btn.disabled=false; document.getElementById('err').innerText=e.message; alert(e.message+' Rules: allow read,write:true');}
 }
 </script></body></html>
