@@ -1,150 +1,224 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Track - VECCTAPIVOT</title><style>
-body{background:#0f172a;color:#fff;font-family:system-ui;padding:12px;max-width:750px;margin:auto}
-.card{background:#1e293b;padding:14px;border-radius:12px;border:1px solid #334155;margin:10px 0}
-input,textarea,select{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
-button{padding:12px;width:100%;border:none;border-radius:8px;font-weight:800;cursor:pointer}
-.btn-y{background:#facc15;color:#000}.btn-b{background:#3b82f6;color:#fff}.btn-r{background:#ef4444;color:#fff}.btn-g{background:#22c55e;color:#000}
-.tabs{display:flex;gap:6px;margin-bottom:10px}.tabs button{flex:1;background:#1e293b;color:#94a3b8;padding:10px;border:none;border-radius:8px}
-.tabs button.active{background:#facc15;color:#000}
-.badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:800}
-.price-box{background:#0f172a;border:2px solid #facc15;padding:14px;border-radius:12px;text-align:center;margin:10px 0}
-.admin-box{background:#052e16;border:1px solid #22c55e;padding:12px;border-radius:10px;margin:10px 0}
-.lock-box{background:#450a0a;border:2px solid #ef4444;padding:14px;border-radius:12px;margin:10px 0}
-.req-box{background:#0f172a;padding:10px;border-radius:8px;margin:6px 0;font-size:13px}
-.locked{opacity:0.4;pointer-events:none;filter:grayscale(1)}
-</style></head><body>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Track - VECCTA - Admin Messages + Correction</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:sans-serif;background:#f5f5f5;margin:0;padding:8px}
+.top{background:black;color:#ffcc00;padding:10px;border-radius:8px;text-align:center;position:sticky;top:0;z-index:5}
+.card{background:white;padding:12px;border-radius:8px;margin:8px 0;border-left:4px solid #ffcc00}
+.step{display:flex;align-items:center;padding:8px;border-bottom:1px solid #eee}
+.step.done{color:#4caf50;font-weight:bold}
+.step.active{color:#ff9800;font-weight:bold;background:#fff3e0}
+.step.pending{color:#999}
+.badge{padding:3px 8px;border-radius:10px;font-size:11px;margin-left:6px}
+.badge.open{background:#2196F3;color:white}
+.badge.closed{background:#4caf50;color:white}
+.badge.correction{background:#ff5722;color:white}
+input,textarea{width:100%;padding:9px;margin:4px 0;border:1px solid #ddd;border-radius:5px;box-sizing:border-box}
+button{padding:10px 16px;border:none;border-radius:6px;font-weight:bold;cursor:pointer}
+#loginGate{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:9999;text-align:center;padding-top:60px;color:white;display:none}
+.adminMsg{background:#e3f2fd;border-left:4px solid #2196F3;padding:10px;margin:8px 0;border-radius:6px}
+.correctionBox{background:#ffebee;border:2px solid #ff5722;padding:12px;border-radius:8px;margin:10px 0}
+</style>
+</head>
+<body>
 
-<div class="tabs">
-<button id="bJ" class="active" onclick="tab('job')">Track JOB</button>
-<button id="bT" onclick="tab('ticket')">Track TICKET</button>
+<div id="loginGate">
+  <h2>🔒 Login to Track</h2>
+  <p>Interface free to browse</p>
+  <p>Tracking needs login</p>
+  <button onclick="location.href='./test-login.html'" style="background:#ffcc00;color:black;width:auto;padding:12px 24px;font-size:16px">LOGIN TO TRACK</button>
 </div>
 
-<div id="jobSec">
+<div class="top">
+<b>🔍 TRACK VEC-JOB / VEC-TKT</b><br>
+<small>See Admin Messages + Steps + Time Response + Correction</small><br>
+<small id="userInfo">Checking login...</small>
+</div>
+
 <div class="card">
-<input id="jobInput" placeholder="Enter JOB- ID e.g JOB-20260912-1234">
-<button class="btn-y" onclick="trackJob()">TRACK JOB</button>
-<div id="jobRes"></div>
+<b>Enter ID to Track <span style="color:red">*</span></b>
+<div style="display:flex;gap:5px">
+<input id="trackId" placeholder="VEC-JOB-XXXXX or VEC-TKT-XXXXX *">
+<button onclick="trackNow()" style="background:black;color:#ffcc00;width:auto">TRACK</button>
 </div>
-</div>
-
-<div id="ticketSec" style="display:none">
-<div class="card">
-<input id="ticketInput" placeholder="Enter TICKET- ID">
-<button class="btn-b" onclick="trackTicket()">TRACK TICKET</button>
-<div id="ticketRes"></div>
-</div>
+<small>Login required if you need tracking - As you said</small>
+<p id="trackResult"></p>
 </div>
 
-<script>
-function getJobs(){try{return JSON.parse(localStorage.getItem('veccta_jobs')||localStorage.getItem('karanu_jobs')||'[]')}catch(e){return []}}
-function getTickets(){try{return JSON.parse(localStorage.getItem('veccta_tickets')||localStorage.getItem('karanu_tickets')||'[]')}catch(e){return []}}
-function saveJobs(j){localStorage.setItem('veccta_jobs',JSON.stringify(j)); localStorage.setItem('karanu_jobs',JSON.stringify(j));}
-function tab(t){jobSec.style.display=t=='job'?'block':'none';ticketSec.style.display=t=='ticket'?'block':'none';bJ.classList.toggle('active',t=='job');bT.classList.toggle('active',t=='ticket');}
+<div id="detailsCard" style="display:none"></div>
 
-function trackJob(){
- let id=jobInput.value.trim().toUpperCase(); if(!id){alert('Enter JOB ID');return;}
- let j=getJobs().find(x=>x.id.toUpperCase()===id);
- if(!j){jobRes.innerHTML=`<div class=card style="border-left:5px solid #ef4444"><b style="color:#ef4444">JOB ${id} NOT FOUND on this device</b><br><small>GitHub Pages saves only on same browser. Use same phone where you submitted.</small></div>`;return;}
- let tickets=getTickets().filter(t=>t.jobId===j.id);
- let isLocked=j.status==='Needs Revision' || j.locked===true;
+<script type="module">
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { collection, query, where, getDocs, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
- let reqHtml='';
- if(j.requirements){ reqHtml=Object.entries(j.requirements).map(([k,v])=>`<div><b>${k.replace(/_/g,' ')}:</b> ${v||'-'}</div>`).join(''); }
- if(j.fileName) reqHtml+=`<div><b>File:</b> ${j.fileName} ${j.fileData?'<span style=color:#22c55e>✓ Uploaded</span>':''}</div>`;
+let currentUser=null;
 
- let normalDetails=`
-  <div class="req-box ${isLocked?'locked':''}">
-   <b style="color:#facc15;font-size:11px">REQUIREMENTS (${j.requirementType||'data'})</b><br>${reqHtml||'No extra'}
-   <div style="margin-top:6px"><b>Details:</b> ${j.details||'-'}</div>
-   <div style="margin-top:6px"><b>Priority:</b> ${j.priority} | <b>Email:</b> ${j.clientEmail||'-'}</div>
+onAuthStateChanged(auth, user=>{
+  currentUser=user;
+  if(!user){
+    document.getElementById("loginGate").style.display="block";
+    document.getElementById("userInfo").innerHTML="❌ Not logged - Login to track";
+  } else {
+    document.getElementById("loginGate").style.display="none";
+    document.getElementById("userInfo").innerHTML=`✅ ${user.email} - Enter ID to track`;
+    // Auto track if id in URL
+    const urlParams=new URLSearchParams(window.location.search);
+    const id=urlParams.get("id");
+    if(id){ document.getElementById("trackId").value=id; trackNow(); }
+  }
+});
+
+window.trackNow=async()=>{
+  if(!currentUser){ location.href='./test-login.html'; return; }
+  const id=document.getElementById("trackId").value.trim().toUpperCase();
+  if(!id){ alert("Enter VEC-JOB or VEC-TKT ID *"); return; }
+  document.getElementById("trackResult").innerHTML="⏳ Searching...";
+
+  try{
+    let found=null; let type=""; let col="";
+    // Try jobs
+    let q=query(collection(db,"jobs"), where("jobId","==",id));
+    let snap=await getDocs(q);
+    if(!snap.empty){ found=snap.docs[0].data(); type="JOB"; col="jobs"; }
+    else {
+      q=query(collection(db,"tickets"), where("ticketId","==",id));
+      snap=await getDocs(q);
+      if(!snap.empty){ found=snap.docs[0].data(); type="TICKET"; col="tickets"; }
+    }
+
+    if(!found){
+      document.getElementById("trackResult").innerHTML=`<div style="background:#ffebee;padding:10px;border-radius:6px;color:#c62828">❌ Not Found: ${id}<br>Check ID - Must be VEC-JOB or VEC-TKT you created after login</div>`;
+      document.getElementById("detailsCard").style.display="none";
+      return;
+    }
+
+    // Ownership check - only owner or admin can see
+    if(found.userId!==currentUser.uid && currentUser.email!=="karanud96@gmail.com"){
+      document.getElementById("trackResult").innerHTML=`⚠️ This ${id} belongs to ${found.userEmail} - You logged as ${currentUser.email} - Login with owner account`;
+      return;
+    }
+
+    document.getElementById("trackResult").innerHTML=`✅ Found ${type}: ${id}`;
+    showDetails(found,type,snap.docs[0].id,col);
+
+  }catch(e){
+    document.getElementById("trackResult").innerHTML=`❌ Error: ${e.message}`;
+  }
+};
+
+function showDetails(data,type,docId,colName){
+  const card=document.getElementById("detailsCard"); card.style.display="block";
+  let status=data.status||"open";
+  let statusClass=status.includes("correction")?"correction":status=="closed"?"closed":"open";
+  let adminMsg=data.adminMessage||data.adminReply||"";
+  let correctionMsg=data.correctionMessage||"";
+  let responseTime=data.adminResponseAt?new Date(data.adminResponseAt.seconds*1000).toLocaleString():"Not responded yet";
+  let createdTime=data.createdAt?new Date(data.createdAt.seconds*1000).toLocaleString():"";
+
+  // Steps logic
+  let steps=[];
+  if(type=="JOB"){
+    steps=[
+      {name:"Request Received",done:true},
+      {name:"Admin Review",done:status!="open"||adminMsg!=""},
+      {name: status.includes("correction")?"Correction Required - Unlock for User": "In Progress",done:status=="in_progress"||status.includes("correction")||status=="closed",active:status=="in_progress"||status.includes("correction")},
+      {name: status=="closed"?"Closed - Service Delivered":"Pending Delivery",done:status=="closed",active:status=="closed"}
+    ];
+  } else {
+    steps=[
+      {name:"Ticket Booked",done:true},
+      {name:"Admin Response",done:adminMsg!=""},
+      {name: status.includes("correction")?"Correction Needed - User Action":"Resolving",done:status.includes("correction")||status=="closed",active:true},
+      {name: status=="closed"?"Closed":"Open",done:status=="closed"}
+    ];
+  }
+
+  let html=`
+  <div class="card">
+    <h3>${type}: ${data.jobId||data.ticketId} <span class="badge ${statusClass}">${status.toUpperCase()}</span></h3>
+    <p><b>Service:</b> ${data.pillar||""} ${data.sub||""} ${data.service||data.ticketType||data.route||""}</p>
+    <p><b>Name:</b> ${data.name} | <b>Phone:</b> ${data.phone} | <b>Location:</b> ${data.location}</p>
+    <p><b>Created:</b> ${createdTime} | <b>Admin Response Time:</b> ${responseTime}</p>
   </div>
-  <div class="price-box ${isLocked?'locked':''}">
-   <div style="font-size:11px;color:#94a3b8">TOTAL PRICE</div>
-   <div style="font-size:32px;color:#facc15;font-weight:900">${j.price? 'KSH '+j.price : 'QUOTE PENDING'}</div>
-  </div>
-  <div class="admin-box ${isLocked?'locked':''}">
-   <div style="font-size:11px;color:#22c55e;font-weight:800">ADMIN MESSAGE</div>
-   <div style="font-size:14px"><i>"${j.adminMessage||'No message yet'}"</i></div>
-  </div>
- `;
 
- let revisionHtml='';
- if(isLocked){
-  revisionHtml=`
-  <div class="lock-box">
-   <div style="font-weight:900;color:#ef4444;font-size:16px">🔒 JOB LOCKED - CORRECTION NEEDED</div>
-   <div style="font-size:12px;color:#fca5a5">Other fields are locked. Only revision allowed.</div>
-   <div style="background:#1e293b;padding:10px;border-radius:8px;margin:8px 0;border-left:3px solid #ef4444">
-    <b style="color:#ef4444">ADMIN CORRECTION NOTE:</b><br>
-    <div style="font-size:15px;line-height:1.4;margin-top:4px"><i>"${j.revisionNote||j.adminMessage||'Please correct and resubmit'}"</i></div>
-   </div>
-   <div style="background:#0f172a;padding:10px;border-radius:8px">
-    <label style="color:#facc15">YOUR CORRECTION *</label>
-    <textarea id="revText" rows="4" placeholder="Write what you corrected..."></textarea>
-    ${j.requirementType=='file'||j.requirementType=='both'? `<label style="color:#22c55e">RE-UPLOAD FILE (if required)</label><input type="file" id="revFile"><small>Previous: ${j.fileName||'none'}</small>` : ''}
-    <button class="btn-r" onclick="resubmitJob('${j.id}')" style="margin-top:10px;background:#ef4444;color:#fff">🔄 RESUBMIT AFTER CORRECTION</button>
-    <small>After resubmit, status becomes Resubmitted and admin will review</small>
-   </div>
-  </div>`;
- }
+  <div class="card">
+    <b>📍 Steps - If open / closed / correction:</b>
+  `;
 
- jobRes.innerHTML=`
-  <div class=card style="border-left:5px solid ${isLocked?'#ef4444':'#facc15'}">
-   <div style="display:flex;justify-content:space-between;align-items:center"><b style="color:#facc15;font-size:20px">${j.id}</b><span class=badge style="background:${j.status=='Completed'?'#22c55e':j.status=='Needs Revision'?'#ef4444':j.status=='In Progress'?'#3b82f6':'#facc15'};color:${j.status=='Logged'?'#000':'#fff'}">${j.status}</span></div>
-   <div style="color:#94a3b8;font-size:12px">${j.logged} | Client: ${j.clientName} ${j.clientPhone}</div>
-   <div style="margin:8px 0"><b>${j.fullService||j.service}</b><br><small style="color:#94a3b8">${j.pillar} > ${j.category} > ${j.service} > ${j.subService}</small></div>
-   ${normalDetails}
-   ${revisionHtml}
-   ${!isLocked? `<div style="display:flex;gap:6px;margin-top:10px"><a href="ticket.html?job=${j.id}" style="flex:1;background:#3b82f6;color:#fff;padding:10px;border-radius:8px;text-decoration:none;text-align:center">Raise Ticket</a><a href="https://wa.me/254700000000?text=Hi%20about%20${j.id}" style="flex:1;background:#22c55e;color:#000;padding:10px;border-radius:8px;text-decoration:none;text-align:center">WhatsApp</a></div>`:''}
+  steps.forEach(s=>{
+    let cls=s.done?"done":s.active?"active":"pending";
+    let icon=s.done?"✅":s.active?"⏳":"⚪";
+    html+=`<div class="step ${cls}">${icon} ${s.name}</div>`;
+  });
+  html+=`</div>`;
+
+  if(adminMsg){
+    html+=`<div class="card"><b>💬 Message from Admin:</b><div class="adminMsg">${adminMsg}<br><small>Response at: ${responseTime}</small></div></div>`;
+  }
+
+  // If correction required - UNLOCK TO END USER with correction message + resubmission button
+  if(status.includes("correction") || status=="correction_needed" || correctionMsg){
+    html+=`
+    <div class="correctionBox">
+      <h3 style="color:#ff5722">⚠️ Correction Required - Admin unlocked for you</h3>
+      <p><b>Correction Message from Admin:</b></p>
+      <div style="background:white;padding:10px;border-radius:6px;border:1px solid #ff5722">${correctionMsg||adminMsg||"Please correct your submission"}</div>
+      <p><b>What to correct:</b> ${data.correctionFields||"Check details above"}</p>
+      <br>
+      <b>Resubmit Correction:</b><br>
+      <textarea id="correctionDetails" placeholder="Enter corrected details *"></textarea>
+      <input id="correctionPhone" placeholder="Correct phone if needed" value="${data.phone}">
+      <input id="correctionLocation" placeholder="Correct location if needed" value="${data.location}">
+      <button onclick="resubmitCorrection('${docId}','${colName}')" style="background:#ff5722;color:white;width:100%;margin-top:8px">🔄 RESUBMIT WITH CORRECTION</button>
+      <small>After resubmission, status goes back to open, admin will re-review</small>
+    </div>
+    `;
+  }
+
+  html+=`
+  <div class="card">
+    <b>Details:</b><br>${data.details||""}<br><br>
+    <b>Quantity:</b> ${data.qty||"-"} | <b>Budget:</b> ${data.budget||"-"} | <b>ID Number:</b> ${data.idNumber||"-"}<br>
+    <b>User:</b> ${data.userEmail}
   </div>
-  <div class=card>
-   <h4 style="color:#3b82f6;margin:0 0 8px">Tickets for ${j.id} (${tickets.length})</h4>
-   ${tickets.length? tickets.map(t=>`<div style="background:#0f172a;padding:10px;border-radius:8px;margin:6px 0;border-left:3px solid ${t.status=='Answered'?'#22c55e':'#3b82f6'}"><b>${t.id}</b> [${t.category||t.tType}] <span class=badge style="background:#1e293b">${t.status}</span><br>Q: ${t.message}<br><div style="background:#1e293b;padding:8px;border-radius:6px;margin-top:4px"><b style="color:#22c55e">ADMIN REPLY:</b> <i>${t.adminReply||'Waiting...'}</i></div><small>${t.logged}</small></div>`).join('') : '<small>No tickets. If needs correction, admin will set status to Needs Revision.</small>'}
-  </div>`;
+  `;
+
+  if(status=="closed"){
+    html+=`<div class="card" style="background:#e8f5e9;border-left-color:#4caf50"><b>✅ Closed</b> - Service delivered / Ticket resolved at ${responseTime}</div>`;
+  }
+
+  card.innerHTML=html;
 }
 
-function resubmitJob(id){
- let revText=document.getElementById('revText')?.value.trim();
- if(!revText){ alert('Write correction note'); return; }
- let jobs=getJobs(); let idx=jobs.findIndex(x=>x.id===id); if(idx<0) return;
- let revFileInput=document.getElementById('revFile');
- if(revFileInput && revFileInput.files[0]){
-  jobs[idx].fileName=revFileInput.files[0].name;
-  let reader=new FileReader();
-  reader.onload=e=>{
-   jobs[idx].fileData=e.target.result.slice(0,80000);
-   finishResubmit(jobs,idx,revText);
-  };
-  reader.readAsDataURL(revFileInput.files[0]);
- } else {
-  finishResubmit(jobs,idx,revText);
- }
-}
-function finishResubmit(jobs,idx,revText){
- jobs[idx].revisionReply=revText;
- jobs[idx].status='Resubmitted';
- jobs[idx].locked=false;
- jobs[idx].adminMessage='Resubmitted: '+revText+' - Admin will review';
- saveJobs(jobs);
- alert('✅ RESUBMITTED! Status now Resubmitted');
- trackJob();
-}
+window.resubmitCorrection=async(docId,colName)=>{
+  const details=document.getElementById("correctionDetails").value.trim();
+  const phone=document.getElementById("correctionPhone").value.trim();
+  const locationVal=document.getElementById("correctionLocation").value.trim();
+  if(!details){ alert("Enter corrected details *"); return; }
+  try{
+    const ref=doc(db,colName,docId);
+    await updateDoc(ref,{
+      details:details,
+      phone:phone,
+      location:locationVal,
+      status:"open",
+      correctionMessage:"",
+      adminMessage:`User resubmitted correction at ${new Date().toLocaleString()} - Previous correction: ${details}`,
+      userResubmittedAt:serverTimestamp()
+    });
+    alert("✅ Correction resubmitted - Status back to open - Admin will respond");
+    trackNow();
+  }catch(e){ alert("Error: "+e.message); }
+};
 
-function trackTicket(){
- let id=ticketInput.value.trim().toUpperCase(); if(!id){alert('Enter Ticket ID');return;}
- let t=getTickets().find(x=>x.id.toUpperCase()===id);
- if(!t){ticketRes.innerHTML='<p style=color:#f87171>TICKET not found on this device</p>';return;}
- ticketRes.innerHTML=`
- <div class=card style="border-left:5px solid #3b82f6">
-  <div style="display:flex;justify-content:space-between"><b style="color:#3b82f6;font-size:18px">${t.id}</b><span class=badge style="background:${t.status=='Answered'?'#22c55e':'#3b82f6'};color:#fff">${t.status}</span></div>
-  <div style="font-size:11px;color:#94a3b8">Linked to: ${t.jobId} | Type: ${t.tType||''} | Cat: ${t.category||''} | ${t.logged}</div>
-  <div style="background:#0f172a;padding:10px;border-radius:8px;margin:10px 0">YOUR MESSAGE:<br>${t.message}</div>
-  <div class=admin-box><div style="font-size:11px;color:#22c55e;font-weight:800">ADMIN REPLY - WELL DISPLAYED</div><div style="font-size:15px;margin-top:6px"><i>"${t.adminReply||'Admin not replied yet'}"</i></div></div>
-  ${t.jobId!='CONSULTATION'? `<button class=btn-y onclick="jobInput.value='${t.jobId}';tab('job');trackJob()">View JOB ${t.jobId}</button>`:''}
- </div>`;
-}
-
-let q=new URLSearchParams(location.search);
-if(q.get('job')){jobInput.value=q.get('job'); setTimeout(trackJob,200);}
-if(q.get('ticket')){tab('ticket'); ticketInput.value=q.get('ticket'); setTimeout(trackTicket,200);}
-</script></body></html>
+// Auto load from URL
+window.addEventListener("DOMContentLoaded", ()=>{
+  const params=new URLSearchParams(window.location.search);
+  if(params.get("id")){ document.getElementById("trackId").value=params.get("id"); }
+});
+</script>
+</body>
+</html>
