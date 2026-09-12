@@ -1,30 +1,32 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin GLOBAL — VECCTAPIVOT — World Class</title><link rel="icon" href="logo.png"><link rel="stylesheet" href="style.css">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin GLOBAL — VECCTAPIVOT — Full Power Delete</title><link rel="icon" href="logo.png"><link rel="stylesheet" href="style.css">
 <style>
-:root{--gold:#facc15;--green:#22c55e;--red:#ef4444;--blue:#60a5fa;--bg:#0f172a;--card:#1e293b;--line:#334155}
-body{background:var(--bg);color:#fff;font-family:system-ui;margin:0}
-.topbar{background:#020617;border-bottom:1px solid var(--line);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;flex-wrap:wrap;gap:8px}
+:root{--gold:#facc15;--gold2:#eab308;--green:#22c55e;--red:#ef4444;--blue:#60a5fa;--bg:#070a14;--card:#1e293b;--line:#334155}
+*{box-sizing:border-box}body{background:radial-gradient(1200px 600px at 20% -10%,#1e293b 0%,#0f172a 40%,var(--bg) 100%);color:#fff;font-family:Inter,system-ui;margin:0;min-height:100vh}
+.topbar{background:linear-gradient(90deg,#000,#111);border-bottom:2px solid var(--gold);padding:12px 14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20;flex-wrap:wrap;gap:8px}
 .page{max-width:1320px;margin:0 auto;padding:14px}
 .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:12px 0}@media(max-width:900px){.stats{grid-template-columns:repeat(3,1fr)}}
 .s{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}.s b{font-size:22px;display:block;color:var(--gold)}.s small{color:#94a3b8;font-size:11px;text-transform:uppercase;letter-spacing:.6px}
-.tabs{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}.tab{padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:#cbd5e1;font-weight:800;cursor:pointer;font-size:12px}.tab.active{background:var(--gold);color:#000;border-color:var(--gold)}
+.tabs{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}.tab{padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:#0f172a;color:#cbd5e1;font-weight:800;cursor:pointer;font-size:12px;transition:.2s}.tab.active{background:linear-gradient(90deg,var(--gold),#fde047);color:#000;border-color:var(--gold);box-shadow:0 8px 20px #facc1535}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;align-items:center}
-.input,.select,.textarea{padding:11px 12px;border-radius:10px;background:#0f172a;border:1px solid var(--line);color:#fff;box-sizing:border-box}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:12px 0;position:relative}
+.input,.select,.textarea{padding:11px 12px;border-radius:10px;background:#0f172a;border:1px solid var(--line);color:#fff;box-sizing:border-box;outline:none;transition:.2s}
+.input:focus,.select:focus,.textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px #facc1526}
+.card{background:linear-gradient(180deg,rgba(30,41,59,.95),rgba(15,23,42,.9));border:1px solid var(--line);border-radius:18px;padding:14px;margin:12px 0;position:relative;overflow:hidden}
+.card:hover{border-color:rgba(250,204,21,.25)}
 .well{padding:12px;border-radius:12px;margin:8px 0;border:2px solid;line-height:1.5;font-size:13px}
 .g{border-color:var(--green);background:#052e16}.r{border-color:var(--red);background:#450a0a}.y{border-color:var(--gold);background:#422006}.b{border-color:var(--blue);background:#0c1a32}
-.badge{padding:4px 10px;border-radius:999px;font-size:10px;font-weight:900}
+.badge{padding:4px 10px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.5px}
 .grid2{display:grid;grid-template-columns:1fr 340px;gap:12px}@media(max-width:1000px){.grid2{grid-template-columns:1fr}}
-.btn{padding:10px 14px;border-radius:10px;border:none;font-weight:800;cursor:pointer}.gold{background:var(--gold);color:#000}.green{background:var(--green);color:#000}.red{background:var(--red);color:#fff}.line{background:transparent;border:1px solid var(--line);color:#fff}
-.kbd{font-family:ui-monospace;font-weight:900;color:var(--gold)}
+.btn{padding:10px 14px;border-radius:10px;border:none;font-weight:800;cursor:pointer;transition:.2s;font-size:12px}.gold{background:linear-gradient(90deg,var(--gold),#fde047);color:#000;box-shadow:0 8px 18px #facc1530}.green{background:var(--green);color:#000}.red{background:var(--red);color:#fff}.line{background:transparent;border:1px solid var(--line);color:#fff}
+.btn:hover{transform:translateY(-1px)}.kbd{font-family:ui-monospace;font-weight:900;color:var(--gold)}
 </style>
 </head><body>
 <div class="topbar">
-<div style="display:flex;gap:10px;align-items:center"><img src="logo.png" style="height:28px"><b style="color:var(--gold)">VECCTAPIVOT ADMIN — GLOBAL WORLD CLASS</b><span id="cloudSt" style="font-size:11px;color:#94a3b8">● Connecting vecctapivot</span></div>
-<div style="display:flex;gap:6px"><button class="btn line" onclick="loadCloud()">↻ Cloud</button><button class="btn line" onclick="exportCSV()">CSV</button><a class="btn line" href="index.html" style="text-decoration:none">Home</a></div>
+<div style="display:flex;gap:10px;align-items:center"><img src="logo.png" style="height:28px"><b style="color:var(--gold)">VECCTAPIVOT ADMIN — FULL POWER DELETE</b><span id="cloudSt" style="font-size:11px;color:#94a3b8">● Connecting vecctapivot</span></div>
+<div style="display:flex;gap:6px"><button class="btn line" onclick="loadCloud()">↻ Cloud</button><button class="btn line" onclick="exportCSV()">CSV</button><a class="btn line" href="dashboard.html" style="text-decoration:none">Official Dashboard</a><a class="btn line" href="index.html" style="text-decoration:none">Home</a></div>
 </div>
 
 <div class="page">
-<div id="loginBox" class="card" style="max-width:420px;margin:50px auto;text-align:center"><h3 style="color:var(--gold)">Admin Login</h3><input id="pw" type="password" class="input" placeholder="veccta2024" style="width:100%"><button class="btn gold" style="width:100%;margin-top:10px" onclick="login()">Login GLOBAL</button><div class="small" style="color:#64748b;margin-top:8px">Jobs + Tickets from any phone · Revert & Unlock</div></div>
+<div id="loginBox" class="card" style="max-width:420px;margin:50px auto;text-align:center"><h3 style="color:var(--gold);margin:0 0 8px">Admin Login — Full Power</h3><p style="font-size:11px;color:#94a3b8;margin-bottom:12px">Delete JOB/TICKET from cloud — Admin Only</p><input id="pw" type="password" class="input" placeholder="veccta2024" style="width:100%"><button class="btn gold" style="width:100%;margin-top:10px;padding:12px" onclick="login()">Login GLOBAL — Delete Power</button></div>
 
 <div id="panel" hidden>
 <div class="stats">
@@ -37,14 +39,14 @@ body{background:var(--bg);color:#fff;font-family:system-ui;margin:0}
 </div>
 
 <div class="tabs">
-<span class="tab active" id="tab-jobs" onclick="setTab('jobs')">📦 Jobs ({{jobs}})</span>
-<span class="tab" id="tab-tickets" onclick="setTab('tickets')">🎫 Tickets ({{tics}})</span>
+<span class="tab active" id="tab-jobs" onclick="setTab('jobs')">📦 Jobs</span>
+<span class="tab" id="tab-tickets" onclick="setTab('tickets')">🎫 Tickets</span>
 <span class="tab" id="tab-pillars" onclick="setTab('pillars')">🏛 7 Pillars Analytics</span>
 </div>
 
 <div class="toolbar">
 <input id="q" class="input" placeholder="Search JOB-, TIC-, name, phone, pillar, service..." oninput="render()" style="flex:1;min-width:220px">
-<select id="fStat" class="select" onchange="render()"><option value="">All Status</option><option>Logged</option><option>Quoted</option><option>Paid</option><option>In Progress</option><option>Done</option><option>Revision Needed</option><option>Resubmitted</option></select>
+<select id="fStat" class="select" onchange="render()"><option value="">All Status</option><option>Logged</option><option>Quoted</option><option>Paid</option><option>In Progress</option><option>Done</option><option>Revision Needed</option><option>Resubmitted</option><option>closed</option></select>
 <select id="fPill" class="select" onchange="render()"><option value="">All Pillars (7)</option><option>Digital & Brand Systems</option><option>Academic & Testing Logistics</option><option>Transport Brokerage Hub</option><option>Merchandise Sourcing Links</option><option>Independent Fixer Desk</option><option>General Agency Core</option><option>Statutory & Portal Logistics</option></select>
 <select id="fSort" class="select" onchange="render()"><option value="newest">Newest First</option><option value="oldest">Oldest First</option><option value="priceHigh">Price High-Low</option></select>
 </div>
@@ -55,7 +57,7 @@ body{background:var(--bg);color:#fff;font-family:system-ui;margin:0}
 
 <script type="module">
 import { db } from './firebase.js';
-import { collection, getDocs, doc, updateDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { collection, getDocs, doc, updateDoc, deleteDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 let JOBS=[], TICKETS=[], TAB='jobs';
 
@@ -67,7 +69,7 @@ function getLocal(){
  }catch(e){return []}
 }
 
-window.login=()=>{if(pw.value==='veccta2024'){loginBox.hidden=true; panel.hidden=false; loadCloud()}else alert('Wrong')}
+window.login=()=>{if(pw.value==='veccta2024'){loginBox.hidden=true; panel.hidden=false; loadCloud()}else alert('Wrong password')}
 
 window.loadCloud=async()=>{
  cloudSt.textContent='● Syncing cloud...'; cloudSt.style.color='#facc15';
@@ -76,10 +78,9 @@ window.loadCloud=async()=>{
   let cloud=[]; snap.forEach(d=>{cloud.push({...d.data(),_docId:d.id})});
   let snap2=await getDocs(query(collection(db,'tickets'), orderBy('createdAt','desc'), limit(200)));
   let cloudT=[]; snap2.forEach(d=>{cloudT.push({...d.data(),_docId:d.id})});
-  // merge cloud + local (cloud wins)
   let local=getLocal(); let map=new Map(); local.forEach(j=>map.set(j.id,j)); cloud.forEach(j=>map.set(j.id,j));
   JOBS=Array.from(map.values()); TICKETS=cloudT;
-  cloudSt.textContent=`● Cloud LIVE — ${cloud.length} jobs / ${cloudT.length} tickets — GLOBAL`; cloudSt.style.color='#22c55e';
+  cloudSt.textContent=`● Cloud LIVE — ${cloud.length} jobs / ${cloudT.length} tickets — Delete Power Active`; cloudSt.style.color='#22c55e';
  }catch(e){
   cloudSt.textContent='● Local only — '+e.message; cloudSt.style.color='#ef4444';
   JOBS=getLocal(); TICKETS=JSON.parse(localStorage.getItem('veccta_tickets')||'[]');
@@ -111,36 +112,35 @@ window.render=()=>{
   if(fs) list=list.filter(j=>j.status===fs);
   if(fp) list=list.filter(j=>j.pillar===fp);
   if(sort==='oldest') list.reverse(); if(sort==='priceHigh') list.sort((a,b)=>(parseInt(b.price)||0)-(parseInt(a.price)||0));
-  if(!list.length) html=`<div class=card style="border-left:5px solid #ef4444"><b>No jobs</b> — submit from job.html (any phone). If you just submitted, click ↻ Cloud</div>`;
+  if(!list.length) html=`<div class=card style="border-left:5px solid #ef4444"><b>No jobs</b> — submit from job.html (any phone). Click ↻ Cloud</div>`;
   list.forEach(j=>{
    html+=`<div class=card>
    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
-   <div><span class=kbd>${j.id}</span> <span class=badge style="background:#334155">${j.status}</span> <span style="font-size:11px;color:#94a3b8">${j.logged||''}</span><br><b>${j.fullService|| (j.pillar+' > '+j.service+' > '+j.subService)}</b><br><span style="font-size:12px;color:#cbd5e1">${j.clientName||''} • ${j.clientPhone||''} • ${j.pillar||''}</span></div>
+   <div><span class=kbd>${j.id}</span> <span class=badge style="background:#334155;color:#fff">${j.status}</span> <span style="font-size:11px;color:#94a3b8">${j.logged||''}</span><br><b>${j.fullService|| (j.pillar+' > '+j.service+' > '+j.subService)}</b><br><span style="font-size:12px;color:#cbd5e1">${j.clientName||''} • ${j.clientPhone||''} • ${j.pillar||''}</span></div>
    <div style="text-align:right"><div style="font-size:11px;color:#94a3b8">Price</div><div style="font-size:20px;font-weight:900;color:var(--gold)">${j.price?'KSH '+j.price:'Pending'}</div><div style="font-size:11px;color:#94a3b8">${j._docId?'☁ Cloud':'📱 Local'}</div></div>
    </div>
-   ${j.details||j.detail?`<div class="well y"><b>Client Details:</b><br>${j.details||''} ${j.detail? '| '+j.detail:''} ${j.requirements?.detail||''}</div>`:''}
-   ${j.fileName?`<div class=well b>📎 Client File: ${j.fileName} ${j.fileData?'<a href="'+j.fileData+'" target="_blank" style="color:#60a5fa">View</a>':''}</div>`:''}
+   ${j.details||j.detail?`<div class="well y"><b>Client Details:</b><br>${j.details||''} ${j.detail? '| '+j.detail:''}</div>`:''}
+   ${j.fileName?`<div class=well b>📎 Client File: ${j.fileName}</div>`:''}
    ${j.adminMessage?`<div class="well g"><b style="color:#22c55e">✅ Your Message (Green Well — client sees on track):</b><br>${j.adminMessage}</div>`:''}
-   ${j.revisionNote?`<div class="well r"><b style="color:#ef4444">🔴 Revision Request — Red Lock (client must fix):</b><br>${j.revisionNote}</div>`:''}
-   ${j.revisionReply?`<div class="well y"><b>↩ Client Resubmitted Reply:</b><br>${j.revisionReply} ${j.resubmitFileName?'<br>📎 '+j.resubmitFileName:''}</div>`:''}
+   ${j.revisionNote?`<div class="well r"><b style="color:#ef4444">🔴 Revision Request — Red Lock:</b><br>${j.revisionNote}</div>`:''}
+   ${j.revisionReply?`<div class="well y"><b>↩ Client Resubmitted:</b><br>${j.revisionReply}</div>`:''}
 
    <div class=grid2 style="margin-top:12px">
    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
    <div><label style="font-size:11px;color:#facc15;font-weight:800">PRICE KSH</label><input id="p-${j.id}" class=input value="${j.price||''}" placeholder="2500"></div>
-   <div><label style="font-size:11px;color:#facc15;font-weight:800">STATUS</label><select id="s-${j.id}" class=select><option ${j.status==='Logged'?'selected':''}>Logged</option><option ${j.status==='Quoted'?'selected':''}>Quoted</option><option ${j.status==='Paid'?'selected':''}>Paid</option><option ${j.status==='In Progress'?'selected':''}>In Progress</option><option ${j.status==='Done'?'selected':''}>Done</option><option ${j.status==='Revision Needed'?'selected':''}>Revision Needed</option></select></div>
+   <div><label style="font-size:11px;color:#facc15;font-weight:800">STATUS</label><select id="s-${j.id}" class=select><option ${j.status==='Logged'?'selected':''}>Logged</option><option ${j.status==='Quoted'?'selected':''}>Quoted</option><option ${j.status==='Paid'?'selected':''}>Paid</option><option ${j.status==='In Progress'?'selected':''}>In Progress</option><option ${j.status==='Done'?'selected':''}>Done</option><option ${j.status==='Revision Needed'?'selected':''}>Revision Needed</option><option ${j.status==='closed'?'selected':''}>closed</option></select></div>
    </div>
    <div>
-   <label style="font-size:11px;color:#22c55e;font-weight:800">ADMIN MESSAGE — GREEN WELL (client view)</label><textarea id="m-${j.id}" class=textarea rows=3 placeholder="e.g. Quote KSH 2500, pay via... Your work started...">${j.adminMessage||''}</textarea>
-   <label style="font-size:11px;color:#ef4444;font-weight:800">REVERT FOR CORRECTION — RED LOCK BOX + UNLOCK UPLOAD</label><textarea id="r-${j.id}" class=textarea rows=3 placeholder="Leave empty if no correction needed. If filled, it LOCKS job and shows RED BOX + upload field on track.html for client to correct" style="border-color:#ef4444">${j.revisionNote||''}</textarea>
+   <label style="font-size:11px;color:#22c55e;font-weight:800">ADMIN MESSAGE — GREEN WELL</label><textarea id="m-${j.id}" class=textarea rows=3 placeholder="e.g. Quote KSH 2500, pay...">${j.adminMessage||''}</textarea>
+   <label style="font-size:11px;color:#ef4444;font-weight:800">REVERT FOR CORRECTION — RED LOCK BOX</label><textarea id="r-${j.id}" class=textarea rows=3 placeholder="If filled, LOCKS job and shows RED BOX + upload on track" style="border-color:#ef4444">${j.revisionNote||''}</textarea>
    </div>
    </div>
 
-   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-   <button class="btn gold" onclick="saveJob('${j.id}')">💾 Save & Push to Client (Cloud)</button>
-   <button class="btn line" onclick="quickQuote('${j.id}')">⚡ Quick Quote Template</button>
-   <button class="btn line" onclick="waJob('${j.id}')">WhatsApp Client</button>
-   <button class="btn red" onclick="delJob('${j.id}')">Delete</button>
+   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+   <button class="btn gold" onclick="saveJob('${j.id}')">💾 Save & Push to Client</button>
+   <button class="btn line" onclick="waJob('${j.id}')">WhatsApp</button>
    <a class="btn line" href="track.html?job=${j.id}" target="_blank" style="text-decoration:none;text-align:center">View as Client</a>
+   <button class="btn red" onclick="delJob('${j.id}')">🗑 DELETE JOB — Admin Only</button>
    </div>
    </div>`;
   });
@@ -150,21 +150,19 @@ window.render=()=>{
   if(!list.length) html=`<div class=card>No tickets — submit from ticket.html</div>`;
   list.forEach(t=>{
    html+=`<div class=card>
-   <div style="display:flex;justify-content:space-between"><div><span class=kbd style="color:#60a5fa">${t.id}</span> for <b style="color:#facc15">${t.jobId}</b> <span class=badge>${t.status}</span> ${t.priority} — ${t.tType}</div><div class=small>${t.logged||''}</div></div>
+   <div style="display:flex;justify-content:space-between"><div><span class=kbd style="color:#60a5fa">${t.id}</span> for <b style="color:#facc15">${t.jobId}</b> <span class=badge style="background:#334155;color:#fff">${t.status}</span> ${t.priority} — ${t.tType}</div><div style="font-size:11px;color:#94a3b8">${t.logged||''}</div></div>
    <b>${t.subject||''}</b> — ${t.category||''}<br>
    <div class="well y"><b>Client Ticket:</b><br>${t.message||''}</div>
-   ${t.fileName?`<div class=well b>📎 ${t.fileName}</div>`:''}
-   ${t.adminReply?`<div class="well g"><b>Your Reply (Green Well — client sees):</b><br>${t.adminReply}</div>`:''}
-   <label style="font-size:11px;color:#22c55e;font-weight:800">ADMIN REPLY — GREEN WELL + RESOLVE</label><textarea id="tr-${t.id}" class=textarea rows=3 placeholder="Write reply — will show as GREEN WELL on track.html">${t.adminReply||''}</textarea>
+   ${t.adminReply?`<div class="well g"><b>Your Reply (Green Well):</b><br>${t.adminReply}</div>`:''}
+   <label style="font-size:11px;color:#22c55e;font-weight:800">ADMIN REPLY — GREEN WELL</label><textarea id="tr-${t.id}" class=textarea rows=3 placeholder="Write reply — will show as GREEN WELL on track">${t.adminReply||''}</textarea>
    <select id="ts-${t.id}" class=select style="margin-top:6px"><option ${t.status==='Open'?'selected':''}>Open</option><option ${t.status==='In Progress'?'selected':''}>In Progress</option><option ${t.status==='Closed'?'selected':''}>Closed</option></select>
-   <div style="display:flex;gap:8px;margin-top:8px"><button class="btn gold" onclick="saveTicket('${t.id}')">💾 Reply & Push to Cloud</button><button class="btn line" onclick="linkJob('${t.jobId}')">Open Job ${t.jobId}</button><button class="btn red" onclick="delTicket('${t.id}')">Delete</button><a class="btn line" href="track.html?ticket=${t.id}" target="_blank" style="text-decoration:none;text-align:center">View as Client</a></div>
+   <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button class="btn gold" onclick="saveTicket('${t.id}')">💾 Reply & Push to Cloud</button><a class="btn line" href="track.html?ticket=${t.id}" target="_blank" style="text-decoration:none;text-align:center">View as Client</a><button class="btn red" onclick="delTicket('${t.id}')">🗑 DELETE TICKET — Admin Only</button></div>
    </div>`;
   });
  }
  if(TAB==='pillars'){
   let pillars={}; JOBS.forEach(j=>{let p=j.pillar||'Unknown'; pillars[p]=(pillars[p]||0)+1});
-  html+=`<div class=card><h3 style="color:var(--gold);margin:0 0 10px">7 Pillars Analytics — World Class</h3>`+Object.entries(pillars).map(([k,v])=>`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #334155"><span>${k}</span><b style="color:var(--gold)">${v} jobs</b></div>`).join('')+`</div>`;
-  html+=`<div class=card><h4 style="margin:0 0 6px">Revenue Quoted</h4><b style="color:var(--gold);font-size:26px">KSH ${JOBS.reduce((s,j)=>s+(parseInt(j.price)||0),0).toLocaleString()}</b><br><span class=small>Sum of all price fields</span></div>`;
+  html+=`<div class=card><h3 style="color:var(--gold);margin:0 0 10px">7 Pillars Analytics</h3>`+Object.entries(pillars).map(([k,v])=>`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #334155"><span>${k}</span><b style="color:var(--gold)">${v} jobs</b></div>`).join('')+`</div>`;
  }
  document.getElementById('list').innerHTML=html;
 }
@@ -172,31 +170,38 @@ window.render=()=>{
 window.saveJob=async(id)=>{
  let j=JOBS.find(x=>x.id===id); if(!j) return;
  j.price=document.getElementById('p-'+id).value; j.status=document.getElementById('s-'+id).value; j.adminMessage=document.getElementById('m-'+id).value; j.revisionNote=document.getElementById('r-'+id).value;
- if(j.revisionNote && j.revisionNote.trim()!=='') j.status='Revision Needed'; // auto lock
- // local
+ if(j.revisionNote && j.revisionNote.trim()!=='') j.status='Revision Needed';
  let local=JSON.parse(localStorage.getItem('veccta_jobs')||'[]'); let idx=local.findIndex(x=>x.id===id); if(idx>=0) local[idx]=j; else local.push(j); localStorage.setItem('veccta_jobs',JSON.stringify(local)); localStorage.setItem('karanu_jobs',JSON.stringify(local));
- // cloud
- if(j._docId){ try{await updateDoc(doc(db,'jobs',j._docId),{price:j.price,status:j.status,adminMessage:j.adminMessage,revisionNote:j.revisionNote});}catch(e){alert('Cloud save failed: '+e.message+' — local saved');} }
- renderStats(); render(); alert('✅ Saved & pushed to client — client sees GREEN WELL + RED LOCK on track.html (any phone)');
+ if(j._docId){ try{await updateDoc(doc(db,'jobs',j._docId),{price:j.price,status:j.status,adminMessage:j.adminMessage,revisionNote:j.revisionNote});}catch(e){alert('Cloud save failed: '+e.message)} }
+ renderStats(); render(); alert('✅ Saved & pushed to client');
 }
-window.quickQuote=id=>{let el=document.getElementById('m-'+id); el.value=`Hello! Quote for ${id} is KSH ${document.getElementById('p-'+id).value||'[PRICE]'}.
-
-Paybill: 400200 / Acc: 12345 / OR Till 123456
-
-After payment reply with screenshot — we start immediately. Track: track.html?job=${id}`; }
-
-window.waJob=id=>{let j=JOBS.find(x=>x.id===id); let msg=`Hello ${j.clientName}, your ${j.id} (${j.fullService}) is ${j.status}. Price KSH ${j.price}. ${j.adminMessage} ${j.revisionNote?'CORRECTION NEEDED: '+j.revisionNote:''} Track: track.html?job=${j.id}`; window.open('https://wa.me/'+(j.clientPhone||'').replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(msg))}
-
-window.delJob=async id=>{if(!confirm('Delete '+id+'?'))return; JOBS=JOBS.filter(x=>x.id!==id); localStorage.setItem('veccta_jobs',JSON.stringify(JOBS)); renderStats(); render();}
-
+window.waJob=id=>{let j=JOBS.find(x=>x.id===id); let msg=`Hello ${j.clientName}, your ${j.id} (${j.fullService}) is ${j.status}. Price KSH ${j.price}. ${j.adminMessage} ${j.revisionNote?'CORRECTION: '+j.revisionNote:''} Track: track.html?job=${j.id}`; window.open('https://wa.me/'+(j.clientPhone||'').replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(msg))}
 window.saveTicket=async id=>{
  let t=TICKETS.find(x=>x.id===id); t.adminReply=document.getElementById('tr-'+id).value; t.status=document.getElementById('ts-'+id).value;
- if(t.adminReply && t.status==='Open') t.status='Closed';
  if(t._docId){try{await updateDoc(doc(db,'tickets',t._docId),{adminReply:t.adminReply,status:t.status});}catch(e){alert(e.message)}}
- alert('✅ Ticket reply pushed — client sees GREEN WELL on track.html?ticket='+id); render();
+ alert('✅ Ticket reply pushed'); render();
 }
-window.delTicket=id=>{TICKETS=TICKETS.filter(x=>x.id!==id); render()}
-window.linkJob=jobId=>{q.value=jobId; setTab('jobs'); document.getElementById('tab-jobs').classList.add('active'); document.getElementById('tab-tickets').classList.remove('active'); render()}
-window.exportCSV=()=>{let csv='ID,Name,Phone,Pillar,Service,Full,Price,Status,AdminMsg,Revision,Logged\n'+JOBS.map(j=>`"${j.id}","${j.clientName||''}","${j.clientPhone||''}","${j.pillar||''}","${j.service||''}","${j.fullService||''}","${j.price||''}","${j.status||''}","${(j.adminMessage||'').replace(/"/g,'') }","${(j.revisionNote||'').replace(/"/g,'') }","${j.logged||''}"`).join('\n'); let blob=new Blob([csv],{type:'text/csv'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='veccta_global.csv'; a.click()}
+
+// --- DELETE POWER - ADMIN ONLY - DOES NOT AFFECT OTHER FEATURES ---
+window.delJob=async id=>{
+ let j=JOBS.find(x=>x.id===id); if(!j){alert('Not found');return}
+ if(!confirm('🗑 ADMIN ONLY — DELETE JOB '+j.id+' PERMANENTLY?\n\nThis deletes from Firebase cloud vecctapivot.\nClient track will show NOT FOUND.\nThis does NOT affect other jobs/tickets.')) return;
+ try{
+  if(j._docId){ await deleteDoc(doc(db,'jobs',j._docId)); }
+  JOBS=JOBS.filter(x=>x.id!==id);
+  localStorage.setItem('veccta_jobs',JSON.stringify(JOBS));
+  localStorage.setItem('karanu_jobs',JSON.stringify(JOBS));
+  renderStats(); render();
+  alert('✅ '+j.id+' deleted — other jobs safe');
+ }catch(e){ alert('❌ Delete failed: '+e.message+'\nSet Firestore Rules: allow read, write: if true; then Publish'); }
+}
+window.delTicket=async id=>{
+ let t=TICKETS.find(x=>x.id===id); if(!t) return;
+ if(!confirm('🗑 ADMIN ONLY — DELETE TICKET '+t.id+' PERMANENTLY? Does not affect jobs.')) return;
+ try{ if(t._docId) await deleteDoc(doc(db,'tickets',t._docId)); }catch(e){}
+ TICKETS=TICKETS.filter(x=>x.id!==id); render(); alert('✅ Ticket '+t.id+' deleted — other data safe');
+}
+
+window.exportCSV=()=>{let csv='ID,Name,Phone,Pillar,Service,Price,Status,AdminMsg,Revision\n'+JOBS.map(j=>`"${j.id}","${j.clientName||''}","${j.clientPhone||''}","${j.pillar||''}","${j.service||''}","${j.price||''}","${j.status||''}","${(j.adminMessage||'').replace(/"/g,'')}","${(j.revisionNote||'').replace(/"/g,'')}"`).join('\n'); let b=new Blob([csv],{type:'text/csv'}); let a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='veccta_global.csv'; a.click()}
 </script>
 </body></html>
