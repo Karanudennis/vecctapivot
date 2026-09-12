@@ -1,25 +1,112 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VEC Admin</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}body{display:flex;height:100vh;background:#f5f7fb}.sidebar{width:230px;background:#111827;color:#fff;padding:18px}.menu{list-style:none;margin-top:16px}.menu li{padding:11px;border-radius:8px;cursor:pointer;margin-bottom:4px;display:flex;justify-content:space-between}.menu li.active,.menu li:hover{background:#1f2937}.content{flex:1;padding:18px;overflow:auto}.card{background:#fff;padding:14px;border-radius:12px;margin-bottom:10px}.badge{padding:3px 8px;border-radius:20px;font-size:11px;font-weight:700}.queue{background:#fef3c7}.closed{background:#dcfce7}.correction{background:#fee2e2}.btn{padding:8px 12px;border:none;border-radius:8px;cursor:pointer;font-weight:600}.btn-dark{background:#111827;color:#fff}.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center}.modal.show{display:flex}.modalBox{background:#fff;width:480px;max-width:95%;padding:18px;border-radius:14px}select,textarea,input{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;margin-top:6px}</style></head><body>
-<div class="sidebar"><h3>VEC Admin</h3><ul class="menu"><li class="active" onclick="setF('all',this)">All <span id="cAll">0</span></li><li onclick="setF('queue',this)">Queue <span id="cQ">0</span></li><li onclick="setF('correction',this)">Corr <span id="cC">0</span></li><li onclick="setF('ticket',this)">Tickets <span id="cT">0</span></li><li onclick="setF('closed',this)">Closed <span id="cCl">0</span></li></ul></div>
-<div class="content"><h3 id="title">All</h3><input id="search" style="margin-top:10px;padding:9px;width:300px;border-radius:8px;border:1px solid #ccc" placeholder="Search ID/phone" oninput="render()"><div id="list" style="margin-top:14px"></div></div>
-<div id="modal" class="modal"><div class="modalBox"><h3 id="mId"></h3><p id="mInfo" style="font-size:12px;color:#666"></p><select id="mStatus"><option value="queue">Queue</option><option value="in_progress">In Progress</option><option value="correction">Correction</option><option value="submitted">Ready</option><option value="closed">Closed</option></select><textarea id="mNote" rows="4" placeholder="Note client will see in tracker"></textarea><input id="mUnlock" placeholder="Unlock fields e.g. idPhoto" style="margin-top:8px"><div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px"><button class="btn" onclick="closeM()">Cancel</button><button class="btn btn-dark" onclick="save()">Save to Tracker</button></div></div></div>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>VEC Admin Working</title>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<style>
+body{font-family:sans-serif;background:#f5f5f5;padding:20px}
+.card{background:#fff;padding:15px;margin-bottom:10px;border-radius:10px;box-shadow:0 1px 3px #ccc}
+button{padding:8px 12px;background:#000;color:#fff;border:none;border-radius:6px;cursor:pointer}
+input,textarea,select{width:100%;padding:8px;margin-top:5px;border:1px solid #ccc;border-radius:6px}
+#box{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center}
+#box.show{display:flex}
+#inner{background:#fff;padding:20px;width:400px;border-radius:12px}
+</style>
+</head>
+<body>
+
+<h2>VEC Admin - WORKING</h2>
+<p id="count">Loading...</p>
+<input id="search" placeholder="Search ID or phone" oninput="show()" style="max-width:300px">
+<div id="list" style="margin-top:15px"></div>
+
+<div id="box"><div id="inner">
+<h3 id="bid"></h3>
+<select id="bstatus">
+<option value="queue">Queue</option>
+<option value="in_progress">In Progress</option>
+<option value="correction">Correction</option>
+<option value="submitted">Ready</option>
+<option value="closed">Closed</option>
+</select>
+<textarea id="bnote" rows="4" placeholder="Message client will see"></textarea>
+<button onclick="save()" style="margin-top:10px;width:100%">SAVE - Show to Tracker</button>
+<button onclick="document.getElementById('box').classList.remove('show')" style="margin-top:8px;width:100%;background:#ccc;color:#000">Cancel</button>
+</div></div>
+
+<script>
+// === PUT YOUR REAL CONFIG HERE ===
 const firebaseConfig = {
-  apiKey: "PUT_YOURS",
-  authDomain: "PUT_YOURS",
-  projectId: "PUT_YOURS",
-  storageBucket: "PUT_YOURS",
-  messagingSenderId: "PUT_YOURS",
-  appId: "PUT_YOURS"
+  apiKey: "YOURS",
+  authDomain: "YOURS",
+  projectId: "YOURS",
+  storageBucket: "YOURS",
+  messagingSenderId: "YOURS",
+  appId: "YOURS"
 };
-const app=initializeApp(firebaseConfig);const db=getFirestore(app);
-let all=[],filter='all',curId=null,curType='job';
-async function load(){const j=await getDocs(collection(db,"jobs"));const t=await getDocs(collection(db,"tickets"));all=[];j.forEach(d=>all.push({fb:d.id,id:d.data().trackingId||d.id,type:'job',...d.data()}));t.forEach(d=>all.push({fb:d.id,id:d.data().trackingId||d.id,type:'ticket',...d.data()}));document.getElementById('cAll').textContent=all.length;document.getElementById('cQ').textContent=all.filter(x=>['queue','open','in_progress'].includes(x.status)).length;document.getElementById('cC').textContent=all.filter(x=>x.status=='correction').length;document.getElementById('cT').textContent=all.filter(x=>x.type=='ticket').length;document.getElementById('cCl').textContent=all.filter(x=>x.status=='closed').length;render();}
-window.setF=(f,el)=>{filter=f;document.querySelectorAll('.menu li').forEach(l=>l.classList.remove('active'));el.classList.add('active');document.getElementById('title').textContent=el.textContent;render()}
-window.render=()=>{const q=document.getElementById('search').value.toLowerCase();let list=all.filter(x=>{if(q && !((x.id||'').toLowerCase().includes(q)||(x.phone||'').includes(q)))return false;if(filter=='queue')return ['queue','open','in_progress'].includes(x.status);if(filter=='correction')return x.status=='correction';if(filter=='ticket')return x.type=='ticket';if(filter=='closed')return x.status=='closed';return true;});document.getElementById('list').innerHTML=list.map(x=>`<div class="card"><div style="display:flex;justify-content:space-between"><b>${x.id}</b><span class="badge ${x.status}">${x.status}</span></div><div style="font-size:12px">${x.service||x.issue||''} • ${x.phone||''}</div><div style="font-size:12px;background:#f9fafb;padding:5px;border-radius:6px;margin-top:4px">${x.adminMessage||'No note'}</div><button class="btn btn-dark" style="margin-top:6px" onclick="openM('${x.fb}','${x.type}')">Respond</button></div>`).join('')||'No jobs';}
-window.openM=(fb,type)=>{const item=all.find(a=>a.fb==fb&&a.type==type);curId=fb;curType=type;document.getElementById('mId').textContent=item.id;document.getElementById('mInfo').textContent=item.service||item.issue||'';document.getElementById('mStatus').value=item.status||'queue';document.getElementById('mNote').value=item.adminMessage||'';document.getElementById('modal').classList.add('show');}
-window.closeM=()=>document.getElementById('modal').classList.remove('show');
-window.save=async()=>{const status=document.getElementById('mStatus').value;const note=document.getElementById('mNote').value;if(!note)return alert('Write note');const coll=curType=='ticket'?'tickets':'jobs';await updateDoc(doc(db,coll,curId),{status,adminMessage:note,adminResponseAt:serverTimestamp(),lastUpdated:serverTimestamp()});closeM();load();}
+// ================================
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+let allJobs = [];
+let curId = null;
+let curCol = null;
+
+async function load(){
+  try{
+    const jobs = await db.collection("jobs").get();
+    const tickets = await db.collection("tickets").get();
+    allJobs = [];
+    jobs.forEach(d=> allJobs.push({docId:d.id, col:"jobs", tracking:d.data().trackingId||d.id, ...d.data()}));
+    tickets.forEach(d=> allJobs.push({docId:d.id, col:"tickets", tracking:d.data().trackingId||d.id, ...d.data()}));
+    document.getElementById('count').innerText = allJobs.length + " jobs/tickets found";
+    show();
+  }catch(e){
+    document.getElementById('count').innerText = "ERROR: " + e.message + " - Check Firestore Rules";
+    console.error(e);
+  }
+}
+
+function show(){
+  const q = document.getElementById('search').value.toLowerCase();
+  const filtered = allJobs.filter(j=> !q || (j.tracking||'').toLowerCase().includes(q) || (j.phone||'').includes(q));
+  document.getElementById('list').innerHTML = filtered.map(j=>`
+    <div class="card">
+      <b>${j.tracking}</b> - ${j.status||'no status'} - ${j.col}
+      <div style="font-size:13px;margin:4px 0">${j.service||j.issue||''} | ${j.phone||''} | ${j.clientName||''}</div>
+      <div style="font-size:12px;background:#f0f0f0;padding:5px;border-radius:5px">Note: ${j.adminMessage||'No note yet'}</div>
+      <button onclick="openBox('${j.docId}','${j.col}')" style="margin-top:8px">Respond</button>
+    </div>
+  `).join('') || 'No jobs - Check if jobs collection exists';
+}
+
+function openBox(docId,col){
+  const j = allJobs.find(x=>x.docId==docId && x.col==col);
+  curId = docId; curCol = col;
+  document.getElementById('bid').innerText = j.tracking;
+  document.getElementById('bstatus').value = j.status||'queue';
+  document.getElementById('bnote').value = j.adminMessage||'';
+  document.getElementById('box').classList.add('show');
+}
+
+async function save(){
+  const status = document.getElementById('bstatus').value;
+  const note = document.getElementById('bnote').value;
+  if(!note) return alert('Write note');
+  await db.collection(curCol).doc(curId).update({
+    status: status,
+    adminMessage: note,
+    adminResponseAt: new Date(),
+    lastUpdated: new Date()
+  });
+  document.getElementById('box').classList.remove('show');
+  load();
+}
+
 load();
-</script></body></html>
+</script>
+</body>
+</html>
