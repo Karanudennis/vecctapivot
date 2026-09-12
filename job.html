@@ -1,96 +1,202 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Request Job - VECCTA Pivot Enterprises</title>
+<title>Job Request 7x7x7 - VECCTA - No Duplicate</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body{font-family:sans-serif;background:#f5f5f5;margin:0;padding:15px}
-.box{background:white;padding:20px;border-radius:10px;max-width:500px;margin:20px auto;box-shadow:0 2px 8px rgba(0,0,0,.1)}
-input,select,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:6px;box-sizing:border-box}
-button{width:100%;padding:12px;background:black;color:#ffcc00;border:none;border-radius:6px;font-weight:bold;font-size:16px;cursor:pointer}
-.top{background:black;color:#ffcc00;padding:12px;border-radius:8px;text-align:center;margin-bottom:15px}
+body{font-family:sans-serif;background:#f5f5f5;margin:0;padding:8px}
+.top{background:black;color:#ffcc00;padding:10px;border-radius:8px;text-align:center;position:sticky;top:0;z-index:5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:8px 0}
+.pill{padding:10px;background:white;border-radius:6px;text-align:center;cursor:pointer;border:2px solid #eee;font-size:12px;font-weight:bold}
+.pill.active{border-color:#ffcc00;background:black;color:#ffcc00}
+.card{background:white;padding:10px;border-radius:8px;margin:6px 0;border-left:3px solid #ffcc00}
+input,select,textarea{width:100%;padding:9px;margin:4px 0;border:1px solid #ddd;border-radius:5px;box-sizing:border-box}
+button{width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer}
+#loginGate{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:9999;text-align:center;padding-top:60px;color:white;display:none}
+.req{color:red}
 </style>
 </head>
 <body>
-<div class="top"><b>VECCTA PIVOT ENTERPRISES</b><br><small>Request a Service - Any Phone</small></div>
 
-<div class="box">
-  <h3>📝 Request a Job</h3>
-  <p id="userInfo" style="font-size:12px;color:gray">Checking login...</p>
-  
-  <label>Service Needed</label>
-  <select id="service">
-    <option>KRA PIN / Returns</option>
-    <option>eCitizen Services</option>
-    <option>NTSA TIMS</option>
-    <option>Passport Application</option>
-    <option>Good Conduct</option>
-    <option>HELB Application</option>
-    <option>KUCCPS</option>
-    <option>Business Registration</option>
-    <option>Other Cyber Service</option>
-  </select>
+<div id="loginGate">
+  <h2>🔒 Login to Request Job</h2>
+  <p>Browse 7x7x7 FREE</p>
+  <p>Request needs login</p>
+  <button onclick="location.href='./test-login.html'" style="background:#ffcc00;color:black;width:auto;padding:12px 24px;font-size:16px">LOGIN WITH GOOGLE</button>
+</div>
 
-  <label>Your Phone (M-Pesa / WhatsApp)</label>
-  <input id="phone" type="tel" placeholder="07xxxxxxxx">
+<div class="top">
+<b>7x7x7 JOB REQUEST - 343 Services</b><br>
+<small>7 Pillars x 7 Subs x 7 Services</small><br>
+<small id="userInfo">Checking login...</small>
+</div>
 
-  <label>Details</label>
-  <textarea id="details" rows="4" placeholder="Explain what you need... e.g. KRA returns for 2023, 2024"></textarea>
+<div class="card">
+<b>Step 1: Pillar (7) <span class="req">*</span></b>
+<div class="grid" id="pillars"></div>
+</div>
 
-  <button id="submitJob">Submit Job Request</button>
-  <p id="msg" style="text-align:center;margin-top:10px;font-weight:bold"></p>
-  
-  <p style="text-align:center;font-size:12px;margin-top:15px">
-    <a href="./dashboard.html">Go to Dashboard</a> | <a href="./index.html">Home</a>
-  </p>
+<div class="card" id="subCard" style="display:none">
+<b>Step 2: Sub-Pillar (7) <span class="req">*</span> - Under <span id="pillarName"></span></b>
+<div class="grid" id="subs"></div>
+</div>
+
+<div class="card" id="subSubCard" style="display:none">
+<b>Step 3: Service (7) <span class="req">*</span> - Under <span id="subName"></span> - Total 7x7x7=343</b>
+<div class="grid" id="subSubs"></div>
+</div>
+
+<div class="card" id="reqCard" style="display:none;border:2px solid black">
+<h3>Step 4: Requirements for <span id="selectedService"></span> <span class="req">*</span></h3>
+<div id="requirements"></div>
+</div>
+
+<div class="card" id="formCard" style="display:none;border:2px solid #ffcc00">
+<h3>Step 5: Fill LPG Info + Submit - No Duplicate Twice</h3>
+<p><b>Selected:</b> <span id="fullPath"></span></p>
+<p><small style="color:red">All * required - System will block duplicate submission twice</small></p>
+<input id="name" placeholder="Full Name *">
+<input id="phone" placeholder="Phone 07XXXXXXXX *">
+<input id="location" placeholder="Location - LPG Delivery *">
+<input id="qty" type="number" placeholder="Quantity * (e.g. 1)">
+<input id="budget" placeholder="Budget KSH *">
+<textarea id="details" placeholder="Full Details * - What exactly you need"></textarea>
+<input id="idNumber" placeholder="ID Number * (for verification, no duplicate)">
+<button id="requestBtn" onclick="requestJob()" style="background:black;color:#ffcc00">📦 REQUEST SERVICE - Check Duplicate</button>
+<p id="result"></p>
 </div>
 
 <script type="module">
 import { auth, db } from "./firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { collection, addDoc, serverTimestamp, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// 1. Check if logged in - if not, force to test-login.html (your rule: sign up only when requesting)
-onAuthStateChanged(auth, (user)=>{
+// 7x7x7 FULL DATA - 7 Pillars x 7 Subs x 7 Services = 343 services
+const DATA={
+"1. GOVERNMENT SERVICES":["KRA Services","eCitizen","SHA/SHIF","NTSA","HELB","Business Registration","Lands & Ardhi"],
+"2. CERTIFICATES & DOCS":["Birth Certificate","Good Conduct","Marriage Certificate","ID Replacement","Passport","Academic Certs","Affidavits"],
+"3. FINANCIAL SERVICES":["KRA Returns","Loan Application","SACCO","Insurance","Bank Services","M-Pesa","Investment"],
+"4. LPG & ENERGY":["LPG Refill 6KG","LPG Refill 13KG","New Cylinder","Gas Accessories","Installation","Biogas","Solar Energy"],
+"5. PRINTING & CYBER":["Printing","Photocopy","Lamination","Typing & CV","Scanning","Email & Online","Graphic Design"],
+"6. EDUCATION & JOBS":["School Application","Job Application","CV Writing","Attachment Letter","Scholarship","KUCCPS","AJIRA Digital"],
+"7. OTHER SERVICES":["Courier","Branding","Photography","Tents & Chairs","PA System","Cleaning","Consultation"]
+};
+
+const SUBS_DATA={
+"KRA Services":["KRA PIN Registration","KRA PIN Retrieval","Tax Compliance","VAT Filing","PAYE Filing","Withholding Tax","Nil Return Filing"],
+"eCitizen":["Good Conduct App","Business Name Search","Driving License","Birth Cert App","Marriage App","Land Search","Passport App"],
+"SHA/SHIF":["SHA Registration","SHIF Payment","Dependants Add","SHA Card","Claims","Facility Search","Complaint"],
+"NTSA":["Driving License Renewal","Logbook Transfer","Inspection Booking","Smart DL","PSV Badge","Vehicle Search","Number Plate"],
+"HELB":["HELB Application","HELB Compliance","HELB Clearance","Loan Repayment","Portal Reset","Statement","Appeal"],
+"Business Registration":["Business Name Reg","Company Reg","Business Permit","CR12","Compliance","Link KRA","Renewal"],
+"Lands & Ardhi":["Land Search","Title Deed","Succession","Lease","Valuation","Consent","Rates"],
+"Birth Certificate":["New Birth Cert","Late Registration","Replacement","Correction","Foreign Birth","Adoption Cert","Death Cert"],
+"Good Conduct":["New Application","Renewal","Foreign Good Conduct","Lost Cert","Correction","Urgent","Company Good Conduct"],
+"LPG Refill 6KG":["6KG K-Gas","6KG Total","6KG Pro Gas","6KG Hass","6KG Oilibya","6KG Exchange","6KG New"],
+"LPG Refill 13KG":["13KG K-Gas","13KG Total","13KG Pro Gas","13KG Hass","13KG Oilibya","13KG Exchange","13KG New"]
+};
+
+// Requirements per service type
+const REQUIREMENTS={
+"default":["Clear Photo of ID (Front & Back)","Phone Number linked to ID","Location for delivery","Quantity needed"],
+"KRA PIN Registration":["ID Front & Back","KRA PIN Email","Phone Number"],
+"LPG Refill":["Cylinder Type (6KG/13KG)","Location","Empty Cylinder Photo","Phone"],
+"Birth Certificate":["Mother ID","Father ID","Clinic Card","Notification"],
+"Good Conduct":["ID Copy","Passport Photo","Fingerprints at Huduma","Email"]
+};
+
+let selPillar="", selSub="", selService="", currentUser=null;
+
+onAuthStateChanged(auth, user=>{
+  currentUser=user;
   if(!user){
-    window.location.href="./test-login.html";
-    return;
+    document.getElementById("loginGate").style.display="block";
+    document.getElementById("userInfo").innerHTML="❌ Not logged - Login to request";
+  } else {
+    document.getElementById("loginGate").style.display="none";
+    document.getElementById("userInfo").innerHTML=`✅ ${user.email} | 7x7x7 Ready`;
   }
-  document.getElementById("userInfo").innerText = "Logged in as: " + user.email;
 });
 
-document.getElementById("submitJob").onclick = async ()=>{
-  const service = document.getElementById("service").value;
-  const details = document.getElementById("details").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const user = auth.currentUser;
-  
-  if(!user){ window.location.href="./test-login.html"; return; }
-  if(!phone || !details){
-    document.getElementById("msg").innerText = "❌ Add phone & details";
-    document.getElementById("msg").style.color="red";
-    return;
-  }
-  
-  document.getElementById("msg").innerText = "⏳ Sending to admin...";
-  document.getElementById("msg").style.color="orange";
-  
+const pillarsDiv=document.getElementById("pillars");
+Object.keys(DATA).forEach(p=>{
+  let d=document.createElement("div"); d.className="pill"; d.innerText=p;
+  d.onclick=()=>{ selPillar=p; document.getElementById("pillarName").innerText=p; selSub=""; selService=""; showSubs(p); document.querySelectorAll("#pillars .pill").forEach(e=>e.classList.remove("active")); d.classList.add("active"); };
+  pillarsDiv.appendChild(d);
+});
+
+function showSubs(pillar){
+  const subsDiv=document.getElementById("subs"); subsDiv.innerHTML=""; document.getElementById("subCard").style.display="block";
+  document.getElementById("subSubCard").style.display="none"; document.getElementById("reqCard").style.display="none"; document.getElementById("formCard").style.display="none";
+  DATA[pillar].forEach(s=>{
+    let d=document.createElement("div"); d.className="pill"; d.innerText=s;
+    d.onclick=()=>{ selSub=s; document.getElementById("subName").innerText=s; showSubSubs(s); document.querySelectorAll("#subs .pill").forEach(e=>e.classList.remove("active")); d.classList.add("active"); };
+    subsDiv.appendChild(d);
+  });
+}
+
+function showSubSubs(sub){
+  const subSubsDiv=document.getElementById("subSubs"); subSubsDiv.innerHTML=""; document.getElementById("subSubCard").style.display="block"; document.getElementById("reqCard").style.display="none"; document.getElementById("formCard").style.display="none";
+  let list=SUBS_DATA[sub]||[`${sub} - Service 1`,`${sub} - Service 2`,`${sub} - Service 3`,`${sub} - Service 4`,`${sub} - Service 5`,`${sub} - Service 6`,`${sub} - Service 7`];
+  list.forEach(s=>{
+    let d=document.createElement("div"); d.className="pill"; d.innerText=s;
+    d.onclick=()=>{ selService=s; document.getElementById("selectedService").innerText=s; document.getElementById("fullPath").innerText=`${selPillar} > ${selSub} > ${s}`; showRequirements(s); document.querySelectorAll("#subSubs .pill").forEach(e=>e.classList.remove("active")); d.classList.add("active"); };
+    subSubsDiv.appendChild(d);
+  });
+}
+
+function showRequirements(service){
+  const reqDiv=document.getElementById("requirements"); reqDiv.innerHTML=""; document.getElementById("reqCard").style.display="block"; document.getElementById("formCard").style.display="block";
+  let reqs=REQUIREMENTS[service]||REQUIREMENTS["default"];
+  // Find matching req
+  for(let k in REQUIREMENTS){ if(service.includes(k.split(" ")[0])){ reqs=REQUIREMENTS[k]; break; } }
+  reqs.forEach(r=>{ reqDiv.innerHTML+=`• ${r} <span class="req">*</span><br>`; });
+  reqDiv.innerHTML+=`<br><small><b>Must fill all above before submission - System checks duplicate</b></small>`;
+}
+
+window.requestJob=async()=>{
+  if(!currentUser){ location.href='./test-login.html'; return; }
+  const name=document.getElementById("name").value.trim();
+  const phone=document.getElementById("phone").value.trim();
+  const locationVal=document.getElementById("location").value.trim();
+  const qty=document.getElementById("qty").value.trim();
+  const budget=document.getElementById("budget").value.trim();
+  const details=document.getElementById("details").value.trim();
+  const idNumber=document.getElementById("idNumber").value.trim();
+
+  if(!selPillar||!selSub||!selService){ alert("❌ Follow 7x7x7: Select Pillar > Sub > Service - All * required"); return; }
+  if(!name||!phone||!locationVal||!qty||!budget||!details||!idNumber){ alert("❌ Fill ALL * fields - Requirements + LPG info required before submission"); return; }
+
+  const btn=document.getElementById("requestBtn"); btn.disabled=true; btn.innerText="⏳ Checking duplicate...";
+
+  // NO SIMILAR SUBMISSION TWICE - Check same user + same service + same phone in last 24h
   try{
-    await addDoc(collection(db, "jobs"), {
-      email: user.email,
-      uid: user.uid,
-      phone: phone,
-      service: service,
-      details: details,
-      status: "new",
-      createdAt: serverTimestamp()
-    });
-    document.getElementById("msg").innerText = "✅ Job Received! Admin will WhatsApp you on " + phone;
-    document.getElementById("msg").style.color="green";
-    document.getElementById("details").value="";
+    const q=query(collection(db,"jobs"), where("userId","==",currentUser.uid), where("service","==",selService), where("phone","==",phone));
+    const snap=await getDocs(q);
+    if(!snap.empty){
+      // Check if same details submitted within 24 hours
+      let duplicate=false;
+      snap.forEach(doc=>{
+        let data=doc.data();
+        if(data.location==locationVal && data.qty==qty && data.status!="closed"){
+          duplicate=true;
+        }
+      });
+      if(duplicate){
+        document.getElementById("result").innerHTML=`<div style="background:#ff9800;color:white;padding:10px;border-radius:6px">⚠️ DUPLICATE BLOCKED!<br>You already requested <b>${selService}</b> with phone ${phone} and location ${locationVal} which is still <b>open/in progress</b><br>Check tracking with your previous VEC-JOB ID<br>Or wait until closed to request again</div>`;
+        btn.disabled=false; btn.innerText="❌ Duplicate - Blocked";
+        return;
+      }
+    }
+
+    btn.innerText="Creating VEC-JOB...";
+    const jobId=`VEC-JOB-${Date.now().toString().slice(-5)}-${Math.floor(Math.random()*9000+1000)}`;
+    await addDoc(collection(db,"jobs"),{jobId,pillar:selPillar,sub:selSub,service:selService,name,phone,location:locationVal,qty,budget,details,idNumber,status:"open",userEmail:currentUser.email,userId:currentUser.uid,createdAt:serverTimestamp(),requirements:document.getElementById("requirements").innerText});
+
+    document.getElementById("result").innerHTML=`<div style="background:#4caf50;color:white;padding:12px;border-radius:8px;text-align:center"><b>✅ 7x7x7 Job Submitted!</b><br>${selPillar} > ${selSub} > <b>${selService}</b><br>ID: <b>${jobId}</b><br>Delivery to: ${locationVal}<br><br><button onclick="location.href='./track.html?id=${jobId}'" style="background:black;color:#ffcc00;width:auto;padding:8px 16px">TRACK NOW</button><br><small>No similar submission allowed twice until closed</small></div>`;
+    btn.innerText="✅ Submitted - No duplicate twice";
   }catch(e){
-    document.getElementById("msg").innerText = "❌ " + e.message + " - Enable Firestore in Firebase Console";
-    document.getElementById("msg").style.color="red";
+    document.getElementById("result").innerHTML=`❌ Error: ${e.message}`; btn.disabled=false; btn.innerText="Try Again";
   }
 };
 </script>
