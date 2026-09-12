@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OLEXpress - VecctaPivot</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+*{box-sizing:border-box;font-family:Arial}body{margin:0;background:#f5f5f5}
+.top{background:#000;color:#fff;padding:14px;text-align:center}
+.top h1{margin:0;color:#ff6a00;font-size:22px}.top small{color:#aaa}
+.search{padding:12px;background:#fff;display:flex;flex-direction:column;gap:10px}
+.search input{padding:14px;border:2px solid #eee;border-radius:12px;font-size:15px;width:100%}
+#map{height:42vh;width:100%}
+.info{background:#fff;margin:10px;border-radius:14px;padding:14px;display:none}
+.info.show{display:block}
+.badge{background:#fff2e8;color:#ff6a00;padding:4px 8px;border-radius:8px;font-size:12px;font-weight:bold}
+.price{background:#ff6a00;color:#fff;padding:16px;border-radius:12px;text-align:center;margin:12px 0}
+.price.big{font-size:28px;font-weight:900}
+.btn{background:#000;color:#fff;border:0;padding:14px;border-radius:12px;width:100%;font-weight:bold}
+.btn2{background:#ff6a00;color:#fff;border:0;padding:14px;border-radius:12px;width:100%;font-weight:bold;margin-top:8px}
+.driver-card{border:1px solid #eee;padding:12px;border-radius:12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;background:#fff}
+.drivers{display:none;padding:10px}.drivers.show{display:block}
+.dot{width:10px;height:10px;background:#0c0;border-radius:50%;display:inline-block;margin-right:4px}
+</style>
+</head>
+<body>
+<div class="top">
+<h1>OLEXpress <span style="color:#fff">by VecctaPivot</span></h1>
+<small>Type FROM & TO - See Map, KM & Cost - Drivers</small>
+</div>
+<div class="search">
+<input id="from" list="places" placeholder="FROM: e.g. Olkalou Town" value="Olkalou Town">
+<input id="to" list="places" placeholder="TO: e.g. Nakuru Town" value="">
+<datalist id="places">
+<option value="Olkalou Town"><option value="Njabini"><option value="Engineer"><option value="Kasuku"><option value="Nakuru Town"><option value="Gilgil"><option value="Nyandarua Hospital"><option value="Ol Jorok">
+</datalist>
+<button class="btn" onclick="calcRoute()">Show Map, KM & Cost</button>
+</div>
+<div id="map"></div>
+<div id="info" class="info">
+<div style="display:flex;justify-content:space-between"><span>FROM <b id="fTxt">-</b></span><span>TO <b id="tTxt">-</b></span></div>
+<div style="display:flex;gap:6px;margin:8px 0"><span class="badge" id="kmTxt">0 km</span><span class="badge" id="timeTxt">~0 min</span><span class="badge">40/km + 200</span></div>
+<div class="price"><div style="font-size:12px">TOTAL COST FIXED</div><div class="big" id="priceBig">KES 0</div><div style="font-size:12px" id="formula">-</div></div>
+<button class="btn2" onclick="showDrivers()">Confirm Ride - Show Drivers</button>
+</div>
+<div id="drivers" class="drivers">
+<h3>Available Drivers Near You:</h3>
+<div class="driver-card"><div><b>Driver James KXXX 123A</b><br><small><span class="dot"></span>5 min away - Toyota Vitz - 4.8*</small></div><div><b>KES 3,000</b><br><small style="color:green">Available</small></div></div>
+<div class="driver-card"><div><b>Driver Peter KYYY 456B</b><br><small><span class="dot"></span>7 min away - Noah - 4.9*</small></div><div><b>KES 3,200</b><br><small style="color:green">Available</small></div></div>
+<div class="driver-card"><div><b>Driver Wafula KZZZ 789C</b><br><small><span class="dot"></span>10 min away - SUV - 4.7*</small></div><div><b>KES 3,800</b><br><small style="color:green">Available</small></div></div>
+<button class="btn" onclick="alert('Ride Confirmed! Driver James coming in 5 min. '+document.getElementById('priceBig').innerText)">Book Driver 5 Min Away</button>
+</div>
+<script>
+var map=L.map('map').setView([-0.308,36.378],11);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+var locs={"Olkalou Town":[-0.308,36.378],"Njabini":[-0.52,36.66],"Engineer":[-0.55,36.45],"Kasuku":[-0.35,36.4],"Nakuru Town":[-0.303,36.08],"Gilgil":[-0.49,36.38]};
+var line=null,m1=null,m2=null;
+function calcRoute(){var f=document.getElementById('from').value.trim();var t=document.getElementById('to').value.trim();var p1=locs[f],p2=locs[t];if(!p1||!p2){alert('Type Olkalou Town, Njabini, Nakuru Town etc');return;}
+if(m1)map.removeLayer(m1);if(m2)map.removeLayer(m2);if(line)map.removeLayer(line);
+m1=L.marker(p1).addTo(map).bindPopup(f);m2=L.marker(p2).addTo(map).bindPopup(t);line=L.polyline([p1,p2],{color:'#ff6a00',weight:5}).addTo(map);map.fitBounds([p1,p2],{padding:[40,40]});
+function hav(a,b,c,d){var R=6371,dLa=(c-a)*3.14159/180,dLo=(d-b)*3.14159/180,aa=Math.sin(dLa/2)**2+Math.cos(a*3.14159/180)*Math.cos(c*3.14159/180)*Math.sin(dLo/2)**2;return R*2*Math.atan2(Math.sqrt(aa),Math.sqrt(1-aa));}
+var d=hav(p1[0],p1[1],p2[0],p2[1])*1.35;var tm=Math.round(d/0.55);var price=Math.round((d*40+200)/100)*100;if(price<300)price=300;
+document.getElementById('fTxt').innerText=f;document.getElementById('tTxt').innerText=t;document.getElementById('kmTxt').innerText=d.toFixed(1)+' km';document.getElementById('timeTxt').innerText='~'+tm+' min';document.getElementById('priceBig').innerText='KES '+price.toLocaleString();document.getElementById('formula').innerText=d.toFixed(1)+' km x 40 + 200 = KES '+price+' FIXED';document.getElementById('info').classList.add('show');}
+function showDrivers(){document.getElementById('drivers').classList.add('show');}
+</script>
+</body>
+</html>
