@@ -1,241 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VECCTA - World Class 7 Pillar Service Request</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VECCTA - Popup Menu Job Request</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-body{background:#fafafb;color:#111;min-height:100vh}
-.hero{background:linear-gradient(180deg,#000 0%,#111 100%);color:white;padding:28px 16px 40px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 20%,#ffcc00 0%,transparent 40%);opacity:0.15}
-.hero h1{font-size:32px;font-weight:800;letter-spacing:-1px;position:relative}
-.hero h1 span{color:#ffcc00}
-.hero p{opacity:0.7;margin-top:8px;font-size:14px;position:relative}
-.progress{max-width:900px;margin:-18px auto 0;background:white;border-radius:16px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 10px 40px rgba(0,0,0,0.08);position:relative;border:1px solid #eee}
-.prog-step{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#999}
-.prog-step.num{width:26px;height:26px;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.3s}
-.prog-step.active{color:#111}.prog-step.active.num{background:#ffcc00;color:black}
-.prog-step.done{color:#16a34a}.prog-step.done.num{background:#16a34a;color:white}
-.bar{height:2px;flex:1;background:#eee;margin:0 8px;border-radius:2px;overflow:hidden}
-.bar-fill{height:100%;width:0%;background:#ffcc00;transition:width 0.5s}
-.container{max-width:900px;margin:20px auto;padding:0 12px}
-.card{background:white;border-radius:20px;padding:20px;border:1px solid #eee;box-shadow:0 4px 20px rgba(0,0,0,0.03);margin-bottom:16px}
-.card-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.card-head.icon{width:36px;height:36px;border-radius:10px;background:#000;color:#ffcc00;display:flex;align-items:center;justify-content:center;font-weight:800}
-.card-head b{font-size:15px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:600px){.grid{grid-template-columns:1fr}}
-.tile{padding:16px;border:1.5px solid #eee;border-radius:14px;cursor:pointer;transition:all 0.2s;background:#fafafa;position:relative}
-.tile:hover{border-color:#111;transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,0.06)}
-.tile.active{border-color:#000;background:#000;color:white;box-shadow:0 10px 30px rgba(0,0,0,0.2)}
-.tile.active.sub{color:#ffcc00!important}
-.tile.title{font-weight:700;font-size:13px}
-.tile.sub{font-size:11px;color:#666;margin-top:3px}
-.tile.count{position:absolute;top:10px;right:10px;background:#ffcc00;color:black;font-size:10px;font-weight:800;padding:2px 7px;border-radius:20px}
-.tile.active.count{background:white}
-.breadcrumb{background:linear-gradient(90deg,#fff8e1,#fff);border:1.5px solid #ffcc00;border-radius:12px;padding:10px 14px;font-size:12px;font-weight:600;display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
-.breadcrumb span{opacity:0.4}.breadcrumb.on{opacity:1;color:#111}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:600px){.form-grid{grid-template-columns:1fr}}
-.field label{font-size:11px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;color:#666;margin-bottom:4px;display:block}
-.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:13px;background:white;transition:all 0.2s}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:#111;outline:none;box-shadow:0 0 0 4px rgba(255,204,0,0.2)}
-.file-drop{border:1.5px dashed #ddd;border-radius:10px;padding:16px;text-align:center;background:#fafafa;cursor:pointer;transition:all 0.2s}
-.file-drop:hover{border-color:#111;background:white}
-.btn-primary{width:100%;padding:18px;background:#000;color:white;border:none;border-radius:14px;font-weight:800;font-size:15px;letter-spacing:-0.3px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 12px 30px rgba(0,0,0,0.2)}
-.btn-primary:disabled{background:#e5e7eb;color:#999;transform:none;box-shadow:none}
-.btn-primary.dot{width:8px;height:8px;background:#22c55e;border-radius:50%;animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-#loginGate{position:fixed;inset:0;background:rgba(0,0,0,0.92);backdrop-filter:blur(10px);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
-.gate-card{background:white;border-radius:20px;padding:28px;max-width:380px;width:100%;text-align:center}
-.success{background:linear-gradient(135deg,#16a34a,#15803d);color:white;border-radius:16px;padding:18px;text-align:center}
+body{background:#f8f9fb;color:#111;min-height:100vh}
+.hero{background:#000;color:white;padding:20px;text-align:center}
+.hero h1{font-size:26px;font-weight:800}.hero h1 span{color:#ffcc00}
+.center{max-width:700px;margin:30px auto;padding:0 14px;text-align:center}
+.big-btn{width:100%;padding:22px;background:#000;color:white;border:none;border-radius:18px;font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,0.15)}
+.big-btn small{display:block;font-size:12px;color:#ffcc00;margin-top:4px;font-weight:600}
+.path{background:white;border:2px solid #ffcc00;border-radius:12px;padding:12px;margin:16px 0;font-weight:700;font-size:13px}
+.popup{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
+.popup.show{display:flex}
+.popup-box{background:white;border-radius:20px;width:100%;max-width:500px;max-height:85vh;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:pop 0.25s}
+@keyframes pop{from{transform:scale(0.9);opacity:0}to{transform:scale(1);opacity:1}}
+.popup-head{padding:18px;background:#000;color:white;display:flex;justify-content:space-between;align-items:center}
+.popup-head b{font-size:15px}.popup-head b span{color:#ffcc00}
+.close{width:32px;height:32px;border-radius:50%;background:#222;color:white;border:none;font-size:18px;cursor:pointer}
+.popup-body{padding:14px;overflow:auto;max-height:60vh;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:500px){.popup-body{grid-template-columns:1fr}}
+.opt{padding:14px;border:1.5px solid #eee;border-radius:12px;background:#fafafa;cursor:pointer;text-align:left;transition:0.15s}
+.opt:hover{border-color:#000;transform:translateY(-1px);background:white}
+.opt b{font-size:13px;display:block}.opt small{font-size:11px;color:#666}
+.form-card{background:white;border-radius:18px;padding:18px;border:2px solid #000;text-align:left;margin-top:16px}
+.field{margin-bottom:10px}.field label{font-size:10px;font-weight:800;text-transform:uppercase;color:#666;display:block;margin-bottom:4px}
+.field input,.field select,.field textarea{width:100%;padding:12px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:13px}
+.file{border:1.5px dashed #ddd;border-radius:10px;padding:12px;text-align:center;background:#fafafa}
+.submit{width:100%;padding:16px;background:#16a34a;color:white;border:none;border-radius:12px;font-weight:800;font-size:15px;cursor:pointer;margin-top:10px}
 </style>
 </head>
 <body>
-
-<div id="loginGate"><div class="gate-card"><h2 style="font-weight:800">Login to Submit</h2><p style="color:#666;font-size:13px;margin:10px 0 16px">Browse 7 pillars free. Login required to submit job request.</p><button onclick="location.href='./test-login.html'" style="width:100%;padding:14px;background:#000;color:#ffcc00;border:none;border-radius:10px;font-weight:800">LOGIN WITH GOOGLE</button></div></div>
-
-<div class="hero">
-<h1>VECCTA <span>7×7×7</span></h1>
-<p>World-class government & LPG services • 7 Pillars → 7 Sub Pillars → 7 Sub Sub = 343 Services</p>
-<p id="userInfo" style="margin-top:12px;font-size:12px;color:#ffcc00">Checking account...</p>
+<div class="hero"><h1>VECCTA <span>POPUP MENU</span></h1><p style="opacity:0.6;font-size:12px;margin-top:4px">Simple smart presentable • Pick → Pick → Pick → Fill & Submit</p><p id="userInfo" style="color:#ffcc00;font-size:11px;margin-top:8px"></p></div>
+<div class="center">
+<div class="path" id="path">PILLAR: Not selected → SUB PILLAR: Not selected → SERVICE: Not selected</div>
+<button class="big-btn" onclick="openPillarPopup()">📦 START JOB REQUEST - PICK PILLAR <small>Tap to open 7 Pillars popup menu</small></button>
+<div id="afterPick" style="display:none">
+<div class="form-card"><b>Fill or Upload Details - <span id="serviceName" style="color:#f59e0b"></span></b><div id="req" style="background:#fffbe6;border-radius:8px;padding:8px;font-size:12px;margin:10px 0"></div><div id="form"></div><button class="submit" id="submitBtn" onclick="submitJob()">📦 SUBMIT JOB</button><div id="result" style="margin-top:10px"></div></div>
+</div>
 </div>
 
-<div class="progress">
-<div class="prog-step active" id="p1"><div class="num">1</div> PILLAR</div><div class="bar"><div class="bar-fill" id="bf1" style="width:0%"></div></div>
-<div class="prog-step" id="p2"><div class="num">2</div> SUB PILLAR</div><div class="bar"><div class="bar-fill" id="bf2" style="width:0%"></div></div>
-<div class="prog-step" id="p3"><div class="num">3</div> SERVICE</div><div class="bar"><div class="bar-fill" id="bf3" style="width:0%"></div></div>
-<div class="prog-step" id="p4"><div class="num">4</div> SUBMIT</div>
-</div>
-
-<div class="container">
-
-<div class="breadcrumb" id="breadcrumb">
-<span class="on">Start</span> <span>→</span> <span id="bcPillar">Select Pillar</span> <span>→</span> <span id="bcSub">Sub Pillar</span> <span>→</span> <span id="bcSubSub">Service</span>
-</div>
-
-<div class="card" id="step1">
-<div class="card-head"><div class="icon">1</div><b>Choose Pillar • 7 Pillars</b><span style="margin-left:auto;font-size:11px;background:#ffcc00;padding:3px 8px;border-radius:20px;font-weight:800">STEP 1</span></div>
-<div class="grid" id="pillars"></div>
-</div>
-
-<div class="card" id="step2" style="display:none">
-<div class="card-head"><div class="icon">2</div><b>Choose Sub Pillar • 7 under <span id="pillarName" style="color:#ff9800"></span></b><span style="margin-left:auto;font-size:11px;background:#000;color:#ffcc00;padding:3px 8px;border-radius:20px;font-weight:800">7 OPTIONS</span></div>
-<div class="grid" id="subs"></div>
-</div>
-
-<div class="card" id="step3" style="display:none">
-<div class="card-head"><div class="icon">3</div><b>Choose Service • 7 under <span id="subName" style="color:#ff9800"></span></b><span style="margin-left:auto;font-size:11px;background:#000;color:#ffcc00;padding:3px 8px;border-radius:20px">343 TOTAL</span></div>
-<div class="grid" id="subSubs"></div>
-</div>
-
-<div class="card" id="step4" style="display:none;border:2px solid #000">
-<div class="card-head"><div class="icon" style="background:#ffcc00;color:black">4</div><b>Submit Request • <span id="fullPath" style="font-size:12px"></span></b></div>
-<div id="requirements" style="background:#fafafa;border-radius:10px;padding:12px;font-size:12px;margin-bottom:14px"></div>
-<div class="form-grid" id="dynamicForm"></div>
-<button class="btn-primary" id="submitBtn" onclick="submitJob()"><span class="dot"></span> SUBMIT JOB REQUEST • <span id="serviceBtnName">Select Service</span></button>
-<div id="result" style="margin-top:12px"></div>
-</div>
-
-</div>
+<!-- POPUP 1: PILLAR -->
+<div class="popup" id="popupPillar"><div class="popup-box"><div class="popup-head"><b>PICK <span>7 PILLARS</span></b><button class="close" onclick="closeAll()">×</button></div><div class="popup-body" id="pillarList"></div></div></div>
+<!-- POPUP 2: SUB PILLAR -->
+<div class="popup" id="popupSub"><div class="popup-box"><div class="popup-head"><b>PICK <span>7 SUB PILLARS</span> - <span id="ppPillar"></span></b><button class="close" onclick="closeAll()">×</button></div><div class="popup-body" id="subList"></div></div></div>
+<!-- POPUP 3: SUB SUB -->
+<div class="popup" id="popupSubSub"><div class="popup-box"><div class="popup-head"><b>PICK <span>7 SERVICES</span> - <span id="ppSub"></span></b><button class="close" onclick="closeAll()">×</button></div><div class="popup-body" id="subSubList"></div></div></div>
 
 <script type="module">
-import { auth, db } from "./firebase.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { collection, addDoc, serverTimestamp, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const DATA={
-"1. GOVERNMENT SERVICES":{"KRA Services":["KRA PIN Registration","KRA PIN Retrieval","Tax Compliance Certificate","VAT Filing","PAYE Filing","Withholding Tax Filing","Nil Return Filing"],"eCitizen Services":["Good Conduct Application","Business Name Search","Driving License Application","Birth Certificate Application","Passport Application","Land Search eCitizen","Marriage Certificate App"],"SHA / SHIF Services":["SHA Registration","SHIF Payment","Add Dependants SHA","SHA Card Printing","SHA Claims","SHA Facility Search","SHA Complaint"],"NTSA Services":["Driving License Renewal","Logbook Transfer","Inspection Booking","Smart DL Application","PSV Badge Application","Vehicle Search NTSA","Number Plate Search"],"HELB Services":["HELB Application","HELB Compliance Certificate","HELB Clearance","HELB Repayment","HELB Portal Reset","HELB Statement","HELB Appeal"],"Business Registration":["Business Name Registration","Company Registration","Business Permit","CR12 Form","Business Compliance","Link KRA to Business","Business Renewal"],"Lands & Ardhi":["Land Search","Title Deed Processing","Succession Application","Lease Application","Land Valuation","Land Consent","Land Rates Payment"]},
-"2. CERTIFICATES & DOCUMENTS":{"Birth Certificates":["New Birth Certificate","Late Birth Registration","Birth Certificate Replacement","Birth Certificate Correction","Foreign Birth Certificate","Adoption Certificate","Death Certificate"],"Good Conduct":["New Good Conduct","Good Conduct Renewal","Foreign Good Conduct","Lost Good Conduct Replacement","Good Conduct Correction","Urgent Good Conduct","Company Good Conduct"],"Marriage Certificates":["New Marriage Certificate","Customary Marriage Registration","Marriage Certificate Search","Marriage Replacement","Marriage Correction","Divorce Certificate","Marriage Affidavit"],"ID Services":["New ID Application","ID Replacement","ID Correction","ID Collection","Maiden Name Change","Waiting Card","ID Status Check"],"Passport Services":["New Passport","Passport Renewal","Lost Passport Replacement","Damaged Passport Replacement","Express Passport","Child Passport","Passport Correction"],"Academic Certificates":["KCSE Certificate","KCPE Certificate","Degree Certificate","Transcript Request","Certificate Equation","Certificate Verification","Academic Replacement"],"Legal Documents":["Affidavit Preparation","Document Commissioning","Document Certification","Power of Attorney","Sale Agreement","Will Writing","Oath Preparation"]},
-"3. FINANCIAL SERVICES":{"KRA Returns":["Individual KRA Returns","Company KRA Returns","Nil Returns","VAT Returns","PAYE Returns","Withholding Returns","Rental Income Returns"],"Loan Applications":["Bank Loan Application","SACCO Loan","HELB Loan","Hustler Fund","Women Fund","Youth Fund","Asset Financing"],"SACCO Services":["SACCO Registration","SACCO Loan Application","SACCO Savings","SACCO Dividend","SACCO Statement","SACCO Closure","SACCO Membership"],"Insurance Services":["Car Insurance","Medical Insurance","Life Insurance","Business Insurance","Crop Insurance","Livestock Insurance","Insurance Claim"],"Bank Services":["Bank Account Opening","Bank Statement","Bank Loan","Bank Card","Cheque Book","Bank Transfer","Bank Closure"],"M-Pesa Services":["M-Pesa Till Registration","M-Pesa Paybill Registration","M-Pesa Statement","M-Pesa Reversal","Fuliza Application","M-Shwari Loan","KCB M-Pesa"],"Investment Services":["Money Market Fund","SACCO Investment","Land Investment","Shares Investment","Bond Investment","Chama Registration","Investment Advice"]},
-"4. LPG & ENERGY":{"LPG Refill 6KG":["6KG K-Gas Refill","6KG Total Refill","6KG Pro Gas Refill","6KG Hass Refill","6KG Oilibya Refill","6KG Exchange Refill","6KG New 6KG Cylinder"],"LPG Refill 13KG":["13KG K-Gas Refill","13KG Total Refill","13KG Pro Gas Refill","13KG Hass Refill","13KG Oilibya Refill","13KG Exchange Refill","13KG New 13KG Cylinder"],"LPG Accessories":["Gas Regulator Sale","Gas Hose Pipe Sale","Gas Burner Sale","Cylinder Stand Sale","Gas Lighter Sale","Gas Seal Sale","Gas Valve Sale"],"Gas Installation":["Home Gas Installation","Hotel Gas Installation","School Gas Installation","Pipe Work Installation","Leak Test Service","Safety Check Service","Gas Repair Service"],"Biogas Services":["Biogas Installation","Biogas Repair","Biogas Consultation","Biogas Parts Sale","Biogas Training","Biogas Loan Application","Biogas Subsidy Application"],"Solar Energy":["Solar Installation","Solar Repair","Solar Battery Sale","Solar Panel Sale","Solar Lighting","Solar Water Heater","Solar Consultation"],"Energy Audit":["Home Energy Audit","Business Energy Audit","School Energy Audit","Factory Energy Audit","Energy Audit Report","Energy Certificate","Energy Saving Plan"]},
-"5. PRINTING & CYBER":{"Printing Services":["Black & White Printing","Color Printing","Large Format Printing","Photo Printing","ID Card Printing","Certificate Printing","Bulk Printing"],"Photocopy Services":["Black & White Photocopy","Color Photocopy","Bulk Photocopy","ID Photocopy","Document Photocopy","Double Sided Photocopy","Reduced Photocopy"],"Lamination Services":["ID Lamination","Certificate Lamination","Document Lamination","Photo Lamination","Large Lamination","Cold Lamination","Hot Lamination"],"Typing & CV":["CV Writing","Cover Letter Writing","Typing Services","Document Formatting","Proposal Writing","Report Writing","Application Letter"],"Scanning Services":["Document Scanning","Photo Scanning","ID Scanning","Certificate Scanning","Bulk Scanning","Email Scanning","Cloud Scanning"],"Email & Online":["Email Creation","Email Recovery","Online Application","Government Portal Help","Social Media Setup","Website Application","Online Form Filling"],"Graphic Design":["Logo Design","Poster Design","Banner Design","Business Card Design","Brochure Design","Flyer Design","Brand Design"]},
-"6. EDUCATION & JOBS":{"School Application":["Primary School Application","Secondary School Application","College Application","University Application","International School Application","Scholarship Application","Bursary Application"],"Job Application":["Government Job Application","Private Job Application","NGO Job Application","Teaching Job Application","Nursing Job Application","Internship Application","Casual Job Application"],"CV & Documents":["CV Writing Service","Cover Letter Service","Recommendation Letter","Certificate of Service","Testimonial Letter","Reference Letter","Academic CV"],"Attachment & Internship":["Attachment Letter","Internship Letter","Industrial Attachment Application","Field Attachment Application","Attachment Report","Attachment Logbook","Attachment Evaluation"],"Scholarship Services":["Local Scholarship Application","International Scholarship Application","Scholarship Essay Writing","Scholarship Recommendation","Scholarship Interview Prep","Scholarship Renewal","Scholarship Appeal"],"KUCCPS Services":["KUCCPS Application","KUCCPS Revision","KUCCPS Inter-Institution Transfer","KUCCPS Course Application","KUCCPS Placement Check","KUCCPS Letter Download","KUCCPS Help"],"AJIRA & Digital":["AJIRA Registration","AJIRA Training","Online Work Application","Freelancing Setup","Digital Literacy Training","Computer Training","Online Writing Training"]},
-"7. OTHER SERVICES":{"Courier Services":["Local Courier","Upcountry Courier","International Courier","Document Courier","Parcel Courier","Express Courier","Bulk Courier"],"Branding Services":["T-Shirt Branding","Mug Branding","Cap Branding","Pen Branding","Umbrella Branding","Bag Branding","Vehicle Branding"],"Photography":["Passport Photography","Event Photography","Product Photography","Portrait Photography","Wedding Photography","Graduation Photography","ID Photography"],"Tents & Chairs":["Tent Hire","Chairs Hire","Tables Hire","Decorations","PA System Hire","Lighting Hire","Catering Equipment Hire"],"Public Address":["PA System Hire","Sound System Hire","DJ Services","MC Services","Event Lighting","Stage Setup","Live Streaming"],"Cleaning Services":["Home Cleaning","Office Cleaning","Compound Cleaning","Car Wash","Laundry Services","Carpet Cleaning","Window Cleaning"],"Consultation":["Business Consultation","Legal Consultation","Financial Consultation","Career Consultation","Academic Consultation","LPG Consultation","Government Services Consultation"]}
-};
-
-let selPillar="", selSub="", selService="", currentUser=null;
-onAuthStateChanged(auth, user=>{
-  currentUser=user;
-  document.getElementById("userInfo").innerText=user?`✅ ${user.email} • Ready`:"Browse free • Login to submit";
-  document.getElementById("loginGate").style.display=user?"none":"none";
-});
-
+import {auth,db} from "./firebase.js";import {onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";import {collection,addDoc,serverTimestamp,query,where,getDocs} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const DATA={"1. GOVERNMENT SERVICES":{"KRA Services":["KRA PIN Registration","KRA PIN Retrieval","Tax Compliance Certificate","VAT Filing","PAYE Filing","Withholding Tax Filing","Nil Return Filing"],"eCitizen Services":["Good Conduct Application","Business Name Search","Driving License Application","Birth Certificate Application","Passport Application","Land Search eCitizen","Marriage Certificate App"],"SHA / SHIF Services":["SHA Registration","SHIF Payment","Add Dependants SHA","SHA Card Printing","SHA Claims","SHA Facility Search","SHA Complaint"],"NTSA Services":["Driving License Renewal","Logbook Transfer","Inspection Booking","Smart DL Application","PSV Badge Application","Vehicle Search NTSA","Number Plate Search"],"HELB Services":["HELB Application","HELB Compliance Certificate","HELB Clearance","HELB Repayment","HELB Portal Reset","HELB Statement","HELB Appeal"],"Business Registration":["Business Name Registration","Company Registration","Business Permit","CR12 Form","Business Compliance","Link KRA to Business","Business Renewal"],"Lands & Ardhi":["Land Search","Title Deed Processing","Succession Application","Lease Application","Land Valuation","Land Consent","Land Rates Payment"]},"2. CERTIFICATES & DOCUMENTS":{"Birth Certificates":["New Birth Certificate","Late Birth Registration","Birth Certificate Replacement","Birth Certificate Correction","Foreign Birth Certificate","Adoption Certificate","Death Certificate"],"Good Conduct":["New Good Conduct","Good Conduct Renewal","Foreign Good Conduct","Lost Good Conduct Replacement","Good Conduct Correction","Urgent Good Conduct","Company Good Conduct"],"Marriage Certificates":["New Marriage Certificate","Customary Marriage Registration","Marriage Certificate Search","Marriage Replacement","Marriage Correction","Divorce Certificate","Marriage Affidavit"],"ID Services":["New ID Application","ID Replacement","ID Correction","ID Collection","Maiden Name Change","Waiting Card","ID Status Check"],"Passport Services":["New Passport","Passport Renewal","Lost Passport Replacement","Damaged Passport Replacement","Express Passport","Child Passport","Passport Correction"],"Academic Certificates":["KCSE Certificate","KCPE Certificate","Degree Certificate","Transcript Request","Certificate Equation","Certificate Verification","Academic Replacement"],"Legal Documents":["Affidavit Preparation","Document Commissioning","Document Certification","Power of Attorney","Sale Agreement","Will Writing","Oath Preparation"]},"3. FINANCIAL SERVICES":{"KRA Returns":["Individual KRA Returns","Company KRA Returns","Nil Returns","VAT Returns","PAYE Returns","Withholding Returns","Rental Income Returns"],"Loan Applications":["Bank Loan Application","SACCO Loan","HELB Loan","Hustler Fund","Women Fund","Youth Fund","Asset Financing"],"SACCO Services":["SACCO Registration","SACCO Loan Application","SACCO Savings","SACCO Dividend","SACCO Statement","SACCO Closure","SACCO Membership"],"Insurance Services":["Car Insurance","Medical Insurance","Life Insurance","Business Insurance","Crop Insurance","Livestock Insurance","Insurance Claim"],"Bank Services":["Bank Account Opening","Bank Statement","Bank Loan","Bank Card","Cheque Book","Bank Transfer","Bank Closure"],"M-Pesa Services":["M-Pesa Till Registration","M-Pesa Paybill Registration","M-Pesa Statement","M-Pesa Reversal","Fuliza Application","M-Shwari Loan","KCB M-Pesa"],"Investment Services":["Money Market Fund","SACCO Investment","Land Investment","Shares Investment","Bond Investment","Chama Registration","Investment Advice"]},"4. LPG & ENERGY":{"LPG Refill 6KG":["6KG K-Gas Refill","6KG Total Refill","6KG Pro Gas Refill","6KG Hass Refill","6KG Oilibya Refill","6KG Exchange Refill","6KG New 6KG Cylinder"],"LPG Refill 13KG":["13KG K-Gas Refill","13KG Total Refill","13KG Pro Gas Refill","13KG Hass Refill","13KG Oilibya Refill","13KG Exchange Refill","13KG New 13KG Cylinder"],"LPG Accessories":["Gas Regulator Sale","Gas Hose Pipe Sale","Gas Burner Sale","Cylinder Stand Sale","Gas Lighter Sale","Gas Seal Sale","Gas Valve Sale"],"Gas Installation":["Home Gas Installation","Hotel Gas Installation","School Gas Installation","Pipe Work Installation","Leak Test Service","Safety Check Service","Gas Repair Service"],"Biogas Services":["Biogas Installation","Biogas Repair","Biogas Consultation","Biogas Parts Sale","Biogas Training","Biogas Loan Application","Biogas Subsidy Application"],"Solar Energy":["Solar Installation","Solar Repair","Solar Battery Sale","Solar Panel Sale","Solar Lighting","Solar Water Heater","Solar Consultation"],"Energy Audit":["Home Energy Audit","Business Energy Audit","School Energy Audit","Factory Energy Audit","Energy Audit Report","Energy Certificate","Energy Saving Plan"]},"5. PRINTING & CYBER":{"Printing Services":["Black & White Printing","Color Printing","Large Format Printing","Photo Printing","ID Card Printing","Certificate Printing","Bulk Printing"],"Photocopy Services":["Black & White Photocopy","Color Photocopy","Bulk Photocopy","ID Photocopy","Document Photocopy","Double Sided Photocopy","Reduced Photocopy"],"Lamination Services":["ID Lamination","Certificate Lamination","Document Lamination","Photo Lamination","Large Lamination","Cold Lamination","Hot Lamination"],"Typing & CV":["CV Writing","Cover Letter Writing","Typing Services","Document Formatting","Proposal Writing","Report Writing","Application Letter"],"Scanning Services":["Document Scanning","Photo Scanning","ID Scanning","Certificate Scanning","Bulk Scanning","Email Scanning","Cloud Scanning"],"Email & Online":["Email Creation","Email Recovery","Online Application","Government Portal Help","Social Media Setup","Website Application","Online Form Filling"],"Graphic Design":["Logo Design","Poster Design","Banner Design","Business Card Design","Brochure Design","Flyer Design","Brand Design"]},"6. EDUCATION & JOBS":{"School Application":["Primary School Application","Secondary School Application","College Application","University Application","International School Application","Scholarship Application","Bursary Application"],"Job Application":["Government Job Application","Private Job Application","NGO Job Application","Teaching Job Application","Nursing Job Application","Internship Application","Casual Job Application"],"CV & Documents":["CV Writing Service","Cover Letter Service","Recommendation Letter","Certificate of Service","Testimonial Letter","Reference Letter","Academic CV"],"Attachment & Internship":["Attachment Letter","Internship Letter","Industrial Attachment Application","Field Attachment Application","Attachment Report","Attachment Logbook","Attachment Evaluation"],"Scholarship Services":["Local Scholarship Application","International Scholarship Application","Scholarship Essay Writing","Scholarship Recommendation","Scholarship Interview Prep","Scholarship Renewal","Scholarship Appeal"],"KUCCPS Services":["KUCCPS Application","KUCCPS Revision","KUCCPS Inter-Institution Transfer","KUCCPS Course Application","KUCCPS Placement Check","KUCCPS Letter Download","KUCCPS Help"],"AJIRA & Digital":["AJIRA Registration","AJIRA Training","Online Work Application","Freelancing Setup","Digital Literacy Training","Computer Training","Online Writing Training"]},"7. OTHER SERVICES":{"Courier Services":["Local Courier","Upcountry Courier","International Courier","Document Courier","Parcel Courier","Express Courier","Bulk Courier"],"Branding Services":["T-Shirt Branding","Mug Branding","Cap Branding","Pen Branding","Umbrella Branding","Bag Branding","Vehicle Branding"],"Photography":["Passport Photography","Event Photography","Product Photography","Portrait Photography","Wedding Photography","Graduation Photography","ID Photography"],"Tents & Chairs":["Tent Hire","Chairs Hire","Tables Hire","Decorations","PA System Hire","Lighting Hire","Catering Equipment Hire"],"Public Address":["PA System Hire","Sound System Hire","DJ Services","MC Services","Event Lighting","Stage Setup","Live Streaming"],"Cleaning Services":["Home Cleaning","Office Cleaning","Compound Cleaning","Car Wash","Laundry Services","Carpet Cleaning","Window Cleaning"],"Consultation":["Business Consultation","Legal Consultation","Financial Consultation","Career Consultation","Academic Consultation","LPG Consultation","Government Services Consultation"]}};
+let selP="",selS="",selSS="",currentUser=null;
 const ICONS={"1. GOVERNMENT SERVICES":"🏛️","2. CERTIFICATES & DOCUMENTS":"📜","3. FINANCIAL SERVICES":"💳","4. LPG & ENERGY":"🔥","5. PRINTING & CYBER":"🖨️","6. EDUCATION & JOBS":"🎓","7. OTHER SERVICES":"⚡"};
+onAuthStateChanged(auth,u=>{currentUser=u;document.getElementById("userInfo").innerText=u?`✅ ${u.email} • Ready to submit`:"Browse • Login to submit • Vecctapivotenterprises@gmail.com";});
 
-const pillarsDiv=document.getElementById("pillars");
-Object.keys(DATA).forEach(p=>{
-  let d=document.createElement("div"); d.className="tile";
-  d.innerHTML=`<div class="title">${ICONS[p]||"📦"} ${p}</div><div class="sub">7 sub-pillars • 49 services under this</div><div class="count">7</div>`;
-  d.onclick=()=>{
-    selPillar=p; selSub=""; selService="";
-    document.getElementById("bcPillar").innerText=p.split(".")[1]; document.getElementById("bcPillar").className="on";
-    document.getElementById("pillarName").innerText=p;
-    document.querySelectorAll("#pillars.tile").forEach(e=>e.classList.remove("active")); d.classList.add("active");
-    document.getElementById("p1").classList.add("done"); document.getElementById("p2").classList.add("active"); document.getElementById("bf1").style.width="100%";
-    showSubs(p);
-  };
-  pillarsDiv.appendChild(d);
-});
-
-function showSubs(pillar){
-  document.getElementById("step2").style.display="block"; document.getElementById("step3").style.display="none"; document.getElementById("step4").style.display="none";
-  const subsDiv=document.getElementById("subs"); subsDiv.innerHTML="";
-  Object.keys(DATA[pillar]).forEach(s=>{
-    let d=document.createElement("div"); d.className="tile"; d.innerHTML=`<div class="title">${s}</div><div class="sub">7 services inside • Click to view</div><div class="count">7</div>`;
-    d.onclick=()=>{
-      selSub=s; selService="";
-      document.getElementById("bcSub").innerText=s; document.getElementById("bcSub").className="on";
-      document.getElementById("subName").innerText=s;
-      document.querySelectorAll("#subs.tile").forEach(e=>e.classList.remove("active")); d.classList.add("active");
-      document.getElementById("p2").classList.add("done"); document.getElementById("p3").classList.add("active"); document.getElementById("bf2").style.width="100%";
-      showSubSubs(pillar,s);
-    };
-    subsDiv.appendChild(d);
-  });
-  document.getElementById("step2").scrollIntoView({behavior:"smooth",block:"start"});
+function renderPillars(){
+  const div=document.getElementById("pillarList");div.innerHTML="";
+  Object.keys(DATA).forEach(p=>{let o=document.createElement("div");o.className="opt";o.innerHTML=`<b>${ICONS[p]} ${p}</b><small>7 sub-pillars • Tap to pick</small>`;o.onclick=()=>pickPillar(p);div.appendChild(o);});
 }
+window.openPillarPopup=()=>{renderPillars();document.getElementById("popupPillar").classList.add("show");};
+window.closeAll=()=>{document.querySelectorAll(".popup").forEach(e=>e.classList.remove("show"));};
 
-function showSubSubs(pillar,sub){
-  document.getElementById("step3").style.display="block"; document.getElementById("step4").style.display="none";
-  const subSubsDiv=document.getElementById("subSubs"); subSubsDiv.innerHTML="";
-  DATA[pillar][sub].forEach(s=>{
-    let d=document.createElement("div"); d.className="tile"; d.innerHTML=`<div class="title">${s}</div><div class="sub">${pillar} → ${sub}</div>`;
-    d.onclick=()=>{
-      selService=s;
-      document.getElementById("bcSubSub").innerText=s; document.getElementById("bcSubSub").className="on";
-      document.getElementById("fullPath").innerText=`${pillar} > ${sub} > ${s}`;
-      document.getElementById("serviceBtnName").innerText=s;
-      document.querySelectorAll("#subSubs.tile").forEach(e=>e.classList.remove("active")); d.classList.add("active");
-      document.getElementById("p3").classList.add("done"); document.getElementById("p4").classList.add("active"); document.getElementById("bf3").style.width="100%";
-      showForm(s,sub);
-    };
-    subSubsDiv.appendChild(d);
-  });
-  document.getElementById("step3").scrollIntoView({behavior:"smooth",block:"start"});
+function pickPillar(p){
+  selP=p;selS="";selSS="";
+  document.getElementById("path").innerText=`PILLAR: ${p} → SUB PILLAR: Not selected → SERVICE: Not selected`;
+  document.getElementById("popupPillar").classList.remove("show");
+  // Open next popup - Sub Pillar
+  document.getElementById("ppPillar").innerText=p.split(".")[1];
+  const div=document.getElementById("subList");div.innerHTML="";
+  Object.keys(DATA[p]).forEach(s=>{let o=document.createElement("div");o.className="opt";o.innerHTML=`<b>${s}</b><small>7 services • Tap to pick next</small>`;o.onclick=()=>pickSub(s);div.appendChild(o);});
+  document.getElementById("popupSub").classList.add("show");
 }
-
-function showForm(service,subType){
-  document.getElementById("step4").style.display="block";
-  const reqDiv=document.getElementById("requirements");
-  const formDiv=document.getElementById("dynamicForm");
-  let isLPG=service.includes("Refill")||service.includes("Gas")||subType.includes("LPG");
-  let isKRA=service.includes("KRA")||service.includes("PIN");
-
+function pickSub(s){
+  selS=s;
+  document.getElementById("path").innerText=`PILLAR: ${selP} → SUB PILLAR: ${s} → SERVICE: Not selected`;
+  document.getElementById("popupSub").classList.remove("show");
+  // Open next popup - Sub Sub
+  document.getElementById("ppSub").innerText=s;
+  const div=document.getElementById("subSubList");div.innerHTML="";
+  DATA[selP][s].forEach(serv=>{let o=document.createElement("div");o.className="opt";o.innerHTML=`<b>${serv}</b><small>${selP} → ${s}</small>`;o.onclick=()=>pickSubSub(serv);div.appendChild(o);});
+  document.getElementById("popupSubSub").classList.add("show");
+}
+function pickSubSub(serv){
+  selSS=serv;
+  document.getElementById("path").innerText=`PILLAR: ${selP} → SUB PILLAR: ${selS} → SERVICE: ${serv}`;
+  document.getElementById("popupSubSub").classList.remove("show");
+  // Show form - Fill or upload details and submit - Simple smart presentable
+  document.getElementById("afterPick").style.display="block";
+  document.getElementById("serviceName").innerText=serv;
+  const req=document.getElementById("req");const form=document.getElementById("form");
+  let isLPG=serv.includes("Refill")||selS.includes("LPG");let isKRA=serv.includes("KRA")||serv.includes("PIN");
   if(isLPG){
-    reqDiv.innerHTML=`<b>🔥 ${service}</b> • File upload specific: Empty cylinder photo + Data: Location, Phone`;
-    formDiv.innerHTML=`
-      <div class="field"><label>Cylinder Type *</label><select id="f1"><option value="">Select</option><option>6KG</option><option>13KG</option><option>22.5KG</option><option>50KG</option></select></div>
-      <div class="field"><label>Brand *</label><select id="f2"><option value="">Select Brand</option><option>K-Gas</option><option>Total</option><option>Pro Gas</option><option>Hass</option></select></div>
-      <div class="field"><label>Delivery Location *</label><input id="f3" placeholder="Gilgil, Nakuru..."></div>
-      <div class="field"><label>Phone 07XXXXXXXX *</label><input id="f4" type="tel" placeholder="07XXXXXXXX"></div>
-      <div class="field"><label>Full Name *</label><input id="f5" placeholder="Your full name"></div>
-      <div class="field"><label>Empty Cylinder Photo * 📁</label><div class="file-drop"><input id="f6" type="file" accept="image/*"> Tap to upload cylinder photo</div></div>
-    `;
+    req.innerHTML=`🔥 <b>${serv}</b> - Fill details + Upload empty cylinder photo`;
+    form.innerHTML=`<div class="field"><label>Cylinder Type *</label><select id="f1"><option value="">Select</option><option>6KG</option><option>13KG</option></select></div><div class="field"><label>Brand *</label><select id="f2"><option> K-Gas</option><option>Total</option></select></div><div class="field"><label>Location *</label><input id="f3" placeholder="Gilgil..."></div><div class="field"><label>Phone 07XXXXXXXX *</label><input id="f4" type="tel" placeholder="07XXXXXXXX"></div><div class="field"><label>Full Name *</label><input id="f5" placeholder="Full name"></div><div class="field"><label>Empty Cylinder Photo * 📁 Upload</label><div class="file"><input id="f6" type="file" accept="image/*"></div></div>`;
   } else if(isKRA){
-    reqDiv.innerHTML=`<b>🏛️ ${service}</b> • File upload: ID Front & Back + Data: ID, Email, Phone`;
-    formDiv.innerHTML=`
-      <div class="field"><label>ID Number *</label><input id="f1" placeholder="12345678"></div>
-      <div class="field"><label>Email *</label><input id="f2" type="email" placeholder="email@gmail.com"></div>
-      <div class="field"><label>ID Front Photo * 📁</label><div class="file-drop"><input id="f3" type="file" accept="image/*"> Front</div></div>
-      <div class="field"><label>ID Back Photo * 📁</label><div class="file-drop"><input id="f4" type="file" accept="image/*"> Back</div></div>
-      <div class="field"><label>Phone *</label><input id="f5" type="tel" placeholder="07XXXXXXXX"></div>
-      <div class="field"><label>Full Name *</label><input id="f6" placeholder="As per ID"></div>
-    `;
+    req.innerHTML=`🏛️ <b>${serv}</b> - Fill ID + Upload ID Front & Back`;
+    form.innerHTML=`<div class="field"><label>ID Number *</label><input id="f1" placeholder="12345678"></div><div class="field"><label>Email *</label><input id="f2" type="email" placeholder="email@gmail.com"></div><div class="field"><label>ID Front Photo * 📁</label><div class="file"><input id="f3" type="file" accept="image/*"></div></div><div class="field"><label>ID Back Photo * 📁</label><div class="file"><input id="f4" type="file" accept="image/*"></div></div><div class="field"><label>Phone *</label><input id="f5" type="tel" placeholder="07XXXXXXXX"></div><div class="field"><label>Full Name *</label><input id="f6" placeholder="As per ID"></div>`;
   } else {
-    reqDiv.innerHTML=`<b>📦 ${service}</b> • World-class data entry + file upload if needed • No duplicate twice check`;
-    formDiv.innerHTML=`
-      <div class="field"><label>Full Name *</label><input id="f1" placeholder="Full name"></div>
-      <div class="field"><label>Phone 07XXXXXXXX *</label><input id="f2" type="tel" placeholder="07XXXXXXXX"></div>
-      <div class="field"><label>Location *</label><input id="f3" placeholder="Gilgil, Nakuru..."></div>
-      <div class="field"><label>ID Number *</label><input id="f4" placeholder="ID number - duplicate check"></div>
-      <div class="field"><label>Supporting Document 📁</label><div class="file-drop"><input id="f5" type="file" accept="image/*,application/pdf"> Upload if required</div></div>
-      <div class="field" style="grid-column:1/-1"><label>Details *</label><textarea id="f6" rows="3" placeholder="Describe all details for ${service}"></textarea></div>
-    `;
+    req.innerHTML=`📦 <b>${serv}</b> - Simple: Fill details + Upload if needed`;
+    form.innerHTML=`<div class="field"><label>Full Name *</label><input id="f1" placeholder="Full name"></div><div class="field"><label>Phone 07XXXXXXXX *</label><input id="f2" type="tel" placeholder="07XXXXXXXX"></div><div class="field"><label>Location *</label><input id="f3" placeholder="Location"></div><div class="field"><label>ID Number *</label><input id="f4" placeholder="ID"></div><div class="field"><label>Supporting Document 📁 Upload</label><div class="file"><input id="f5" type="file" accept="image/*,application/pdf"></div></div><div class="field"><label>Details *</label><textarea id="f6" rows="3" placeholder="Details for ${serv}"></textarea></div>`;
   }
-  document.getElementById("step4").scrollIntoView({behavior:"smooth"});
+  document.getElementById("afterPick").scrollIntoView({behavior:"smooth"});
 }
 
 window.submitJob=async()=>{
-  if(!currentUser){ document.getElementById("loginGate").style.display="flex"; return; }
-  if(!selService){ alert("Complete 7→7→7 sequence first"); return; }
-  let btn=document.getElementById("submitBtn"); btn.innerHTML="⏳ Submitting world-class request..."; btn.disabled=true;
-  let data={};
-  for(let i=1;i<=6;i++){ let el=document.getElementById(`f${i}`); if(!el) continue; if(el.type=="file"){ if(el.files[0]) data[`Field${i}`]=el.files[0].name; } else data[`Field${i}`]=el.value; }
-  let phone=Object.values(data).find(v=>String(v).startsWith("07"))||"";
-  if(!phone){ alert("Phone 07XXXXXXXX required"); btn.disabled=false; btn.innerHTML=`<span class="dot"></span> SUBMIT • ${selService}`; return; }
+  if(!currentUser){location.href='./test-login.html';return;}
+  if(!selSS){alert("Pick Pillar → Sub Pillar → Service via popup first");return;}
+  let btn=document.getElementById("submitBtn");btn.innerText="⏳ Submitting...";btn.disabled=true;
+  let data={};for(let i=1;i<=6;i++){let el=document.getElementById(`f${i}`);if(!el)continue;if(el.type=="file"){if(el.files[0])data[`Field${i}`]=el.files[0].name;}else data[`Field${i}`]=el.value;}
+  let phone=Object.values(data).find(v=>String(v).startsWith("07"))||"";if(!phone){alert("Phone 07XXXXXXXX * required");btn.disabled=false;btn.innerText="📦 SUBMIT JOB";return;}
   try{
-    const q=query(collection(db,"jobs"), where("userId","==",currentUser.uid), where("service","==",selService), where("phone","==",phone));
-    const snap=await getDocs(q); let dup=false; snap.forEach(d=>{ if(d.data().status!="closed") dup=true; });
-    if(dup){ document.getElementById("result").innerHTML=`<div style="background:#fef3c7;padding:12px;border-radius:10px;border:1px solid #f59e0b">⚠️ Duplicate blocked - You have open ${selService} with same phone</div>`; btn.disabled=false; return; }
+    const q=query(collection(db,"jobs"),where("userId","==",currentUser.uid),where("service","==",selSS),where("phone","==",phone));const snap=await getDocs(q);let dup=false;snap.forEach(d=>{if(d.data().status!="closed")dup=true;});if(dup){document.getElementById("result").innerHTML=`<div style="background:#fef3c7;padding:10px;border-radius:8px">⚠️ Duplicate - Open ${selSS} with same phone exists</div>`;btn.disabled=false;return;}
     const jobId=`VEC-JOB-${Date.now().toString().slice(-5)}-${Math.floor(Math.random()*9000+1000)}`;
-    await addDoc(collection(db,"jobs"),{jobId,pillar:selPillar,sub:selSub,service:selService,name:data.Field1||currentUser.email,phone:phone,location:data.Field3||"",qty:"1",details:JSON.stringify(data),formData:data,status:"open",userEmail:currentUser.email,userId:currentUser.uid,createdAt:serverTimestamp()});
-    document.getElementById("result").innerHTML=`<div class="success"><b>✅ World-class request submitted!</b><br>${selPillar} → ${selSub} → <b>${selService}</b><br>ID: <b>${jobId}</b><br><br><button onclick="location.href='./track.html?id=${jobId}'" style="background:white;color:#16a34a;padding:10px 18px;border:none;border-radius:8px;font-weight:800;cursor:pointer">TRACK REQUEST →</button></div>`;
-    btn.innerHTML=`✅ Submitted • ${jobId}`; btn.style.background="#16a34a";
-  }catch(e){ document.getElementById("result").innerHTML=`<div style="background:#fee2e2;padding:12px;border-radius:10px">${e.message}</div>`; btn.disabled=false; }
+    await addDoc(collection(db,"jobs"),{jobId,pillar:selP,sub:selS,service:selSS,name:data.Field1||currentUser.email,phone:phone,location:data.Field3||"",details:JSON.stringify(data),formData:data,status:"open",userEmail:currentUser.email,userId:currentUser.uid,createdAt:serverTimestamp()});
+    document.getElementById("result").innerHTML=`<div style="background:#16a34a;color:white;padding:14px;border-radius:12px;text-align:center">✅ Submitted!<br>${selP} > ${selS} > <b>${selSS}</b><br>ID: <b>${jobId}</b><br><br><button onclick="location.href='./track.html?id=${jobId}'" style="background:white;color:#16a34a;padding:8px 16px;border:none;border-radius:8px;font-weight:800">TRACK NOW →</button></div>`;
+    btn.innerHTML=`✅ Done - ${jobId}`;
+  }catch(e){document.getElementById("result").innerText=e.message;btn.disabled=false;}
 };
 </script>
 </body>
