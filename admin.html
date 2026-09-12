@@ -1,54 +1,14 @@
-<!-- Replace admin.html with this BEAUTIFUL version -->
-<!DOCTYPE html><html><head><meta charset="UTF-8"><title>VEC Admin Pro</title>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
-body{background:#f8fafc}
-.header{background:#0f172a;color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center}
-.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;padding:20px}
-.stat{background:#fff;padding:16px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.1);text-align:center}
-.stat b{font-size:22px;display:block}
-.searchBar{padding:0 20px;display:flex;gap:10px}
-.searchBar input{flex:1;padding:12px;border:1px solid #e2e8f0;border-radius:10px}
-.card{background:#fff;margin:12px 20px;padding:16px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.08);border-left:4px solid #0f172a}
-</style></head><body>
-<div class="header"><h2>⚡ VECCTAPIVOT - Checker Panel</h2><span id="status">Tracker Linked ✓</span></div>
-<div class="stats">
-<div class="stat"><b id="cAll">0</b>All</div>
-<div class="stat"><b id="cJob">0</b>Jobs</div>
-<div class="stat"><b id="cT">0</b>Tickets</div>
-<div class="stat"><b id="cQ">0</b>Queue</div>
-<div class="stat"><b id="cCl">0</b>Closed</div>
-</div>
-<div class="searchBar"><input id="search" placeholder="Search TIC-04013 or VEC-JOB or phone" oninput="show()"><button onclick="load()" style="padding:12px 18px;background:#0f172a;color:#fff;border:none;border-radius:10px">Reload</button></div>
-<div id="list" style="margin-top:10px"></div>
-<div id="debug" style="padding:20px;font-size:12px;color:#64748b"></div>
-<script>
-const firebaseConfig={apiKey:"YOURS",authDomain:"YOURS",projectId:"YOURS",storageBucket:"YOURS",messagingSenderId:"YOURS",appId:"YOURS"};
-firebase.initializeApp(firebaseConfig);const db=firebase.firestore();
-let all=[];
-async function load(){
-  try{
-    const j=await db.collection("jobs").get();
-    const t=await db.collection("tickets").get();
-    all=[]; j.forEach(d=>all.push({docId:d.id,col:"jobs",...d.data()})); t.forEach(d=>all.push({docId:d.id,col:"tickets",...d.data()}));
-    document.getElementById('cAll').textContent=all.length;
-    document.getElementById('cJob').textContent=j.size;
-    document.getElementById('cT').textContent=t.size;
-    document.getElementById('debug').innerHTML=`Firebase Project: ${firebaseConfig.projectId} | Jobs: ${j.size} | Tickets: ${t.size} | If 0, check Rules and that submit page uses SAME projectId`;
-    show();
-  }catch(e){document.getElementById('debug').innerHTML="ERROR: "+e.message+" - Set Firestore Rules to allow read,write:true";}
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin GLOBAL — VECCTAPIVOT</title><style>body{background:#0f172a;color:#fff;font-family:system-ui;margin:0;padding:12px}.card{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:12px;margin:10px 0}input,select,textarea{width:100%;padding:10px;margin:5px 0;border-radius:10px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}.btn{padding:10px 14px;border-radius:10px;border:none;font-weight:800;cursor:pointer}.gold{background:#facc15;color:#000}.well{padding:10px;border-radius:10px;margin:6px 0;border:2px solid}.g{border-color:#22c55e;background:#052e16}.r{border-color:#ef4444;background:#450a0a}.y{border-color:#facc15;background:#422006}</style></head><body>
+<div id="login" class="card" style="max-width:400px;margin:40px auto;text-align:center"><h3 style="color:#facc15">Admin Login GLOBAL</h3><input id="pw" type="password" placeholder="veccta2024"><button class="btn gold" style="width:100%" onclick="login()">Login</button><div id="cloudSt" style="font-size:11px;color:#94a3b8;margin-top:8px">Firebase: vecctapivot</div></div>
+<div id="panel" hidden><div style="display:flex;justify-content:space-between;align-items:center"><h3 style="color:#facc15">GLOBAL Admin — <span id="cnt">0</span> jobs — <span id="st" style="font-size:12px;color:#22c55e">Cloud LIVE</span></h3><div><button class="btn gold" onclick="loadCloud()">↻ Cloud Refresh</button><a href="index.html" style="color:#94a3b8;margin-left:8px">Home</a></div></div><input id="q" placeholder="Search..." oninput="render()"><div id="list"></div></div>
+<script type="module">
+import { db } from './firebase.js';
+import { collection, getDocs, doc, updateDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+let JOBS=[];
+window.login=()=>{if(pw.value==='veccta2024'){login.hidden=true; panel.hidden=false; loadCloud()}else alert('wrong')}
+window.loadCloud=async()=>{
+ try{st.textContent='Syncing...'; let snap=await getDocs(query(collection(db,'jobs'), orderBy('createdAt','desc'), limit(200))); JOBS=[]; snap.forEach(d=>{let o=d.data(); o._id=d.id; JOBS.push(o)}); cnt.textContent=JOBS.length; st.textContent=`Cloud LIVE - ${JOBS.length} jobs`; render()}catch(e){st.textContent='❌ '+e.message+' - Check Firestore Rules'; let local=JSON.parse(localStorage.getItem('veccta_jobs')||'[]'); JOBS=local; cnt.textContent=JOBS.length+' local'; render()}
 }
-function show(){
-  const q=document.getElementById('search').value.toUpperCase();
-  const f=all.filter(x=>!q||JSON.stringify(x).toUpperCase().includes(q));
-  document.getElementById('list').innerHTML=f.map(x=>`
-    <div class="card">
-      <div style="display:flex;justify-content:space-between"><b>${x.trackingId||x.ticket||x.id||x.docId}</b><span style="background:#fef3c7;padding:2px 8px;border-radius:20px;font-size:11px">${x.status||'queue'} • ${x.col}</span></div>
-      <div style="font-size:13px;margin-top:6px">${x.service||x.issue||''} | ${x.phone||''} | ${x.clientName||''}</div>
-      <div style="margin-top:6px;font-size:12px">💬 ${x.adminMessage||'No admin reply yet'}</div>
-    </div>`).join('')||'<p style="padding:20px">No jobs/tickets found - Firebase returned 0</p>';
-}
-load();
+window.render=()=>{let qv=(q.value||'').toLowerCase(); let list=JOBS.filter(j=>!qv||JSON.stringify(j).toLowerCase().includes(qv)); let h=''; list.forEach(j=>{h+=`<div class=card><b style="color:#facc15">${j.id}</b> ${j.status} — ${j.logged||''}<br><b>${j.fullService}</b><br><small>${j.clientName} ${j.clientPhone} · ${j.pillar}</small><br><b style="color:#facc15">${j.price?'KSH '+j.price:'No price'}</b><br><input id="p-${j.id}" value="${j.price||''}" placeholder="Price"><select id="s-${j.id}"><option ${j.status==='Logged'?'selected':''}>Logged</option><option ${j.status==='Quoted'?'selected':''}>Quoted</option><option ${j.status==='Paid'?'selected':''}>Paid</option><option ${j.status==='In Progress'?'selected':''}>In Progress</option><option ${j.status==='Done'?'selected':''}>Done</option><option ${j.status==='Revision Needed'?'selected':''}>Revision Needed</option></select><textarea id="m-${j.id}" rows=2 placeholder="Admin message well displayed">${j.adminMessage||''}</textarea><textarea id="r-${j.id}" rows=2 placeholder="Revision red lock" style="border-color:#ef4444">${j.revisionNote||''}</textarea><div style="display:flex;gap:6px;margin-top:6px"><button class="btn gold" onclick="save('${j.id}')">💾 Save to Cloud</button><a href="track.html?job=${j.id}" target="_blank" style="padding:10px;border:1px solid #334155;border-radius:8px;color:#fff;text-decoration:none">Track</a></div></div>`}); document.getElementById('list').innerHTML=h||'<div class=card>No jobs in cloud yet. Submit from job.html</div>'}
+window.save=async(id)=>{let j=JOBS.find(x=>x.id===id); j.price=document.getElementById('p-'+id).value; j.status=document.getElementById('s-'+id).value; j.adminMessage=document.getElementById('m-'+id).value; j.revisionNote=document.getElementById('r-'+id).value; if(j.revisionNote) j.status='Revision Needed'; if(j._id){try{await updateDoc(doc(db,'jobs',j._id),{price:j.price,status:j.status,adminMessage:j.adminMessage,revisionNote:j.revisionNote}); alert('✅ Saved to CLOUD - visible any phone on track.html')}catch(e){alert('Cloud error: '+e.message)}}}
 </script></body></html>
