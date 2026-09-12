@@ -1,106 +1,98 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Job Request - 7 Pillars</title><style>
-body{background:#0f172a;color:#fff;font-family:system-ui;padding:12px;max-width:750px;margin:auto}
-.card{background:#1e293b;padding:16px;border-radius:14px;border:1px solid #334155}
-input,select,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
-button{width:100%;padding:14px;border:none;border-radius:10px;font-weight:900;cursor:pointer;margin-top:8px}
-.btn-y{background:#facc15;color:#000}.dynamic{background:#0f172a;border:1px dashed #facc15;padding:12px;border-radius:10px;margin:8px 0}
-label{font-size:11px;color:#facc15;font-weight:700;margin-top:8px;display:block}
-</style></head><body>
-<div class="card">
-<h2 style="color:#facc15;text-align:center;margin:0">VECCTAPIVOT - 49 SERVICES</h2><p style="text-align:center;color:#94a3b8;font-size:12px">7 Pillars x 7 Services x 7 Subs = 343 options</p>
-<input id="cName" placeholder="Full Name *"><input id="cPhone" placeholder="Phone 07... *">
-<label>PILLAR (7) *</label><select id="pillar" onchange="onPillar()"></select>
-<label>CATEGORY / SERVICE (7 per Pillar) *</label><select id="service" onchange="onService()"></select>
-<label>SUB-SERVICE / SPECIFIC (7 per Service) *</label><select id="sub" onchange="onSub()"></select>
-<div id="dynamicFields" class="dynamic">Select pillar...</div>
-<label>Additional Details</label><textarea id="details" rows="3"></textarea>
-<button class="btn-y" onclick="createJob()">🚀 SUBMIT JOB</button><div id="res"></div>
-<div style="text-align:center;margin-top:10px"><a href="track.html" style="color:#3b82f6">Track Job</a> | <a href="index.html" style="color:#94a3b8">Home</a></div>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Request Job - VECCTA Pivot Enterprises</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:sans-serif;background:#f5f5f5;margin:0;padding:15px}
+.box{background:white;padding:20px;border-radius:10px;max-width:500px;margin:20px auto;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+input,select,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:6px;box-sizing:border-box}
+button{width:100%;padding:12px;background:black;color:#ffcc00;border:none;border-radius:6px;font-weight:bold;font-size:16px;cursor:pointer}
+.top{background:black;color:#ffcc00;padding:12px;border-radius:8px;text-align:center;margin-bottom:15px}
+</style>
+</head>
+<body>
+<div class="top"><b>VECCTA PIVOT ENTERPRISES</b><br><small>Request a Service - Any Phone</small></div>
+
+<div class="box">
+  <h3>📝 Request a Job</h3>
+  <p id="userInfo" style="font-size:12px;color:gray">Checking login...</p>
+  
+  <label>Service Needed</label>
+  <select id="service">
+    <option>KRA PIN / Returns</option>
+    <option>eCitizen Services</option>
+    <option>NTSA TIMS</option>
+    <option>Passport Application</option>
+    <option>Good Conduct</option>
+    <option>HELB Application</option>
+    <option>KUCCPS</option>
+    <option>Business Registration</option>
+    <option>Other Cyber Service</option>
+  </select>
+
+  <label>Your Phone (M-Pesa / WhatsApp)</label>
+  <input id="phone" type="tel" placeholder="07xxxxxxxx">
+
+  <label>Details</label>
+  <textarea id="details" rows="4" placeholder="Explain what you need... e.g. KRA returns for 2023, 2024"></textarea>
+
+  <button id="submitJob">Submit Job Request</button>
+  <p id="msg" style="text-align:center;margin-top:10px;font-weight:bold"></p>
+  
+  <p style="text-align:center;font-size:12px;margin-top:15px">
+    <a href="./dashboard.html">Go to Dashboard</a> | <a href="./index.html">Home</a>
+  </p>
 </div>
-<script>
-const DATA={
-"Digital & Brand Systems":{
- "BRS Registry Filing":["Business Name Registration","Private Ltd (CR1/CR2/CR8)","LLP Registration","Company Search","CR12 & Compliance","Annual Returns","Change of Officials"],
- "Brand Identity Pack":["Logo Design","Brand Manual","Business Card & Letterhead","Poster/Flyer Pack","Social Media Kit","Brand Mockups","Rebrand Package"],
- "Secure Document Vault":["Document Digitization","Cloud Vault Setup","Encrypted Sharing","Access Control Setup","Versioning & Backup","Retrieval Service","Audit Log"],
- "Web & Systems":["Business Website","E-commerce Site","System Development","Domain & Hosting","Payment Integration","SEO Setup","Maintenance"],
- "Creative Production":["Poster Design","Brochure Design","Motion Graphics","Video Editing","Photography","Content Writing","Voice Over"],
- "Digital Marketing":["Social Media Management","Google Ads","Meta Ads","Email Campaign","WhatsApp Marketing","Influencer Link","Analytics Report"],
- "Escrow & Ledger":["Service Escrow Setup","Milestone Ledger","Payment Tracking","Receipt Vault","Reconciliation","Dispute Ledger","Release Approval"]
-},
-"Academic & Testing Logistics":{
- "Mock Archives":["Primary Mocks","Junior Secondary Mocks","Senior Secondary Mocks","College Mocks","KASNEB Mocks","Teacher Guides","Marking Schemes"],
- "Revision Booklets":["CBC Revision","CBE Revision","KCSE Revision","College Revision","Topical Booklets","Quick Notes","Question Banks"],
- "KASNEB Vault":["ATD Materials","CS Materials","CPA Materials","CIFA/CFFE","Past Papers","Study Texts","Revision Kits"],
- "CBC Distribution":["Grade 1-6 Materials","Grade 7-9 Materials","Assessment Tools","Teacher Resources","Learner Workbooks","School Bulk Supply","County Distribution"],
- "Academic Support":["Assignment Help","Research Project","Thesis Writing","Online Classes","Tutoring Link","Proofreading","Plagiarism Check"],
- "Testing & Certification":["PTE Booking","IELTS Booking","TOEFL Link","KASNEB Booking","Driver Test Booking","Computer Packages","Professional Certs"],
- "School Logistics":["Uniform Sourcing","Books Supply","Lab Equipment Link","Furniture Link","School Transport Link","Feeding Program Link","Fee Ledger"]
-},
-"Transport Brokerage Hub":{
- "Executive Rides":["Airport Transfer","Corporate Hire","Wedding Cars","SGR Transfer","Town Service","Upcountry Trip","Hourly Hire"],
- "Courier Runs":["Same Day Courier","Overnight Courier","Document Courier","Parcel Link","E-commerce Delivery","Medical Courier","Bulk Distribution"],
- "Cargo Freight":["Truck Hire - Pickup","Canter 3T","Lorry 5T","Lorry 10T","Trailer Link","Container Link","Cold Chain Link"],
- "Transit Insurance":["Cargo Insurance","Transit Cover","Vehicle Cover Link","Goods in Transit","Marine Link","Claim Processing","Risk Assessment"],
- "Vehicle Sourcing":["Toyota Sourcing","Mazda Sourcing","Honda Sourcing","Budget Search","Import on Behalf","Inspection Link","Logbook Transfer"],
- "Movers & Relocation":["House Movers - 1BR","2BR Movers","3BR+ Movers","Office Move","Inter-County Move","Storage Link","Packing Service"],
- "Fleet Management":["Fleet Tracking Setup","Fuel Ledger","Driver Vetting Link","Maintenance Link","Route Planning","Compliance Check","Fleet Escrow"]
-},
-"Merchandise Sourcing Links":{
- "Farm-Gate Produce":["Maize Sourcing","Potatoes Sourcing","Onions/Tomatoes","Fruits Sourcing","Vegetables Bulk","Dairy Link","Export Grade"],
- "Factory Price Audits":["Factory Verification","Price Audit","MOQ Negotiation","Sample Collection","Quality Check","Quotation Ledger","Supplier Comparison"],
- "Supplier Vetting":["Supplier KYC","Background Check","Site Visit Proxy","Capacity Check","Reference Check","Blacklist Check","Vetted List"],
- "Import Links":["China Import Link","Turkey Import Link","Dubai Import Link","Clearance Link","Shipping Link","Consolidation","Duty Estimate"],
- "Export Links":["Export Documentation","KEBS Link","KPHIS Link","Packaging Link","Buyer Link","Escrow for Export","Logistics Link"],
- "Retail Bulk Supply":["Shop Stock Supply","Supermarket Supply","Hotel Supply","School Supply","Hospital Supply","Hardware Supply","Bulk Negotiation"],
- "Market Linkage":["Market Research","Buyer-Seller Link","Commission Ledger","Escrow for Goods","Delivery Proof","Dispute Handling","Repeat Order System"]
-},
-"Independent Fixer Desk":{
- "Site Inspections":["Land Inspection","House Inspection","Construction Site","Factory Inspection","Shop Inspection","School Inspection","Photo/Video Proof"],
- "Permit Queues":["County Permit Queue","NEMA Queue","Construction Permit","Business Permit Follow-up","Health Permit","Fire Safety Link","Queue Proxy"],
- "Dispute Resolution":["Land Dispute Proxy","Tenant Dispute","Supplier Dispute","Boundary Check","Witness Link","Chiefs Office Link","Documentation"],
- "Ground Proxy":["Document Collection","Document Delivery","Office Visit Proxy","Bank Queue Proxy","School Visit Proxy","Hospital Proxy","Court Registry Proxy"],
- "Verification Services":["ID Verification","Address Verification","Employee Verification","Tenant Verification","Asset Verification","Business Verification","Next of Kin Check"],
- "Due Diligence":["Land Search Proxy","Company Search Proxy","Vehicle Search","Background Due Diligence","Title Verification","Compliance Check","Report Compilation"],
- "Emergency Fixer":["Urgent Document Fix","Urgent Permit Fix","Urgent Inspection","After Hours Proxy","Weekend Queue","Remote Area Proxy","Crisis Ledger"]
-},
-"General Agency Core":{
- "Cross-Sector Retainers":["Business Retainer","Personal Retainer","Corporate Retainer","Startup Retainer","Family Office Link","Monthly Package","Priority Queue"],
- "Unified Ledgers":["Income Ledger","Expense Ledger","Service Ledger","Client Ledger","Supplier Ledger","Tax Ledger","Reconciliation"],
- "Priority Queues":["VIP Queue","Same Day Queue","Express Queue","Weekend Queue","After Hours","Multi-Service Queue","Escalation Queue"],
- "Escrow Services":["Service Escrow","Goods Escrow","Land Escrow Link","Vehicle Escrow Link","Milestone Release","Dispute Hold","Receipt & Release"],
- "Consultation":["Business Consultation","Career Guidance","Legal Guidance Link","Tax Consultation","Investment Link","Import/Export Advice","Startup Advisory"],
- "Documentation":["Affidavit Link","Agreement Drafting","Business Plan","Company Profile","Proposal Writing","Letter Writing","Certification Link"],
- "Agency Subcontracting":["Subcontractor Sourcing","Quotation Collection","Supervision Proxy","Quality Check","Payment Coordination","Completion Proof","Ledger Closure"]
-},
-"Statutory & Portal Logistics":{
- "eCitizen Services":["Good Conduct - DCI","Business Search","Driving License Renewal","Marriage Services","Land Search Proxy","BRELA Link","General eCitizen Help"],
- "Passports & Immigration":["New Passport Booking","Renewal Booking","Lost Passport","Immigration Status","Appointment Queue","Document Checklist","Collection Proxy"],
- "NTSA TIMS":["Logbook Search","Vehicle Transfer","Driving License Check","PSV Compliance","Inspection Booking","Number Plate Link","TIMS Account Help"],
- "SHA/SHIF & Health":["SHA Registration","SHIF Payment","Means Testing Help","Facility Link","Claim Follow-up","Card Collection","Dependent Addition"],
- "KRA iTax":["KRA PIN Registration","Nil Returns","Employment Returns","Business Returns","TCC Application","Tax Compliance","iTax Account Recovery"],
- "ArdhiSasa & Lands":["Land Search","Stamp Duty Help","Transfer Queue","ArdhiSasa Account","Green Card Check","Map Request Link","Consent Link"],
- "DCI & Statutory Docs":["Police Clearance Follow-up","Lost Document Report Link","OB Processing Link","Document Certification","Commissioner of Oaths Link","Huduma Center Queue","Statutory Declaration"]
-}
-};
 
-const SERVICE_CONFIG={
-"Logo Design":{type:"both", accept:".png,.jpg,.pdf,.ai"},
-"BRS Registry Filing":{type:"data"}, "Mock Archives":{type:"file", accept:".pdf"}, "Executive Rides":{type:"data"},
-"Farm-Gate Produce":{type:"data"}, "Site Inspections":{type:"both", accept:".jpg,.mp4,.pdf"},
-"eCitizen Services":{type:"file", accept:".pdf,.jpg"}, "KRA iTax":{type:"file", accept:".pdf,.jpg"},
-"default":{type:"both", accept:".pdf,.jpg,.png,.docx"}
-};
+<script type="module">
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-let upFile="", upData="";
-function getCfg(){ return SERVICE_CONFIG[service.value] || SERVICE_CONFIG[document.getElementById('pillar').value] || SERVICE_CONFIG["default"]; }
-function onPillar(){ let p=pillar.value; service.innerHTML=Object.keys(DATA[p]||{}).map(k=>`<option>${k}</option>`).join(''); onService(); }
-function onService(){ let p=pillar.value, s=service.value; let subs=DATA[p]?.[s]||["General"]; sub.innerHTML=subs.map(x=>`<option>${x}</option>`).join(''); render(); }
-function onSub(){ render(); }
-function render(){ let cfg=getCfg(); let p=pillar.value, s=service.value, ss=sub.value; let html=`<b style="color:#facc15;font-size:11px">REQUIREMENT FOR: ${p} > ${s} > ${ss} [${cfg.type.toUpperCase()}]</b><br><label>Specific Details for ${ss} *</label><input id="req_detail" placeholder="Describe ${ss}">`; if(cfg.type=='file'||cfg.type=='both'){ html+=`<label>UPLOAD FILE</label><input type="file" id="fUp" accept="${cfg.accept||''}" onchange="hFile(this)"><small id="fName" style="color:#22c55e"></small>`; } dynamicFields.innerHTML=html; }
-function hFile(i){ if(i.files[0]){ upFile=i.files[0].name; fName.textContent='Selected: '+upFile; let r=new FileReader(); r.onload=e=>{upData=e.target.result.slice(0,70000)}; r.readAsDataURL(i.files[0]); } }
-function getJobs(){try{return JSON.parse(localStorage.getItem('veccta_jobs')||'[]')}catch(e){return []}}
-function saveJobs(j){localStorage.setItem('veccta_jobs',JSON.stringify(j)); localStorage.setItem('karanu_jobs',JSON.stringify(j));}
-function createJob(){ if(!cName.value||!cPhone.value){alert('Name & Phone required');return;} let id='JOB-'+Date.now().toString().slice(-6); let job={id,clientName:cName.value,clientPhone:cPhone.value,pillar:pillar.value,service:service.value,subService:sub.value,fullService:`${pillar.value} > ${service.value} > ${sub.value}`,requirements:{detail:document.getElementById('req_detail')?.value||''},fileName:upFile,fileData:upData,details:details.value,requirementType:getCfg().type,price:'',status:'Logged',adminMessage:'Job received - we will quote',revisionNote:'',revisionReply:'',locked:false,logged:new Date().toLocaleString()}; let jobs=getJobs(); jobs.push(job); saveJobs(jobs); res.innerHTML=`<div style="background:#052e16;padding:12px;border-radius:10px;border:1px solid #22c55e;text-align:center"><b style="color:#22c55e">✅ JOB SUBMITTED</b><br><span style="font-size:22px;color:#facc15;font-weight:900">${id}</span><br><small>${job.fullService}</small><br><a href="track.html?job=${id}" style="background:#facc15;color:#000;padding:10px 16px;border-radius:8px;text-decoration:none;display:inline-block;margin-top:8px;font-weight:800">TRACK</a></div>`; }
-(function init(){ pillar.innerHTML=Object.keys(DATA).map(k=>`<option>${k}</option>`).join(''); onPillar(); })();
-</script></body></html>
+// 1. Check if logged in - if not, force to test-login.html (your rule: sign up only when requesting)
+onAuthStateChanged(auth, (user)=>{
+  if(!user){
+    window.location.href="./test-login.html";
+    return;
+  }
+  document.getElementById("userInfo").innerText = "Logged in as: " + user.email;
+});
+
+document.getElementById("submitJob").onclick = async ()=>{
+  const service = document.getElementById("service").value;
+  const details = document.getElementById("details").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const user = auth.currentUser;
+  
+  if(!user){ window.location.href="./test-login.html"; return; }
+  if(!phone || !details){
+    document.getElementById("msg").innerText = "❌ Add phone & details";
+    document.getElementById("msg").style.color="red";
+    return;
+  }
+  
+  document.getElementById("msg").innerText = "⏳ Sending to admin...";
+  document.getElementById("msg").style.color="orange";
+  
+  try{
+    await addDoc(collection(db, "jobs"), {
+      email: user.email,
+      uid: user.uid,
+      phone: phone,
+      service: service,
+      details: details,
+      status: "new",
+      createdAt: serverTimestamp()
+    });
+    document.getElementById("msg").innerText = "✅ Job Received! Admin will WhatsApp you on " + phone;
+    document.getElementById("msg").style.color="green";
+    document.getElementById("details").value="";
+  }catch(e){
+    document.getElementById("msg").innerText = "❌ " + e.message + " - Enable Firestore in Firebase Console";
+    document.getElementById("msg").style.color="red";
+  }
+};
+</script>
+</body>
+</html>
