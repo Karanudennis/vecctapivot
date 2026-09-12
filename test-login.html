@@ -1,39 +1,51 @@
 <!DOCTYPE html>
 <html>
-<head><title>VECCTA Login</title></head>
-<body style="font-family:sans-serif; padding:40px; background:#f5f5f5; text-align:center">
-<h2>🔥 VECCTA - Login</h2>
-<p>You already have an account: denniskmuthoni@gmail.com</p>
-<input id="email" placeholder="email" value="denniskmuthoni@gmail.com" style="padding:12px; width:260px;"><br><br>
-<input id="password" type="password" placeholder="password" style="padding:12px; width:260px;"><br><br>
-<button id="loginBtn" style="padding:12px 25px; background:black; color:white; border:none; cursor:pointer; margin:5px;">Log In</button>
-<button id="signupBtn" style="padding:12px 25px; background:white; color:black; border:1px solid black; cursor:pointer; margin:5px;">Sign Up New User</button>
-<p id="msg" style="margin-top:20px; font-weight:bold;"></p>
+<head>
+<title>VECCTA - Sign Up When You Need Service</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="font-family:sans-serif; text-align:center; padding:30px; background:#f0f2f5">
+
+<h2 style="background:black; color:white; padding:15px; border-radius:8px">VECCTA PIVOT ENTERPRISES</h2>
+<h3>Sign Up to Get Service</h3>
+<p style="color:gray; font-size:13px">Only sign up when you need a service - Gilgil</p>
+
+<div style="background:white; padding:20px; border-radius:10px; max-width:350px; margin:20px auto; box-shadow:0 2px 10px rgba(0,0,0,0.1)">
+<input id="email" placeholder="Your Email" style="width:90%; padding:12px; margin:8px; border:1px solid #ddd; border-radius:6px"><br>
+<input id="password" type="password" placeholder="Password (6+ chars)" style="width:90%; padding:12px; margin:8px; border:1px solid #ddd; border-radius:6px"><br><br>
+
+<button id="signupBtn" style="width:95%; padding:12px; background:#00c853; color:white; border:none; border-radius:6px; font-weight:bold; cursor:pointer">SIGN UP - Get Service</button><br><br>
+<button id="loginBtn" style="width:95%; padding:12px; background:black; color:white; border:none; border-radius:6px; cursor:pointer">LOG IN - Already Have Account?</button>
+
+<p id="msg" style="margin-top:15px; font-weight:bold; color:#333"></p>
+</div>
+
+<a href="./index.html" style="font-size:12px; color:gray; text-decoration:none">← Back to Open Home Page</a>
 
 <script type="module">
 import { auth } from "./firebase.js";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-document.getElementById("loginBtn").onclick = async () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    document.getElementById("msg").innerText = "✅ LOGGED IN! Welcome to VECCTA, Dennis!";
-  } catch(e) {
-    document.getElementById("msg").innerText = "❌ " + e.message;
-  }
-};
+function goDashboard(){
+  document.getElementById("msg").innerText = "✅ Success! Going to dashboard...";
+  document.getElementById("msg").style.color = "green";
+  setTimeout(()=>{ window.location.href = "./dashboard.html"; }, 1000);
+}
 
 document.getElementById("signupBtn").onclick = async () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  try {
-    await createUserWithEmailAndPassword(auth, email, password);
-    document.getElementById("msg").innerText = "✅ NEW USER CREATED!";
-  } catch(e) {
-    document.getElementById("msg").innerText = "❌ " + e.message;
-  }
+  const email = document.getElementById("email").value.trim();
+  const pass = document.getElementById("password").value;
+  if(!email || !pass) return document.getElementById("msg").innerText = "❌ Fill email & password";
+  try { await createUserWithEmailAndPassword(auth, email, pass); goDashboard(); }
+  catch(e){ document.getElementById("msg").innerText = "❌ " + e.message; }
+};
+
+document.getElementById("loginBtn").onclick = async () => {
+  const email = document.getElementById("email").value.trim();
+  const pass = document.getElementById("password").value;
+  if(!email || !pass) return document.getElementById("msg").innerText = "❌ Fill email & password";
+  try { await signInWithEmailAndPassword(auth, email, pass); goDashboard(); }
+  catch(e){ document.getElementById("msg").innerText = "❌ " + e.message; }
 };
 </script>
 </body>
