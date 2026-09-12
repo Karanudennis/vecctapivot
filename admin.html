@@ -1,14 +1,253 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin GLOBAL — VECCTAPIVOT</title><style>body{background:#0f172a;color:#fff;font-family:system-ui;margin:0;padding:12px}.card{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:12px;margin:10px 0}input,select,textarea{width:100%;padding:10px;margin:5px 0;border-radius:10px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}.btn{padding:10px 14px;border-radius:10px;border:none;font-weight:800;cursor:pointer}.gold{background:#facc15;color:#000}.well{padding:10px;border-radius:10px;margin:6px 0;border:2px solid}.g{border-color:#22c55e;background:#052e16}.r{border-color:#ef4444;background:#450a0a}.y{border-color:#facc15;background:#422006}</style></head><body>
-<div id="login" class="card" style="max-width:400px;margin:40px auto;text-align:center"><h3 style="color:#facc15">Admin Login GLOBAL</h3><input id="pw" type="password" placeholder="veccta2024"><button class="btn gold" style="width:100%" onclick="login()">Login</button><div id="cloudSt" style="font-size:11px;color:#94a3b8;margin-top:8px">Firebase: vecctapivot</div></div>
-<div id="panel" hidden><div style="display:flex;justify-content:space-between;align-items:center"><h3 style="color:#facc15">GLOBAL Admin — <span id="cnt">0</span> jobs — <span id="st" style="font-size:12px;color:#22c55e">Cloud LIVE</span></h3><div><button class="btn gold" onclick="loadCloud()">↻ Cloud Refresh</button><a href="index.html" style="color:#94a3b8;margin-left:8px">Home</a></div></div><input id="q" placeholder="Search..." oninput="render()"><div id="list"></div></div>
-<script type="module">
-import { db } from './firebase.js';
-import { collection, getDocs, doc, updateDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-let JOBS=[];
-window.login=()=>{if(pw.value==='veccta2024'){login.hidden=true; panel.hidden=false; loadCloud()}else alert('wrong')}
-window.loadCloud=async()=>{
- try{st.textContent='Syncing...'; let snap=await getDocs(query(collection(db,'jobs'), orderBy('createdAt','desc'), limit(200))); JOBS=[]; snap.forEach(d=>{let o=d.data(); o._id=d.id; JOBS.push(o)}); cnt.textContent=JOBS.length; st.textContent=`Cloud LIVE - ${JOBS.length} jobs`; render()}catch(e){st.textContent='❌ '+e.message+' - Check Firestore Rules'; let local=JSON.parse(localStorage.getItem('veccta_jobs')||'[]'); JOBS=local; cnt.textContent=JOBS.length+' local'; render()}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VECCTAPIVOT Admin Pro - Full System</title>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{background:#f1f5f9;color:#0f172a}
+/* LOGIN */
+#loginScreen{height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#1e293b)}
+.loginCard{background:#fff;width:400px;padding:32px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.loginCard h1{font-size:22px;text-align:center}
+.loginCard p{font-size:12px;color:#64748b;text-align:center;margin-top:6px}
+.inputGroup{position:relative;margin-top:16px}
+.inputGroup input{width:100%;padding:14px 44px 14px 14px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;outline:none}
+.inputGroup input:focus{border-color:#0f172a}
+.eyeBtn{position:absolute;right:8px;top:8px;background:#f1f5f9;border:none;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700}
+.mainBtn{width:100%;margin-top:16px;padding:14px;background:#0f172a;color:#fff;border:none;border-radius:12px;font-weight:700;cursor:pointer;font-size:14px}
+.mainBtn:hover{background:#000}
+.linkRow{display:flex;justify-content:space-between;margin-top:12px}
+.linkRow span{font-size:11px;color:#2563eb;cursor:pointer;font-weight:600}
+.error{color:#ef4444;font-size:11px;margin-top:8px;text-align:center}
+.forgotBox{display:none;margin-top:16px;background:#f8fafc;padding:14px;border-radius:12px;border:1px dashed #cbd5e1}
+/* ADMIN */
+#adminScreen{display:none}
+.topbar{background:#0f172a;color:#fff;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:5}
+.topbar h2{font-size:18px}
+.badge{background:#10b981;padding:4px 10px;border-radius:20px;font-size:10px}
+.container{padding:20px;max-width:1200px;margin:auto}
+.statsGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.statCard{background:#fff;padding:18px;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);border:1px solid #e2e8f0}
+.statCard b{font-size:28px;display:block}
+.statCard span{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+.toolbar{background:#fff;padding:14px;border-radius:14px;margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.toolbar input{flex:1;min-width:200px;padding:12px;border:1px solid #e2e8f0;border-radius:10px}
+.filterBtn{padding:8px 14px;border:1px solid #e2e8f0;background:#fff;border-radius:20px;cursor:pointer;font-size:12px;font-weight:600}
+.filterBtn.active{background:#0f172a;color:#fff;border-color:#0f172a}
+.jobCard{background:#fff;padding:18px;margin-top:12px;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);border-left:5px solid #0f172a;transition:.2s}
+.jobCard:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.1)}
+.jobHeader{display:flex;justify-content:space-between;align-items:start}
+.jobId{font-weight:800;font-size:15px;letter-spacing:.5px}
+.statusPill{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase}
+.s-queue{background:#fef3c7;color:#92400e} .s-in_progress{background:#dbeafe;color:#1e40af} .s-correction{background:#fee2e2;color:#991b1b} .s-submitted{background:#dcfce7;color:#166534} .s-closed{background:#e2e8f0;color:#475569}
+.meta{font-size:12px;color:#475569;margin-top:8px;line-height:1.6}
+.adminMsg{margin-top:10px;background:#f8fafc;border:1px solid #e2e8f0;padding:10px;border-radius:10px;font-size:12px}
+.actionBtn{margin-top:12px;padding:10px 16px;background:#0f172a;color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:700;font-size:12px}
+/* MODAL */
+#modal{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+#modal.show{display:flex}
+.modalBox{background:#fff;width:480px;max-width:100%;border-radius:20px;padding:24px;max-height:90vh;overflow:auto}
+.modalBox h3{font-size:16px}
+.modalBox select,.modalBox textarea,.modalBox input{width:100%;margin-top:10px;padding:12px;border:1px solid #e2e8f0;border-radius:10px;font-size:13px}
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+<div class="loginCard">
+<h1>VECCTAPIVOT ENTERPRISES</h1>
+<p>Admin • Jobs • Tickets • Tracker Linked</p>
+
+<div class="inputGroup">
+<input id="passInput" type="password" placeholder="Enter Admin Password">
+<button class="eyeBtn" onclick="toggleEye()">👁️ SHOW</button>
+</div>
+
+<button class="mainBtn" onclick="doLogin()">Sign In → Dashboard</button>
+<div class="linkRow">
+<span onclick="showForgot()">Forgot Password?</span>
+<span onclick="alert('Contact owner: vecctapivotenterprises@gmail.com')">Help</span>
+</div>
+<p id="loginError" class="error"></p>
+
+<div id="forgotArea" class="forgotBox">
+<b style="font-size:12px">RESET PASSWORD</b>
+<p style="font-size:10px;margin-top:4px;color:#64748b">Enter security code: VEC-RESET-2025</p>
+<input id="secCode" placeholder="Security Code">
+<input id="newPassInput" placeholder="New Password (min 4 chars)">
+<button class="mainBtn" onclick="doReset()">Reset & Save</button>
+</div>
+
+<p style="font-size:10px;color:#94a3b8;margin-top:16px;text-align:center">Default: VEC2025 | Security: VEC-RESET-2025</p>
+</div>
+</div>
+
+<div id="adminScreen">
+<div class="topbar">
+<h2>📊 Checker Panel - Tracker Linked</h2>
+<div style="display:flex;gap:10px;align-items:center">
+<span class="badge" id="liveBadge">● LIVE</span>
+<button onclick="location.reload()" style="background:#fff;color:#0f172a;border:none;padding:6px 12px;border-radius:8px;font-weight:700;cursor:pointer;font-size:12px">Logout</button>
+</div>
+</div>
+
+<div class="container">
+<div class="statsGrid">
+<div class="statCard"><span>Total</span><b id="cAll">0</b><span>Jobs + Tickets</span></div>
+<div class="statCard"><span>Jobs</span><b id="cJob">0</b><span>VEC-JOB</span></div>
+<div class="statCard"><span>Tickets</span><b id="cT">0</b><span>TIC / VEC-TKT</span></div>
+<div class="statCard"><span>Queue</span><b id="cQ">0</b><span>Pending</span></div>
+<div class="statCard"><span>Closed</span><b id="cCl">0</b><span>Done</span></div>
+</div>
+
+<div class="toolbar">
+<input id="searchInput" placeholder="🔍 Search TIC-04013, VEC-JOB, phone, email" oninput="render()">
+<button class="filterBtn active" onclick="setFilter('all',this)">All</button>
+<button class="filterBtn" onclick="setFilter('jobs',this)">Jobs</button>
+<button class="filterBtn" onclick="setFilter('tickets',this)">Tickets</button>
+<button class="filterBtn" onclick="setFilter('queue',this)">Queue</button>
+<button class="filterBtn" onclick="setFilter('closed',this)">Closed</button>
+<button class="filterBtn" onclick="loadData()">↻ Reload</button>
+</div>
+
+<div id="debugBar" style="margin-top:12px;font-size:11px;background:#fff;padding:10px;border-radius:10px;color:#64748b;border:1px dashed #cbd5e1"></div>
+
+<div id="listArea"></div>
+</div>
+</div>
+
+<div id="modal"><div class="modalBox">
+<h3 id="mTitle">TICKET</h3>
+<p id="mSub" style="font-size:11px;color:#64748b;margin-top:4px"></p>
+<select id="mStatus">
+<option value="queue">📥 Queue / Open</option>
+<option value="in_progress">⚙️ In Progress - Working</option>
+<option value="correction">⚠️ Correction - Client must edit</option>
+<option value="submitted">📤 Submitted / Ready for Pickup</option>
+<option value="closed">✅ Closed - Satisfied</option>
+</select>
+<textarea id="mMessage" rows="5" placeholder="Write message that client will see in track.html with time..."></textarea>
+<input id="mUnlock" placeholder="If correction: fields to unlock e.g. idPhoto, kraPin" style="display:none">
+<div style="display:flex;gap:8px;margin-top:12px">
+<button class="mainBtn" style="flex:1;margin:0" onclick="saveUpdate()">💾 SAVE → Update Tracker</button>
+<button onclick="closeModal()" style="flex:1;padding:14px;background:#e2e8f0;border:none;border-radius:12px;font-weight:700;cursor:pointer">Cancel</button>
+</div>
+</div></div>
+
+<script>
+// ================== CONFIG - CHANGE HERE ==================
+let ADMIN_PASS = localStorage.getItem('VEC_ADMIN_PASS') || "VEC2025";
+const RESET_CODE = "VEC-RESET-2025";
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY_HERE",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_BUCKET",
+  messagingSenderId: "YOUR_SENDER",
+  appId: "YOUR_APP_ID"
+};
+// =========================================================
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+let allData=[],currentFilter='all',editId=null,editCol=null;
+
+function toggleEye(){
+  const p=document.getElementById('passInput');
+  const b=document.querySelector('.eyeBtn');
+  if(p.type==='password'){p.type='text';b.textContent='🙈 HIDE';}else{p.type='password';b.textContent='👁️ SHOW';}
 }
-window.render=()=>{let qv=(q.value||'').toLowerCase(); let list=JOBS.filter(j=>!qv||JSON.stringify(j).toLowerCase().includes(qv)); let h=''; list.forEach(j=>{h+=`<div class=card><b style="color:#facc15">${j.id}</b> ${j.status} — ${j.logged||''}<br><b>${j.fullService}</b><br><small>${j.clientName} ${j.clientPhone} · ${j.pillar}</small><br><b style="color:#facc15">${j.price?'KSH '+j.price:'No price'}</b><br><input id="p-${j.id}" value="${j.price||''}" placeholder="Price"><select id="s-${j.id}"><option ${j.status==='Logged'?'selected':''}>Logged</option><option ${j.status==='Quoted'?'selected':''}>Quoted</option><option ${j.status==='Paid'?'selected':''}>Paid</option><option ${j.status==='In Progress'?'selected':''}>In Progress</option><option ${j.status==='Done'?'selected':''}>Done</option><option ${j.status==='Revision Needed'?'selected':''}>Revision Needed</option></select><textarea id="m-${j.id}" rows=2 placeholder="Admin message well displayed">${j.adminMessage||''}</textarea><textarea id="r-${j.id}" rows=2 placeholder="Revision red lock" style="border-color:#ef4444">${j.revisionNote||''}</textarea><div style="display:flex;gap:6px;margin-top:6px"><button class="btn gold" onclick="save('${j.id}')">💾 Save to Cloud</button><a href="track.html?job=${j.id}" target="_blank" style="padding:10px;border:1px solid #334155;border-radius:8px;color:#fff;text-decoration:none">Track</a></div></div>`}); document.getElementById('list').innerHTML=h||'<div class=card>No jobs in cloud yet. Submit from job.html</div>'}
-window.save=async(id)=>{let j=JOBS.find(x=>x.id===id); j.price=document.getElementById('p-'+id).value; j.status=document.getElementById('s-'+id).value; j.adminMessage=document.getElementById('m-'+id).value; j.revisionNote=document.getElementById('r-'+id).value; if(j.revisionNote) j.status='Revision Needed'; if(j._id){try{await updateDoc(doc(db,'jobs',j._id),{price:j.price,status:j.status,adminMessage:j.adminMessage,revisionNote:j.revisionNote}); alert('✅ Saved to CLOUD - visible any phone on track.html')}catch(e){alert('Cloud error: '+e.message)}}}
-</script></body></html>
+function doLogin(){
+  const v=document.getElementById('passInput').value;
+  if(v===ADMIN_PASS){
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('adminScreen').style.display='block';
+    loadData();
+  }else{document.getElementById('loginError').textContent='Wrong password. Current: '+ADMIN_PASS;}
+}
+function showForgot(){document.getElementById('forgotArea').style.display='block';}
+function doReset(){
+  if(document.getElementById('secCode').value!==RESET_CODE) return alert('Wrong security code. Use: '+RESET_CODE);
+  const np=document.getElementById('newPassInput').value;
+  if(np.length<4) return alert('Password too short');
+  localStorage.setItem('VEC_ADMIN_PASS',np); ADMIN_PASS=np;
+  alert('Password updated to: '+np); document.getElementById('forgotArea').style.display='none';
+}
+
+async function loadData(){
+  document.getElementById('debugBar').textContent='Loading from Firebase... Project: '+firebaseConfig.projectId;
+  try{
+    const jSnap=await db.collection("jobs").orderBy("createdAt","desc").get().catch(()=>db.collection("jobs").get());
+    const tSnap=await db.collection("tickets").orderBy("createdAt","desc").get().catch(()=>db.collection("tickets").get());
+    allData=[];
+    jSnap.forEach(d=>allData.push({docId:d.id,col:'jobs',trackingId:d.data().trackingId||d.id,...d.data()}));
+    tSnap.forEach(d=>allData.push({docId:d.id,col:'tickets',trackingId:d.data().trackingId||d.data().ticket||d.id,...d.data()}));
+    document.getElementById('cAll').textContent=allData.length;
+    document.getElementById('cJob').textContent=jSnap.size;
+    document.getElementById('cT').textContent=tSnap.size;
+    document.getElementById('cQ').textContent=allData.filter(x=>['queue','open',undefined,null,''].includes(x.status)).length;
+    document.getElementById('cCl').textContent=allData.filter(x=>x.status==='closed').length;
+    document.getElementById('debugBar').innerHTML=`✅ Firebase Connected: <b>${firebaseConfig.projectId}</b> | Jobs: ${jSnap.size} | Tickets: ${tSnap.size} | If 0, Firestore Rules must be <code>allow read,write:if true</code> and submit page must use SAME config`;
+    render();
+  }catch(e){
+    document.getElementById('debugBar').innerHTML=`🔥 Firebase Error: ${e.message} <br> Fix: Firebase → Firestore → Rules → set to: allow read, write: if true;`;
+  }
+}
+
+function setFilter(f,btn){
+  currentFilter=f;
+  document.querySelectorAll('.filterBtn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  render();
+}
+
+function render(){
+  const q=document.getElementById('searchInput').value.toUpperCase();
+  let list=allData.filter(x=>{
+    if(q && !JSON.stringify(x).toUpperCase().includes(q)) return false;
+    if(currentFilter==='jobs') return x.col==='jobs';
+    if(currentFilter==='tickets') return x.col==='tickets';
+    if(currentFilter==='queue') return ['queue','open',undefined,''].includes(x.status)|| x.status==='in_progress';
+    if(currentFilter==='closed') return x.status==='closed';
+    return true;
+  });
+  document.getElementById('listArea').innerHTML=list.map(x=>{
+    const st=x.status||'queue';
+    return `<div class="jobCard">
+      <div class="jobHeader"><span class="jobId">${x.trackingId}</span><span class="statusPill s-${st}">${st} • ${x.col}</span></div>
+      <div class="meta">👤 ${x.clientName||x.name||'-'} | 📞 ${x.phone||''} | ✉️ ${x.email||''}<br>📦 ${x.pillar||''} ${x.subPillar||''} ${x.service||x.issue||''} <br>🕒 ${x.createdAt? new Date(x.createdAt.seconds*1000).toLocaleString():''}</div>
+      <div class="adminMsg">💬 Tracker shows: <b>${x.adminMessage||'No admin reply yet - client waiting'}</b> ${x.adminResponseAt? '<br><small>⏰ '+new Date(x.adminResponseAt.seconds*1000).toLocaleString()+'</small>':''}</div>
+      <button class="actionBtn" onclick="openEdit('${x.docId}','${x.col}')">✏️ View & Respond → Update Tracker</button>
+    </div>`;
+  }).join('')||`<div style="padding:40px;text-align:center;background:#fff;border-radius:16px;margin-top:12px">📭 No jobs/tickets found<br><small style="color:#64748b">Firebase returned 0 - Check submit code saves to same ProjectId: ${firebaseConfig.projectId}</small></div>`;
+}
+
+function openEdit(id,col){
+  const item=allData.find(a=>a.docId===id&&a.col===col);
+  editId=id; editCol=col;
+  document.getElementById('mTitle').textContent=item.trackingId+' - '+col.toUpperCase();
+  document.getElementById('mSub').textContent=`${item.clientName||''} ${item.phone||''} ${item.service||item.issue||''}`;
+  document.getElementById('mStatus').value=item.status||'queue';
+  document.getElementById('mMessage').value=item.adminMessage||'';
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('mStatus').onchange=e=>{
+    document.getElementById('mUnlock').style.display=e.target.value==='correction'?'block':'none';
+  };
+}
+function closeModal(){document.getElementById('modal').classList.remove('show');}
+async function saveUpdate(){
+  const status=document.getElementById('mStatus').value;
+  const msg=document.getElementById('mMessage').value;
+  if(!msg) return alert('Write message for tracker');
+  const unlock=document.getElementById('mUnlock').value.split(',').map(s=>s.trim()).filter(Boolean);
+  await db.collection(editCol).doc(editId).update({status,adminMessage:msg,adminResponseAt:new Date(),unlockedFields:unlock,lastUpdated:new Date()});
+  closeModal(); loadData();
+}
+</script>
+</body>
+</html>
