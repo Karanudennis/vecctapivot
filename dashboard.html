@@ -1,1 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard - Official ONLY - VECCTA</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
+body{background:#0f172a;color:#fff;min-height:100vh}
+.top{background:#000;color:#ffcc00;padding:14px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #ffcc00}
+.card{max-width:1000px;margin:18px auto;background:#fff;color:#000;border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+.stat{display:inline-block;background:#000;color:#ffcc00;padding:7px 12px;border-radius:20px;font-size:11px;font-weight:800;margin:3px}
+input{width:100%;padding:12px;border:1.5px solid #e2e8f0;border-radius:10px;color:#000;margin-top:10px}
+.job{display:flex;justify-content:space-between;gap:10px;border:1.5px solid #e2e8f0;border-radius:12px;padding:12px;margin-top:10px;background:#f8fafc}
+.btn{padding:8px 14px;border:none;border-radius:8px;font-weight:800;cursor:pointer;font-size:12px}
+.btn-b{background:#000;color:#ffcc00}
+.btn-y{background:#ffcc00;color:#000}
+.lock{max-width:500px;margin:40px auto;background:#fee2e2;border:2px solid #fecaca;padding:20px;border-radius:16px;color:#000;text-align:center}
+</style>
+</head>
+<body>
+<div class="top">
+<div style="font-weight:800">🔒 VECCTA OFFICIAL ONLY - CHECK 343 Jobs</div>
+<div id="who" style="background:#222;color:#ffcc00;padding:6px 12px;border-radius:20px;font-size:11px">Checking login...</div>
+</div>
 
+<div class="card">
+<h3 style="font-weight:800">Official Dashboard - 7x7x7 Jobs</h3>
+<p style="font-size:11px;color:#64748b">Only <b>vecctapivotenterprises@gmail.com</b> can CHECK jobs - Official ONLY 1 email</p>
+<div style="margin-top:10px">
+<span class="stat" id="total">0 Total</span>
+<span class="stat" id="open">0 Open</span>
+<span class="stat" id="closed">0 Closed</span>
+</div>
+<input id="search" placeholder="Search Ticket #, email, phone, service..." oninput="filterJobs()">
+<div id="list" style="margin-top:14px">Loading jobs from Firebase...</div>
+<div style="margin-top:14px;display:flex;gap:8px">
+<button class="btn btn-b" onclick="location.href='./job.html'">Go to 7x7x7 Request</button>
+<button class="btn btn-y" onclick="logout()">Log Out</button>
+</div>
+</div>
+
+<script type="module">
+import {auth,db} from "./firebase.js";
+import {onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {collection,getDocs,orderBy,query,doc,updateDoc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let allJobs = [];
+const OFFICIAL = "vecctapivotenterprises@gmail.com";
+
+onAuthStateChanged(auth, async (u)=>{
+  if(!u){ location.href='./admin.html'; return; }
+  document.getElementById("who").innerText = u.email;
+
+  if(u.email.toLowerCase() !== OFFICIAL){
+    document.getElementById("list").innerHTML = `
+    <div class="lock">
+      <div style="font-size:32px">🔒</div>
+      <div style="font-weight:800;margin-top:6px">ADMIN ONLY</div>
+      <div style="font-size:12px;margin-top:6px">Only <b>${OFFICIAL}</b> can CHECK jobs<br>You are logged in as <b>${u.email}</b></div>
+      <button class="btn btn-b" style="margin-top:12px;width:100%" onclick="location.href='./admin.html'">LOGIN AS OFFICIAL ADMIN</button>
+    </div>`;
+    return;
+  }
+
+  try{
+    const q = query(collection(db,"jobs"), orderBy("createdAt","desc"));
+    const snap = await getDocs(q);
+    allJobs = [];
+    snap.forEach(d=> allJobs.push({id:d.id, ...d.data()}));
+    document.getElementById("total").innerText = allJobs.length+" Total";
+    document.getElementById("open").innerText = allJobs.filter(j=>j.status!=="closed").length+" Open";
+    document.getElementById("closed").innerText = allJobs.filter(j=>j.status==="closed").length+" Closed";
+    render(allJobs);
+  }catch(e){
+    document.getElementById("list").innerHTML = "Error: "+e.message;
+  }
+});
+
+function render(jobs){
+  if(jobs.length===0){
+    document.getElementById("list").innerHTML = "<div style='text-align:center;padding:20px;color:#64748b'><b>No jobs yet</b><br>Clients haven't requested via job.html</div>";
+    return;
+  }
+  document.getElementById("list").innerHTML = jobs.map(j=>`
+    <div class="job">
+      <div>
+        <b>${j.jobId||'NO-ID'}</b> <small>(${j.status||'open'})</small><br>
+        <small>${j.pillar||''} → ${j.sub||''} → <b>${j.service||''}</b></small><br>
+        <small>${j.name||''} • ${j.phone||''} • ${j.email||''}</small><br>
+        <small style="color:#94a3b8">${j.createdAt?.toDate?.().toLocaleString()||''}</small>
+      </div>
+      <div>
+        <button class="btn btn-b" onclick="closeJob('${j.id}')">Close</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+window.filterJobs = ()=>{
+  let s = document.getElementById("search").value.toLowerCase();
+  render(allJobs.filter(j=> (j.jobId+j.email+j.phone+j.service+j.name).toLowerCase().includes(s)));
+};
+
+window.closeJob = async(id)=>{
+  if(!confirm("Close this job?")) return;
+  await updateDoc(doc(db,"jobs",id), {status:"closed"});
+  location.reload();
+};
+
+window.logout = async()=>{
+  await signOut(auth);
+  location.href='./admin.html';
+};
+</script>
+</body>
+</html>
