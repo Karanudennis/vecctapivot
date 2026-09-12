@@ -2,111 +2,182 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>VEC Admin Working</title>
+<title>VEC Admin Final</title>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <style>
-body{font-family:sans-serif;background:#f5f5f5;padding:20px}
-.card{background:#fff;padding:15px;margin-bottom:10px;border-radius:10px;box-shadow:0 1px 3px #ccc}
-button{padding:8px 12px;background:#000;color:#fff;border:none;border-radius:6px;cursor:pointer}
-input,textarea,select{width:100%;padding:8px;margin-top:5px;border:1px solid #ccc;border-radius:6px}
-#box{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center}
+body{font-family:sans-serif;margin:0;background:#f5f7fb}
+#login{height:100vh;display:flex;align-items:center;justify-content:center;background:#111827}
+.loginBox{background:#fff;padding:28px;border-radius:16px;width:360px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.inputWrap{position:relative;margin-top:12px}
+.inputWrap input{width:100%;padding:12px 40px 12px 12px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}
+.eye{position:absolute;right:10px;top:11px;cursor:pointer;font-size:14px;background:#eee;padding:4px 8px;border-radius:6px}
+.btn{width:100%;padding:12px;background:#000;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin-top:12px}
+.link{font-size:12px;color:#2563eb;cursor:pointer;margin-top:10px;display:inline-block}
+.card{background:#fff;padding:14px;margin-bottom:10px;border-radius:10px}
+#main{display:none;padding:20px}
+#box{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:10}
 #box.show{display:flex}
-#inner{background:#fff;padding:20px;width:400px;border-radius:12px}
+#inner{background:#fff;padding:20px;width:420px;border-radius:12px}
 </style>
 </head>
 <body>
 
-<h2>VEC Admin - WORKING</h2>
-<p id="count">Loading...</p>
-<input id="search" placeholder="Search ID or phone" oninput="show()" style="max-width:300px">
-<div id="list" style="margin-top:15px"></div>
+<div id="login">
+<div class="loginBox">
+<h2 style="margin:0">VEC Admin</h2>
+<p style="font-size:13px;color:#666;margin:6px 0 0">Jobs • Tickets • Tracker</p>
+
+<div class="inputWrap">
+<input id="pass" type="password" placeholder="Admin Password">
+<span class="eye" onclick="togglePass()">👁️ Show</span>
+</div>
+
+<button class="btn" onclick="login()">Sign In</button>
+<div style="display:flex;justify-content:space-between;margin-top:12px">
+<span class="link" onclick="forgot()">Forgot Password?</span>
+<span class="link" onclick="alert('Contact owner: 07XXXXXXXX')">Need help?</span>
+</div>
+<p id="err" style="color:red;font-size:12px;margin-top:10px"></p>
+
+<div id="forgotBox" style="display:none;margin-top:16px;background:#f9fafb;padding:12px;border-radius:10px">
+<p style="font-size:12px;font-weight:700">Reset Password</p>
+<input id="secQ" placeholder="Security code: VEC-RESET-2025" style="width:100%;padding:10px;border-radius:6px;border:1px solid #ccc;margin-top:6px;box-sizing:border-box">
+<input id="newPass" placeholder="New Password" style="width:100%;padding:10px;border-radius:6px;border:1px solid #ccc;margin-top:6px;box-sizing:border-box">
+<button class="btn" onclick="resetPass()">Reset Now</button>
+</div>
+</div>
+</div>
+
+<div id="main">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<h2>Checker Panel</h2>
+<button onclick="logout()" style="padding:6px 12px;border-radius:6px;border:1px solid #ccc;background:#fff;cursor:pointer">Logout</button>
+</div>
+<p id="count"></p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+<button onclick="setFilter('all')" class="fbtn">All <span id="cAll">0</span></button>
+<button onclick="setFilter('job')" class="fbtn">Jobs <span id="cJob">0</span></button>
+<button onclick="setFilter('ticket')" class="fbtn">Tickets <span id="cT">0</span></button>
+<button onclick="setFilter('queue')" class="fbtn">Queue <span id="cQ">0</span></button>
+<button onclick="setFilter('closed')" class="fbtn">Closed <span id="cCl">0</span></button>
+</div>
+<input id="search" placeholder="Search tracking ID / phone" oninput="show()" style="margin-top:12px;padding:10px;width:320px;border-radius:8px;border:1px solid #ccc;max-width:100%">
+<div id="list" style="margin-top:14px"></div>
+</div>
 
 <div id="box"><div id="inner">
 <h3 id="bid"></h3>
-<select id="bstatus">
-<option value="queue">Queue</option>
-<option value="in_progress">In Progress</option>
-<option value="correction">Correction</option>
-<option value="submitted">Ready</option>
-<option value="closed">Closed</option>
+<p id="binfo" style="font-size:12px;color:#666"></p>
+<select id="bstatus" style="width:100%;padding:10px;border-radius:6px;margin-top:8px">
+<option value="queue">📥 Queue / Open</option>
+<option value="in_progress">⚙️ In Progress</option>
+<option value="correction">⚠️ Correction - Unlock fields</option>
+<option value="submitted">📤 Submitted / Ready for Collection</option>
+<option value="closed">✅ Closed - Satisfied</option>
 </select>
-<textarea id="bnote" rows="4" placeholder="Message client will see"></textarea>
-<button onclick="save()" style="margin-top:10px;width:100%">SAVE - Show to Tracker</button>
-<button onclick="document.getElementById('box').classList.remove('show')" style="margin-top:8px;width:100%;background:#ccc;color:#000">Cancel</button>
+<textarea id="bnote" rows="4" style="width:100%;margin-top:8px;padding:10px;border-radius:6px" placeholder="This message shows in CLIENT TRACKER with time"></textarea>
+<input id="bunlock" placeholder="If correction: fields to unlock e.g. idPhoto, kraDoc" style="width:100%;margin-top:8px;padding:10px;border-radius:6px;display:none">
+<button onclick="save()" style="width:100%;margin-top:10px;padding:12px;background:#000;color:#fff;border:none;border-radius:8px;font-weight:700">SAVE → Show in Tracker</button>
+<button onclick="document.getElementById('box').classList.remove('show')" style="width:100%;margin-top:6px;padding:10px;background:#e5e7eb;border:none;border-radius:8px">Cancel</button>
 </div></div>
 
 <script>
-// === PUT YOUR REAL CONFIG HERE ===
+// CONFIG - CHANGE HERE
+let ADMIN_PASSWORD = localStorage.getItem('vec_admin_pass') || "VEC2025";
+const RESET_CODE = "VEC-RESET-2025"; // security code for forgot
+
+function togglePass(){
+  const p=document.getElementById('pass');
+  const eye=document.querySelector('.eye');
+  if(p.type==='password'){p.type='text';eye.textContent='🙈 Hide';}else{p.type='password';eye.textContent='👁️ Show';}
+}
+function login(){
+  if(document.getElementById('pass').value===ADMIN_PASSWORD){
+    document.getElementById('login').style.display='none';
+    document.getElementById('main').style.display='block';
+    load();
+  }else{document.getElementById('err').innerText='Wrong password. Try: '+ADMIN_PASSWORD;}
+}
+function logout(){location.reload();}
+function forgot(){document.getElementById('forgotBox').style.display='block';}
+function resetPass(){
+  if(document.getElementById('secQ').value!==RESET_CODE) return alert('Wrong security code. Use: '+RESET_CODE);
+  const np=document.getElementById('newPass').value;
+  if(np.length<4) return alert('Password too short');
+  localStorage.setItem('vec_admin_pass',np);
+  ADMIN_PASSWORD=np;
+  alert('Password changed to: '+np+' - Now login');
+  document.getElementById('forgotBox').style.display='none';
+}
+
 const firebaseConfig = {
-  apiKey: "YOURS",
-  authDomain: "YOURS",
-  projectId: "YOURS",
-  storageBucket: "YOURS",
-  messagingSenderId: "YOURS",
-  appId: "YOURS"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_BUCKET",
+  messagingSenderId: "YOUR_SENDER",
+  appId: "YOUR_APP_ID"
 };
-// ================================
-
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-let allJobs = [];
-let curId = null;
-let curCol = null;
+const db=firebase.firestore();
+let all=[],filter='all',curId=null,curCol=null;
 
 async function load(){
   try{
-    const jobs = await db.collection("jobs").get();
-    const tickets = await db.collection("tickets").get();
-    allJobs = [];
-    jobs.forEach(d=> allJobs.push({docId:d.id, col:"jobs", tracking:d.data().trackingId||d.id, ...d.data()}));
-    tickets.forEach(d=> allJobs.push({docId:d.id, col:"tickets", tracking:d.data().trackingId||d.id, ...d.data()}));
-    document.getElementById('count').innerText = allJobs.length + " jobs/tickets found";
+    const j=await db.collection("jobs").orderBy("createdAt","desc").get();
+    const t=await db.collection("tickets").orderBy("createdAt","desc").get();
+    all=[];
+    j.forEach(d=>all.push({docId:d.id,col:"jobs",tracking:d.data().trackingId||d.id,...d.data()}));
+    t.forEach(d=>all.push({docId:d.id,col:"tickets",tracking:d.data().trackingId||d.id,...d.data()}));
+    document.getElementById('count').innerText=all.length+" Total (Jobs + Tickets) - Tracker Linked";
+    document.getElementById('cAll').parentElement.innerHTML=`All ${all.length}`;
+    document.getElementById('cJob').parentElement.innerHTML=`Jobs ${all.filter(x=>x.col==='jobs').length}`;
+    document.getElementById('cT').parentElement.innerHTML=`Tickets ${all.filter(x=>x.col==='tickets').length}`;
     show();
-  }catch(e){
-    document.getElementById('count').innerText = "ERROR: " + e.message + " - Check Firestore Rules";
-    console.error(e);
-  }
+  }catch(e){document.getElementById('count').innerText="Error: "+e.message+" - Check Rules allow read";}
 }
 
+function setFilter(f){filter=f;show();}
 function show(){
-  const q = document.getElementById('search').value.toLowerCase();
-  const filtered = allJobs.filter(j=> !q || (j.tracking||'').toLowerCase().includes(q) || (j.phone||'').includes(q));
-  document.getElementById('list').innerHTML = filtered.map(j=>`
-    <div class="card">
-      <b>${j.tracking}</b> - ${j.status||'no status'} - ${j.col}
-      <div style="font-size:13px;margin:4px 0">${j.service||j.issue||''} | ${j.phone||''} | ${j.clientName||''}</div>
-      <div style="font-size:12px;background:#f0f0f0;padding:5px;border-radius:5px">Note: ${j.adminMessage||'No note yet'}</div>
-      <button onclick="openBox('${j.docId}','${j.col}')" style="margin-top:8px">Respond</button>
-    </div>
-  `).join('') || 'No jobs - Check if jobs collection exists';
-}
-
-function openBox(docId,col){
-  const j = allJobs.find(x=>x.docId==docId && x.col==col);
-  curId = docId; curCol = col;
-  document.getElementById('bid').innerText = j.tracking;
-  document.getElementById('bstatus').value = j.status||'queue';
-  document.getElementById('bnote').value = j.adminMessage||'';
-  document.getElementById('box').classList.add('show');
-}
-
-async function save(){
-  const status = document.getElementById('bstatus').value;
-  const note = document.getElementById('bnote').value;
-  if(!note) return alert('Write note');
-  await db.collection(curCol).doc(curId).update({
-    status: status,
-    adminMessage: note,
-    adminResponseAt: new Date(),
-    lastUpdated: new Date()
+  const q=document.getElementById('search').value.toLowerCase();
+  let list=all.filter(x=>{
+    if(q && !((x.tracking||'').toLowerCase().includes(q)||(x.phone||'').toLowerCase().includes(q)))return false;
+    if(filter==='job')return x.col==='jobs';
+    if(filter==='ticket')return x.col==='tickets';
+    if(filter==='queue')return ['queue','open','in_progress'].includes(x.status);
+    if(filter==='closed')return x.status==='closed';
+    return true;
   });
+  document.getElementById('list').innerHTML=list.map(x=>`
+    <div class="card">
+      <div style="display:flex;justify-content:space-between"><b>${x.tracking}</b><span style="font-size:11px;background:#fef3c7;padding:3px 8px;border-radius:20px">${x.status||'queue'} • ${x.col}</span></div>
+      <div style="font-size:13px;margin-top:4px">${x.pillar||''} ${x.subPillar||''} ${x.service||x.issue||''}</div>
+      <div style="font-size:12px;color:#555">👤${x.clientName||x.name||''} 📞${x.phone||''} 🕒${x.createdAt? new Date(x.createdAt.seconds*1000).toLocaleDateString():''}</div>
+      <div style="font-size:12px;background:#f9fafb;padding:6px;border-radius:6px;margin-top:6px">💬 Tracker shows: ${x.adminMessage? x.adminMessage+' ( '+ (x.adminResponseAt? new Date(x.adminResponseAt.seconds*1000).toLocaleString():'' )+' )': 'No reply yet - Client waiting'}</div>
+      <button onclick="openBox('${x.docId}','${x.col}')" style="margin-top:8px">View & Respond → Tracker</button>
+    </div>`).join('')||'No jobs/tickets found';
+}
+
+function openBox(id,col){
+  const j=all.find(x=>x.docId==id&&x.col==col);
+  curId=id;curCol=col;
+  document.getElementById('bid').innerText=j.tracking+" - "+col;
+  document.getElementById('binfo').innerText=(j.clientName||'')+" "+(j.phone||'')+" "+(j.service||j.issue||'');
+  document.getElementById('bstatus').value=j.status||'queue';
+  document.getElementById('bnote').value=j.adminMessage||'';
+  document.getElementById('box').classList.add('show');
+  document.getElementById('bstatus').addEventListener('change',e=>{document.getElementById('bunlock').style.display=e.target.value==='correction'?'block':'none'});
+}
+async function save(){
+  const status=document.getElementById('bstatus').value;
+  const note=document.getElementById('bnote').value;
+  const unlock=document.getElementById('bunlock').value.split(',').map(s=>s.trim()).filter(Boolean);
+  if(!note) return alert('Write note for tracker');
+  await db.collection(curCol).doc(curId).update({status,adminMessage:note,adminResponseAt:new Date(),unlockedFields:unlock,lastUpdated:new Date()});
   document.getElementById('box').classList.remove('show');
   load();
 }
-
-load();
 </script>
 </body>
 </html>
