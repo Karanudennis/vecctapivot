@@ -1,187 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VEC Ticket System - Full</title>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Raise Ticket — VECCTAPIVOT GLOBAL</title><link rel="icon" href="logo.png"><link rel="stylesheet" href="style.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,sans-serif}
-body{background:#f8fafc}
-.top{background:#0f172a;color:#fff;padding:16px 20px;text-align:center}
-.formBox{background:#fff;max-width:600px;margin:20px auto;padding:24px;border-radius:18px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
-label{font-size:12px;font-weight:700;color:#334155;margin-top:14px;display:block}
-input,select,textarea{width:100%;padding:13px;border:1.5px solid #e2e8f0;border-radius:12px;margin-top:6px;font-size:13px;outline:none}
-input:focus,select:focus,textarea:focus{border-color:#0f172a}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.btn{width:100%;padding:14px;background:#f59e0b;color:#000;border:none;border-radius:12px;font-weight:800;cursor:pointer;margin-top:18px;font-size:14px}
-.btn:disabled{background:#e2e8f0}
-.ticketCard{margin-top:18px;background:#065f46;color:#fff;padding:18px;border-radius:14px;display:none}
-.ticketCard.show{display:block}
-.pill{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:800}
+.wrap{max-width:860px;margin:18px auto;padding:0 14px}
+.form{background:#1e293b;border:1px solid #334155;border-radius:22px;padding:24px;box-shadow:0 24px 70px #0006}
+.h{color:#facc15;text-align:center;margin:0;font-size:26px;letter-spacing:.2px}
+.sub{color:#94a3b8;text-align:center;font-size:13px;margin:8px 0 16px}
+.label{font-size:11px;font-weight:900;color:#facc15;letter-spacing:.9px;text-transform:uppercase;margin:14px 0 6px;display:block}
+.input,.select,.textarea{width:100%;padding:13px 14px;border-radius:12px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box;outline:none}
+.input:focus,.select:focus,.textarea:focus{border-color:#facc15;box-shadow:0 0 0 3px #facc1526}
+.chiprow{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chip{padding:8px 14px;border-radius:999px;border:1px solid #334155;background:#0f172a;color:#cbd5e1;font-size:11px;font-weight:800;cursor:pointer;transition:.2s}
+.chip.active{background:#facc15;color:#000;border-color:#facc15;transform:translateY(-1px)}
+.well{padding:12px;border-radius:14px;margin:10px 0;border:2px solid;font-size:13px;line-height:1.5}
+.green{border-color:#22c55e;background:#052e16}.red{border-color:#ef4444;background:#450a0a}.yellow{border-color:#facc15;background:#422006}.blue{border-color:#60a5fa;background:#0c1a32}
+.btn{width:100%;padding:14px;border:none;border-radius:12px;background:#facc15;color:#000;font-weight:900;letter-spacing:.3px;cursor:pointer;margin-top:12px}
+.btn:disabled{opacity:.6}
+.kbd{font-family:ui-monospace;font-weight:900;font-size:20px;color:#facc15;letter-spacing:1px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:700px){.grid{grid-template-columns:1fr}}
 </style>
-</head>
-<body>
-<div class="top">
-<h2>VECCTAPIVOT - Raise Ticket</h2>
-<p style="font-size:11px;color:#94a3b8;margin-top:4px">TIC-XXXXX • Trackable • Admin Linked • Cloud</p>
-</div>
+</head><body>
+<div class="utility"><div class="uwrap"><span class="uitem"><span class="ubadge">GLOBAL LIVE — TICKETS</span></span><span class="uitem">Any Phone · Well Displayed</span><a class="uitem" href="track.html">Track</a></div></div>
+<header class="top"><div class="navrow"><a class="brand" href="index.html"><img src="logo.png"><span class="brandname">Vecctapivot<em>Service Desk</em></span></a><div class="navcta"><a class="btn line sm2" href="job.html">New Job</a><a class="btn gold sm2" href="index.html">Home</a></div></div></header>
 
-<div class="formBox">
-<label>Full Name *</label>
-<input id="name" placeholder="Dennis Muthoni">
+<main class="wrap">
+<div class="form">
+<h2 class="h">Raise a Ticket — GLOBAL</h2>
+<p class="sub">Revision, Question, Complaint, Payment — well-displayed presentation, visible from any phone</p>
 
 <div class="grid">
-<div><label>Phone *</label><input id="phone" placeholder="0700000000"></div>
-<div><label>Email</label><input id="email" placeholder="vec@gmail.com"></div>
+<div><label class="label">Job ID (Optional but recommended)</label><input id="jobId" class="input" placeholder="JOB-123456 — leave empty for general"></div>
+<div><label class="label">Your Phone (for update)</label><input id="phone" class="input" placeholder="07..."></div>
 </div>
 
-<div class="grid">
-<div><label>Category *</label>
-<select id="pillar">
-<option value="">Select Category</option>
-<option>Academic & Testing Logistics</option>
-<option>KRA Services</option>
-<option>CV & Jobs</option>
-<option>Government Services</option>
-<option>Technical Support</option>
-<option>Other</option>
-</select></div>
+<label class="label">Ticket Type — Tap Chip (World Class)</label>
+<div class="chiprow" id="typeChips"></div>
+<select id="tType" class="select" hidden></select>
 
-<div><label>Priority</label>
-<select id="priority"><option>Normal</option><option>High</option><option>Urgent</option></select></div>
-</div>
-
-<label>Sub-Category / Service *</label>
-<select id="service">
-<option value="">Select Service First</option>
+<label class="label">Category (7 pillars aware)</label>
+<select id="category" class="select">
+<option>Revision Request</option><option>Document Issue</option><option>Delay / Follow-up</option><option>Payment / Price</option><option>Quality / Correction</option><option>Escrow / Ledger</option><option>General Support</option>
 </select>
 
-<label>Issue Title *</label>
-<input id="title" placeholder="e.g. ID Correction, KRA Pin not opening">
+<label class="label">Priority</label>
+<div class="chiprow" id="prioChips"></div>
+<select id="priority" class="select" hidden><option>Normal</option><option>Urgent</option><option>Critical</option></select>
 
-<label>Describe Issue in Detail *</label>
-<textarea id="desc" rows="5" placeholder="Explain your issue... What happened? What do you need?"></textarea>
+<label class="label">Subject *</label>
+<input id="subject" class="input" placeholder="e.g. Logo needs 2 revisions, BRS delay">
 
-<button class="btn" id="submitBtn" onclick="createTicket()">🎫 CREATE TICKET - SAVE TO CLOUD</button>
+<label class="label">Detailed Message * — Well Displayed Box</label>
+<textarea id="message" class="textarea" rows="5" placeholder="Explain clearly... what you need changed / question / issue. This shows in yellow well in admin."></textarea>
 
-<div id="successBox" class="ticketCard">
-<h3 id="tId">TIC-00000</h3>
-<p id="tInfo" style="font-size:12px;margin-top:8px"></p>
-<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-<button onclick="trackNow()" style="padding:10px 16px;background:#fbbf24;border:none;border-radius:8px;font-weight:700;cursor:pointer">Track Now</button>
-<button onclick="location.href='admin.html'" style="padding:10px 16px;background:#fff;color:#065f46;border:none;border-radius:8px;font-weight:700;cursor:pointer">View in Admin</button>
-<button onclick="copyId()" style="padding:10px 16px;background:#10b981;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">Copy ID</button>
+<label class="label">Attach File (Optional - Screenshot, doc)</label>
+<input type="file" id="file" class="input" onchange="hFile(this)"><div id="fName" style="font-size:11px;color:#22c55e;margin-top:4px"></div>
+
+<div class="well blue"><b style="color:#60a5fa">How it works:</b><br>
+• Submit → saved to Firebase `tickets` cloud → admin sees from any phone<br>
+• Admin reply shows as <b style="color:#22c55e">GREEN WELL</b> on track page<br>
+• Your message shows as <b style="color:#facc15">YELLOW WELL</b> in admin<br>
+• Revision shows as <b style="color:#ef4444">RED LOCK BOX</b></div>
+
+<button id="btn" class="btn" onclick="sendTicket()">🎫 SUBMIT TICKET TO CLOUD — ANY PHONE VISIBLE</button>
+
+<div id="res"></div>
+
+<div style="text-align:center;margin-top:12px"><a href="track.html" style="color:#94a3b8;font-size:12px">Already have ticket? Track it →</a></div>
 </div>
 </div>
+</main>
 
-<p id="err" style="color:#dc2626;font-size:11px;margin-top:12px;text-align:center"></p>
-</div>
+<script type="module">
+import { db } from './firebase.js';
+import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-<script>
-const firebaseConfig={
-  apiKey:"PUT_YOUR_API_KEY",
-  authDomain:"PUT_YOUR_AUTH_DOMAIN",
-  projectId:"PUT_YOUR_PROJECT_ID",
-  storageBucket:"PUT_YOUR_BUCKET",
-  messagingSenderId:"PUT_SENDER",
-  appId:"PUT_APP_ID"
-};
-firebase.initializeApp(firebaseConfig);
-const db=firebase.firestore();
+const TYPES=["Revision Request","Question","Complaint","Payment Issue","Delay","Urgent Help","General"];
+const PRIOS=["Normal","Urgent","Critical"];
 
-const services={
-"Academic & Testing Logistics":["Revision Booklets - College","Exam Registration","Transcript Request"],
-"KRA Services":["KRA Pin Registration","KRA Returns Filing","Compliance Check"],
-"CV & Jobs":["CV Writing","Job Application","Interview Prep"],
-"Government Services":["ID Correction","Birth Certificate","Good Conduct"],
-"Technical Support":["System Not Working","Payment Issue","Login Problem"],
-"Other":["General Inquiry","Complaint","Feedback"]
-};
+const typeChips=document.getElementById('typeChips'), prioChips=document.getElementById('prioChips');
+const tType=document.getElementById('tType'), priority=document.getElementById('priority');
 
-document.getElementById('pillar').onchange=function(){
-  const v=this.value;
-  const s=document.getElementById('service');
-  s.innerHTML='<option>Select Service</option>';
-  if(services[v]){services[v].forEach(x=>{let o=document.createElement('option'); o.textContent=x; s.appendChild(o);});}
-};
-
-let lastTicketId=null;
-
-async function createTicket(){
-  const btn=document.getElementById('submitBtn');
-  const name=document.getElementById('name').value.trim();
-  const phone=document.getElementById('phone').value.trim();
-  const email=document.getElementById('email').value.trim();
-  const pillar=document.getElementById('pillar').value;
-  const service=document.getElementById('service').value;
-  const title=document.getElementById('title').value.trim();
-  const desc=document.getElementById('desc').value.trim();
-  const priority=document.getElementById('priority').value;
-
-  if(!name||!phone||!pillar||!service||!title||!desc){
-    document.getElementById('err').innerText='Fill all * fields - Name, Phone, Category, Service, Title, Description';
-    return;
-  }
-
-  btn.innerText='⏳ CREATING TICKET & SAVING TO FIREBASE...';
-  btn.disabled=true;
-  document.getElementById('err').innerText='';
-
-  const ticketId="TIC-0"+Math.floor(4000+Math.random()*1000);
-  lastTicketId=ticketId;
-
-  const ticketData={
-    trackingId:ticketId,
-    ticket:ticketId,
-    id:ticketId,
-    ticketNumber:ticketId,
-    clientName:name,
-    name:name,
-    phone:phone,
-    email:email,
-    pillar:pillar,
-    category:pillar,
-    subPillar:service,
-    service:service,
-    issue:title,
-    title:title,
-    description:desc,
-    priority:priority,
-    status:'queue',
-    source:'ticket.html full system',
-    adminMessage:'',
-    createdAt:firebase.firestore.FieldValue.serverTimestamp(),
-    lastUpdated:firebase.firestore.FieldValue.serverTimestamp()
-  };
-
-  try{
-    // SAVE TO BOTH COLLECTIONS - So both track.html and admin.html find it
-    await db.collection("tickets").doc(ticketId).set(ticketData);
-    await db.collection("jobs").doc(ticketId).set(ticketData);
-
-    document.getElementById('successBox').classList.add('show');
-    document.getElementById('tId').innerText=ticketId+' - CREATED & SAVED TO CLOUD';
-    document.getElementById('tInfo').innerHTML=`<b>${name}</b> • ${phone}<br>${pillar} > ${service}<br>${title}<br><br>✅ This ticket is now visible in:<br>1. track.html?job=${ticketId}<br>2. admin.html (search ${ticketId})<br>3. Any device anywhere`;
-
-    btn.innerText='✅ TICKET SAVED - CREATE ANOTHER';
-    btn.disabled=false;
-
-  }catch(e){
-    btn.innerText='🎫 CREATE TICKET - SAVE TO CLOUD';
-    btn.disabled=false;
-    document.getElementById('err').innerHTML=`🔥 FIREBASE SAVE FAILED: ${e.message}<br><br>Go to Firebase Console → Firestore → Rules → Set to:<br><code>allow read, write: if true;</code><br>Publish and try again`;
-    alert('Save Failed: '+e.message+'\n\nFix Firestore Rules');
-  }
+function renderChips(){
+ typeChips.innerHTML=TYPES.map(t=>`<span class="chip ${t===tType.value?'active':''}" onclick="setType('${t}')">${t}</span>`).join('');
+ prioChips.innerHTML=PRIOS.map(p=>`<span class="chip ${p===priority.value?'active':''}" onclick="setPrio('${p}')" style="${p==='Critical'?'border-color:#ef4444':p==='Urgent'?'border-color:#facc15':''}">${p==='Critical'?'🔴':p==='Urgent'?'🟡':'🟢'} ${p}</span>`).join('');
 }
+window.setType=t=>{tType.value=t; renderChips()}
+window.setPrio=p=>{priority.value=p; renderChips()}
 
-function trackNow(){
-  if(lastTicketId) window.location.href='track.html?job='+lastTicketId;
-}
-function copyId(){
-  if(lastTicketId){navigator.clipboard.writeText(lastTicketId); alert('Copied: '+lastTicketId);}
+tType.value=TYPES[0]; priority.value=PRIOS[0]; renderChips();
+
+let fileName='', fileData='';
+window.hFile=i=>{if(i.files[0]){fileName=i.files[0].name; document.getElementById('fName').textContent='✓ '+fileName+' ('+Math.round(i.files[0].size/1024)+'KB)'; let r=new FileReader(); r.onload=e=>fileData=e.target.result.slice(0,70000); r.readAsDataURL(i.files[0])}}
+
+window.sendTicket=async()=>{
+ if(!subject.value.trim()||!message.value.trim()){alert('Subject & Message required');return}
+ const btn=document.getElementById('btn'); btn.textContent='⏳ Saving to cloud...'; btn.disabled=true;
+ let id='TIC-'+Date.now().toString().slice(-5);
+ let payload={
+  id, jobId:(jobId.value.trim().toUpperCase()||'GENERAL'), clientPhone:phone.value.trim(),
+  tType:tType.value, category:category.value, priority:priority.value,
+  subject:subject.value.trim(), message:message.value.trim(),
+  fileName,fileData, status:'Open', adminReply:'', logged:new Date().toLocaleString(), createdAt:serverTimestamp()
+ };
+ try{
+  await addDoc(collection(db,'tickets'),payload);
+  // local fallback too
+  let local=JSON.parse(localStorage.getItem('veccta_tickets')||'[]'); local.push(payload); localStorage.setItem('veccta_tickets',JSON.stringify(local));
+  res.innerHTML=`<div class="well green" style="text-align:center"><b style="color:#22c55e;font-size:16px">✅ TICKET ${id} SAVED TO CLOUD</b><br><span class=kbd>${payload.tType} — ${payload.priority}</span><br><span style="color:#e2e8f0">${payload.subject}</span><br><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px"><a href="track.html?ticket=${id}" style="background:#facc15;color:#000;padding:11px 16px;border-radius:10px;text-decoration:none;font-weight:900">Track Ticket →</a><a href="https://wa.me/254788099685?text=Ticket%20${id}%20for%20${payload.jobId}%20—%20${encodeURIComponent(payload.subject)}" style="border:1px solid #334155;color:#fff;padding:11px 16px;border-radius:10px;text-decoration:none;font-weight:700">WhatsApp</a></div><div style="font-size:11px;color:#94a3b8;margin-top:8px">Admin sees instantly from any phone — reply shows as GREEN WELL on track</div></div>`;
+  window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+ }catch(e){
+  res.innerHTML=`<div class="well red">❌ Cloud error: ${e.message}<br>Fix: Firebase Console > Firestore > Rules > allow read, write: if true; Publish</div>`;
+ }
+ btn.textContent='🎫 SUBMIT TICKET TO CLOUD — ANY PHONE VISIBLE'; btn.disabled=false;
 }
 </script>
-</body>
-</html>
+</body></html>
