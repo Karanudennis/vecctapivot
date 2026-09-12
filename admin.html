@@ -1,134 +1,202 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VEC Admin</title>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin GLOBAL — VECCTAPIVOT — World Class</title><link rel="icon" href="logo.png"><link rel="stylesheet" href="style.css">
 <style>
-body{margin:0;font-family:sans-serif;background:#f1f5f9}
-#login{height:100vh;display:flex;align-items:center;justify-content:center;background:#0f172a}
-.cardL{background:#fff;width:360px;padding:26px;border-radius:16px}
-.cardL input{width:100%;padding:12px;border:1px solid #ccc;border-radius:10px;margin-top:10px;box-sizing:border-box}
-.btn{width:100%;padding:12px;background:#0f172a;color:#fff;border:none;border-radius:10px;font-weight:700;margin-top:10px;cursor:pointer}
-#admin{display:none}
-.top{padding:14px 20px;background:#0f172a;color:#fff;display:flex;justify-content:space-between}
-.list{padding:14px}
-.job{background:#fff;padding:14px;border-radius:12px;margin-bottom:10px;border-left:4px solid #0f172a}
-#modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:14px}
-#modal.show{display:flex}
-#box{background:#fff;width:440px;max-width:100%;padding:20px;border-radius:14px}
-#box input,#box select,#box textarea{width:100%;padding:11px;border:1px solid #ccc;border-radius:10px;margin-top:8px;box-sizing:border-box}
+:root{--gold:#facc15;--green:#22c55e;--red:#ef4444;--blue:#60a5fa;--bg:#0f172a;--card:#1e293b;--line:#334155}
+body{background:var(--bg);color:#fff;font-family:system-ui;margin:0}
+.topbar{background:#020617;border-bottom:1px solid var(--line);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;flex-wrap:wrap;gap:8px}
+.page{max-width:1320px;margin:0 auto;padding:14px}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:12px 0}@media(max-width:900px){.stats{grid-template-columns:repeat(3,1fr)}}
+.s{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}.s b{font-size:22px;display:block;color:var(--gold)}.s small{color:#94a3b8;font-size:11px;text-transform:uppercase;letter-spacing:.6px}
+.tabs{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}.tab{padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:#cbd5e1;font-weight:800;cursor:pointer;font-size:12px}.tab.active{background:var(--gold);color:#000;border-color:var(--gold)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;align-items:center}
+.input,.select,.textarea{padding:11px 12px;border-radius:10px;background:#0f172a;border:1px solid var(--line);color:#fff;box-sizing:border-box}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:12px 0;position:relative}
+.well{padding:12px;border-radius:12px;margin:8px 0;border:2px solid;line-height:1.5;font-size:13px}
+.g{border-color:var(--green);background:#052e16}.r{border-color:var(--red);background:#450a0a}.y{border-color:var(--gold);background:#422006}.b{border-color:var(--blue);background:#0c1a32}
+.badge{padding:4px 10px;border-radius:999px;font-size:10px;font-weight:900}
+.grid2{display:grid;grid-template-columns:1fr 340px;gap:12px}@media(max-width:1000px){.grid2{grid-template-columns:1fr}}
+.btn{padding:10px 14px;border-radius:10px;border:none;font-weight:800;cursor:pointer}.gold{background:var(--gold);color:#000}.green{background:var(--green);color:#000}.red{background:var(--red);color:#fff}.line{background:transparent;border:1px solid var(--line);color:#fff}
+.kbd{font-family:ui-monospace;font-weight:900;color:var(--gold)}
 </style>
-</head>
-<body>
-
-<div id="login">
-<div class="cardL">
-<h3 style="text-align:center">VEC Admin</h3>
-<div style="position:relative">
-<input id="pass" type="password" placeholder="Password">
-<span onclick="let p=document.getElementById('pass'); p.type=p.type==='password'?'text':'password'" style="position:absolute;right:8px;top:16px;font-size:11px;background:#eee;padding:5px 8px;border-radius:6px;cursor:pointer">SHOW</span>
-</div>
-<button class="btn" onclick="login()">Sign In</button>
-<p style="font-size:11px;margin-top:8px"><span style="color:#2563eb;cursor:pointer" onclick="document.getElementById('fg').style.display='block'">Forgot?</span> <span style="float:right">Default: VEC2025</span></p>
-<div id="fg" style="display:none;margin-top:10px;background:#f8fafc;padding:10px;border-radius:10px">
-<input id="code" placeholder="Code: VEC-RESET-2025">
-<input id="np" placeholder="New password">
-<button class="btn" onclick="if(document.getElementById('code').value==='VEC-RESET-2025'){localStorage.setItem('VEC_PASS',document.getElementById('np').value);alert('Saved');location.reload()}else{alert('Wrong code')}">Reset</button>
-</div>
-<p id="err" style="color:red;font-size:11px;text-align:center;margin-top:6px"></p>
-</div>
+</head><body>
+<div class="topbar">
+<div style="display:flex;gap:10px;align-items:center"><img src="logo.png" style="height:28px"><b style="color:var(--gold)">VECCTAPIVOT ADMIN — GLOBAL WORLD CLASS</b><span id="cloudSt" style="font-size:11px;color:#94a3b8">● Connecting vecctapivot</span></div>
+<div style="display:flex;gap:6px"><button class="btn line" onclick="loadCloud()">↻ Cloud</button><button class="btn line" onclick="exportCSV()">CSV</button><a class="btn line" href="index.html" style="text-decoration:none">Home</a></div>
 </div>
 
-<div id="admin">
-<div class="top"><b>Checker Panel</b><button onclick="location.reload()" style="background:#fff;border:none;padding:6px 10px;border-radius:6px;font-weight:700;cursor:pointer">Logout</button></div>
-<div style="padding:14px;display:flex;gap:8px">
-<input id="s" placeholder="Search TIC-04013 or phone" oninput="show()" style="flex:1;padding:11px;border-radius:10px;border:1px solid #ccc">
-<button onclick="load()" style="padding:11px 14px;border-radius:10px;border:none;background:#0f172a;color:#fff;font-weight:700">Reload</button>
-<button onclick="test()" style="padding:11px 14px;border-radius:10px;border:none;background:#10b981;color:#fff;font-weight:700">+ TEST</button>
+<div class="page">
+<div id="loginBox" class="card" style="max-width:420px;margin:50px auto;text-align:center"><h3 style="color:var(--gold)">Admin Login</h3><input id="pw" type="password" class="input" placeholder="veccta2024" style="width:100%"><button class="btn gold" style="width:100%;margin-top:10px" onclick="login()">Login GLOBAL</button><div class="small" style="color:#64748b;margin-top:8px">Jobs + Tickets from any phone · Revert & Unlock</div></div>
+
+<div id="panel" hidden>
+<div class="stats">
+<div class="s"><b id="cTotal">0</b><small>Total Jobs</small></div>
+<div class="s"><b id="cNew">0</b><small>New Logged</small></div>
+<div class="s"><b id="cRev">0</b><small>Revision / Resubmit</small></div>
+<div class="s"><b id="cPaid">0</b><small>Paid / Done</small></div>
+<div class="s"><b id="cTic">0</b><small>Tickets Open</small></div>
+<div class="s"><b id="cMoney">0</b><small>KSH Quoted</small></div>
 </div>
-<div id="info" style="padding:0 14px;font-size:11px;color:#64748b"></div>
-<div id="list" class="list"></div>
+
+<div class="tabs">
+<span class="tab active" id="tab-jobs" onclick="setTab('jobs')">📦 Jobs ({{jobs}})</span>
+<span class="tab" id="tab-tickets" onclick="setTab('tickets')">🎫 Tickets ({{tics}})</span>
+<span class="tab" id="tab-pillars" onclick="setTab('pillars')">🏛 7 Pillars Analytics</span>
 </div>
 
-<div id="modal"><div id="box">
-<h3 id="mid"></h3>
-<select id="mStatus"><option value="queue">Queue</option><option value="in_progress">In Progress</option><option value="correction">Correction</option><option value="submitted">Submitted</option><option value="closed">Closed</option></select>
-<textarea id="mMsg" rows="4" placeholder="Message for tracker"></textarea>
-<button class="btn" onclick="save()">Save to Tracker</button>
-<button class="btn" style="background:#e2e8f0;color:#000" onclick="document.getElementById('modal').classList.remove('show')">Cancel</button>
-</div></div>
+<div class="toolbar">
+<input id="q" class="input" placeholder="Search JOB-, TIC-, name, phone, pillar, service..." oninput="render()" style="flex:1;min-width:220px">
+<select id="fStat" class="select" onchange="render()"><option value="">All Status</option><option>Logged</option><option>Quoted</option><option>Paid</option><option>In Progress</option><option>Done</option><option>Revision Needed</option><option>Resubmitted</option></select>
+<select id="fPill" class="select" onchange="render()"><option value="">All Pillars (7)</option><option>Digital & Brand Systems</option><option>Academic & Testing Logistics</option><option>Transport Brokerage Hub</option><option>Merchandise Sourcing Links</option><option>Independent Fixer Desk</option><option>General Agency Core</option><option>Statutory & Portal Logistics</option></select>
+<select id="fSort" class="select" onchange="render()"><option value="newest">Newest First</option><option value="oldest">Oldest First</option><option value="priceHigh">Price High-Low</option></select>
+</div>
 
-<script>
-let PASS = localStorage.getItem('VEC_PASS') || "VEC2025";
-const firebaseConfig = {
-  apiKey: "PUT_YOURS",
-  authDomain: "PUT_YOURS",
-  projectId: "PUT_YOURS",
-  storageBucket: "PUT_YOURS",
-  messagingSenderId: "PUT_YOURS",
-  appId: "PUT_YOURS"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-let all=[],curId,curCol;
+<div id="list"></div>
+</div>
+</div>
 
-function login(){
-  if(document.getElementById('pass').value===PASS){
-    document.getElementById('login').style.display='none';
-    document.getElementById('admin').style.display='block';
-    load();
-  }else document.getElementById('err').innerText='Wrong: '+PASS;
+<script type="module">
+import { db } from './firebase.js';
+import { collection, getDocs, doc, updateDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+let JOBS=[], TICKETS=[], TAB='jobs';
+
+function getLocal(){
+ try{
+  let a=JSON.parse(localStorage.getItem('veccta_jobs')||'[]');
+  let b=JSON.parse(localStorage.getItem('karanu_jobs')||'[]');
+  let m=[...a,...b]; let map=new Map(); m.forEach(j=>{if(!map.has(j.id)) map.set(j.id,j)}); return Array.from(map.values());
+ }catch(e){return []}
 }
 
-async function load(){
-  try{
-    let j,t;
-    try{j=await db.collection("jobs").orderBy("createdAt","desc").get()}catch(e){j=await db.collection("jobs").get()}
-    try{t=await db.collection("tickets").orderBy("createdAt","desc").get()}catch(e){t=await db.collection("tickets").get()}
-    all=[];
-    j.forEach(d=>all.push({docId:d.id,col:"jobs",trackingId:d.data().trackingId||d.id,...d.data()}));
-    t.forEach(d=>all.push({docId:d.id,col:"tickets",trackingId:d.data().trackingId||d.data().ticket||d.id,...d.data()}));
-    document.getElementById('info').innerHTML=all.length+' Total - Jobs:'+j.size+' Tickets:'+t.size+' Project:'+firebaseConfig.projectId;
-    show();
-  }catch(e){document.getElementById('info').innerHTML='Error: '+e.message;}
+window.login=()=>{if(pw.value==='veccta2024'){loginBox.hidden=true; panel.hidden=false; loadCloud()}else alert('Wrong')}
+
+window.loadCloud=async()=>{
+ cloudSt.textContent='● Syncing cloud...'; cloudSt.style.color='#facc15';
+ try{
+  let snap=await getDocs(query(collection(db,'jobs'), orderBy('createdAt','desc'), limit(300)));
+  let cloud=[]; snap.forEach(d=>{cloud.push({...d.data(),_docId:d.id})});
+  let snap2=await getDocs(query(collection(db,'tickets'), orderBy('createdAt','desc'), limit(200)));
+  let cloudT=[]; snap2.forEach(d=>{cloudT.push({...d.data(),_docId:d.id})});
+  // merge cloud + local (cloud wins)
+  let local=getLocal(); let map=new Map(); local.forEach(j=>map.set(j.id,j)); cloud.forEach(j=>map.set(j.id,j));
+  JOBS=Array.from(map.values()); TICKETS=cloudT;
+  cloudSt.textContent=`● Cloud LIVE — ${cloud.length} jobs / ${cloudT.length} tickets — GLOBAL`; cloudSt.style.color='#22c55e';
+ }catch(e){
+  cloudSt.textContent='● Local only — '+e.message; cloudSt.style.color='#ef4444';
+  JOBS=getLocal(); TICKETS=JSON.parse(localStorage.getItem('veccta_tickets')||'[]');
+ }
+ renderStats(); render();
 }
 
-function show(){
-  const q=document.getElementById('s').value.toUpperCase();
-  const f=all.filter(x=>!q||JSON.stringify(x).toUpperCase().includes(q));
-  document.getElementById('list').innerHTML=f.map(x=>`
-    <div class="job">
-      <b>${x.trackingId}</b> <small>[${x.col}] ${x.status||'queue'}</small><br>
-      <small>👤${x.clientName||x.name||''} 📞${x.phone||''} - ${x.service||x.issue||''}</small>
-      <div style="font-size:11px;background:#f8fafc;padding:6px;border-radius:6px;margin-top:6px">💬 ${x.adminMessage||'No reply'}</div>
-      <button onclick="openM('${x.docId}','${x.col}')" style="margin-top:8px;padding:7px 12px;background:#0f172a;color:#fff;border:none;border-radius:6px;font-weight:700;cursor:pointer">Respond</button>
-    </div>`).join('')||'No jobs/tickets found';
+function renderStats(){
+ cTotal.textContent=JOBS.length;
+ cNew.textContent=JOBS.filter(j=>j.status==='Logged').length;
+ cRev.textContent=JOBS.filter(j=>['Revision Needed','Resubmitted'].includes(j.status)).length;
+ cPaid.textContent=JOBS.filter(j=>['Paid','Done'].includes(j.status)).length;
+ cTic.textContent=TICKETS.filter(t=>t.status==='Open').length;
+ cMoney.textContent='KSH '+(JOBS.reduce((s,j)=>s+(parseInt(j.price)||0),0).toLocaleString());
+ document.getElementById('tab-jobs').textContent=`📦 Jobs (${JOBS.length})`;
+ document.getElementById('tab-tickets').textContent=`🎫 Tickets (${TICKETS.length})`;
 }
 
-function openM(id,col){
-  const x=all.find(a=>a.docId===id&&a.col===col);
-  curId=id;curCol=col;
-  document.getElementById('mid').innerText=x.trackingId;
-  document.getElementById('mStatus').value=x.status||'queue';
-  document.getElementById('mMsg').value=x.adminMessage||'';
-  document.getElementById('modal').classList.add('show');
+window.setTab=t=>{
+ TAB=t; document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); document.getElementById('tab-'+t).classList.add('active'); render();
 }
-async function save(){
-  const s=document.getElementById('mStatus').value;
-  const m=document.getElementById('mMsg').value;
-  if(!m) return alert('Write message');
-  await db.collection(curCol).doc(curId).update({status:s,adminMessage:m,adminResponseAt:new Date()});
-  document.getElementById('modal').classList.remove('show');
-  load();
+
+window.render=()=>{
+ let qv=(q.value||'').toLowerCase(), fs=fStat.value, fp=fPill.value, sort=fSort.value;
+ let html='';
+ if(TAB==='jobs'){
+  let list=[...JOBS];
+  if(qv) list=list.filter(j=>JSON.stringify(j).toLowerCase().includes(qv));
+  if(fs) list=list.filter(j=>j.status===fs);
+  if(fp) list=list.filter(j=>j.pillar===fp);
+  if(sort==='oldest') list.reverse(); if(sort==='priceHigh') list.sort((a,b)=>(parseInt(b.price)||0)-(parseInt(a.price)||0));
+  if(!list.length) html=`<div class=card style="border-left:5px solid #ef4444"><b>No jobs</b> — submit from job.html (any phone). If you just submitted, click ↻ Cloud</div>`;
+  list.forEach(j=>{
+   html+=`<div class=card>
+   <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+   <div><span class=kbd>${j.id}</span> <span class=badge style="background:#334155">${j.status}</span> <span style="font-size:11px;color:#94a3b8">${j.logged||''}</span><br><b>${j.fullService|| (j.pillar+' > '+j.service+' > '+j.subService)}</b><br><span style="font-size:12px;color:#cbd5e1">${j.clientName||''} • ${j.clientPhone||''} • ${j.pillar||''}</span></div>
+   <div style="text-align:right"><div style="font-size:11px;color:#94a3b8">Price</div><div style="font-size:20px;font-weight:900;color:var(--gold)">${j.price?'KSH '+j.price:'Pending'}</div><div style="font-size:11px;color:#94a3b8">${j._docId?'☁ Cloud':'📱 Local'}</div></div>
+   </div>
+   ${j.details||j.detail?`<div class="well y"><b>Client Details:</b><br>${j.details||''} ${j.detail? '| '+j.detail:''} ${j.requirements?.detail||''}</div>`:''}
+   ${j.fileName?`<div class=well b>📎 Client File: ${j.fileName} ${j.fileData?'<a href="'+j.fileData+'" target="_blank" style="color:#60a5fa">View</a>':''}</div>`:''}
+   ${j.adminMessage?`<div class="well g"><b style="color:#22c55e">✅ Your Message (Green Well — client sees on track):</b><br>${j.adminMessage}</div>`:''}
+   ${j.revisionNote?`<div class="well r"><b style="color:#ef4444">🔴 Revision Request — Red Lock (client must fix):</b><br>${j.revisionNote}</div>`:''}
+   ${j.revisionReply?`<div class="well y"><b>↩ Client Resubmitted Reply:</b><br>${j.revisionReply} ${j.resubmitFileName?'<br>📎 '+j.resubmitFileName:''}</div>`:''}
+
+   <div class=grid2 style="margin-top:12px">
+   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+   <div><label style="font-size:11px;color:#facc15;font-weight:800">PRICE KSH</label><input id="p-${j.id}" class=input value="${j.price||''}" placeholder="2500"></div>
+   <div><label style="font-size:11px;color:#facc15;font-weight:800">STATUS</label><select id="s-${j.id}" class=select><option ${j.status==='Logged'?'selected':''}>Logged</option><option ${j.status==='Quoted'?'selected':''}>Quoted</option><option ${j.status==='Paid'?'selected':''}>Paid</option><option ${j.status==='In Progress'?'selected':''}>In Progress</option><option ${j.status==='Done'?'selected':''}>Done</option><option ${j.status==='Revision Needed'?'selected':''}>Revision Needed</option></select></div>
+   </div>
+   <div>
+   <label style="font-size:11px;color:#22c55e;font-weight:800">ADMIN MESSAGE — GREEN WELL (client view)</label><textarea id="m-${j.id}" class=textarea rows=3 placeholder="e.g. Quote KSH 2500, pay via... Your work started...">${j.adminMessage||''}</textarea>
+   <label style="font-size:11px;color:#ef4444;font-weight:800">REVERT FOR CORRECTION — RED LOCK BOX + UNLOCK UPLOAD</label><textarea id="r-${j.id}" class=textarea rows=3 placeholder="Leave empty if no correction needed. If filled, it LOCKS job and shows RED BOX + upload field on track.html for client to correct" style="border-color:#ef4444">${j.revisionNote||''}</textarea>
+   </div>
+   </div>
+
+   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+   <button class="btn gold" onclick="saveJob('${j.id}')">💾 Save & Push to Client (Cloud)</button>
+   <button class="btn line" onclick="quickQuote('${j.id}')">⚡ Quick Quote Template</button>
+   <button class="btn line" onclick="waJob('${j.id}')">WhatsApp Client</button>
+   <button class="btn red" onclick="delJob('${j.id}')">Delete</button>
+   <a class="btn line" href="track.html?job=${j.id}" target="_blank" style="text-decoration:none;text-align:center">View as Client</a>
+   </div>
+   </div>`;
+  });
+ }
+ if(TAB==='tickets'){
+  let list=[...TICKETS]; let qv2=(q.value||'').toLowerCase(); if(qv2) list=list.filter(t=>JSON.stringify(t).toLowerCase().includes(qv2));
+  if(!list.length) html=`<div class=card>No tickets — submit from ticket.html</div>`;
+  list.forEach(t=>{
+   html+=`<div class=card>
+   <div style="display:flex;justify-content:space-between"><div><span class=kbd style="color:#60a5fa">${t.id}</span> for <b style="color:#facc15">${t.jobId}</b> <span class=badge>${t.status}</span> ${t.priority} — ${t.tType}</div><div class=small>${t.logged||''}</div></div>
+   <b>${t.subject||''}</b> — ${t.category||''}<br>
+   <div class="well y"><b>Client Ticket:</b><br>${t.message||''}</div>
+   ${t.fileName?`<div class=well b>📎 ${t.fileName}</div>`:''}
+   ${t.adminReply?`<div class="well g"><b>Your Reply (Green Well — client sees):</b><br>${t.adminReply}</div>`:''}
+   <label style="font-size:11px;color:#22c55e;font-weight:800">ADMIN REPLY — GREEN WELL + RESOLVE</label><textarea id="tr-${t.id}" class=textarea rows=3 placeholder="Write reply — will show as GREEN WELL on track.html">${t.adminReply||''}</textarea>
+   <select id="ts-${t.id}" class=select style="margin-top:6px"><option ${t.status==='Open'?'selected':''}>Open</option><option ${t.status==='In Progress'?'selected':''}>In Progress</option><option ${t.status==='Closed'?'selected':''}>Closed</option></select>
+   <div style="display:flex;gap:8px;margin-top:8px"><button class="btn gold" onclick="saveTicket('${t.id}')">💾 Reply & Push to Cloud</button><button class="btn line" onclick="linkJob('${t.jobId}')">Open Job ${t.jobId}</button><button class="btn red" onclick="delTicket('${t.id}')">Delete</button><a class="btn line" href="track.html?ticket=${t.id}" target="_blank" style="text-decoration:none;text-align:center">View as Client</a></div>
+   </div>`;
+  });
+ }
+ if(TAB==='pillars'){
+  let pillars={}; JOBS.forEach(j=>{let p=j.pillar||'Unknown'; pillars[p]=(pillars[p]||0)+1});
+  html+=`<div class=card><h3 style="color:var(--gold);margin:0 0 10px">7 Pillars Analytics — World Class</h3>`+Object.entries(pillars).map(([k,v])=>`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #334155"><span>${k}</span><b style="color:var(--gold)">${v} jobs</b></div>`).join('')+`</div>`;
+  html+=`<div class=card><h4 style="margin:0 0 6px">Revenue Quoted</h4><b style="color:var(--gold);font-size:26px">KSH ${JOBS.reduce((s,j)=>s+(parseInt(j.price)||0),0).toLocaleString()}</b><br><span class=small>Sum of all price fields</span></div>`;
+ }
+ document.getElementById('list').innerHTML=html;
 }
-async function test(){
-  const id="VEC-JOB-"+Math.floor(1000+Math.random()*9000);
-  await db.collection("jobs").doc(id).set({trackingId:id,clientName:"Test",phone:"0700000000",service:"Test Job",status:"queue",createdAt:new Date()});
-  load();
+
+window.saveJob=async(id)=>{
+ let j=JOBS.find(x=>x.id===id); if(!j) return;
+ j.price=document.getElementById('p-'+id).value; j.status=document.getElementById('s-'+id).value; j.adminMessage=document.getElementById('m-'+id).value; j.revisionNote=document.getElementById('r-'+id).value;
+ if(j.revisionNote && j.revisionNote.trim()!=='') j.status='Revision Needed'; // auto lock
+ // local
+ let local=JSON.parse(localStorage.getItem('veccta_jobs')||'[]'); let idx=local.findIndex(x=>x.id===id); if(idx>=0) local[idx]=j; else local.push(j); localStorage.setItem('veccta_jobs',JSON.stringify(local)); localStorage.setItem('karanu_jobs',JSON.stringify(local));
+ // cloud
+ if(j._docId){ try{await updateDoc(doc(db,'jobs',j._docId),{price:j.price,status:j.status,adminMessage:j.adminMessage,revisionNote:j.revisionNote});}catch(e){alert('Cloud save failed: '+e.message+' — local saved');} }
+ renderStats(); render(); alert('✅ Saved & pushed to client — client sees GREEN WELL + RED LOCK on track.html (any phone)');
 }
+window.quickQuote=id=>{let el=document.getElementById('m-'+id); el.value=`Hello! Quote for ${id} is KSH ${document.getElementById('p-'+id).value||'[PRICE]'}.
+
+Paybill: 400200 / Acc: 12345 / OR Till 123456
+
+After payment reply with screenshot — we start immediately. Track: track.html?job=${id}`; }
+
+window.waJob=id=>{let j=JOBS.find(x=>x.id===id); let msg=`Hello ${j.clientName}, your ${j.id} (${j.fullService}) is ${j.status}. Price KSH ${j.price}. ${j.adminMessage} ${j.revisionNote?'CORRECTION NEEDED: '+j.revisionNote:''} Track: track.html?job=${j.id}`; window.open('https://wa.me/'+(j.clientPhone||'').replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(msg))}
+
+window.delJob=async id=>{if(!confirm('Delete '+id+'?'))return; JOBS=JOBS.filter(x=>x.id!==id); localStorage.setItem('veccta_jobs',JSON.stringify(JOBS)); renderStats(); render();}
+
+window.saveTicket=async id=>{
+ let t=TICKETS.find(x=>x.id===id); t.adminReply=document.getElementById('tr-'+id).value; t.status=document.getElementById('ts-'+id).value;
+ if(t.adminReply && t.status==='Open') t.status='Closed';
+ if(t._docId){try{await updateDoc(doc(db,'tickets',t._docId),{adminReply:t.adminReply,status:t.status});}catch(e){alert(e.message)}}
+ alert('✅ Ticket reply pushed — client sees GREEN WELL on track.html?ticket='+id); render();
+}
+window.delTicket=id=>{TICKETS=TICKETS.filter(x=>x.id!==id); render()}
+window.linkJob=jobId=>{q.value=jobId; setTab('jobs'); document.getElementById('tab-jobs').classList.add('active'); document.getElementById('tab-tickets').classList.remove('active'); render()}
+window.exportCSV=()=>{let csv='ID,Name,Phone,Pillar,Service,Full,Price,Status,AdminMsg,Revision,Logged\n'+JOBS.map(j=>`"${j.id}","${j.clientName||''}","${j.clientPhone||''}","${j.pillar||''}","${j.service||''}","${j.fullService||''}","${j.price||''}","${j.status||''}","${(j.adminMessage||'').replace(/"/g,'') }","${(j.revisionNote||'').replace(/"/g,'') }","${j.logged||''}"`).join('\n'); let blob=new Blob([csv],{type:'text/csv'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='veccta_global.csv'; a.click()}
 </script>
-</body>
-</html>
+</body></html>
