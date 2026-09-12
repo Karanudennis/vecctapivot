@@ -1,135 +1,191 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin - 7 Pillars</title><style>
-body{background:#0f172a;color:#fff;font-family:system-ui;padding:12px;max-width:1200px;margin:auto}
-.card{background:#1e293b;padding:12px;border-radius:12px;border:1px solid #334155;margin:8px 0}
-input,textarea,select{width:100%;padding:10px;margin:4px 0;border-radius:8px;background:#0f172a;color:#fff;border:1px solid #334155;box-sizing:border-box}
-button{padding:8px 12px;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin:2px}
-.btn-y{background:#facc15;color:#000}.btn-b{background:#3b82f6;color:#fff}.btn-g{background:#22c55e;color:#000}.btn-r{background:#ef4444;color:#fff}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:900px){.grid{grid-template-columns:1fr}}
-.badge{padding:3px 8px;border-radius:12px;font-size:11px;font-weight:800}
-.pass-wrap{display:flex;gap:6px;align-items:center}.saved{color:#22c55e;font-weight:800;font-size:12px;display:none;background:#052e16;padding:2px 8px;border-radius:10px;border:1px solid #22c55e}.saved.show{display:inline-block}
-.price-input{border:2px solid #facc15!important;color:#facc15!important;font-weight:900;font-size:16px}
-.admin-msg{border:2px solid #22c55e!important}.rev-note{border:2px solid #ef4444!important}
-.req-box{background:#0f172a;padding:8px;border-radius:8px;font-size:12px;margin:4px 0}
-.searchbar{display:flex;gap:6px;margin:8px 0}
-</style></head><body>
+<!DOCTYPE html>
+<html>
+<head>
+<title>ADMIN - 7 PILLARS - Firebase Fix - All Devices</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:sans-serif;background:#0a0a0a;color:white;margin:0;padding:6px}
+.top{background:black;border:2px solid #ffcc00;padding:10px;border-radius:8px;text-align:center;position:sticky;top:0;z-index:10}
+.top b{color:#ffcc00}
+.card{background:#1a1a1a;padding:10px;border-radius:8px;margin:6px 0;border-left:5px solid #ffcc00;font-size:12px}
+.tabs{display:flex;gap:4px;margin:8px 0;overflow:auto}
+.tab{padding:8px 12px;background:#222;border-radius:6px;cursor:pointer;font-weight:bold;font-size:11px;white-space:nowrap;color:#ffcc00}
+.tab.active{background:#ffcc00;color:black}
+input,select,textarea{width:100%;padding:8px;margin:4px 0;border:1px solid #444;border-radius:5px;background:#222;color:white;box-sizing:border-box}
+button{padding:8px 12px;border:none;border-radius:5px;font-weight:bold;cursor:pointer}
+#loginGate{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.96);z-index:9999;text-align:center;padding-top:80px;display:none}
+.badge{padding:2px 6px;border-radius:8px;font-size:10px;color:white}
+.open{background:#2196F3}.closed{background:#4caf50}.correction{background:#ff5722}.in_progress{background:#ff9800}
+.seq{background:#fff3e0;color:black;padding:5px;border-radius:4px;font-size:11px;margin:4px 0}
+</style>
+</head>
+<body>
 
-<h3 style="color:#facc15;margin:0">ADMIN - 7 PILLARS (GitHub Fix)</h3><small style="color:#94a3b8">Shows jobs from same device only - GitHub limit - Use Export/Import to move between phones</small>
+<div id="loginGate">
+<h2 style="color:#ffcc00">🔒 Admin Firebase Login</h2>
+<p>Old admin.html used localStorage = device only = 0 Jobs<br>New uses Firebase = All devices</p>
+<p id="gateEmail"></p>
+<button onclick="location.href='./test-login.html'" style="background:#ffcc00;color:black;width:auto;padding:12px 24px">LOGIN AS karanud96@gmail.com</button>
+</div>
+
+<div class="top">
+<b>ADMIN - 7 PILLARS (Firebase Fix - All Devices)</b><br>
+<small>Shows jobs from SAME device only - GitHub limit - FIXED now with Firebase</small><br>
+<small id="adminInfo">Checking...</small><br>
+<small>Password veccta2024 removed - Now Google Login only - 7x7x7 Sequence</small>
+</div>
+
+<div style="display:flex;gap:6px;margin:8px 0">
+<button onclick="loadData()" style="background:#4caf50;color:white">🔄 Refresh - Load Jobs from Firebase</button>
+<button onclick="exportJobs()" style="background:#2196F3;color:white">Export JSON</button>
+<input type="file" id="importFile" accept=".json" style="width:auto">
+<button onclick="clearOldLocal()" style="background:#ff5722;color:white">Clear Old LocalStorage</button>
+</div>
+
+<div class="seq" id="deviceInfo">Device: Loading... | Firebase: Connected = Shows jobs from ALL phones, not same device only</div>
+
+<div class="tabs">
+<div class="tab active" onclick="switchTab('jobs')">📦 JOBS (7 pillars) <span id="jobCount">0</span></div>
+<div class="tab" onclick="switchTab('tickets')">🎫 TICKETS <span id="ticketCount">0</span></div>
+<div class="tab" onclick="switchTab('correction')">⚠️ Corrections <span id="corrCount">0</span></div>
+<div class="tab" onclick="switchTab('closed')">✅ Closed</div>
+</div>
 
 <div class="card">
-<div class="pass-wrap">
-<input type="password" id="pass" placeholder="Password veccta2024">
-<button class="btn-y" onclick="togglePass()" id="eyeBtn">👁️ View</button>
-<button class="btn-g" onclick="login()">Login</button>
+<div style="display:flex;gap:4px">
+<input id="searchBox" placeholder="Search VEC-JOB / Email denniskmuthoni@gmail.com / Phone / 7x7x7 Service" oninput="render()">
+<select id="pillarFilter" onchange="render()"><option value="all">All 7 Pillars</option><option value="GOVERNMENT">1 GOV</option><option value="CERTIFICATES">2 CERT</option><option value="FINANCIAL">3 FIN</option><option value="LPG">4 LPG</option><option value="PRINTING">5 PRINT</option><option value="EDUCATION">6 EDU</option><option value="OTHER">7 OTHER</option></select>
+<select id="statusFilter" onchange="render()"><option value="all">All Status</option><option value="open">Open</option><option value="in_progress">In Progress</option><option value="correction_needed">Correction Needed</option><option value="closed">Closed</option></select>
 </div>
-<div id="loginMsg" style="font-size:12px;margin-top:4px"></div>
-</div>
-
-<div id="area" style="display:none">
-<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">
-<button class="btn-g" onclick="load()">🔄 Refresh - Load Jobs</button>
-<button class="btn-b" onclick="exportData()">Export JSON</button>
-<input type="file" id="importFile" onchange="importData()" style="width:180px">
-<button class="btn-r" onclick="clearAll()">Clear Test Data</button>
-<span id="counts" style="color:#facc15;font-weight:800;font-size:12px"></span>
-</div>
-<div class="searchbar"><input id="search" placeholder="Search JOB ID, Name, Phone, Pillar, Service..." oninput="load()"></div>
-<div class="grid"><div><h4 style="color:#facc15">JOBS (7 pillars)</h4><div id="jobs"></div></div><div><h4 style="color:#3b82f6">TICKETS</h4><div id="tickets"></div></div></div>
 </div>
 
-<script>
-const PASS='veccta2024';
-function getAllJobs(){
- let a=[], b=[];
- try{a=JSON.parse(localStorage.getItem('veccta_jobs')||'[]')}catch(e){}
- try{b=JSON.parse(localStorage.getItem('karanu_jobs')||'[]')}catch(e){}
- // merge unique by id
- let map={}; [...a,...b].forEach(j=>{ if(j&&j.id) map[j.id]=j; });
- return Object.values(map);
+<div id="dataList">Loading Firebase jobs - No more 0 Jobs on this device...</div>
+
+<script type="module">
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { collection, query, orderBy, onSnapshot, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const ADMINS=["karanud96@gmail.com","denniskmuthoni@gmail.com"]; // Added your email from screenshot
+let allJobs=[], allTickets=[], currentTab="jobs", currentUser=null;
+
+document.getElementById("deviceInfo").innerText=`Device: ${navigator.userAgent.slice(0,50)} | Firebase: If 0, submit job on SAME phone or Import - Now Firebase will show ALL devices jobs`;
+
+onAuthStateChanged(auth, user=>{
+  currentUser=user;
+  document.getElementById("gateEmail").innerText=user?user.email:"Not logged - Old veccta2024 password no longer works, use Google";
+  if(!user || !ADMINS.includes(user.email)){
+    document.getElementById("loginGate").style.display="block";
+    document.getElementById("adminInfo").innerHTML=user?`❌ ${user.email} not in admin list - Add email to ADMINS`:"❌ Not logged - Login to see Firebase jobs - Old localStorage jobs empty";
+  } else {
+    document.getElementById("loginGate").style.display="none";
+    document.getElementById("adminInfo").innerHTML=`✅ Logged in ${user.email} - Firebase Connected - Shows jobs from ALL devices, not same device only`;
+    loadData();
+  }
+});
+
+window.loadData=()=>{
+  onSnapshot(query(collection(db,"jobs"), orderBy("createdAt","desc")), snap=>{
+    allJobs=[]; snap.forEach(d=>allJobs.push({id:d.id,...d.data()}));
+    document.getElementById("jobCount").innerText=allJobs.length;
+    document.getElementById("corrCount").innerText=allJobs.filter(j=>j.status&&j.status.includes("correction")).length+allTickets.filter(t=>t.status&&t.status.includes("correction")).length;
+    render();
+  });
+  onSnapshot(query(collection(db,"tickets"), orderBy("createdAt","desc")), snap=>{
+    allTickets=[]; snap.forEach(d=>allTickets.push({id:d.id,...d.data()}));
+    document.getElementById("ticketCount").innerText=allTickets.length;
+    render();
+  });
+};
+
+window.switchTab=(t)=>{ currentTab=t; document.querySelectorAll(".tab").forEach(e=>e.classList.remove("active")); event.target.classList.add("active"); render(); };
+
+function render(){
+  let list=document.getElementById("dataList");
+  let search=document.getElementById("searchBox").value.toLowerCase();
+  let pillarF=document.getElementById("pillarFilter").value;
+  let statusF=document.getElementById("statusFilter").value;
+  let data=currentTab=="jobs"?allJobs:currentTab=="tickets"?allTickets:currentTab=="closed"?[...allJobs,...allTickets].filter(d=>d.status=="closed"):[...allJobs,...allTickets].filter(d=>d.status&&d.status.includes("correction"));
+  
+  data=data.filter(d=>{
+    let matchSearch=!search||(d.jobId||d.ticketId||"").toLowerCase().includes(search)||(d.userEmail||"").toLowerCase().includes(search)||(d.phone||"").includes(search)||(d.service||"").toLowerCase().includes(search)||(d.name||"").toLowerCase().includes(search);
+    let matchPillar=pillarF=="all"||(d.pillar||"").toUpperCase().includes(pillarF);
+    let matchStatus=statusF=="all"||d.status==statusF||(statusF=="correction_needed"&&d.status&&d.status.includes("correction"));
+    return matchSearch&&matchPillar&&matchStatus;
+  });
+
+  document.getElementById("deviceInfo").innerText=`Found: ${allJobs.length} Jobs, ${allTickets.length} Tickets | Showing: ${data.length}/${allJobs.length+allTickets.length} | Device: ${navigator.userAgent.slice(0,30)} | If 0, submit job on SAME phone or Import - Firebase fixes this`;
+
+  if(!data.length){ 
+    list.innerHTML=`
+    <div class="card" style="border-left-color:#ff5722">
+      <b style="color:#ff6b6b">No Jobs on this device - OLD REASON</b><br>
+      Reason: GitHub Pages saves only on browser where job was created. Solution: Submit a test job on this same phone, or use Export on client phone then Import here.<br><br>
+      <b style="color:#4caf50">NEW FIREBASE FIX:</b><br>
+      If you submitted jobs from job.html (Firebase version) they WILL appear here after refresh.<br>
+      If you still see 0, you are still using old job.html with localStorage - Replace job.html with Firebase version I gave (7x7x7).<br><br>
+      Keys checked: veccta_jobs, karanu_jobs (old)<br>
+      LocalStorage raw: ${localStorage.getItem('veccta_jobs')?'Has data but Firebase empty':'Empty - Use Firebase job.html'}<br>
+      Firebase jobs count: ${allJobs.length} - If 0, no Firebase jobs yet
+    </div>`;
+    return; 
+  }
+
+  let html="";
+  data.slice(0,100).forEach(item=>{
+    let isJob=item.jobId; let id=isJob?item.jobId:item.ticketId; let status=item.status||"open";
+    let created=item.createdAt?new Date(item.createdAt.seconds*1000).toLocaleString():"";
+    let response=item.adminResponseAt?new Date(item.adminResponseAt.seconds*1000).toLocaleString():"No response";
+    let formData=item.formData||{};
+    html+=`
+    <div class="card">
+      <div style="display:flex;justify-content:space-between"><b>${id}</b> <span class="badge ${status.includes('correction')?'correction':status}">${status.toUpperCase()}</span></div>
+      <div class="seq">7→7→7: ${item.pillar||""} → ${item.sub||""} → ${item.service||item.ticketType||""}</div>
+      <small>${item.name} | ${item.phone} | ${item.userEmail} | ${item.location}</small><br>
+      <small>Created: ${created} | Response: ${response}</small>
+      <div style="background:#222;padding:5px;margin:4px 0;border-radius:4px">
+        ${Object.entries(formData).map(([k,v])=>`<small>${k.includes("Photo")?"📁 FILE":"📝 DATA"} ${k}: ${v}</small><br>`).join("")||`<small>${item.details||""}</small>`}
+      </div>
+      ${item.adminMessage?`<div style="background:#0d47a1;padding:5px;border-left:3px solid #2196F3"><b>Admin Msg:</b> ${item.adminMessage}<br><small>${response}</small></div>`:""}
+      ${item.correctionMessage?`<div style="background:#b71c1c;padding:5px;border-left:3px solid #ff5722"><b>Correction:</b> ${item.correctionMessage}</div>`:""}
+      <div style="display:flex;gap:4px;margin-top:6px">
+        <select id="st-${item.id}" onchange="updateStatus('${item.id}','${isJob?'jobs':'tickets'}',this.value)" style="flex:1"><option value="open" ${status=="open"?"selected":""}>Open</option><option value="in_progress" ${status=="in_progress"?"selected":""}>In Progress</option><option value="correction_needed" ${status=="correction_needed"?"selected":""}>Correction Needed - Unlock</option><option value="closed" ${status=="closed"?"selected":""}>Closed</option></select>
+        <button onclick="document.getElementById('msg-${item.id}').style.display=document.getElementById('msg-${item.id}').style.display=='none'?'block':'none'" style="background:#2196F3;color:white">💬</button>
+        <button onclick="window.open('https://wa.me/254${item.phone.toString().replace(/^0/,'')}?text=Hello ${item.name}, ${id}')" style="background:#25d366;color:white">WA</button>
+      </div>
+      <div id="msg-${item.id}" style="display:none;margin-top:6px;border:2px solid #ffcc00;padding:8px;border-radius:6px">
+        <textarea id="adminMsg-${item.id}" placeholder="Message from admin - tracking shows + time">${item.adminMessage||""}</textarea>
+        <textarea id="corrMsg-${item.id}" placeholder="Correction message - unlock + resubmit button">${item.correctionMessage||""}</textarea>
+        <input id="corrFields-${item.id}" placeholder="Fields to correct" value="${item.correctionFields||""}">
+        <button onclick="sendMsg('${item.id}','${isJob?'jobs':'tickets'}')" style="background:#ffcc00;color:black;width:100%;margin-top:4px">📤 Send to Tracking + Time + Unlock</button>
+      </div>
+    </div>`;
+  });
+  list.innerHTML=html;
 }
-function getAllTickets(){
- let a=[], b=[];
- try{a=JSON.parse(localStorage.getItem('veccta_tickets')||'[]')}catch(e){}
- try{b=JSON.parse(localStorage.getItem('karanu_tickets')||'[]')}catch(e){}
- let map={}; [...a,...b].forEach(t=>{ if(t&&t.id) map[t.id]=t; });
- return Object.values(map);
-}
-function saveJobs(j){ localStorage.setItem('veccta_jobs',JSON.stringify(j)); localStorage.setItem('karanu_jobs',JSON.stringify(j)); }
-function saveTickets(t){ localStorage.setItem('veccta_tickets',JSON.stringify(t)); localStorage.setItem('karanu_tickets',JSON.stringify(t)); }
 
-function togglePass(){ let p=pass; if(p.type=='password'){p.type='text'; eyeBtn.textContent='🙈 Hide';} else {p.type='password'; eyeBtn.textContent='👁️ View';} }
-function login(){ if(pass.value!==PASS){loginMsg.textContent='❌ Wrong password - veccta2024'; loginMsg.style.color='#ef4444'; return;} loginMsg.textContent='✅ Logged in'; loginMsg.style.color='#22c55e'; area.style.display='block'; load(); }
-
-function load(){
- let allJobs=getAllJobs().slice().reverse();
- let allTickets=getAllTickets().slice().reverse();
- let q=(search.value||'').toLowerCase();
- let jobs=allJobs.filter(j=>!q|| (j.id+' '+j.clientName+' '+j.clientPhone+' '+j.pillar+' '+j.service+' '+j.subService+' '+j.fullService).toLowerCase().includes(q));
- let tickets=allTickets.filter(t=>!q|| (t.id+' '+t.jobId+' '+t.message).toLowerCase().includes(q));
-
- counts.textContent=`Found: ${allJobs.length} Jobs, ${allTickets.length} Tickets | Showing: ${jobs.length}/${tickets.length} | Device: ${navigator.userAgent.slice(0,30)} | If 0, submit job on SAME phone or Import`;
-
- if(allJobs.length==0){ document.getElementById('jobs').innerHTML=`<div class=card style="border-left:5px solid #ef4444"><b style="color:#ef4444">No Jobs on this device</b><br><small>Reason: GitHub Pages saves only on browser where job was created. Solution: Submit a test job on this same phone, or use Export on client phone then Import here.<br><br>Keys checked: veccta_jobs, karanu_jobs<br>LocalStorage raw: ${localStorage.getItem('veccta_jobs')?'Has data':'Empty'}</small></div>`; } else {
-  document.getElementById('jobs').innerHTML=jobs.map((j,idx)=>{
-   let realId=j.id; let realIdx=getAllJobs().findIndex(x=>x.id===realId);
-   let req=j.requirements? Object.entries(j.requirements).map(([k,v])=>`<div><b>${k}:</b> ${v||'-'}</div>`).join(''):'-';
-   return `<div class=card style="border-left:5px solid ${j.status=='Needs Revision'?'#ef4444':'#facc15'}">
-    <div style="display:flex;justify-content:space-between"><b style="color:#facc15">${j.id}</b><span class=badge style="background:${j.status=='Completed'?'#22c55e':j.status=='Needs Revision'?'#ef4444':'#facc15'};color:${j.status=='Logged'||j.status=='Resubmitted'?'#000':'#fff'}">${j.status}</span></div>
-    <span id="jsaved_${realIdx}" class="saved">✅ SAVED</span>
-    <div style="font-size:11px;color:#94a3b8">${j.logged} | ${j.clientName} ${j.clientPhone}</div>
-    <div style="font-size:12px;margin:4px 0"><b>${j.fullService|| (j.pillar+' > '+j.service+' > '+j.subService)}</b><br><small style="color:#94a3b8">Type: ${j.requirementType} | File: ${j.fileName||'No file'} ${j.fileData?'✓':''}</small></div>
-    <div class=req-box>${req}<br><b>Details:</b> ${j.details||'-'}<br>${j.revisionReply? `<div style="background:#052e16;padding:4px;border-radius:4px;margin-top:4px;border:1px solid #22c55e"><b style="color:#22c55e">Resubmit:</b> ${j.revisionReply}</div>`:''}</div>
-    <label style="color:#facc15;font-size:11px">PRICE KSH</label><input id="price_${realIdx}" class="price-input" value="${j.price||''}" placeholder="3500">
-    <label>STATUS</label><select id="status_${realIdx}"><option ${j.status=='Logged'?'selected':''}>Logged</option><option ${j.status=='Quoted'?'selected':''}>Quoted</option><option ${j.status=='In Progress'?'selected':''}>In Progress</option><option ${j.status=='Needs Revision'?'selected':''}>Needs Revision</option><option ${j.status=='Resubmitted'?'selected':''}>Resubmitted</option><option ${j.status=='Completed'?'selected':''}>Completed</option><option ${j.status=='Cancelled'?'selected':''}>Cancelled</option></select>
-    <label style="color:#ef4444;font-size:11px">REVISION NOTE (RED LOCK BOX on TRACK)</label><textarea id="rev_${realIdx}" class="rev-note" rows="2">${j.revisionNote||''}</textarea>
-    <label style="color:#22c55e;font-size:11px">ADMIN MESSAGE (GREEN BOX on TRACK)</label><textarea id="msg_${realIdx}" class="admin-msg" rows="2">${j.adminMessage||''}</textarea>
-    <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">
-     <button class=btn-y onclick="saveJob(${realIdx})">💾 Save Job</button>
-     <button class=btn-b onclick="document.getElementById('price_${realIdx}').focus()">✏️ Edit</button>
-     <button class=btn-g onclick="wa('${j.clientPhone}','${j.id} - Price KSH '+document.getElementById('price_${realIdx}').value)">WhatsApp</button>
-     <button class=btn-r onclick="delJob(${realIdx})">Delete</button>
-    </div>
-   </div>`;
-  }).join('');
- }
-
- if(allTickets.length==0){ document.getElementById('tickets').innerHTML=`<div class=card style="border-left:5px solid #3b82f6"><b>No Tickets on this device</b><br><small>Same reason - localStorage device only</small></div>`; } else {
-  document.getElementById('tickets').innerHTML=tickets.map((t)=>{
-   let realIdx=getAllTickets().findIndex(x=>x.id===t.id);
-   return `<div class=card style="border-left:5px solid #3b82f6">
-    <div style="display:flex;justify-content:space-between"><b style="color:#3b82f6">${t.id}</b><span class=badge style="background:${t.status=='Answered'?'#22c55e':'#3b82f6'};color:#fff">${t.status}</span></div>
-    <span id="tsaved_${realIdx}" class="saved">✅ SAVED</span>
-    <div style="font-size:11px;color:#94a3b8">For ${t.jobId} | ${t.tTypeLabel||t.tType} | ${t.category} | ${t.priority} | ${t.logged}</div>
-    <div class=req-box>Q: ${t.message}<br>File: ${t.fileName||'None'}</div>
-    <label style="color:#22c55e;font-size:11px">ADMIN REPLY (Well displayed on TRACK)</label><textarea id="reply_${realIdx}" class="admin-msg" rows="3">${t.adminReply||''}</textarea>
-    <select id="tstatus_${realIdx}"><option ${t.status=='Open'?'selected':''}>Open</option><option ${t.status=='Answered'?'selected':''}>Answered</option><option ${t.status=='Closed'?'selected':''}>Closed</option></select>
-    <div style="display:flex;gap:4px;margin-top:6px"><button class=btn-b onclick="saveTicket(${realIdx})">💾 Save Reply</button><button class=btn-r onclick="delTicket(${realIdx})">Delete</button></div>
-   </div>`;
-  }).join('');
- }
-}
-
-function saveJob(i){
- let jobs=getAllJobs(); let job=jobs[i]; if(!job) return;
- let all=getAllJobs(); let idx=all.findIndex(x=>x.id===job.id); if(idx<0) return;
- all[idx].price=document.getElementById('price_'+i).value;
- all[idx].status=document.getElementById('status_'+i).value;
- all[idx].revisionNote=document.getElementById('rev_'+i).value;
- all[idx].adminMessage=document.getElementById('msg_'+i).value;
- all[idx].locked=(all[idx].status==='Needs Revision');
- saveJobs(all);
- let el=document.getElementById('jsaved_'+i); if(el){ el.textContent='✅ SAVED - Shows on TRACK'; el.classList.add('show'); }
-}
-function saveTicket(i){
- let all=getAllTickets(); let t=all[i]; if(!t) return;
- all[i].adminReply=document.getElementById('reply_'+i).value;
- all[i].status=document.getElementById('tstatus_'+i).value;
- saveTickets(all);
- let el=document.getElementById('tsaved_'+i); if(el){ el.textContent='✅ SAVED'; el.classList.add('show'); }
-}
-function delJob(i){ if(confirm('Delete?')){ let all=getAllJobs(); all.splice(i,1); saveJobs(all); load(); } }
-function delTicket(i){ if(confirm('Delete?')){ let all=getAllTickets(); all.splice(i,1); saveTickets(all); load(); } }
-function wa(phone,msg){ window.open('https://wa.me/'+phone.replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(msg)); }
-function exportData(){ let data={jobs:getAllJobs(),tickets:getAllTickets()}; let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='veccta_7pillars_backup.json'; a.click(); }
-function importData(){ let f=importFile.files[0]; if(!f) return; let r=new FileReader(); r.onload=e=>{ try{let d=JSON.parse(e.target.result); if(d.jobs) saveJobs([...getAllJobs(),...d.jobs]); if(d.tickets) saveTickets([...getAllTickets(),...d.tickets]); load(); alert('Imported '+ (d.jobs?.length||0)+' jobs'); }catch(err){alert('Invalid JSON')} }; r.readAsText(f); }
-function clearAll(){ if(confirm('Clear all test data on this device?')){ localStorage.removeItem('veccta_jobs'); localStorage.removeItem('karanu_jobs'); localStorage.removeItem('veccta_tickets'); localStorage.removeItem('karanu_tickets'); load(); } }
-</script></body></html>
+window.updateStatus=async(docId,col,newStatus)=>{
+  try{ await updateDoc(doc(db,col,docId),{status:newStatus,adminResponseAt:serverTimestamp(),adminEmail:currentUser.email}); alert(`Status ${newStatus}`); }catch(e){ alert(e.message); }
+};
+window.sendMsg=async(docId,col)=>{
+  const msg=document.getElementById(`adminMsg-${docId}`).value.trim();
+  const corrMsg=document.getElementById(`corrMsg-${docId}`).value.trim();
+  const corrFields=document.getElementById(`corrFields-${docId}`).value.trim();
+  if(!msg&&!corrMsg){ alert("Write message"); return; }
+  try{
+    let update={adminMessage:msg,adminResponseAt:serverTimestamp(),adminEmail:currentUser.email};
+    if(corrMsg){ update.correctionMessage=corrMsg; update.correctionFields=corrFields; update.status="correction_needed"; }
+    await updateDoc(doc(db,col,docId),update);
+    alert(`Sent - Tracking will show message + time + correction unlock`);
+  }catch(e){ alert(e.message); }
+};
+window.exportJobs=()=>{
+  let data=JSON.stringify({jobs:allJobs,tickets:allTickets},null,2);
+  let blob=new Blob([data],{type:"application/json"});
+  let url=URL.createObjectURL(blob);
+  let a=document.createElement("a"); a.href=url; a.download=`veccta-firebase-${Date.now()}.json`; a.click();
+};
+window.clearOldLocal=()=>{ localStorage.removeItem('veccta_jobs'); localStorage.removeItem('karanu_jobs'); alert("Old localStorage cleared - Now Firebase only"); };
+</script>
+</body>
+</html>
